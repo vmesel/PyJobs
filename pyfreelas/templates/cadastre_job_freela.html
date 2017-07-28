@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{%block title%}PyFreelas - Cadastre um job!{%endblock title%}
+{%block ptitle%}PyFreelas - Cadastre um job!{%endblock ptitle%}
+{% block content %}
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <h4 class="header center orange-text">Encontre o Freela perfeito para você: Empresa ou Pythonista!</h4>
+        <div class="row center">
+          <h5 class="header col s12 light">Preencha o formulário abaixo e encontre o freelancer que melhor atenda as suas necessidades!</h5>
+        </div>
+      </div>
+      <div class="row">
+        <form class="col s12" method="post" action="/cadastre-job/">
+          <p>Por favor, preencha todos os campos com * (asterisco) corretamenta, pois ainda não dispomos da funcionalidade de editar um job cadastrado.</p>
+          {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s6">
+              <input placeholder="Nome da Empresa" id="first_name" type="text" class="validate" name="nome-empresa" required>
+              <label for="first_name">Nome da Empresa*</label>
+            </div>
+            <div class="input-field col s6">
+              <input placeholder="Email do responsável" id="email" type="email" class="validate" name="email-empresa" required>
+              <label for="last_name">Email do responsável*</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Título do Job" id="titulo-job" type="text" class="validate" name="titulo-job" required>
+              <label for="titulo-job">Título do Job*</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Site da empresa" id="link-empresa" type="url" class="validate" name="link-empresa" required>
+              <label for="link-empresa">Site da empresa*</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Link para o Job" id="link-para-o-job" type="url" class="validate" name="link-para-o-job" required>
+              <label for="link-para-o-job">Link para o Job</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="descricao" class="materialize-textarea" name="descricao-job" required></textarea>
+              <label for="descricao">Descrição do Job*</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="requisitos" class="materialize-textarea" name="requisitos-job" required></textarea>
+              <label for="requisitos">Requisitos do Job*</label>
+            </div>
+          </div>
+        <input type="submit" name="name" value="Enviar" class="btn-large waves-effect waves-light orange">
+
+
+        </form>
+      </div>
+      <div class="row">
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+  {% endblock content %}
