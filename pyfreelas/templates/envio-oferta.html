@@ -9,7 +9,7 @@
           <h5 class="header col s12 light">Preencha o formulário abaixo e se candidate a vaga: {{obj.titulo_do_job}}!</h5>
         </div>
       </div>
-        <form class="col s12" method="post" action="/envio-interesse-form/">
+        <form class="col s12" method="post" action="/envio-interesse/">
           <p>Por favor, preencha todos os campos com * (asterisco) corretamenta, pois ainda não dispomos da funcionalidade de editar um job cadastrado.</p>
           {% csrf_token %}
           <div class="row">
@@ -39,6 +39,4 @@
       </div>
 
     </div>
-    <br><br>
-  </div>
   {% endblock content %}

@@ -25,7 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".herokuapp.com", ".pyfreelas.com.br"]
+ALLOWED_HOSTS = ["localhost", "localhost:8000", "127.0.0.1", ".herokuapp.com", ".pyfreelas.com.br"]
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'freela',
-    'rest_framework'
+    'rest_framework',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

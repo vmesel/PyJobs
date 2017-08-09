@@ -15,11 +15,11 @@ urlpatterns = [
     url(r'^freelas-disponiveis/$', EncontreJobFreela.as_view(), name='cadatre_job_freela'),
     url(r'^vagas-disponiveis/$', EncontreVaga.as_view(), name='cadatre_vaga'),
     url(r'^freela-cadastrado/$', SucessoFreela.as_view(), name='sucesso_job'),
-
+    url(r'^contato-cadastrado/$', SucessoContato.as_view(), name='sucesso_contato'),
     url(r'^job/(?P<pk>\d+)/', JobFreela.as_view(), name='job_url'),
     url(r'^vaga/(?P<pk>\d+)/', VagaView.as_view(), name='vaga_url'),
     url(r'^envio-interesse/(?P<pk>\d+)/', EnvioInteresse.as_view(), name='envio_interesse'),
-    url(r'^envio-interesse-form/', EnvioFormInteresse.as_view(), name='envio_interesse_parte2'),
+    url(r'^envio-interesse/', EnvioInteresse.as_view(), name='envio_interesse'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # if settings.DEBUG == False:

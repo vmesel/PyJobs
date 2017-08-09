@@ -15,4 +15,7 @@ source pyfreelas/bin/activate
 pip install -r requirements.txt
 export DATABASE_URL="sqlite://seubancodedados.sqlite3" # Pode ser qualquer outro banco
 export DEBUG=True
+export SENDGRID_API_KEY='sua-key-aqui'
 ```
+
+Para fazer o deploy no Heroku, basta pegar estes mesmos exports e rodar no Heroku

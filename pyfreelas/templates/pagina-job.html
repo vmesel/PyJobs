@@ -9,7 +9,7 @@
         <p>Contratante: {{job.empresa}}</p>
       </div>
       <div class="row">
-        <a href="/envio-interesse/{{job.pk}}" id="download-button" class="btn waves-effect waves-light blue">Entre em contato</a>
+        <a href="/envio-interesse/{{job.pk}}/" id="download-button" class="btn waves-effect waves-light blue">Entre em contato</a>
         <a href="{{ job.link_da_empresa }}" id="download-button" class="btn waves-effect waves-light orange">Conheça a empresa</a>
         {% if job.valor_pago %}
             <span>R$ {{ job.valor_pago }}</span>
