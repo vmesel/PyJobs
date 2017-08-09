@@ -54,15 +54,22 @@ class CadastraOportunidade(generic.TemplateView):
             'descricao': request.POST.get('descricao-job'),
             'requisitos': request.POST.get('requisitos-job'),
             'tipo_freela': bool(request.POST.get('tipo-freela')),
-            'valor_pago': float(request.POST.get('valor-oportunidade'))
         }
+        if request.POST.get('valor-oportunidade') == None:
+            detalhes['valor_pago'] = 0.00
+        elif request.POST.get('valor-oportunidade') == "":
+            detalhes['valor_pago'] = 0.00
+        else:
+            detalhes['valor_pago'] = float(request.POST.get('valor-oportunidade'))
+
         freela = Freela(**detalhes)
         freela.save()
         msg_email = empresa_cadastrou_vaga(detalhes["empresa"], detalhes["titulo_do_job"])
 
-        link_to_approve = "http://localhost:8000/admin/freela/freela/{}/change/".format(freela.id)
-        email_sender(detalhes["email_responsavel_empresa"], "Cadastramos sua oportunidade {} no PyFreelas".format(detalhes["titulo_do_job"]), msg_email)
+        link_to_approve = "http://www.pyfreelas.com.br/admin/freela/freela/{}/change/".format(freela.id)
         email_sender("viniciuscarqueijo@gmail.com", "Nova oportunidade no PyFreelas", link_to_approve)
+
+        email_sender(detalhes["email_responsavel_empresa"], "Cadastramos sua oportunidade {} no PyFreelas".format(detalhes["titulo_do_job"]), msg_email)
         return redirect('sucesso_job')
 
 
