@@ -5,15 +5,28 @@
   <div class="container">
     <div class="section">
       <div class="row">
-        <h4 class="header center orange-text">Encontre o Freela perfeito para você: Empresa ou Pythonista!</h4>
+        <h4 class="header center orange-text">Encontre a pessoa perfeita para sua vaga de emprego ou para freela!</h4>
         <div class="row center">
-          <h5 class="header col s12 light">Preencha o formulário abaixo e encontre o freelancer que melhor atenda as suas necessidades!</h5>
+          <h5 class="header col s12 light">Preencha o formulário abaixo e encontre a pessoa que melhor atenda as suas necessidades!</h5>
         </div>
       </div>
       <div class="row">
-        <form class="col s12" method="post" action="/cadastre-job/">
+        <form class="col s12" method="post" action="/cadastre-oportunidade/">
           <p>Por favor, preencha todos os campos com * (asterisco) corretamenta, pois ainda não dispomos da funcionalidade de editar um job cadastrado.</p>
           {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s12">
+                <input type="checkbox" class="filled-in" id="tipo-freela" name="tipo-freela"/>
+                <label for="tipo-freela">Freela (Só Preencha se a vaga for para um job freelancer, caso seja uma vaga de emprego, deixe vazio)</label>
+            </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input placeholder="Título do Job" id="titulo-job" type="text" class="validate" name="titulo-job" required>
+                <label for="titulo-job">Título do Job*</label>
+              </div>
+            </div>
+
           <div class="row">
             <div class="input-field col s6">
               <input placeholder="Nome da Empresa" id="first_name" type="text" class="validate" name="nome-empresa" required>
@@ -25,21 +38,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Título do Job" id="titulo-job" type="text" class="validate" name="titulo-job" required>
-              <label for="titulo-job">Título do Job*</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s8">
               <input placeholder="Site da empresa" id="link-empresa" type="url" class="validate" name="link-empresa" required>
               <label for="link-empresa">Site da empresa*</label>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Link para o Job" id="link-para-o-job" type="url" class="validate" name="link-para-o-job" required>
-              <label for="link-para-o-job">Link para o Job</label>
+            <div class="input-field col s4">
+              <input placeholder="Valor sem R$" id="valor-oportunidade" type="number" class="validate" name="valor-oportunidade">
+              <label for="link-empresa">Valor da Oportunidade</label>
             </div>
           </div>
           <div class="row">
@@ -54,7 +59,7 @@
               <label for="requisitos">Requisitos do Job*</label>
             </div>
           </div>
-        <input type="submit" name="name" value="Enviar" class="btn-large waves-effect waves-light orange">
+        <input type="submit" name="name" value="Enviar" class="btn-large orange">
 
 
         </form>

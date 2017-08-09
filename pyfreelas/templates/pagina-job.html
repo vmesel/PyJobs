@@ -1,24 +1,24 @@
 {% extends "base.html" %}
-{%block title%}PyFreelas - Job: {{ job.titulo_do_job }}{%endblock title%}
-{%block ptitle%}PyFreelas - Job: {{ job.titulo_do_job }}{%endblock ptitle%}
+{%block title%}PyFreelas - {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}: {{ job.titulo_do_job }}{%endblock title%}
+{%block ptitle%}PyFreelas - {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}: {{ job.titulo_do_job }}{%endblock ptitle%}
 {% block content %}
   <div class="container">
     <div class="section">
       <div class="row">
-        <h3 class="header orange-text">Job: {{ job.titulo_do_job }}</h3>
+        <h3 class="header orange-text">{% if job.tipo_freela %}Job{% else %}Vaga{% endif %}: <b>{{ job.titulo_do_job }}</b></h3>
         <p>Contratante: {{job.empresa}}</p>
       </div>
       <div class="row">
-        <a href="mailto:{{ job.email_responsavel_empresa }}?subject=Job no PyFreelas: {{ job.titulo_do_job }}" id="download-button" class="btn waves-effect waves-light orange">Entre em contato</a>
+        <a href="/envio-interesse/{{job.pk}}" id="download-button" class="btn waves-effect waves-light blue">Entre em contato</a>
         <a href="{{ job.link_da_empresa }}" id="download-button" class="btn waves-effect waves-light orange">Conheça a empresa</a>
-        {% if job.link_job %}
-            <a href="{{ job.link_job }}" id="download-button" class="btn waves-effect waves-light orange">Link para o job</a>
+        {% if job.valor_pago %}
+            <span>R$ {{ job.valor_pago }}</span>
         {% endif %}
       </div>
       <div class="divider"></div>
       <div class="row">
         <div class="section">
-          <h5 class="header orange-text">Descrição do job</h5>
+          <h5 class="header orange-text">Descrição do {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}</h5>
           <p>
             {{ job.descricao }}
           </p>
@@ -27,7 +27,7 @@
       <div class="divider"></div>
       <div class="row">
         <div class="section">
-          <h5 class="header orange-text">Requisitos do job</h5>
+          <h5 class="header orange-text">Requisitos do {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}</h5>
           <p>
             {{ job.requisitos }}
           </p>

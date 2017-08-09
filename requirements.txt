@@ -5,6 +5,8 @@ djangorestframework==3.6.3
 gunicorn==19.7.1
 psycopg2==2.7.3
 python-decouple==3.0
+python-http-client==2.2.1
 pytz==2017.2
+sendgrid==4.2.1
 static3==0.7.0
 whitenoise==3.3.0

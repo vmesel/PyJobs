@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{%block title%}PyFreelas - Encontre a melhor vaga para você!{%endblock title%}
+{%block ptitle%}PyFreelas - Encontre a melhor vaga para você!{%endblock ptitle%}
+{% block content %}
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <h4 class="header center orange-text">Encontre a Melhor Vaga para você!</h4>
+        <div class="row center">
+          <h5 class="header col s12 light">Encontre a vaga que mais atende ao que você conhece e ajude um projeto a acontecer!</h5>
+        </div>
+      </div>
+      <div class="row">
+        <ul class="collection">
+          {% for job in jobs %}
+          <li class="collection-item">
+            <div>{{job.titulo_do_job}}
+              <a href="/job/{{job.pk}}" class="secondary-content"><i class="material-icons">send</i></a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="row">
+        <ul class="pagination">
+          {% for i in pages %}
+          {% if i == actual_page %}
+            <li class="active blue"><a href="/vagas-disponiveis/?page={{i}}">{{i}}</a></li>
+          {% else %}
+            <li class="waves-effect"><a href="/vagas-disponiveis/?page={{i}}">{{i}}</a></li>
+          {% endif %}
+          {%endfor%}
+       </ul>
+      </div>
+    </div>
+    <br><br>
+  </div>
+  {% endblock content %}
