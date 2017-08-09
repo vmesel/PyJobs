@@ -1,15 +1,11 @@
 from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
-from freela.views import ShowAvailableJobs
 from pyfreelas.views import *
 from rest_framework import routers
 from pyfreelas import settings
 from django.contrib.staticfiles import views
 from django.conf.urls.static import static
-
-router = routers.DefaultRouter()
-router.register(r'jobs', ShowAvailableJobs)
 
 urlpatterns = [
     url(r'^$', Home.as_view(), name='index'),

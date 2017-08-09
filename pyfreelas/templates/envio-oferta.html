@@ -10,8 +10,8 @@
         </div>
       </div>
         <form class="col s12" method="post" action="/envio-interesse-form/">
-          {% csrf_token %}
           <p>Por favor, preencha todos os campos com * (asterisco) corretamenta, pois ainda não dispomos da funcionalidade de editar um job cadastrado.</p>
+          {% csrf_token %}
           <div class="row">
             <div class="input-field col s6">
               <input placeholder="Seu Nome" id="first_name" type="text" class="validate" name="nome" required>

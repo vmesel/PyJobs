@@ -8,7 +8,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import date, timedelta
 
 from freela.models import Freela, Freelancer
-from emailtools.utils import email_sender
+from emailtools.utils import email_sender, empresa_cadastrou_vaga
+
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 
 class Home(generic.TemplateView):
     template_name = "index.html"
@@ -125,13 +128,11 @@ class EnvioFormInteresse(generic.TemplateView):
     template_name = "index.html"
 
     def post(self, request, *args, **kwargs):
-        print("Postou")
-        # nome = request.POST.get('nome')
-        # email = request.POST.get('email')
-        # portfolio = request.POST.get('portfolio')
-        # objpk = request.POST.get('objpk')
-        # obj = get_object_or_404(Freela, pk = int(objpk))
-        # print(objpk)
-        # Freelancer.create(nome=nome, email=email, portfolio=portfolio, job=obj)
-        # context = {"success": "True"}
-        # return redirect('sucesso_job')
+        detalhes = {
+            'nome': request.POST.get('nome'),
+            'email': request.POST.get('email'),
+            'portfolio': request.POST.get('portfolio'),
+            'objpk': get_object_or_404(Freelancer, pk = int(request.POST.get('objpk')))
+        }
+        Freelancer.objects.create(**detalhes)
+        return redirect('sucesso_job')
