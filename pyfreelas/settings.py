@@ -77,7 +77,9 @@ WSGI_APPLICATION = 'pyfreelas.wsgi.application'
 
 DATABASES = {}
 
-DATABASES["default"] = dj_database_url.config() #default='sqlite://{}/db.sqlite3'.format(BASE_DIR))
+print(BASE_DIR)
+
+DATABASES["default"] = dj_database_url.config(default='sqlite:///%s/db.sqlite3' % (BASE_DIR))
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
