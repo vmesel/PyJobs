@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^job/(?P<pk>\d+)/', JobFreela.as_view(), name='job_url'),
     url(r'^vaga/(?P<pk>\d+)/', VagaView.as_view(), name='vaga_url'),
     url(r'^envio-interesse/(?P<pk>\d+)/', EnvioInteresse.as_view(), name='envio_interesse'),
+    url(r'^envio-interesse-form/', EnvioFormInteresse.as_view(), name='envio_interesse_parte2'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # if settings.DEBUG == False:

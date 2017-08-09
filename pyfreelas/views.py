@@ -120,13 +120,18 @@ class EnvioInteresse(generic.TemplateView):
         context = {"obj": obj}
         return render_to_response(self.template_name, context)
 
+
+class EnvioFormInteresse(generic.TemplateView):
+    template_name = "index.html"
+
     def post(self, request, *args, **kwargs):
-        nome = request.POST.get('nome')
-        email = request.POST.get('email')
-        portfolio = request.POST.get('portfolio')
-        objpk = request.POST.get('objpk')
-        obj = get_object_or_404(Freela, pk = int(objpk))
-        print(objpk)
-        Freelancer.create(nome=nome, email=email, portfolio=portfolio, job=obj)
-        context = {"success": "True"}
-        return redirect('sucesso_job')
+        print("Postou")
+        # nome = request.POST.get('nome')
+        # email = request.POST.get('email')
+        # portfolio = request.POST.get('portfolio')
+        # objpk = request.POST.get('objpk')
+        # obj = get_object_or_404(Freela, pk = int(objpk))
+        # print(objpk)
+        # Freelancer.create(nome=nome, email=email, portfolio=portfolio, job=obj)
+        # context = {"success": "True"}
+        # return redirect('sucesso_job')
