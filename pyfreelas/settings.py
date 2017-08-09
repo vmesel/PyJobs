@@ -77,8 +77,6 @@ WSGI_APPLICATION = 'pyfreelas.wsgi.application'
 
 DATABASES = {}
 
-print(BASE_DIR)
-
 DATABASES["default"] = dj_database_url.config(default='sqlite:///%s/db.sqlite3' % (BASE_DIR))
 
 # Password validation
