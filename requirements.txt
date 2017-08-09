@@ -10,3 +10,4 @@ pytz==2017.2
 sendgrid==4.2.1
 static3==0.7.0
 whitenoise==3.3.0
+django_extensions==1.8.1
