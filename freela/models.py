@@ -13,7 +13,6 @@ class Freela(models.Model):
    email_responsavel_empresa = models.EmailField(default="")
    link_da_empresa = models.URLField(default="")
    titulo_do_job = models.CharField(max_length=100, default="")
-   # link_job = models.URLField(default="", blank=True, null=True)
    descricao = models.TextField(default="")
    requisitos = models.TextField(default="")
    data_adicionado = models.DateTimeField(auto_now_add=True)

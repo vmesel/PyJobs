@@ -2,6 +2,12 @@
 {%block title%}PyFreelas - Cadastre um job!{%endblock title%}
 {%block ptitle%}PyFreelas - Cadastre um job!{%endblock ptitle%}
 {% block content %}
+<style>
+#id_tipo_freela{
+  visibility: visible;
+  position: inherit;
+}
+</style>
   <div class="container">
     <div class="section">
       <div class="row">
@@ -11,9 +17,15 @@
         </div>
       </div>
       <div class="row">
-        <form class="col s12" method="post" action="/cadastre-oportunidade/">
+        <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <input type="submit" name="submit" class="btn-large blue" value="ENVIAR">
+        </form>
+        <!-- <form class="col s12" method="post" action="/cadastre-oportunidade/">
           <p>Por favor, preencha todos os campos com * (asterisco) corretamenta, pois ainda não dispomos da funcionalidade de editar um job cadastrado.</p>
-          {% csrf_token %}
+
           <div class="row">
             <div class="input-field col s12">
                 <input type="checkbox" class="filled-in" id="tipo-freela" name="tipo-freela"/>
@@ -62,7 +74,7 @@
         <input type="submit" name="name" value="Enviar" class="btn-large orange">
 
 
-        </form>
+        </form> -->
       </div>
       <div class="row">
       </div>

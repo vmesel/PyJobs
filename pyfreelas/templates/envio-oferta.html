@@ -9,30 +9,11 @@
           <h5 class="header col s12 light">Preencha o formulário abaixo e se candidate a vaga: {{obj.titulo_do_job}}!</h5>
         </div>
       </div>
-        <form class="col s12" method="post" action="/envio-interesse/">
-          <p>Por favor, preencha todos os campos com * (asterisco) corretamenta, pois ainda não dispomos da funcionalidade de editar um job cadastrado.</p>
+        <form class="col s12" method="post">
           {% csrf_token %}
-          <div class="row">
-            <div class="input-field col s6">
-              <input placeholder="Seu Nome" id="first_name" type="text" class="validate" name="nome" required>
-              <label for="first_name">Seu Nome*</label>
-            </div>
-            <div class="input-field col s6">
-              <input placeholder="Seu Email" id="email" type="email" class="validate" name="email" required>
-              <label for="last_name">Seu Email*</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Portfolio" id="titulo-job" type="text" class="validate" name="portfolio" required>
-              <label for="titulo-job">Portfolio*</label>
-            </div>
-          </div>
-          <input type="hidden" name="objpk" value="{{obj.pk}}">
-          <!-- <div class="g-recaptcha" data-sitekey="6LdpPSwUAAAAACCTbxwbyGX0Tf-ydf0z2Q4eoIdf"></div> -->
-        <input type="submit" name="name" value="Enviar" class="btn-large orange">
-
-
+          {{form}}
+          <br/>
+          <input type="submit" name="submit" class="btn-large blue" value="ENVIAR">
         </form>
       </div>
       <div class="row">
