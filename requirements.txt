@@ -1,3 +1,4 @@
+contextlib2==0.5.5
 decorator==4.1.2
 dj-database-url==0.4.2
 dj-static==0.0.6
@@ -19,6 +20,7 @@ Pygments==2.2.0
 python-decouple==3.0
 python-http-client==2.2.1
 pytz==2017.2
+raven==6.1.0
 sendgrid==4.2.1
 simplegeneric==0.8.1
 six==1.10.0

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'freela',
     'materializecssform',
     'rest_framework',
-    'django_extensions'
+    'django_extensions',
+    'raven.contrib.django.raven_compat'
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
+
+RAVEN_CONFIG = {
+            'dsn': config("DSN"),
+                # If you are using git, you can also automatically configure the
+                #     # release based on the git info.
+                #         'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+                #         }
+                }
