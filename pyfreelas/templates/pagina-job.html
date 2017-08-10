@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {%block title%}PyFreelas - {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}: {{ job.titulo_do_job }}{%endblock title%}
-{%block ptitle%}PyFreelas - {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}: {{ job.titulo_do_job }}{%endblock ptitle%}
+{%block ptitle%}PyFreelas - {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}: {{ job.titulo_do_job }} na {{ job.empresa }}{%endblock ptitle%}
 {% block content %}
   <div class="container">
     <div class="section">
