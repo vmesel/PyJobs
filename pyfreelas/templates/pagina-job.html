@@ -18,18 +18,18 @@
       <div class="divider"></div>
       <div class="row">
         <div class="section">
-          <h5 class="header orange-text">Descrição do {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}</h5>
+          <h5 class="header orange-text">Descrição {% if job.tipo_freela %}do Job{% else %}da Vaga{% endif %}</h5>
           <p>
-            {{ job.descricao }}
+            {{ job.descricao|linebreaks }}
           </p>
         </div>
       </div>
       <div class="divider"></div>
       <div class="row">
         <div class="section">
-          <h5 class="header orange-text">Requisitos do {% if job.tipo_freela %}Job{% else %}Vaga{% endif %}</h5>
+          <h5 class="header orange-text">Requisitos {% if job.tipo_freela %}do Job{% else %}da Vaga{% endif %}</h5>
           <p>
-            {{ job.requisitos }}
+            {{ job.requisitos|linebreaks }}
           </p>
         </div>
       </div>
