@@ -14,7 +14,7 @@
         <ul class="collection">
           {% for job in jobs %}
           <li class="collection-item">
-            <div>{{job.titulo_do_job}}
+            <div><b>{{job.titulo_do_job}}</b><i> na {{job.empresa}}</i>
               <a href="/job/{{job.pk}}" class="secondary-content"><i class="material-icons">send</i></a>
             </div>
           </li>
