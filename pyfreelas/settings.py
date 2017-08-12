@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'freela',
-    'rest_framework'
+    'rest_framework',
+    'marketing',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
