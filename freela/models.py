@@ -33,3 +33,4 @@ class Freelancer(models.Model):
    email = models.EmailField(default="")
    portfolio = models.URLField(default="")
    job = models.ForeignKey(Freela, default="")
+   data_inscrito = models.DateTimeField(auto_now_add=True)

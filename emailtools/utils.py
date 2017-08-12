@@ -4,8 +4,8 @@ from sendgrid.helpers.mail import *
 
 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 
-def email_sender(to_email, subject, content):
-    from_email = Email("pyfreelas@pyfreelas.com.br")
+def email_sender(to_email, subject, content, from_email = "pyfreelas@pyfreelas.com.br"):
+    from_email = Email(from_email)
     to_email = Email(to_email)
     subject = subject
     content = Content("text/plain", content)
@@ -26,3 +26,42 @@ def empresa_cadastrou_vaga(empresa, vaga):
         Vinicius Mesel
         @vmesel
         """.format(empresa=empresa, vaga=vaga)
+
+def contato_prospect(tipo, nome):
+    if tipo:
+        return """
+Olá pessoal da {nome},
+
+Tudo bem com vocês?
+
+Eu sou Vinícius Mesel, e atualmente eu tenho trabalhado em um website chamado PyFreelas, um site que pretendemos preencher com o máximo de vagas que contenham Python em todo o Brasil.
+
+Eu gostaria de saber se você tem interesse que eu anuncie suas vagas de desenvolvedores Python no PyFreelas, assim poderemos alcançar todos os programadores Python do Brasil.
+
+O PyFreelas é uma plataforma que trabalha para que todos da comunidade Python consigam atingir seus objetivos profissionais.
+
+O link para o PyFreelas é: http://www.pyfreelas.com.br
+
+Se vocês prefererirem, vocês mesmos podem cadastrar uma oportunidade no PyFreelas entrando no site e clicando em “cadastrar oportunidade”. Também gostaria de seu sincero feedback sobre o site e como eu posso ajudar vocês na escolha de profissionais.
+
+Abraços,
+Vinicius Mesel
+Founder do PyFreelas""".format(nome=nome)
+    return """
+Olá {nome},
+
+Tudo bem com você?
+
+Eu sou Vinícius Mesel, e atualmente eu tenho trabalhado em um website chamado PyFreelas, um site que pretendemos preencher com o máximo de vagas que contenham Python em todo o Brasil.
+
+Eu gostaria de saber se você tem interesse que eu anuncie suas vagas de desenvolvedores Python no PyFreelas, assim poderemos alcançar todos os programadores Python do Brasil.
+
+O PyFreelas é uma plataforma que trabalha para que todos da comunidade Python consigam atingir seus objetivos profissionais.
+
+O link para o PyFreelas é: http://www.pyfreelas.com.br
+
+Se você prefererir, você podem cadastrar uma oportunidade no PyFreelas entrando no site e clicando em “cadastrar oportunidade”. Também gostaria de seu sincero feedback sobre o site e como eu posso ajudar você na escolha de profissionais.
+
+Abraços,
+Vinicius Mesel
+Founder do PyFreelas""".format(nome=nome)
