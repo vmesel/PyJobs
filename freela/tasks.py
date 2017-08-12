@@ -14,15 +14,15 @@ def send_seven_days_email():
             email = f.email
 
             email_empresa, email_pessoa = retorno_vaga(empresa=job.empresa,
-                        nome_candidato=nome_pessoa,
-                        vaga=job.titulo_do_job)
+                        nome_candidato = nome_pessoa,
+                        vaga = job.titulo_do_job)
 
             email_sender(to_email=email,
-            subject="Feedback sobre a oportunidade: {}".format(job.titulo_do_job),
-            content=email_pessoa
+            subject = "Feedback sobre a oportunidade: {}".format(job.titulo_do_job),
+            content = email_pessoa
             )
 
             email_sender(to_email=job.email_responsavel_empresa,
-            subject="Feedback sobre a oportunidade: {}".format(job.titulo_do_job),
-            content=email_empresa
+            subject = "Feedback sobre a oportunidade: {}".format(job.titulo_do_job),
+            content = email_empresa
             )

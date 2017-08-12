@@ -113,33 +113,6 @@ class VagaView(generic.TemplateView):
         else:
             return redirect("/job/{}".format(obj.pk))
 
-
-# class EnvioInteresse(generic.TemplateView):
-#     template_name = "envio-oferta.html"
-#
-#     def get(self, request,  *args, **kwargs):
-#         obj = get_object_or_404(Freela, pk = int(self.kwargs['pk']))
-#         context = {"obj": obj}
-#         return render(request, self.template_name, context, RequestContext(request))
-#
-#     def post(self, request, *args, **kwargs):
-#         detalhes = {
-#             'nome': request.POST.get('nome'),
-#             'email': request.POST.get('email'),
-#             'portfolio': request.POST.get('portfolio'),
-#             'job': get_object_or_404(Freela, pk = int(request.POST.get('objpk')))
-#         }
-#         Freelancer.objects.create(**detalhes)
-#         email_pessoa = contato_cadastrado(nome = detalhes["nome"], email = detalhes["email"], portfolio = detalhes["portfolio"], vaga=detalhes["job"].titulo_do_job, empresa=False)
-#         email_empresa = contato_cadastrado(nome = detalhes["nome"], email = detalhes["job"], portfolio = detalhes["portfolio"], vaga=detalhes["job"].titulo_do_job, empresa=True)
-#
-#         email_sender(detalhes["email"], "PyFreelas: Recebemos o seu formulário de interesse na vaga", email_pessoa) # Email para interessado
-#         print("Enviamos o seu interesse na vaga para a empresa - Email da Pessoa OK")
-#         email_sender(detalhes["job"].email_responsavel_empresa, "PyFreelas: Você recebeu um interessado na sua vaga", email_empresa) # Email para a empresa
-#         print("Recebemos um interessado na sua vaga - Email da Empresa OK")
-#         return redirect('sucesso_contato')
-
-
 class EnvioInteresse(CreateView):
     template_name = "envio-oferta.html"
     form_class = FreelancerForm
@@ -160,7 +133,7 @@ class EnvioInteresse(CreateView):
         print("Recebemos o contato - Enviado OK")
         email_sender(job.email_responsavel_empresa, "PyFreelas: Recebemos um interessado em sua vaga!", email_empresa)
         print("interessado recebido - Enviado OK")
-        email_sender("viniciuscarqueijo@gmail.com",  "PyFreelas: Nova vaga cadastrada", "http://www.pyfreelas/admin/freela/freela/{}/change".format(job.pk))
+        email_sender("viniciuscarqueijo@gmail.com",  "PyFreelas: Nova vaga cadastrada", "http://www.pyfreelas.com.br/admin/freela/freela/{}/change".format(job.pk))
         print("ADM Email - Enviado OK")
 
         return HttpResponseRedirect(self.success_url)
