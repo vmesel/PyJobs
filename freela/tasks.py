@@ -5,7 +5,7 @@ from emailtools.utils import retorno_vaga, email_sender
 
 @task
 def send_seven_days_email():
-    date_last_week = date.today()# - timedelta(weeks=1)
+    date_last_week = date.today() - timedelta(weeks=1)
     freelancers = Freelancer.objects.filter(data_inscrito__gt=date_last_week)
     if len(freelancers) > 0:
         for f in freelancers:
