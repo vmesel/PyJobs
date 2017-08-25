@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'raven.contrib.django.raven_compat',
     'kombu.transport.django',
-    'djcelery'
+    'djcelery',
+    'bootstrap3'
 ]
 
 MIDDLEWARE = [

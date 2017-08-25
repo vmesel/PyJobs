@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title%}Cadastre um job!{%endblock title%}
+{%block ptitle%}Cadastre um job!{%endblock ptitle%}
+{% block content %}
+<section id="cadastro" style="margin-top:10px;">
+  <center><h2>Cadastre um job no PyJobs</h2></center>
+  <center><p>Achar o Pythonista para seu job nunca foi tão fácil quanto agora, nós cuidaremos de toda a parte de divulgação para você!</p></center>
+  <form class="" action="." method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "star" %} Cadastrar
+  {% endbuttons %}
+</form>
+</section>
+</div>
+{%endblock content%}

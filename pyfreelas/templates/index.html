@@ -1,58 +1,257 @@
-{% extends "base.html" %}
-{%block title%}PyFreelas - Encontre o melhor talento para você!{%endblock title%}
-{%block ptitle%}PyFreelas - Encontre o melhor talento para você!{%endblock ptitle%}
-{% block content %}
-  <div class="section no-pad-bot" id="index-banner">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>PyJobs</title>
+    <!-- <link rel="icon" href="img/pybunker-logo.png"> -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Material Design Bootstrap -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.1/css/mdb.min.css" rel="stylesheet">
+    <!-- Template styles -->
+    <style>
+        /* TEMPLATE STYLES */
+
+        html,
+        body,
+        .view {
+            height: 100%;
+        }
+
+        /* Navigation*/
+
+        .navbar {
+            background-color: transparent;
+        }
+
+        .scrolling-navbar {
+            -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
+            -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
+            transition: background .5s ease-in-out, padding .5s ease-in-out;
+        }
+
+        .top-nav-collapse {
+            background-color: #011474;
+        }
+
+        footer.page-footer {
+            background-color: #f1dc1c;
+            margin-top: 2rem;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .navbar {
+                background-color: #011474;
+            }
+        }
+
+        /*Call to action*/
+
+        .flex-center {
+            color: #fff;
+        }
+
+        .view {
+            background: url("http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        /*Contact section*/
+
+        #contact .fa {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1C2331;
+        }
+
+        .footer-content > *, .footer-content ul > li > a {
+            color: #3E4551;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
+            <div class="container">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <strong>PyJobs</strong>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarNav1">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Início <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/jobs/">Para quem procura jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/cadastro-job/">Para quem procura profissionais</a>
+
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+        <!--/.Navbar-->
+    </header>
+    <!--Mask-->
+    <div class="view hm-black-strong">
+        <div class="full-bg-img flex-center">
+            <ul>
+                <li>
+                  <h1 class="h1-responsive wow fadeInDown" data-wow-delay="0.2s"><b>PyJobs</b></h1>
+                  <h2 class="wow fadeInDown" data-wow-delay="0.5s">Conectando Pythonistas as oportunidades de trabalho</h2>
+                  <h3 class="wow fadeInDown" data-wow-delay="0.5s">
+                      <a href="#participe"><button type="button" class="btn btn-success">SOU UM PYTHONISTA</button></a>
+                      <a href="#participe"><button type="button" class="btn btn btn-info">SOU UMA EMPRESA</button></a>
+                  </h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--/.Mask-->
+    <div id="info"></div>
+    <!-- Main container-->
     <div class="container">
-      <br><br>
-      <h2 class="header center orange-text">Encontre a Oportunidade perfeita para você</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">Encontre a empresa para você trabalhar ou o job freelancer que irá te ajudar a aprender mais!</h5>
+      <div class="divider-new">
+          <h2 class="h2-responsive">Participe</h2>
       </div>
-      <div class="row center">
-        <a href="/cadastre-oportunidade/" id="download-button" class="btn-large waves-effect waves-light orange">Ache uma Pessoa</a>
-        <a href="/oportunidades/" id="download-button" class="btn-large waves-effect waves-light blue">Ache uma Oportunidade</a>
-      </div>
-      <br><br>
-
-    </div>
-  </div>
-
-
-  <div class="container">
-    <div class="section">
-
-      <!--   Icon Section   -->
       <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons large">flash_on</i></h2>
-            <h5 class="center">Encontre um Pythonista rapidamente</h5>
-
-            <p class="light" style="text-align: justify;">Muito tempo é perdido tentando encontrar desenvolvedores Python, portanto este site tentará ajudar as empresas a encontrarem as pessoas perfeitas a elas e ainda ajudar as pessoas que procuram uma recolocação no mercado a se reposicionar.</p>
-          </div>
+        <div class="col-md-6" id="participe">
+          <center>
+            <h3>Para os Pythonistas:</h3>
+            <a href="/jobs/"><button type="button" class="btn btn-success">Procurar um job</button></a>
+        </center>
         </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons large">group</i></h2>
-            <h5 class="center">Focado em Conectar as Duas Pontas</h5>
-
-            <p class="light" style="text-align: justify;">Achar ou o Pythonista ou a Empresa certa é complicado, e para resolver este problema, estamos montando a central de dados para todos que se interessarem em oportunidades Python, seja uma empresa ou Pythonista, assim todos podem trabalhar!</p>
-          </div>
+        <div class="col-md-6" id="participe">
+        <center>
+          <h3>Para as Empresas:</h3>
+          <a href="/cadastro-job/"><button type="button" class="btn btn-success">Cadastrar um job</button></a>
         </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons large">settings</i></h2>
-            <h5 class="center">Fácil de se inscrever</h5>
-
-            <p class="light">Nós criamos um site simples e fácil para quem quiser começar a desenvolver seus trampos Python conseguir cadastrar rapidamente uma vaga e conseguir receber as pessoas através do email.</p>
-          </div>
-        </div>
+      </center>
       </div>
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="divider-new">
+              <h2 class="h2-responsive">Iniciativa PyJobs</h2>
+          </div>
 
-    </div>
-    <br><br>
-  </div>
-  {% endblock content %}
+          <!--Section: Inciativa-->
+              <p>
+                Uma iniciativa de membros da comunidade Python de todo o Brasil que tem como objetivo apresentar os Pythonistas
+                ao mercado de trabalho com vagas especificamente de Python.
+                </p>
+
+              </div>
+        <div class="col-md-6 ">
+          <div class="divider-new">
+              <h2 class="h2-responsive">Quem pode usar?</h2>
+          </div>
+
+          <!--Section: Inciativa-->
+              <p>
+                O PyJobs, por ser uma iniciativa da comunidade, pode ser usado por qualquer um que quiser cadastrar uma vaga de emprego ou que queira procurar empregos dentro da comunidade Python.
+              </p>
+
+              </div>
+
+
+            </div>
+
+
+</div>
+    <!--Footer-->
+    <footer class="page-footer center-on-small-only footer-content">
+
+        <!--Footer Links-->
+        <div class="container-fluid">
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3 offset-lg-1 hidden-lg-down">
+                    <h5 class="title">SOBRE O PyJobs</h5>
+                    <p>Iniciativa para montar um banco de dados central de jobs na linguagem Python.</p>
+                </div>
+                <!--/.First column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Second column-->
+                <div class="col-lg-2 col-md-4 offset-lg-1">
+                    <h5 class="title">O Projeto</h5>
+                    <ul>
+                        <li><a href="#">Para quem é Pythonista</a></li>
+                        <li><a href="#">Para quem é Empresa</a></li>
+                        <li><a href="mailto:viniciuscarqueijo@gmail.com">Contato</a></li>
+                    </ul>
+                </div>
+                <!--/.Second column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Third column-->
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="title">Links uteis</h5>
+                    <ul>
+                        <li><a href="http://python.org.br/">Python Brasil</a></li>
+                        <li><a href="https://www.python.org/psf/">PSF</a></li>
+                    </ul>
+                </div>
+                <!--/.Third column-->
+
+                <hr class="hidden-md-up">
+
+                <!--Fourth column-->
+
+                <!--/.Fourth column-->
+
+            </div>
+        </div>
+        <!--/.Footer Links-->
+
+
+    </footer>
+    <!--/.Footer-->
+
+
+    <!-- SCRIPTS -->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.1/js/mdb.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sheetrock/1.1.4/dist/sheetrock.min.js"></script>
+
+
+    <!-- Animations init-->
+    <script>
+        new WOW().init();
+    </script>
+
+</body>
+
+</html>

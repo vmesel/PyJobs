@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{%block title%}Jobs disponíveis!{%endblock title%}
+{%block ptitle%}Jobs disponíveis!{%endblock ptitle%}
+{% block content %}
+<h2 style="margin-top:15px;text-align:center;">Jobs disponíveis:</h2>
+<!-- JOB -->
+<hr/>
+{% for job in jobs %}
+<div class="row">
+  <div class="col-md-10">
+    <h3>{{job.titulo_do_job}}</h3>
+    <b><p>Empresa: {{job.empresa}}</p></b>
+    <b><p>Tipo do Job: {% if job.tipo_freela %}Freela{% else %}Vaga{% endif %}</p></b>
+  </div>
+  <div class="col-md-2">
+    <a href="/job/{{job.pk}}"><button type="button" class="btn btn-success">SAIBA MAIS</button></a>
+  </div>
+</div>
+<hr/>
+{% endfor %}
+<div class="row">
+        <ul class="pagination">
+          {% for i in pages %}
+          {% if i == actual_page %}
+            <a href="/jobs/?page={{i}}">{{i}}</a>
+          {% else %}
+            <a href="/jobs/?page={{i}}">{{i}}</a>
+          {% endif %}
+          {%endfor%}
+       </ul>
+      </div>
+{% endblock content %}
