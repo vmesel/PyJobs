@@ -154,3 +154,6 @@ BROKER_URL = 'django://'
 CELERY_RESULT_BACKEND = "amqp"
 CELERY_IMPORTS = ("freela.tasks", )
 CELERY_ALWAYS_EAGER = True
+
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
