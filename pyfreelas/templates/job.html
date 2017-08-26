@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title%}{{job.titulo_do_job}}!{%endblock title%}
+{%block ptitle%}{{job.titulo_do_job}}!{%endblock ptitle%}
+{% block content %}
+<h2 style="margin-top:15px;text-align:center;"><b>{%if job.tipo_freela%}Freela{%else%}Vaga{%endif%}</b> - {{job.titulo_do_job}}</h2>
+<h6 style="text-align:center;">{{job.empresa}}</h6>
+<!-- JOB -->
+<hr/>
+<div class="row">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-contato">CANDIDATE-SE AO JOB</button>
+    <a href="#"><button type="button" class="btn btn-info">COMPARTILHAR NO FACEBOOK</button></a>
+</div>
+<hr/>
+<div>
+  <h4>Descrição:</h4>
+    <p>
+      {{job.descricao|linebreaks}}
+    </p>
+</div>
+<div>
+  <h4>Requisitos:</h4>
+    <p>
+      {{job.requisitos|linebreaks}}
+    </p>
+</div>
+</div>
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="modal-contato" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Se candidate!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <form class="" action="." method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+              <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Cadastrar
+            {% endbuttons %}
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <!-- <button type="button" class="btn btn-primary">Enviar</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock content%}

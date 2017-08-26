@@ -37,13 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Our modules
     'freela',
-    'marketing',
+
+    # Third party modules
     'rest_framework',
     'django_extensions',
     'raven.contrib.django.raven_compat',
     'kombu.transport.django',
-    'djcelery'
+    'djcelery',
+    'bootstrap3'
 ]
 
 MIDDLEWARE = [
@@ -153,3 +157,6 @@ BROKER_URL = 'django://'
 CELERY_RESULT_BACKEND = "amqp"
 CELERY_IMPORTS = ("freela.tasks", )
 CELERY_ALWAYS_EAGER = True
+
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')

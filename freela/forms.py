@@ -5,7 +5,7 @@ from freela.models import Freela, Freelancer
 class FreelaForm(ModelForm):
     class Meta:
         model = Freela
-        fields = ["empresa", "email_responsavel_empresa", "link_da_empresa", "titulo_do_job", "descricao", "requisitos", "valor_pago", "tipo_freela"]
+        fields = ["empresa", "email_responsavel_empresa", "link_da_empresa", "titulo_do_job", "descricao", "requisitos", "tipo_freela"]
 
 
 

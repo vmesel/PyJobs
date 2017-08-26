@@ -1,16 +1,5 @@
 import sendgrid
 import os
-from sendgrid.helpers.mail import *
-
-sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-
-def email_sender(to_email, subject, content, from_email="pyfreelas@pyfreelas.com.br"):
-    from_email = Email(from_email)
-    to_email = Email(to_email)
-    subject = subject
-    content = Content("text/plain", content)
-    mail = Mail(from_email, subject, to_email, content)
-    response = sg.client.mail.send.post(request_body=mail.get())
 
 def empresa_cadastrou_vaga(empresa, vaga):
         return """
