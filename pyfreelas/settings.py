@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
     'kombu.transport.django',
     'djcelery',
-    'bootstrap3'
+    'bootstrap3',
+    'bootstrap_pagination',
 ]
 
 MIDDLEWARE = [
