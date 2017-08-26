@@ -2,7 +2,8 @@ from __future__ import unicode_literals
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
-
+from django.core.mail import send_mail
+from emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
 
 # A ser implementado em um futuro, por ser mais complexo
 class Empresa(models.Model):
@@ -36,9 +37,28 @@ class Freelancer(models.Model):
 
 
 @receiver(post_save, sender=Freela)
-def freela_envia_email(sender, **kwargs):
+def freela_envia_email(sender, instance, **kwargs):
     # TODO: MUDAR LOGICA PARA PERMITIR O ENVIO DO EMAIL
-    # msg_email = empresa_cadastrou_vaga(form.cleaned_data["empresa"], form.cleaned_data["titulo_do_job"])
-    # email_sender(form.cleaned_data["email_responsavel_empresa"],  "Cadastramos sua oportunidade {} no PyFreelas".format(form.cleaned_data["titulo_do_job"]), msg_email)
-    # email_sender("viniciuscarqueijo@gmail.com",  "Nova vaga cadastrada", "http://www.pyfreelas.com.br/admin/freela/freela/{}/change".format(self.object.pk))
-    print(sender)
+    msg_email = empresa_cadastrou_vaga(instance.empresa, instance.titulo_do_job)
+    send_mail("Cadastramos sua oportunidade {} no PyJobs".format(instance.titulo_do_job),
+            msg_email,
+            "pyjobs@pyjobs.com.br",
+            [instance.email_responsavel_empresa, "viniciuscarqueijo@gmail.com"])
+
+
+@receiver(post_save, sender=Freelancer)
+def freelancer_envia_email(sender, instance, **kwargs):
+        email_pessoa = contato_cadastrado(nome = instance.nome, email = instance.email, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=False)
+        email_empresa = contato_cadastrado(nome = instance.nome, email = instance.job.email_responsavel_empresa, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=True)
+
+        send_mail("PyJobs: Recebemos o seu contato!",
+                    email_pessoa,
+                    "pyjobs@pyjobs.com.br",
+                    [instance.email]
+                    )
+
+        send_mail("PyJobs: Recebemos um interessado em sua vaga!",
+                    email_empresa,
+                    "pyjobs@pyjobs.com.br",
+                    [instance.job.email_responsavel_empresa]
+                    )

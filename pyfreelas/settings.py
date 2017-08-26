@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Our modules
     'freela',
-    'marketing',
+
+    # Third party modules
     'rest_framework',
     'django_extensions',
     'raven.contrib.django.raven_compat',

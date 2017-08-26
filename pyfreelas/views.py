@@ -10,7 +10,6 @@ from datetime import date, timedelta
 
 from freela.models import Freela, Freelancer
 from freela.forms import FreelaForm, FreelancerForm
-from emailtools.utils import email_sender, empresa_cadastrou_vaga, contato_cadastrado
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
@@ -44,10 +43,6 @@ def create_job(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            # Passar logica para model
-            # msg_email = empresa_cadastrou_vaga(form.cleaned_data["empresa"], form.cleaned_data["titulo_do_job"])
-            # email_sender(form.cleaned_data["email_responsavel_empresa"],  "Cadastramos sua oportunidade {} no PyFreelas".format(form.cleaned_data["titulo_do_job"]), msg_email)
-            # email_sender("viniciuscarqueijo@gmail.com",  "Nova vaga cadastrada", "http://www.pyfreelas.com.br/admin/freela/freela/{}/change".format(self.object.pk))
             messages.success(request, 'Job Cadastrado com Sucesso!')
 
     return render(request, template_name, {"form": form})
@@ -69,11 +64,3 @@ def job_info(request, pk):
             messages.success(request, 'Contato Cadastrado com Sucesso!')
 
     return render(request, "job.html", { "job" : job, "form" : form })
-
-
-#  Passar logica para Model
-#         email_pessoa = contato_cadastrado(nome = form.cleaned_data["nome"], email = form.cleaned_data["email"], portfolio = form.cleaned_data["portfolio"], vaga=job.titulo_do_job, empresa=False)
-#         email_empresa = contato_cadastrado(nome = form.cleaned_data["nome"], email = job.email_responsavel_empresa, portfolio = form.cleaned_data["portfolio"], vaga=job.titulo_do_job, empresa=True)
-#
-#         email_sender(form.cleaned_data["email"], "PyFreelas: Recebemos o seu contato!", email_pessoa)
-#         email_sender(job.email_responsavel_empresa, "PyFreelas: Recebemos um interessado em sua vaga!", email_empresa)
