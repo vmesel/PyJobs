@@ -20,6 +20,7 @@ class Freela(models.Model):
    data_adicionado = models.DateTimeField("Data que o job foi adicionado", auto_now_add=True)
    tipo_freela = models.BooleanField("O job é freela?", default=1, help_text="Selecione apenas se o job for para freelancers") # Se for 1 eh um freela, se for 0 eh vaga
    publico = models.BooleanField("Este job é público?", default=0)
+   local = models.CharField("Local da vaga", max_length=100, default="Não Especificado", help_text="Preencha com o lugar da vaga, caso seja remota, explicite!")
 
    class Meta:
        ordering = ['-data_adicionado']

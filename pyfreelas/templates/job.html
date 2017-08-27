@@ -5,11 +5,11 @@
 {% block content %}
 <h2 style="margin-top:15px;text-align:center;"><b>{%if job.tipo_freela%}Freela{%else%}Vaga{%endif%}</b> - {{job.titulo_do_job}}</h2>
 <h6 style="text-align:center;">{{job.empresa}}</h6>
+<b><p>Data de adição: {{job.data_adicionado}}</p></b>
 <!-- JOB -->
 <hr/>
 <div class="row">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-contato">CANDIDATE-SE AO JOB</button>
-    <a href="#"><button type="button" class="btn btn-info">COMPARTILHAR NO FACEBOOK</button></a>
 </div>
 <hr/>
 <div>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap_pagination %}
 {%block title%}Jobs disponíveis!{%endblock title%}
 {%block ptitle%}Jobs disponíveis!{%endblock ptitle%}
 {% block content %}
@@ -11,6 +12,8 @@
     <h3>{{job.titulo_do_job}}</h3>
     <b><p>Empresa: {{job.empresa}}</p></b>
     <b><p>Tipo do Job: {% if job.tipo_freela %}Freela{% else %}Vaga{% endif %}</p></b>
+    <p>Data de adição: {{job.data_adicionado}}</p>
+    <p>Local do job: {{job.local}}</p>
   </div>
   <div class="col-md-2">
     <a href="/job/{{job.pk}}"><button type="button" class="btn btn-success">SAIBA MAIS</button></a>
@@ -18,15 +21,5 @@
 </div>
 <hr/>
 {% endfor %}
-<div class="row">
-        <ul class="pagination">
-          {% for i in pages %}
-          {% if i == actual_page %}
-            <a href="/jobs/?page={{i}}">{{i}}</a>
-          {% else %}
-            <a href="/jobs/?page={{i}}">{{i}}</a>
-          {% endif %}
-          {%endfor%}
-       </ul>
-      </div>
+{% bootstrap_paginate jobs range=n_pages %}
 {% endblock content %}

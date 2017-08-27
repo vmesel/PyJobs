@@ -32,7 +32,7 @@ def find_job(request):
             jobs_pag = paginator.page(1)
         except EmptyPage:
             jobs_pag = paginator.page(paginator.num_pages)
-        context = {'jobs': jobs_pag, 'pages': paginator.page_range, 'actual_page': int(page)}
+        context = {'jobs': jobs_pag, 'pages': paginator.page_range, 'actual_page': int(page), 'n_pages': int(paginator.num_pages)}
         return render(request, "jobs.html", context)
 
 
