@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
-{%block title%}{{job.titulo_do_job}}!{%endblock title%}
-{%block ptitle%}{{job.titulo_do_job}}!{%endblock ptitle%}
+{%block title%}{{job.titulo_do_job}} na {{job.empresa}}!{%endblock title%}
+{%block ptitle%}{{job.titulo_do_job}} na {{job.empresa}}!{%endblock ptitle%}
 {% block content %}
 <h2 style="margin-top:15px;text-align:center;"><b>{%if job.tipo_freela%}Freela{%else%}Vaga{%endif%}</b> - {{job.titulo_do_job}}</h2>
 <h6 style="text-align:center;">{{job.empresa}}</h6>
