@@ -151,13 +151,13 @@ if os.environ.get("SENTRY_DSN") is not None:
                     #         }
                     }
 
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = 'django://'
-
-CELERY_RESULT_BACKEND = "amqp"
-CELERY_IMPORTS = ("freela.tasks", )
-CELERY_ALWAYS_EAGER = True
+# import djcelery
+# djcelery.setup_loader()
+# BROKER_URL = 'django://'
+#
+# CELERY_RESULT_BACKEND = "amqp"
+# CELERY_IMPORTS = ("freela.tasks", )
+# CELERY_ALWAYS_EAGER = True
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
