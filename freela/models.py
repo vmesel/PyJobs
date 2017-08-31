@@ -50,7 +50,7 @@ def freela_envia_email(sender, instance, **kwargs):
 @receiver(post_save, sender=Freelancer)
 def freelancer_envia_email(sender, instance, **kwargs):
         email_pessoa = contato_cadastrado(nome = instance.nome, email = instance.email, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=False)
-        email_empresa = contato_cadastrado(nome = instance.nome, email = instance.job.email_responsavel_empresa, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=True)
+        email_empresa = contato_cadastrado(nome = instance.nome, email = instance.email, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=True)
 
         send_mail("PyJobs: Recebemos o seu contato!",
                     email_pessoa,
