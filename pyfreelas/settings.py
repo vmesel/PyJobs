@@ -159,5 +159,7 @@ CELERY_RESULT_BACKEND = "amqp"
 CELERY_IMPORTS = ("freela.tasks", )
 CELERY_ALWAYS_EAGER = True
 
-EMAIL_BACKEND = "sgbackend.SendGridBackend"
+
+default_email_backend = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
