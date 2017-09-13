@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import os
 import sys
-
+# import ipdb; ipdb.set_trace()
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pyfreelas.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pyjobs.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
