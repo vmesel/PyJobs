@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from apps.emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
 
 
-class Freela(models.Model):
+class Job(models.Model):
    empresa = models.CharField("Nome da empresa", max_length=45, default="")
    email_responsavel_empresa = models.EmailField("Email do responsável", default="")
    link_da_empresa = models.URLField("Link da Empresa", default="")
@@ -21,14 +21,18 @@ class Freela(models.Model):
 
    class Meta:
        ordering = ['-data_adicionado']
+       db_table = 'freela.Freela'
 
 
-class Freelancer(models.Model):
+class Person(models.Model):
    nome = models.CharField(max_length=45, default="")
    email = models.EmailField(default="")
    portfolio = models.URLField(default="")
    job = models.ForeignKey(Freela, default="")
    data_inscrito = models.DateTimeField(auto_now_add=True)
+
+   class Meta:
+       db_table = "freela.Freelancer"
 
 
 @receiver(post_save, sender=Freela)
@@ -58,4 +62,3 @@ def freelancer_envia_email(sender, instance, **kwargs):
                         "pyjobs@pyjobs.com.br",
                         [instance.job.email_responsavel_empresa]
                         )
-
