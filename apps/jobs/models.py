@@ -58,3 +58,4 @@ def freelancer_envia_email(sender, instance, **kwargs):
                         "pyjobs@pyjobs.com.br",
                         [instance.job.email_responsavel_empresa]
                         )
+

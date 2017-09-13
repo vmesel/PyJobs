@@ -133,14 +133,13 @@ if os.environ.get("SENTRY_DSN") is not None:
         'dsn': os.environ["SENTRY_DSN"],
     }
 
-
-djcelery.setup_loader()
-BROKER_URL = 'django://'
-
-CELERY_RESULT_BACKEND = "amqp"
-CELERY_IMPORTS = ("freela.tasks", )
-CELERY_ALWAYS_EAGER = True
-
+# import djcelery
+# djcelery.setup_loader()
+# BROKER_URL = 'django://'
+#
+# CELERY_RESULT_BACKEND = "amqp"
+# CELERY_IMPORTS = ("freela.tasks", )
+# CELERY_ALWAYS_EAGER = True
 
 default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
