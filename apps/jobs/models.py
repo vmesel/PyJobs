@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
 from django.core.mail import send_mail
-from emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
+from apps.emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
 
 
 class Freela(models.Model):

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from freela.models import Freela, Freelancer
+from apps.jobs.models import Freela, Freelancer
 
 
 class FreelaForm(ModelForm):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from freela.models import Freela, Freelancer
+from apps.jobs.models import Freela, Freelancer
 # Register your models here.
 
 class FreelaAdmin(admin.ModelAdmin):

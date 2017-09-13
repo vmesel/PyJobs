@@ -1,6 +1,11 @@
-from __future__ import unicode_literals
+# from django.shortcuts import render
+# from __future__ import unicode_literals
 from django.views import generic
 from django.views.generic import CreateView
+from django.http import JsonResponse
+
+from apps.jobs.serializers import Freela as FreelaSerializer
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render_to_response, render
 from django.contrib import messages
@@ -8,16 +13,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import date, timedelta
 
-from freela.models import Freela, Freelancer
-from freela.forms import FreelaForm, FreelancerForm
+from apps.jobs.models import Freela, Freelancer
+from apps.jobs.forms import FreelaForm, FreelancerForm
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-
-
-def home_view(request):
-    return render(request, "index.html")
-
 
 def find_job(request):
     if request.method == "GET":

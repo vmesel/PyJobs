@@ -1,4 +1,4 @@
-from freela.models import Freela
+from apps.jobs.models import Freela
 from rest_framework import serializers
 
 
