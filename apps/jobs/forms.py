@@ -1,15 +1,15 @@
 from django.forms import ModelForm
-from apps.jobs.models import Freela, Freelancer
+from apps.jobs.models import Job, Person
 
 
-class FreelaForm(ModelForm):
+class JobForm(ModelForm):
     class Meta:
-        model = Freela
+        model = Job
         fields = ["empresa", "email_responsavel_empresa", "link_da_empresa", "titulo_do_job", "local", "descricao", "requisitos", "tipo_freela"]
 
 
 
-class FreelancerForm(ModelForm):
+class PersonForm(ModelForm):
     class Meta:
-        model = Freelancer
+        model = Person
         fields = ["nome", "email", "portfolio"]
