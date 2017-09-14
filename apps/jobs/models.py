@@ -21,7 +21,7 @@ class Job(models.Model):
 
    class Meta:
        ordering = ['-data_adicionado']
-       db_table = 'freela.Freela'
+       db_table = 'freela_freela'
 
 
 class Person(models.Model):
@@ -32,7 +32,7 @@ class Person(models.Model):
    data_inscrito = models.DateTimeField(auto_now_add=True)
 
    class Meta:
-       db_table = "freela.Freelancer"
+       db_table = "freela_freelancer"
 
 
 @receiver(post_save, sender=Job)
