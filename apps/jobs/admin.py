@@ -3,7 +3,7 @@ from apps.jobs.models import Job, Person
 # Register your models here.
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ("empresa", "email_responsavel_empresa", "titulo_do_job", "data_adicionado", "tipo_freela", "publico")
+    list_display = ("empresa", "titulo_do_job", "data_adicionado", "tipo_freela", "publico")
 
 
 class PersonAdmin(admin.ModelAdmin):
