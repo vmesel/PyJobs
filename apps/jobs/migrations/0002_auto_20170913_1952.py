@@ -22,10 +22,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelTable(
             name='job',
-            table='freela.Freela',
+            table='freela_freela',
         ),
         migrations.AlterModelTable(
             name='person',
-            table='freela.Freelancer',
+            table='freela_freelancer',
         ),
     ]
