@@ -1,6 +1,10 @@
-from __future__ import unicode_literals
+# from django.shortcuts import render
+# from __future__ import unicode_literals
 from django.views import generic
 from django.views.generic import CreateView
+from django.http import JsonResponse
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render_to_response, render
 from django.contrib import messages
@@ -8,20 +12,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import date, timedelta
 
-from freela.models import Freela, Freelancer
-from freela.forms import FreelaForm, FreelancerForm
+from apps.jobs.models import Job, Person
+from apps.jobs.forms import JobForm, PersonForm
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
-
-def home_view(request):
-    return render(request, "index.html")
-
-
 def find_job(request):
     if request.method == "GET":
-        jobs = Freela.objects.filter(publico=True)
+        jobs = Job.objects.filter(publico=True)
         paginator = Paginator(jobs, 5)
         page = request.GET.get('page')
         if page is None:
@@ -38,7 +37,7 @@ def find_job(request):
 
 def create_job(request):
     template_name = "cadastro.html"
-    form = FreelaForm(request.POST or None)
+    form = JobForm(request.POST or None)
 
     if request.method == "POST":
         if form.is_valid():
@@ -49,8 +48,8 @@ def create_job(request):
 
 
 def job_info(request, pk):
-    job = get_object_or_404(Freela, pk = int(pk))
-    form = FreelancerForm(request.POST or None)
+    job = get_object_or_404(Job, pk = int(pk))
+    form = PersonForm(request.POST or None)
 
     if request.method == "POST":
         if form.is_valid():
@@ -60,7 +59,7 @@ def job_info(request, pk):
                 "portfolio":  request.POST.get("portfolio"),
                 "job": job
             }
-            Freelancer.objects.create(**insert_dict)
+            Person.objects.create(**insert_dict)
             messages.success(request, 'Contato Cadastrado com Sucesso!')
 
     return render(request, "job.html", { "job" : job, "form" : form })

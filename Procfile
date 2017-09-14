@@ -1,1 +1,1 @@
-web: gunicorn pyfreelas.wsgi --log-file -
+web: gunicorn pyjobs.wsgi --log-file -

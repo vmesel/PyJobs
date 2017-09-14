@@ -3,10 +3,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
 from django.core.mail import send_mail
-from emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
+from apps.emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
 
 
-class Freela(models.Model):
+class Job(models.Model):
    empresa = models.CharField("Nome da empresa", max_length=45, default="")
    email_responsavel_empresa = models.EmailField("Email do responsável", default="")
    link_da_empresa = models.URLField("Link da Empresa", default="")
@@ -21,17 +21,21 @@ class Freela(models.Model):
 
    class Meta:
        ordering = ['-data_adicionado']
+       db_table = 'freela_freela'
 
 
-class Freelancer(models.Model):
+class Person(models.Model):
    nome = models.CharField(max_length=45, default="")
    email = models.EmailField(default="")
    portfolio = models.URLField(default="")
-   job = models.ForeignKey(Freela, default="")
+   job = models.ForeignKey(Job, default="")
    data_inscrito = models.DateTimeField(auto_now_add=True)
 
+   class Meta:
+       db_table = "freela_freelancer"
 
-@receiver(post_save, sender=Freela)
+
+@receiver(post_save, sender=Job)
 def freela_envia_email(sender, instance, **kwargs):
     if kwargs['created']:
         msg_email = empresa_cadastrou_vaga(instance.empresa, instance.titulo_do_job)
@@ -41,7 +45,7 @@ def freela_envia_email(sender, instance, **kwargs):
                 [instance.email_responsavel_empresa, "viniciuscarqueijo@gmail.com"])
 
 
-@receiver(post_save, sender=Freelancer)
+@receiver(post_save, sender=Person)
 def freelancer_envia_email(sender, instance, **kwargs):
         if kwargs['created']:
             email_pessoa = contato_cadastrado(nome = instance.nome, email = instance.email, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=False)
