@@ -9,7 +9,7 @@ class CadastreSeForm(UserCreationForm):
     telefone = forms.CharField(help_text="Formato: (11) 99999-9999")
     github = forms.URLField(help_text="Informe o link do seu Github, caso você tenha um")
     linkedin = forms.URLField(help_text="Informe o link do seu Linkedin, caso você tenha um")
-    portfolio = forms.URLField(help_text="Informe o link do seu Portfolio, caso você tenha um")
+    portfolio = forms.URLField(help_text="Informe o link do seu Portfolio, caso você tenha um", required=False)
     skills = forms.ModelMultipleChoiceField(
         label="Skills",
         queryset=skills,

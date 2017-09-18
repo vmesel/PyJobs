@@ -14,14 +14,15 @@
   <form action="." method="post">
     {% csrf_token %}
     {% comment %} <input type="hidden" name="job" value="{{job.pk}}"> {% endcomment %}
+    {% if interest %}
+<input type="submit" class="btn btn-primary" name="enviar" value="Você já se cadastrou nesta vaga">
+    {%else%}
     <input type="submit" class="btn btn-success" name="enviar" value="Cadastrar interessa na vaga">
+
+    {%endif%}
   </form>
   {% else %}
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#login">Se logue no PyJobs e envie o seu currículo para a vaga</button>
-
-
-
-
   {% endif %}
 </div>
 <hr/>
@@ -38,10 +39,6 @@
     </p>
 </div>
 </div>
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
 
-<!-- Modal -->
 {%endblock content%}
 {%include 'modal-login.html' %}

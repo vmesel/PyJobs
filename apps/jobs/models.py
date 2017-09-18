@@ -5,7 +5,7 @@ from django.db import models
 from django.core.mail import send_mail
 from apps.core.models import Company, Profile
 from django.contrib.auth.models import User
-from apps.emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado
+from apps.emailtools.utils import empresa_cadastrou_vaga, contato_cadastrado, user_cadastrado
 
 
 class Job(models.Model):
@@ -33,6 +33,7 @@ class InterestedPerson(models.Model):
     def __str__(self):
         return "Relação de {} com {}".format(self.job.titulo_do_job, self.usuario.get_full_name())
 
+
 @receiver(post_save, sender=Job)
 def freela_envia_email(sender, instance, **kwargs):
     if kwargs['created']:
@@ -48,21 +49,30 @@ def freela_envia_email(sender, instance, **kwargs):
             receivers)
 
 
+@receiver(post_save, sender=User)
+def user_criado(sender, instance, **kwargs):
+    if kwargs['created']:
+        send_mail("Seja bem vindo ao PyJobs",
+            user_cadastrado(instance),
+            "pyjobs@pyjobs.com.br",
+            [instance.email]
+        )
 
-# @receiver(post_save, sender=Person)
-# def freelancer_envia_email(sender, instance, **kwargs):
-#     if kwargs['created']:
-#         email_pessoa = contato_cadastrado(nome = instance.nome, email = instance.email, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=False)
-#         email_empresa = contato_cadastrado(nome = instance.nome, email = instance.job.email_responsavel_empresa, portfolio = instance.portfolio, vaga=instance.job.titulo_do_job, empresa=True)
-#
-#         send_mail("PyJobs: Recebemos o seu contato!",
-#             email_pessoa,
-#             "pyjobs@pyjobs.com.br",
-#             [instance.email]
-#         )
-#
-#         send_mail("PyJobs: Recebemos um interessado em sua vaga!",
-#             email_empresa,
-#             "pyjobs@pyjobs.com.br",
-#             [instance.job.email_responsavel_empresa]
-#         )
+
+@receiver(post_save, sender=InterestedPerson)
+def freelancer_envia_email(sender, instance, **kwargs):
+    if kwargs['created']:
+        email_pessoa = contato_cadastrado(pessoa = instance.usuario, vaga=instance.job.titulo_do_job, empresa=False)
+        email_empresa = contato_cadastrado(pessoa = instance.usuario, vaga=instance.job.titulo_do_job, empresa=True)
+
+        send_mail("PyJobs: Recebemos o seu contato!",
+            email_pessoa,
+            "pyjobs@pyjobs.com.br",
+            [instance.usuario.email]
+        )
+
+        send_mail("PyJobs: Recebemos um interessado em sua vaga!",
+            email_empresa,
+            "pyjobs@pyjobs.com.br",
+            [instance.job.empresa.email]
+        )
