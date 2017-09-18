@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^', include('apps.jobs.urls', namespace='jobs')),
+    url(r'^', include('apps.core.urls', namespace='core')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

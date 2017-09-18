@@ -14,7 +14,7 @@ from datetime import date, timedelta
 
 from apps.jobs.models import Job, Person
 from apps.jobs.forms import JobForm, PersonForm
-
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
@@ -31,7 +31,7 @@ def find_job(request):
             jobs_pag = paginator.page(1)
         except EmptyPage:
             jobs_pag = paginator.page(paginator.num_pages)
-        context = {'jobs': jobs_pag, 'pages': paginator.page_range, 'actual_page': int(page), 'n_pages': int(paginator.num_pages)}
+        context = {'jobs': jobs_pag, 'pages': paginator.page_range, 'actual_page': int(page), 'n_pages': int(paginator.num_pages), "user":request.user}
         return render(request, "jobs.html", context)
 
 
@@ -44,7 +44,7 @@ def create_job(request):
             form.save()
             messages.success(request, 'Job Cadastrado com Sucesso!')
 
-    return render(request, template_name, {"form": form})
+    return render(request, template_name, {"form": form, "user":request.user})
 
 
 def job_info(request, pk):

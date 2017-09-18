@@ -1,0 +1,26 @@
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Entre no maior portal de vagas Python!</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tenha acesso e cadastre as melhores oportunidade Python do Brasil</p>
+            <form class="" action="/login/" method="post">
+              Faça o seu login:
+            {% csrf_token %}
+              <input type="text" name="username" value="" placeholder="Seu usuario">
+              <input type="password" name="password" value="" placeholder="Sua senha">
+          </form>
+      </div>
+      <div class="modal-footer">
+        <a href="/cadastro/"><input type="submit" class="btn btn-primary" value="Cadastrar"></a>
+        <input type="submit" class="btn btn-success" value="Login">
+        <!-- <button type="button" class="btn btn-primary">Enviar</button> -->
+      </div>
+    </div>
+  </div>
+</div>

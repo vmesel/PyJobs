@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # Third party modules
     # 'rest_framework',
+    'material',
     'django_extensions',
     'raven.contrib.django.raven_compat',
     # 'kombu.transport.django',
@@ -133,13 +134,8 @@ if os.environ.get("SENTRY_DSN") is not None:
         'dsn': os.environ["SENTRY_DSN"],
     }
 
-# import djcelery
-# djcelery.setup_loader()
-# BROKER_URL = 'django://'
-#
-# CELERY_RESULT_BACKEND = "amqp"
-# CELERY_IMPORTS = ("freela.tasks", )
-# CELERY_ALWAYS_EAGER = True
+LOGIN_URL='/login/'
+LOGIN_REDIRECT_URL='/dashboard/'
 
 default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)

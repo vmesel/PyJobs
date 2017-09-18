@@ -17,16 +17,17 @@ class Profile(models.Model):
     github = models.URLField("URL do seu GitHub", default="")
     linkedin = models.URLField("URL do seu Linkedin", default="")
     portfolio = models.URLField("URL do seu Portfolio", default="")
-    habilidades = models.TextField("Habilidades que você tem", default="")
-    plano_de_cv_db = models.BooleanField("A conta tem acesso ao plano_de_cv_db", default=False)
+    plano_de_cv_db = models.BooleanField("A conta tem acesso ao Banco de Curriculos", default=False)
+    interesse_banco_cv = models.BooleanField("Você tem interesse em receber novas propostas de empresas?", default=False)
     data_inscrito = models.DateTimeField(auto_now_add=True)
+    skills = models.ManyToManyField("Skills")
 
     def __str__(self):
         return self.usuario.get_full_name()
 
 
 class Company(models.Model):
-    usuario = models.OneToOneField(Profile)
+    usuario = models.OneToOneField(User)
     nome = models.CharField("Nome da empresa", max_length=45, default="")
     email = models.EmailField("Email do responsável da empresa", default="")
     site = models.URLField("Link da Empresa", default="")
@@ -35,10 +36,23 @@ class Company(models.Model):
     def __str__(self):
         return self.nome
 
+
+class Skills(models.Model):
+    skill = models.CharField("Nome da Skill", max_length=100, default="")
+
+    def __str__(self):
+        return self.skill
+
+    class Meta:
+        verbose_name_plural = "Skills"
+        verbose_name = "Skill"
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(usuario=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

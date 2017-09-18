@@ -1,15 +1,26 @@
 from django.contrib import admin
-from apps.core.models import Profile, Company
+from apps.core.models import Profile, Company, Skills
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
-# class ProfileAdmin(admin.ModelAdmin):
-#     list_display = ("empresa", "email_responsavel_empresa", "titulo_do_job", "data_adicionado", "tipo_freela", "publico")
-#
-#
-# class CompanyAdmin(admin.ModelAdmin):
-#     list_display = ("nome", "get_job", "email")
-#
-#     def get_job(self, obj):
-#         return obj.job.titulo_do_job
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False
+    verbose_name_plural = "Perfis"
+    verbose_name = "Perfil"
+    fk_name = "usuario"
 
-admin.site.register(Profile) # , ProfileAdmin)
+class CustomUserAdmin(UserAdmin):
+    inlines = (ProfileInline, )
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
+
 admin.site.register(Company) # , CompanyAdmin)
+admin.site.register(Skills) # , CompanyAdmin)
