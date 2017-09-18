@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # Our modules
     'apps.jobs', #TODO TROCAR PARA JOB
     'apps.core',
+    'apps.curriculumdb',
+    # 'password_reset'
 
     # Third party modules
     # 'rest_framework',

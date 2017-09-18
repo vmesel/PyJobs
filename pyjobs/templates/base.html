@@ -79,7 +79,11 @@
                   <span class="caret"></span></button>
               <ul class="dropdown-menu pull-right">
                   <li><a href="/dashboard/">Dashboard</a></li>
+                  {% if user.profile.plano_de_cv_db %}
+                  <li><a href="/cvdb/">Banco de Currículos</a></li>
+                  {%endif%}
                   <li><a href="/logout/">Logout</a></li>
+
 
           </div>
           {% else %}
@@ -94,7 +98,7 @@
         <!--/.Navbar-->
     </header>
     {% bootstrap_messages %}
-    <div class="container">
+    <div class="container" style="min-height:600px;">
     {% block content %}{% endblock content %}
     </div>
     <!--Footer-->
