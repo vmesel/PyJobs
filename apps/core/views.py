@@ -50,17 +50,46 @@ def cadastrese(request):
 def dashboard(request):
     user = request.user
 
-    if Company.objects.filter(usuario=user).count() == 1:
-        company_user = True
-    else:
-        company_user = False
-
-    template_name = "dashboard.html"
     context = {
         "user":request.user,
         "userform": EditUserForm(instance=request.user),
         "profileform": EditProfileForm(instance=request.user.profile),
-        "companyform": EditCompanyForm(instance=request.user.profile),
-        "companyexists": company_user
     }
+
+    if Company.objects.filter(usuario=user).count() == 1:
+        context["companyform"] = EditCompanyForm(instance=request.user.company)
+        context["company_user"] = True
+    else:
+        context["company_user"] = False
+        context["companyform"] = EditCompanyForm()
+
+    template_name = "dashboard.html"
+
     return render(request, template_name, context)
+
+@login_required
+def update_user(request):
+    user = request.user
+    form = EditUserForm(request.POST or None, instance=user)
+    if form.is_valid():
+        form.save()
+    messages.success(request, 'Usuário Atualizado com Sucesso!')
+    return redirect("/dashboard/")
+
+@login_required
+def update_profile(request):
+    profile = request.user.profile
+    form = EditProfileForm(request.POST or None, instance=profile)
+    if form.is_valid():
+        form.save()
+    messages.success(request, 'Perfil Atualizado com Sucesso!')
+    return redirect("/dashboard/")
+
+@login_required
+def update_company(request):
+    company = request.user.company
+    form = EditCompanyForm(request.POST or None, instance=company)
+    if form.is_valid():
+        form.save()
+    messages.success(request, 'Empresa Atualizada com Sucesso!')
+    return redirect("/dashboard/")

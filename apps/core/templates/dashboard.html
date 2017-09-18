@@ -25,9 +25,9 @@
       <div class="tab-pane show active" id="panel1" role="tabpanel">
         <div class="container">
           <br>
-          Olá Pessoa<br>
-          Você está participando de XX processos seletivos<br>
-          Você possui X vagas abertas na sua empresa<br>
+          Olá {{user.get_full_name}},<br/>
+          Você está participando de XXXX processos seletivos<br>
+          Você possui XX vagas abertas na sua empresa<br>
       </div>
       </div>
       <!--/.Panel 1-->
@@ -35,7 +35,7 @@
       <div class="tab-pane fade" id="panel2" role="tabpanel">
           <br>
           <div class="container">
-          <form class="" action="." method="post">
+          <form class="" action="/update/user/" method="post">
           {% csrf_token %}
           {% bootstrap_form userform %}
           {% comment %} {% bootstrap_form form2 %} {% endcomment %}
@@ -51,7 +51,7 @@
       <div class="tab-pane fade" id="panel3" role="tabpanel">
           <br>
           <div class="container">
-          <form class="" action="." method="post">
+          <form class="" action="/update/profile/" method="post">
           {% csrf_token %}
           {% bootstrap_form profileform %}
           {% comment %} {% bootstrap_form form2 %} {% endcomment %}
@@ -64,19 +64,32 @@
       </div>
       <div class="tab-pane fade" id="panel4" role="tabpanel">
           <br>
-          {%if companyexists%}
-          <form class="" action="." method="post">
-          {% csrf_token %}
-          {% bootstrap_form companyform %}
-          {% comment %} {% bootstrap_form form2 %} {% endcomment %}
-          {% buttons %}
+          <div class="container">
+            {%if companyexists%}
+            <p>
+              Edite os dados da sua empresa para você receber todas as novidades do PyJobs para a sua empresa.
+            </p>
+            {%else%}
+            <p>
+              Cadastre a sua empresa no PyJobs e tenha acesso ao maior número de candidatos especialistas em Python.
+            </p>
+            {%endif%}
+              <hr>
+            <form class="" action="/update/company/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form companyform %}
+            {% comment %} {% bootstrap_form form2 %} {% endcomment %}
+            {% buttons %}
+            {%if companyexists%}
+            <button type="submit" class="btn btn-primary">
+              {% bootstrap_icon "star" %} Salvar Alterações
+            {%else%}
             <button type="submit" class="btn btn-primary">
               {% bootstrap_icon "star" %} Cadastrar
-          {% endbuttons %}
-        </form>
-        {%else%}
-        aaa
-        {%endif%}
+            {%endif%}
+            {% endbuttons %}
+          </form>
+          </div>
       </div>
       <!--/.Panel 3-->
   </div>
