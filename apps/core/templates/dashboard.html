@@ -76,26 +76,24 @@
             {%if companyexists%}
             <p>
               Edite os dados da sua empresa para você receber todas as novidades do PyJobs para a sua empresa.
+              <form class="" action="/update/company/" method="post">
+              {% csrf_token %}
+              {% bootstrap_form companyform %}
+              {% comment %} {% bootstrap_form form2 %} {% endcomment %}
+              {% buttons %}
+              <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Salvar Alterações
+
             </p>
             {%else%}
             <p>
               Cadastre a sua empresa no PyJobs e tenha acesso ao maior número de candidatos especialistas em Python.
             </p>
+            <hr>
+            <a href="/cadastro/">
+              <input type="button" name="button">
+            </a>
             {%endif%}
-              <hr>
-            <form class="" action="/update/company/" method="post">
-            {% csrf_token %}
-            {% bootstrap_form companyform %}
-            {% comment %} {% bootstrap_form form2 %} {% endcomment %}
-            {% buttons %}
-            {%if companyexists%}
-            <button type="submit" class="btn btn-primary">
-              {% bootstrap_icon "star" %} Salvar Alterações
-            {%else%}
-            <button type="submit" class="btn btn-primary">
-              {% bootstrap_icon "star" %} Cadastrar
-            {%endif%}
-            {% endbuttons %}
           </form>
           </div>
       </div>
