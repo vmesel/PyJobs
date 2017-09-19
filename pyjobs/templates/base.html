@@ -79,6 +79,9 @@
                   <span class="caret"></span></button>
               <ul class="dropdown-menu pull-right">
                   <li><a href="/dashboard/">Dashboard</a></li>
+                  {% if user.company %}
+                  <li><a href="/vagas/">Gerenciar vagas</a></li>
+                  {% endif %}
                   {% if user.profile.plano_de_cv_db %}
                   <li><a href="/cvdb/">Banco de Currículos</a></li>
                   {%endif%}

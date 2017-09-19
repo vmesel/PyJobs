@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load bootstrap_pagination %}
+{%block title%}Jobs disponíveis!{%endblock title%}
+{%block ptitle%}Jobs disponíveis!{%endblock ptitle%}
+{% block content %}
+<h2 style="margin-top:15px;text-align:center;">Jobs disponíveis:</h2>
+<!-- JOB -->
+<hr/>
+{% for job in jobs %}
+<div class="row">
+  <div class="col-md-10">
+    <h3>{{job.titulo_do_job}}</h3>
+    <b><p>Tipo do Job: {% if job.tipo_freela %}Freela{% else %}Vaga{% endif %}</p></b>
+    <p>Data de adição: {{job.data_adicionado}}</p>
+    <p>Local do job: {{job.local}}</p>
+  </div>
+  <div class="col-md-2">
+    <a href="/vaga/{{job.pk}}"><button type="button" class="btn btn-success">EDITAR</button></a>
+  </div>
+</div>
+<hr/>
+{% endfor %}
+{% bootstrap_paginate jobs range=n_pages %}
+{% endblock content %}

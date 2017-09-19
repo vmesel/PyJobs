@@ -1,7 +1,7 @@
 from django.views import generic
 from django.views.generic import CreateView
 from django.http import JsonResponse
-
+from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render_to_response, render
@@ -15,8 +15,9 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.exceptions import ObjectDoesNotExist
 from apps.core.models import Skills, Company
+from apps.jobs.models import Job
 from apps.core.forms import *
-
+from apps.jobs.forms import JobForm
 
 def cadastrese(request):
     if request.user.is_authenticated():
@@ -33,7 +34,13 @@ def cadastrese(request):
                 user.profile.linkedin = form.cleaned_data.get('linkedin')
                 user.profile.portfolio = form.cleaned_data.get('portfolio')
                 user.profile.skills = form.cleaned_data.get('skills')
+                userform, userpass = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
                 user.save()
+                new_user = authenticate(
+                    username=userform,
+                    password=userpass
+                )
+                login(request, new_user)
                 return redirect("/")
         else:
             form = CadastreSeForm()
@@ -92,3 +99,40 @@ def update_company(request):
         form.save()
     messages.success(request, 'Empresa Atualizada com Sucesso!')
     return redirect("/dashboard/")
+
+
+@login_required
+def vagas(request):
+    company = Company.objects.get(usuario=request.user)
+    jobs = Job.objects.filter(empresa=company)
+
+    paginator = Paginator(jobs, 5)
+    page = request.GET.get('page')
+    if page is None:
+        page = 1
+    try:
+        jobs_pag = paginator.page(page)
+    except PageNotAnInteger:
+        jobs_pag = paginator.page(1)
+    except EmptyPage:
+        jobs_pag = paginator.page(paginator.num_pages)
+
+    context = {
+        'jobs': jobs_pag,
+        'pages': paginator.page_range,
+        'actual_page': int(page),
+        'n_pages': int(paginator.num_pages),
+        "user":request.user
+    }
+    return render(request, "jobs-empresa.html", context)
+
+@login_required
+def editar_vaga(request, pk):
+    template_name = "editar-vaga.html"
+    job = Job.objects.get(pk=pk)
+    if job.empresa.usuario == request.user:
+        form = JobForm(request.POST or None, instance=job)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Mensagem")
+        return render(request, template_name, {"form": form})

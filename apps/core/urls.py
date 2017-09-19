@@ -5,6 +5,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^cadastro/', cadastrese, name="cadastro_view"),
     url(r'^dashboard/', dashboard, name="dashboard_view"),
+    url(r'^vagas/', vagas, name="vagas_cadastradas"),
+    url(r'^vaga/(?P<pk>\w+)/$', editar_vaga, name="editar_vaga"),
     url(r'^update/user/', update_user, name="update_user"),
     url(r'^update/profile/', update_profile, name="update_profile"),
     url(r'^update/company/', update_company, name="update_company"),
