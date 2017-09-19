@@ -81,6 +81,7 @@ def create_job(request):
 
                     Company.objects.create(**form_data)
                     messages.success(request, 'Empresa Cadastrada com Sucesso!')
+                form.clean()
     else:
         form = []
 

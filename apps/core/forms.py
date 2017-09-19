@@ -6,19 +6,26 @@ from apps.core.models import Skills, Profile, Company
 skills = Skills.objects.all()
 
 class CadastreSeForm(UserCreationForm):
-    telefone = forms.CharField(help_text="Formato: (11) 99999-9999")
-    github = forms.URLField(help_text="Informe o link do seu Github, caso você tenha um")
-    linkedin = forms.URLField(help_text="Informe o link do seu Linkedin, caso você tenha um")
-    portfolio = forms.URLField(help_text="Informe o link do seu Portfolio, caso você tenha um", required=False)
+    telefone = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex: 11998445522'}), required=True)
+    github = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu GitHub (não obrigatório)'}), required=False)
+    linkedin = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu Linkedin (não obrigatório)'}), required=False)
+    portfolio = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu portfolio (não obrigatório)'}), required=False)
+
     skills = forms.ModelMultipleChoiceField(
         label="Skills",
         queryset=skills,
-        help_text="Selecione a quantidade de skills "
+        help_text="Selecione as skills que você tem",
     )
 
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email")
+
+    def __init__(self, *args, **kwargs):
+        super(CadastreSeForm, self).__init__(*args, **kwargs)
+
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
 
 class EditUserForm(forms.ModelForm):
     class Meta:
