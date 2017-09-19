@@ -106,7 +106,7 @@
                     <strong>PyJobs</strong>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto navbar-left">
                         <li class="nav-item active">
                             <a class="nav-link" href="/">Início <span class="sr-only">(current)</span></a>
                         </li>
@@ -115,9 +115,27 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/cadastro-job/">Para quem procura profissionais</a>
-
                         </li>
                     </ul>
+                    <ul class="nav navbar-nav navbar-right"></ul>
+                      {% if user.is_authenticated %}
+                  <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown" style="padding:6px!important;">{{ user.get_full_name }}
+                          <span class="caret"></span></button>
+                      <ul class="dropdown-menu pull-right">
+                          <li><a href="/dashboard/">Dashboard</a></li>
+                          {% if user.company %}
+                          <li><a href="/vagas/">Gerenciar vagas</a></li>
+                          {% endif %}
+                          <li><a href="/logout/">Logout</a></li>
+
+                  </div>
+                  {% else %}
+                    <!-- <li style="float:right;" ><a href="#">Entrar</a></li> -->
+                    <button class="btn btn-primary pull-right profile-top-menu-button" type="button" data-toggle="modal" data-target="#login"  style="padding:6px!important;" >Entrar
+                        </button>
+                  {% endif %}
+                              </ul>
 
                 </div>
             </div>
@@ -247,7 +265,6 @@
 
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script> -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.1/js/mdb.js"></script>
@@ -265,7 +282,7 @@
     <script>
         new WOW().init();
     </script>
-
+    {% include 'modal-login.html'%}
 </body>
 
 </html>

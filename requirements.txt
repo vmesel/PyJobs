@@ -6,11 +6,16 @@ contextlib2==0.5.5
 decorator==4.1.2
 dj-database-url==0.4.2
 dj-static==0.0.6
-Django==1.11.3
+Django==1.11.5
+django-autocomplete-light==3.2.10
+django-bootstrap==0.2.4
 django-bootstrap-pagination==1.6.2
 django-bootstrap3==9.0.0
 django-celery==3.2.1
 django-extensions==1.8.1
+django-material==1.0.0
+django-materializecss-form==1.0.1
+django-password-reset==1.0
 django-social-share==1.1.2
 djangorestframework==3.6.3
 gunicorn==19.7.1

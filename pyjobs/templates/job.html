@@ -10,7 +10,20 @@
 <!-- JOB -->
 <hr/>
 <div class="row">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-contato">CANDIDATE-SE AO JOB</button>
+  {% if user.is_authenticated %}
+  <form action="." method="post">
+    {% csrf_token %}
+    {% comment %} <input type="hidden" name="job" value="{{job.pk}}"> {% endcomment %}
+    {% if interest %}
+<input type="submit" class="btn btn-primary" name="enviar" value="Você já se cadastrou nesta vaga">
+    {%else%}
+    <input type="submit" class="btn btn-success" name="enviar" value="Cadastrar interessa na vaga">
+
+    {%endif%}
+  </form>
+  {% else %}
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#login">Se logue no PyJobs e envie o seu currículo para a vaga</button>
+  {% endif %}
 </div>
 <hr/>
 <div>
@@ -26,35 +39,6 @@
     </p>
 </div>
 </div>
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
 
-<!-- Modal -->
-<div class="modal fade" id="modal-contato" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Se candidate!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-            <form class="" action="." method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-              <button type="submit" class="btn btn-primary">
-                {% bootstrap_icon "star" %} Cadastrar
-            {% endbuttons %}
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <!-- <button type="button" class="btn btn-primary">Enviar</button> -->
-      </div>
-    </div>
-  </div>
-</div>
 {%endblock content%}
+{%include 'modal-login.html' %}
