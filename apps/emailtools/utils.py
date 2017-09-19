@@ -9,6 +9,8 @@ Agora que você criou a vaga {vaga}, nós lhe enviaremos os detalhes de quem se 
 
 Em breve, nós lhe contataremos com as pessoas que se inscreveram para a sua vaga!
 
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+
 Abraços,
 Vinicius Mesel
 @vmesel
@@ -24,6 +26,8 @@ Recebemos seu interesse na oportunidade: {vaga}
 Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve, eles entrarão em contato com você!
 
 Em breve, nós lhe contataremos com mais informações sobre a vaga!
+
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
 
 Abraços,
 Vinicius Mesel
@@ -47,6 +51,8 @@ Estamos lhe enviando este email para te avisar que a pessoa está interessada em
 
 Em breve, nós lhe contataremos com mais interessados!
 
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+
 Abraços,
 Vinicius Mesel
 @vmesel
@@ -67,7 +73,11 @@ Olá {nome},
 
 Seja bem vindo ao PyJobs, a plataforma que vai te ajudar a encontrar a vaga perfeita ou a pessoa que você precisa para sua empresa!
 
+Caso você tenha sido cadastrado automaticamente, sua senha padrão é: senha1234
+
 Estamos lhe enviando este email para te avisar que você já pode desfrutar de nosso site!
+
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
 
 Abraços,
 Vinicius Mesel

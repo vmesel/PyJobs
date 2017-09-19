@@ -20,7 +20,6 @@ class Job(models.Model):
 
     class Meta:
          ordering = ['-data_adicionado']
-         db_table = 'freela_freela'
 
 
 class InterestedPerson(models.Model):
