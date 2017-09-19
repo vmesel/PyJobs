@@ -18,7 +18,7 @@ class Profile(models.Model):
     linkedin = models.URLField("URL do seu Linkedin", default="")
     portfolio = models.URLField("URL do seu Portfolio", default="")
     plano_de_cv_db = models.BooleanField("A conta tem acesso ao Banco de Curriculos", default=False)
-    interesse_banco_cv = models.BooleanField("Você tem interesse em receber novas propostas de empresas?", default=False)
+    interesse_banco_cv = models.BooleanField("Você tem interesse em receber novas propostas de empresas?", default=True)
     data_inscrito = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skills")
 

@@ -1,0 +1,4 @@
+[31;1mCommandError: Unable to serialize database: relation "jobs_job" does not exist
+LINE 1: ...obs_job"."tipo_freela", "jobs_job"."publico" FROM "jobs_job"...
+                                                             ^
+[0m[
