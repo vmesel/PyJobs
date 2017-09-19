@@ -100,4 +100,5 @@ def job_info(request, pk):
 
         interesse = interest.exists()
 
+    interesse = False
     return render(request, "job.html", { "job" : job, "user": request.user, "interest":  interesse})
