@@ -98,5 +98,9 @@ def job_info(request, pk):
             InterestedPerson.objects.create(usuario=request.user, job=job)
             messages.success(request, "Cadastramos seu interesse na vaga com sucesso")
 
+    try:
+        interesse = interest.exists()
+    except:
+        interesse = False
 
-    return render(request, "job.html", { "job" : job, "user": request.user, "interest": interest.exists() })
+    return render(request, "job.html", { "job" : job, "user": request.user, "interest":  interesse})
