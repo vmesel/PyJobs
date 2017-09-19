@@ -91,9 +91,9 @@ def create_job(request):
 def job_info(request, pk):
     job = get_object_or_404(Job, pk = int(pk))
 
-    interest = InterestedPerson.objects.filter(usuario=request.user, job=job)
 
     if request.user.is_authenticated() and not interest.exists():
+        interest = InterestedPerson.objects.filter(usuario=request.user, job=job)
         if request.method == "POST":
             InterestedPerson.objects.create(usuario=request.user, job=job)
             messages.success(request, "Cadastramos seu interesse na vaga com sucesso")
