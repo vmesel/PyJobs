@@ -41,6 +41,7 @@ Telefone do interessado(a): {telefone}
 Linkedin do interessado(a): {linkedin}
 GitHub do interessado(a): {github}
 Portfolio do interessado(a): {portfolio}
+Skills do interessado(a): {skills}
 
 Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!
 
@@ -56,7 +57,8 @@ Vinicius Mesel
     telefone=pessoa.profile.telefone,
     portfolio=pessoa.profile.portfolio,
     github=pessoa.profile.github,
-    linkedin=pessoa.profile.linkedin
+    linkedin=pessoa.profile.linkedin,
+    skills=", ".join([skill.skill for skill in pessoa.profile.skills.get_queryset()])
 )
 
 def user_cadastrado(pessoa):
