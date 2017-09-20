@@ -28,6 +28,8 @@ class InterestedPerson(models.Model):
 
     class Meta:
          unique_together = ("job", "usuario")
+         verbose_name_plural = "Pessoas Interessadas"
+         verbose_name = "Pessoa Interessada"
 
     def __str__(self):
         return "Relação de {} com {}".format(self.job.titulo_do_job, self.usuario.get_full_name())

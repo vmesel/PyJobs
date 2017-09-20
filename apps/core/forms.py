@@ -11,6 +11,7 @@ class CadastreSeForm(UserCreationForm):
     linkedin = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu Linkedin (não obrigatório)'}), required=False)
     portfolio = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu portfolio (não obrigatório)'}), required=False)
 
+
     skills = forms.ModelMultipleChoiceField(
         label="Skills",
         queryset=skills,

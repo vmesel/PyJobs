@@ -12,12 +12,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.shortcuts import render_to_response
 from django.core.exceptions import ObjectDoesNotExist
 from apps.core.models import Skills, Company
 from apps.jobs.models import Job
 from apps.core.forms import *
 from apps.jobs.forms import JobForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 def cadastrese(request):
     if request.user.is_authenticated():
@@ -34,6 +36,7 @@ def cadastrese(request):
                 user.profile.linkedin = form.cleaned_data.get('linkedin')
                 user.profile.portfolio = form.cleaned_data.get('portfolio')
                 user.profile.skills = form.cleaned_data.get('skills')
+                user.profile.interesse_banco_cv = form.cleaned_data.get('agree_banco_cv', False)
                 userform, userpass = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
                 user.save()
                 new_user = authenticate(
@@ -51,6 +54,23 @@ def cadastrese(request):
         }
 
         return render(request, template_name, context)
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Sua senha foi alterada com sucesso!')
+            return redirect('core:dashboard_view')
+        else:
+            messages.error(request, 'Corrija os erros abaixo')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'accounts/change_password.html', {
+        'form': form
+    })
 
 @login_required
 def dashboard(request):
@@ -134,5 +154,14 @@ def editar_vaga(request, pk):
         form = JobForm(request.POST or None, instance=job)
         if form.is_valid():
             form.save()
-            messages.success(request, "Mensagem")
+            messages.success(request, "Suas alterações foram salvas")
         return render(request, template_name, {"form": form})
+
+
+@login_required
+def deletar_job(request, pk):
+    job = Job.objects.get(pk=pk)
+    if job.empresa.usuario == request.user:
+        job.delete()
+        messages.success(request, "Job deletado com sucesso")
+        return redirect("core:dashboard_view")
