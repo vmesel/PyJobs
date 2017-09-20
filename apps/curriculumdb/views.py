@@ -41,9 +41,8 @@ def lista_de_curriculos(request):
 
 @has_curriculumdb_plan
 def curriculo(request, pk):
-    usuario = request.user
     template_name = "cv.html"
     context = {
-        "interessado": Profile.objects.get(usuario=request.user)
+        "interessado": Profile.objects.get(pk=pk)
     }
     return render(request, "cv.html", context)
