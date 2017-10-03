@@ -73,7 +73,7 @@
       <div class="tab-pane fade" id="panel4" role="tabpanel">
           <br>
           <div class="container">
-            {%if companyexists%}
+            {%if company_user%}
             <p>
               Edite os dados da sua empresa para você receber todas as novidades do PyJobs para a sua empresa.
             </p>
@@ -83,20 +83,22 @@
             </p>
             {%endif%}
               <hr>
+            {%if company_user%}
             <form class="" action="/update/company/" method="post">
             {% csrf_token %}
             {% bootstrap_form companyform %}
-            {% comment %} {% bootstrap_form form2 %} {% endcomment %}
             {% buttons %}
-            {%if companyexists%}
             <button type="submit" class="btn btn-primary">
               {% bootstrap_icon "star" %} Salvar Alterações
-            {%else%}
-            <button type="submit" class="btn btn-primary">
-              {% bootstrap_icon "star" %} Cadastrar
-            {%endif%}
             {% endbuttons %}
           </form>
+          {%else%}
+          <a href="/cadastro-job/">
+          <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Cadastre a sua empresa
+          </button>
+          </a>
+          {%endif%}
           </div>
       </div>
       <!--/.Panel 3-->
