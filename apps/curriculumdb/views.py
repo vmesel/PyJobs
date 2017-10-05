@@ -10,7 +10,7 @@ def has_curriculumdb_plan(view):
         if user.is_authenticated:
             if user.profile.plano_de_cv_db:
                 return view(request, *args, **kwargs)
-            return redirect("/cadastro-job/")        
+            return redirect("/cadastro-job/")
         else:
             return redirect("/")
     return wrap

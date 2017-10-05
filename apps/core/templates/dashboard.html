@@ -73,32 +73,28 @@
       <div class="tab-pane fade" id="panel4" role="tabpanel">
           <br>
           <div class="container">
-            {%if company_user%}
+            {%if companyexists%}
             <p>
               Edite os dados da sua empresa para você receber todas as novidades do PyJobs para a sua empresa.
+              <form class="" action="/update/company/" method="post">
+              {% csrf_token %}
+              {% bootstrap_form companyform %}
+              {% comment %} {% bootstrap_form form2 %} {% endcomment %}
+              {% buttons %}
+              <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Salvar Alterações
+              {% endbuttons %}
             </p>
             {%else%}
             <p>
               Cadastre a sua empresa no PyJobs e tenha acesso ao maior número de candidatos especialistas em Python.
             </p>
+            <hr>
+            <a href="/cadastro-job/">
+              <input type="button" name="button" value="Cadastrar Empresa">
+            </a>
             {%endif%}
-              <hr>
-            {%if company_user%}
-            <form class="" action="/update/company/" method="post">
-            {% csrf_token %}
-            {% bootstrap_form companyform %}
-            {% buttons %}
-            <button type="submit" class="btn btn-primary">
-              {% bootstrap_icon "star" %} Salvar Alterações
-            {% endbuttons %}
           </form>
-          {%else%}
-          <a href="/cadastro-job/">
-          <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "star" %} Cadastre a sua empresa
-          </button>
-          </a>
-          {%endif%}
           </div>
       </div>
       <!--/.Panel 3-->

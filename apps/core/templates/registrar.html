@@ -37,7 +37,7 @@
   <form class="" action="." method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
-  {% comment %} {% bootstrap_form form2 %} {% endcomment %}
+  <input type="checkbox" name="agree_banco_cv"> Marque para aceitar receber novas ofertas de emprego através de empresas parceiras
   {% buttons %}
     <button type="submit" class="btn btn-primary">
       {% bootstrap_icon "star" %} Cadastrar
