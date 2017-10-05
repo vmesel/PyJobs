@@ -25,7 +25,7 @@
       <div class="tab-pane show active" id="panel1" role="tabpanel">
         <div class="container">
           <br>
-          Olá {{user.get_full_name}},
+          Olá {{user.get_full_name}},<br/>
           <hr>
           <p>
             Aqui é o seu dashboard do PyJobs, nele você conseguirá ter acesso as seguintes funções:
@@ -41,9 +41,6 @@
       <!--/.Panel 1-->
       <!--Panel 2-->
       <div class="tab-pane fade" id="panel2" role="tabpanel">
-        <a href="/password/">
-          <input type="button" name="Troque sua senha" class="btn btn-success" style="float:right;" value="Troque sua senha">
-        </a>
           <br>
           <div class="container">
           <form class="" action="/update/user/" method="post">
