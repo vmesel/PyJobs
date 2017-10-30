@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap_pagination %}
 {%block title%}Jobs disponíveis!{%endblock title%}
 {%block ptitle%}Jobs disponíveis!{%endblock ptitle%}
 {% block content %}
@@ -21,5 +20,27 @@
 </div>
 <hr/>
 {% endfor %}
-{% bootstrap_paginate jobs range=n_pages %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if jobs.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ jobs.previous_page_number }}" aria-label="Anterior">
+        <span aria-hidden="true">&laquo;</span><span class="sr-only">Anterior</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for page in jobs.paginator.page_range %}
+    <li class="page-item {% if jobs.number == page%}active{% endif %}">
+      <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+    </li>
+    {% endfor %}
+    {% if jobs.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ jobs.next_page_number }}" aria-label="Próximo">
+        <span aria-hidden="true">&raquo;</span><span class="sr-only">Próximo</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock content %}

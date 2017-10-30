@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     # 'kombu.transport.django',
     # 'djcelery',
     'bootstrap3',
-    'bootstrap_pagination',
 ]
 
 MIDDLEWARE = [
