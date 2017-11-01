@@ -6,6 +6,7 @@
 <h2 style="margin-top:15px;text-align:center;"><b>{%if job.tipo_freela%}Freela{%else%}Vaga{%endif%}</b> - {{job.titulo_do_job}}</h2>
 <h6 style="text-align:center;">{{job.empresa}}</h6>
 <b><p>Data de adição: {{job.data_adicionado}}</p></b>
+<p>Aceita home office: {% if job.home_office%}Sim{% else %}Não{% endif %}</p>
 <p>Localização: {{job.local}}</p>
 <!-- JOB -->
 <hr/>
