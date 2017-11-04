@@ -31,9 +31,6 @@ def lista_de_curriculos(request):
 
     context = {
         'interessados': cv_pag,
-        'pages': paginator.page_range,
-        'actual_page': page,
-        'n_pages': int(paginator.num_pages),
         "user":request.user
     }
 
