@@ -21,6 +21,9 @@ class Job(models.Model):
     tipo_freela = models.BooleanField("O job é freela?", default=1, help_text="Selecione apenas se o job for para freelancers")
     publico = models.BooleanField("Este job é público?", default=0)
 
+    def __str__(self):
+        return self.titulo_do_job
+
     class Meta:
         verbose_name = 'Vaga'
         verbose_name_plural = 'Vagas'
