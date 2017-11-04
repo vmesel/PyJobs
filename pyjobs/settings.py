@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from decouple import config, Csv
+
 import dj_database_url
 import djcelery
+from decouple import config, Csv
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -29,31 +32,32 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = ['*']
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 # Application definition
 
-INSTALLED_APPS = [
+DEFAULT_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-    # Our modules
-    'apps.jobs', #TODO TROCAR PARA JOB
-    'apps.core',
-    'apps.curriculumdb',
-    # 'password_reset'
-
-    # Third party modules
-    # 'rest_framework',
+THIRD_PARTY_APPS = [
     'material',
     'django_extensions',
     'raven.contrib.django.raven_compat',
-    # 'kombu.transport.django',
-    # 'djcelery',
     'bootstrap3',
 ]
+
+LOCAL_APPS = [
+    'apps.jobs',
+    'apps.core',
+    'apps.curriculumdb',
+]
+
+INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS + DEFAULT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,8 +139,9 @@ if os.environ.get("SENTRY_DSN") is not None:
         'dsn': os.environ["SENTRY_DSN"],
     }
 
-LOGIN_URL='/login/'
-LOGIN_REDIRECT_URL='/dashboard/'
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
