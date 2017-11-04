@@ -1,24 +1,12 @@
-# from django.shortcuts import render
-# from __future__ import unicode_literals
-from django.views import generic
-from django.views.generic import CreateView
-from django.http import JsonResponse
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render_to_response, render
+from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from datetime import date, timedelta
 
 from apps.jobs.models import Job, InterestedPerson
-from apps.core.models import Company
 from apps.jobs.forms import JobForm
-from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
-from django.shortcuts import render_to_response
-from apps.core.forms import *
+from apps.core.models import Company
+from apps.core.forms import EditCompanyForm
+
 
 def find_job(request):
     if request.method == "GET":
@@ -36,7 +24,10 @@ def find_job(request):
 
         context = {
             'jobs': jobs_pag,
-            "user":request.user
+            'pages': paginator.page_range,
+            'actual_page': int(page),
+            'n_pages': int(paginator.num_pages),
+            "user": request.user
         }
         return render(request, "jobs.html", context)
 
@@ -59,6 +50,7 @@ def create_job(request):
                 if context["company_user"]:
                     form_data = {
                         "titulo_do_job": form.cleaned_data.get("titulo_do_job"),
+                        "home_office": form.cleaned_data.get("home_office"),
                         "descricao": form.cleaned_data.get("descricao"),
                         "requisitos": form.cleaned_data.get("requisitos"),
                         "local": form.cleaned_data.get("local"),
@@ -82,12 +74,11 @@ def create_job(request):
     else:
         form = []
 
-    return render(request, template_name, {"form": form, "user":request.user})
+    return render(request, template_name, {"form": form, "user": request.user})
 
 
 def job_info(request, pk):
-    job = get_object_or_404(Job, pk = int(pk))
-
+    job = get_object_or_404(Job, pk=int(pk))
 
     if request.user.is_authenticated():
         interest = InterestedPerson.objects.filter(usuario=request.user, job=job)
@@ -98,4 +89,4 @@ def job_info(request, pk):
         interesse = interest.exists()
 
     interesse = False
-    return render(request, "job.html", { "job" : job, "user": request.user, "interest":  interesse})
+    return render(request, "job.html", {"job": job, "user": request.user, "interest": interesse})
