@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap_pagination %}
 {% block content %}
 <h2 style="margin-top:15px;text-align:center;">Membros do banco de currículos:</h2>
 <style media="screen">
@@ -43,5 +42,27 @@
 </div>
 <hr/>
 {% endfor %}
-{% bootstrap_paginate interessados range=n_pages %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if interessados.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ interessados.previous_page_number }}" aria-label="Anterior">
+        <span aria-hidden="true">&laquo;</span><span class="sr-only">Anterior</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for page in interessados.paginator.page_range %}
+    <li class="page-item {% if interessados.number == page%}active{% endif %}">
+      <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+    </li>
+    {% endfor %}
+    {% if interessados.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ interessados.next_page_number }}" aria-label="Próximo">
+        <span aria-hidden="true">&raquo;</span><span class="sr-only">Próximo</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock content %}

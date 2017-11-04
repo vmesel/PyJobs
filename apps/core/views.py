@@ -139,9 +139,6 @@ def vagas(request):
 
     context = {
         'jobs': jobs_pag,
-        'pages': paginator.page_range,
-        'actual_page': int(page),
-        'n_pages': int(paginator.num_pages),
         "user":request.user
     }
     return render(request, "jobs-empresa.html", context)
