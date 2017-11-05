@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="margin-top:15px;text-align:center;">Membros do banco de currículos:</h2>
+<style media="screen">
+  .chip{
+    display: inline-block;
+    height: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #e4e4e4;
+    margin-bottom: 5px;
+    margin-right: 5px;
+  }
+</style>
+<!-- JOB -->
+<hr/>
+<div class="row">
+  <div class="col-md-12">
+    <h5>Currículo de: <b>{{interessado.usuario.get_full_name}}</b></h5>
+    <hr>
+    <p>
+      E-mail: {{interessado.usuario.email}}<br/>
+      Telefone: {{interessado.telefone}}<br>
+      GitHub: <a href="{{interessado.github}}">{{interessado.github}}</a><br>
+      Linkedin: <a href="{{interessado.linkedin}}">{{interessado.linkedin}}</a><br>
+      Portfolio: <a href="{{interessado.portfolio}}">{{interessado.portfolio}}</a><br>
+      Skills:
+      {% for skill in interessado.skills.get_queryset %}
+      <div class="chip">
+        {{skill}}
+      </div>
+      {%endfor%}
+
+    </p>
+  </div>
+</div>
+<hr/>
+{% endblock content %}

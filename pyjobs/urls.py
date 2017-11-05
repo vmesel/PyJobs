@@ -14,5 +14,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^', include('apps.jobs.urls', namespace='jobs')),
+    url(r'^', include('apps.core.urls', namespace='core')),
+    url(r'^cvdb/', include('apps.curriculumdb.urls', namespace='curriculumdb')),
+    # include('password_reset.urls')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

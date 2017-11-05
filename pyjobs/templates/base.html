@@ -16,6 +16,7 @@
     <!-- Material Design Bootstrap -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <meta property="og:image" content="https://15809-presscdn-0-93-pagely.netdna-ssl.com/wp-content/uploads/2016/02/MTE5NDg0MDYxMTk4NTUwNTQz.png" />
     <meta property="og:site_name" content="PyJobs" />
     <meta property="og:title" content="{%block ptitle%}{%endblock ptitle%}" />
@@ -57,7 +58,7 @@
                 <a class="navbar-brand" href="/">
                     <strong>PyJobs</strong>
                 </a>
-                <div class="collapse navbar-collapse" id="navbarNav1">
+                <div class="collapse navbar-collapse navbar-left" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
 
                        <li class="nav-item">
@@ -71,13 +72,36 @@
 
                         </li>
                     </ul>
+            <ul class="nav navbar-nav navbar-right"></ul>
+              {% if user.is_authenticated %}
+          <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown" style="padding:6px!important;">{{ user.get_full_name }}
+                  <span class="caret"></span></button>
+              <ul class="dropdown-menu pull-right">
+                  <li><a href="/dashboard/">Dashboard</a></li>
+                  {% if user.company %}
+                  <li><a href="/vagas/">Gerenciar vagas</a></li>
+                  {% endif %}
+                  {% if user.profile.plano_de_cv_db %}
+                  <li><a href="/cvdb/">Banco de Currículos</a></li>
+                  {%endif%}
+                  <li><a href="/logout/">Logout</a></li>
+
+
+          </div>
+          {% else %}
+            <!-- <li style="float:right;" ><a href="#">Entrar</a></li> -->
+            <button class="btn btn-primary pull-right profile-top-menu-button" type="button" data-toggle="modal" data-target="#login"  style="padding:6px!important;" >Entrar
+                </button>
+          {% endif %}
+                      </ul>
                 </div>
             </div>
         </nav>
         <!--/.Navbar-->
     </header>
     {% bootstrap_messages %}
-    <div class="container">
+    <div class="container" style="min-height:600px;">
     {% block content %}{% endblock content %}
     </div>
     <!--Footer-->
@@ -145,6 +169,9 @@
   ga('create', 'UA-103581044-1', 'auto');
   ga('send', 'pageview');
   </script>
+  {% block aditional_scripts %}
+  {% endblock aditional_scripts %}
+  {% include 'modal-login.html'%}
 </body>
 
 </html>

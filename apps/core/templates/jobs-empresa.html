@@ -9,14 +9,13 @@
 <div class="row">
   <div class="col-md-10">
     <h3>{{job.titulo_do_job}}</h3>
-    <b><p>Empresa: {{job.empresa}}</p></b>
     <b><p>Tipo do Job: {% if job.tipo_freela %}Freela{% else %}Vaga{% endif %}</p></b>
-    <b><p>Aceita home office: {% if job.home_office%}Sim{% else %}Não{% endif %}</p></b>
     <p>Data de adição: {{job.data_adicionado}}</p>
     <p>Local do job: {{job.local}}</p>
   </div>
   <div class="col-md-2">
-    <a href="/job/{{job.pk}}"><button type="button" class="btn btn-success">SAIBA MAIS</button></a>
+    <a href="/job/edit/{{job.pk}}"><button type="button" class="btn btn-success">EDITAR</button></a>
+    <a href="/job/del/{{job.pk}}"><button type="button" class="btn btn-danger">DELETAR</button></a>
   </div>
 </div>
 <hr/>

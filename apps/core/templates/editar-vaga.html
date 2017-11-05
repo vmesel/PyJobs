@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title%}Cadastre um job!{%endblock title%}
+{%block ptitle%}Cadastre um job!{%endblock ptitle%}
+{% block content %}
+<section id="cadastro" style="margin-top:10px;">
+  <center><h2>Edite seu job</h2></center>
+  <form class="" action="." method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-success">
+      {% bootstrap_icon "star" %} Editar
+  {% endbuttons %}
+</form>
+</section>
+</div>
+{%endblock content%}

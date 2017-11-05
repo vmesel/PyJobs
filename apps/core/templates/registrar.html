@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load material_form %}
+{%block title%}Cadastre-se no PyJobs!{%endblock title%}
+{%block ptitle%}Cadastre-se no PyJobs!{%endblock ptitle%}
+{% block content %}
+<section id="cadastro" style="margin-top:10px;">
+  <script type="text/javascript">
+  /* Máscaras ER */
+  function mascara(o,f){
+      v_obj=o
+      v_fun=f
+      setTimeout("execmascara()",1)
+  }
+  function execmascara(){
+      v_obj.value=v_fun(v_obj.value)
+  }
+  function mtel(v){
+      v=v.replace(/D/g,"");             //Remove tudo o que não é dígito
+      v=v.replace(/^(d{2})(d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+      v=v.replace(/(d)(d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+      return v;
+  }
+  function id( el ){
+  	return document.getElementById( el );
+  }
+  window.onload = function(){
+  	id('id_telefone').onkeypress = function(){
+  		mascara( this, mtel );
+  	}
+  }
+  </script>
+  <center><h2>{{h2}}</h2></center>
+  <center>{{description}}</center>
+  <div class="container">
+
+  <form class="" action="." method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="checkbox" name="agree_banco_cv"> Marque para aceitar receber novas ofertas de emprego através de empresas parceiras
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "star" %} Cadastrar
+  {% endbuttons %}
+</form>
+</section>
+</div>
+
+{%endblock content%}
+{% block aditional_scripts %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script type="text/javascript">
+  $('#id_skills').select2();
+</script>
+{% endblock aditional_scripts %}

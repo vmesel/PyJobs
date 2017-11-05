@@ -5,63 +5,21 @@ def empresa_cadastrou_vaga(empresa, vaga):
         return """
 Olá {empresa},
 
-Seja bem vindo(a) ao PyJobs, a plataforma que lhe ajudará a encontrar a pessoa que é necessária em sua equipe!
-
 Agora que você criou a vaga {vaga}, nós lhe enviaremos os detalhes de quem se inscreveu para ela, assim você conseguirá entrar em contato com eles
 
 Em breve, nós lhe contataremos com as pessoas que se inscreveram para a sua vaga!
+
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
 
 Abraços,
 Vinicius Mesel
 @vmesel
 """.format(empresa=empresa, vaga=vaga)
 
-def contato_prospect(tipo, nome):
-    if tipo:
-        return """
-Olá pessoal da {nome},
-
-Tudo bem com vocês?
-
-Eu sou Vinícius Mesel, e atualmente eu tenho trabalhado em um website chamado PyJobs, um site que pretendemos preencher com o máximo de vagas que contenham Python em todo o Brasil.
-
-Eu gostaria de saber se você tem interesse que eu anuncie suas vagas de desenvolvedores Python no PyJobs, assim poderemos alcançar todos os programadores Python do Brasil.
-
-O PyJobs é uma plataforma que trabalha para que todos da comunidade Python consigam atingir seus objetivos profissionais.
-
-O link para o PyJobs é: http://www.PyJobs.com.br
-
-Se vocês prefererirem, vocês mesmos podem cadastrar uma oportunidade no PyJobs entrando no site e clicando em “cadastrar oportunidade”. Também gostaria de seu sincero feedback sobre o site e como eu posso ajudar vocês na escolha de profissionais.
-
-Abraços,
-Vinicius Mesel
-Founder do PyJobs""".format(nome=nome)
-    return """
-Olá {nome},
-
-Tudo bem com você?
-
-Eu sou Vinícius Mesel, e atualmente eu tenho trabalhado em um website chamado PyJobs, um site que pretendemos preencher com o máximo de vagas que contenham Python em todo o Brasil.
-
-Eu gostaria de saber se você tem interesse que eu anuncie suas vagas de desenvolvedores Python no PyJobs, assim poderemos alcançar todos os programadores Python do Brasil.
-
-O PyJobs é uma plataforma que trabalha para que todos da comunidade Python consigam atingir seus objetivos profissionais.
-
-O link para o PyJobs é: http://www.PyJobs.com.br
-
-Se você prefererir, você podem cadastrar uma oportunidade no PyJobs entrando no site e clicando em “cadastrar oportunidade”. Também gostaria de seu sincero feedback sobre o site e como eu posso ajudar você na escolha de profissionais.
-
-Abraços,
-Vinicius Mesel
-Founder do PyJobs""".format(nome=nome)
-
-
-def contato_cadastrado(nome="", email="", portfolio="", vaga="", empresa=False):
+def contato_cadastrado(pessoa, vaga, empresa=False):
     if not empresa:
         return """
 Olá {nome},
-
-Seja bem vindo(a) ao PyJobs, a plataforma que lhe ajudará a encontrar a melhor oportunidade para você!
 
 Recebemos seu interesse na oportunidade: {vaga}
 
@@ -69,10 +27,12 @@ Estamos lhe enviando este email para te avisar que a empresa responsável pela s
 
 Em breve, nós lhe contataremos com mais informações sobre a vaga!
 
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+
 Abraços,
 Vinicius Mesel
 @vmesel
-""".format(nome=nome, vaga=vaga)
+""".format(nome=pessoa.get_full_name(), vaga=vaga)
     else:
         return """
 Olá,
@@ -81,39 +41,45 @@ Você recebeu uma nova pessoa interessada em sua vaga: {vaga}
 
 Nome do interessado(a): {nome}
 Email do interessado(a): {email}
+Telefone do interessado(a): {telefone}
+Linkedin do interessado(a): {linkedin}
+GitHub do interessado(a): {github}
 Portfolio do interessado(a): {portfolio}
+Skills do interessado(a): {skills}
 
 Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!
 
 Em breve, nós lhe contataremos com mais interessados!
 
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+
 Abraços,
 Vinicius Mesel
 @vmesel
-""".format(nome=nome, vaga=vaga, email=email, portfolio=portfolio)
+""".format(
+    nome=pessoa.get_full_name(),
+    vaga=vaga,
+    email=pessoa.email,
+    telefone=pessoa.profile.telefone,
+    portfolio=pessoa.profile.portfolio,
+    github=pessoa.profile.github,
+    linkedin=pessoa.profile.linkedin,
+    skills=", ".join([skill.skill for skill in pessoa.profile.skills.get_queryset()])
+)
 
-def retorno_vaga(empresa, nome_candidato, vaga, tipo_empresa):
-        return ("""
-Olá pessoal da {nome_empresa},
+def user_cadastrado(pessoa):
+        return """
+Olá {nome},
 
-Tudo bem com vocês?
+Seja bem vindo ao PyJobs, a plataforma que vai te ajudar a encontrar a vaga perfeita ou a pessoa que você precisa para sua empresa!
 
-Nós do PyJobs gostariamos de saber como foi a conversa com o candidato {nome_candidato} para a oportunidade: {vaga}
+Caso você tenha sido cadastrado automaticamente, sua senha padrão é: senha1234
 
-Para dar o feedback para nós, preencha o formulário através deste link: https://docs.google.com/forms/d/16Jr7ZkjtAtvncT73x1_hmLdi1JC9olBUCsiOpY201no/viewform
+Estamos lhe enviando este email para te avisar que você já pode desfrutar de nosso site!
+
+Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
 
 Abraços,
-PyJobs
-""".format(empresa=empresa, nome_candidato=nome_candidato, vaga=vaga),
-"""
-Olá {nome_candidato},
-
-Tudo bem com vocês?
-
-Nós do PyJobs gostariamos de saber como foi a conversa para a oportunidade: {vaga}
-
-Para dar o feedback para nós, preencha o formulário através deste link: https://docs.google.com/forms/d/e/1FAIpQLScpuibIeqHlC34cm8OzPjvvvt_sN5pKV1GTfJ-OBXDatPADQA/viewform
-
-Abraços,
-PyJobs
-""".format(empresa=empresa, nome_candidato=nome_candidato, vaga=vaga))
+Vinicius Mesel
+@vmesel
+""".format(nome=pessoa.get_full_name())
