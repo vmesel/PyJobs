@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^', include('apps.jobs.urls', namespace='jobs')),
     url(r'^', include('apps.core.urls', namespace='core')),
     url(r'^cvdb/', include('apps.curriculumdb.urls', namespace='curriculumdb')),
+    url('^', include('django.contrib.auth.urls')),
     # include('password_reset.urls')
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
