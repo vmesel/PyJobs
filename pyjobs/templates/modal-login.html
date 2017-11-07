@@ -14,8 +14,9 @@
             {% csrf_token %}
               <input type="text" name="username" value="" placeholder="Seu usuario">
               <input type="password" name="password" value="" placeholder="Sua senha">
-
+              <a href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
       </div>
+     
       <div class="modal-footer">
         <input type="submit" class="btn btn-success" value="Login">
     </form>

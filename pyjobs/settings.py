@@ -31,29 +31,29 @@ ALLOWED_HOSTS = ['*']
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-    # Our modules
+LOCAL_APPS= [
     'apps.jobs', #TODO TROCAR PARA JOB
     'apps.core',
     'apps.curriculumdb',
-    # 'password_reset'
+]
 
-    # Third party modules
-    # 'rest_framework',
+THIRD_PARTY_APPS = [  
     'material',
     'django_extensions',
     'raven.contrib.django.raven_compat',
-    # 'kombu.transport.django',
-    # 'djcelery',
     'bootstrap3',
 ]
+ 
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
