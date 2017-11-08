@@ -10,8 +10,8 @@ Para instalar o repositório do PyJobs em seu computador você deve seguir algun
 ### Para o setup de desenvolvedor
 ```
 cd PyJobs/
-virtualenv pyfreelas
-source pyfreelas/bin/activate
+virtualenv pyjobs
+source pyjobs/bin/activate
 pip install -r requirements.txt
 export DATABASE_URL="sqlite:///$(pwd)/db.sqlite3" # Pode ser qualquer outro banco
 export DEBUG=True
