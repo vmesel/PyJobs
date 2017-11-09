@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from decouple import config, Csv
 import dj_database_url
-import djcelery
+#import djcelery
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,8 +48,8 @@ LOCAL_APPS= [
 
 THIRD_PARTY_APPS = [  
     'material',
-    'django_extensions',
-    'raven.contrib.django.raven_compat',
+    #'django_extensions',
+    #'raven.contrib.django.raven_compat',
     'bootstrap3',
 ]
  

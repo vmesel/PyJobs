@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 from pyjobs.views import *
 from apps.jobs.urls import *
-from rest_framework import routers
+#from rest_framework import routers
 from pyjobs import settings
 from django.contrib.staticfiles import views
 from django.conf.urls.static import static
