@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/86f23287eac22e4885bd/maintainability)](https://codeclimate.com/github/vmesel/PyJobs/maintainability)
+
 # PyJobs (Antigo pyfreelas)
 
 Repositório do site PyJobs, um sistema de freelances desenvolvido totalmente em Python para Pythonistas.
