@@ -25,30 +25,6 @@ class JobListView(ListView):
         return queryset
 
 
-def find_job(request):
-    if request.method == "GET":
-        jobs = Job.objects.filter(publico=True)
-        paginator = Paginator(jobs, 5)
-        page = request.GET.get('page')
-        if page is None:
-            page = 1
-        try:
-            jobs_pag = paginator.page(page)
-        except PageNotAnInteger:
-            jobs_pag = paginator.page(1)
-        except EmptyPage:
-            jobs_pag = paginator.page(paginator.num_pages)
-
-        context = {
-            'jobs': jobs_pag,
-            'pages': paginator.page_range,
-            'actual_page': int(page),
-            'n_pages': int(paginator.num_pages),
-            "user": request.user
-        }
-        return render(request, "jobs.html", context)
-
-
 def create_job(request):
     template_name = "cadastro.html"
     if request.user.is_authenticated():
