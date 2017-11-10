@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.test import Client
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from apps.jobs.models import Job
