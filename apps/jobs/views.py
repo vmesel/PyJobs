@@ -1,11 +1,28 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
+from django.views.generic import ListView
 
 from apps.jobs.models import Job, InterestedPerson
 from apps.jobs.forms import JobForm
 from apps.core.models import Company
 from apps.core.forms import EditCompanyForm
+
+from watson import search as watson
+
+
+class JobListView(ListView):
+
+    context_object_name = 'jobs'
+    template_name = 'jobs.html'
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = Job.objects.filter(publico=True)
+        q = self.request.GET.get('q', '')
+        if q:
+            queryset = queryset = watson.filter(queryset, q)
+        return queryset
 
 
 def find_job(request):

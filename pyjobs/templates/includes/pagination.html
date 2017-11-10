@@ -1,0 +1,27 @@
+{% if is_paginated %}
+  <nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link waves-effect waves-effect" href="?page={{ page_obj.previous_page_number }}">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+              </a>
+            </li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+            <li {% if page_obj.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+              <a class="page-link waves-effect waves-effect" href="?page={{i}}">{{i}}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link waves-effect waves-effect" href="?page={{ page_obj.next_page_number }}">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </a>
+            </li>
+        {% endif %}
+    </ul>
+  </nav>
+{% endif %}

@@ -1,11 +1,18 @@
 {% extends "base.html" %}
-{% load bootstrap_pagination %}
 {%block title%}Jobs disponíveis!{%endblock title%}
 {%block ptitle%}Jobs disponíveis!{%endblock ptitle%}
 {% block content %}
+
 <h2 style="margin-top:15px;text-align:center;">Jobs disponíveis:</h2>
+
+<form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+        <input type="text" name="q" class="form-control" placeholder="Pesquisar job">
+    </div>
+</form>
+
+
 <!-- JOB -->
-<hr/>
 {% for job in jobs %}
 <div class="row">
   <div class="col-md-10">
@@ -21,6 +28,8 @@
   </div>
 </div>
 <hr/>
+{% empty %}
+  <h1 class="text-center">Nenhum job encontrado!</h1>
 {% endfor %}
-{% bootstrap_paginate jobs range=n_pages %}
+{% include "includes/pagination.html" %}
 {% endblock content %}
