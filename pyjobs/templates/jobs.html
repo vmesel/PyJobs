@@ -5,11 +5,24 @@
 
 <h2 style="margin-top:15px;text-align:center;">Jobs disponíveis:</h2>
 
-<form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-        <input type="text" name="q" class="form-control" placeholder="Pesquisar job">
-    </div>
-</form>
+
+  <form class="form-inline">
+      <input class="form-control col-md-8" type="text" name='titulo' placeholder="Título do job" aria-label="Search">
+
+      <select class="col-md-2" name="home-office">
+          <option value="" disabled selected>Home office?</option>
+          <option value="1">Sim</option>
+          <option value="0">Não</option>
+      </select>
+
+      <select class="col-md-2" name="freelancer">
+      <option value="" disabled selected>O job é freela?</option>
+      <option value="1">Sim</option>
+      <option value="0">Não</option>
+      </select>
+
+      <button class="btn btn-primary col-md-12" type="submit">Pesquisar</button>
+  </form>
 
 
 <!-- JOB -->

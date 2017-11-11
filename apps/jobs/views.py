@@ -8,8 +8,6 @@ from apps.jobs.forms import JobForm
 from apps.core.models import Company
 from apps.core.forms import EditCompanyForm
 
-from watson import search as watson
-
 
 class JobListView(ListView):
 
@@ -18,11 +16,18 @@ class JobListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = Job.objects.filter(publico=True)
-        q = self.request.GET.get('q', '')
-        if q:
-            queryset = queryset = watson.filter(queryset, q)
-        return queryset
+        search_fields = {}
+        if self.request.GET.get('titulo'):
+            search_fields['titulo_do_job__icontains'] = self.request.GET.get('titulo')
+        if self.request.GET.get('home-office'):
+            search_fields['home_office'] = self.request.GET.get('home-office')
+        if self.request.GET.get('freelancer'):
+            search_fields['tipo_freela'] = self.request.GET.get('freelancer')
+        try:
+            jobs = Job.objects.filter(**search_fields)
+        except:
+            jobs = None
+        return jobs
 
 
 def create_job(request):
