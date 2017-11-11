@@ -17,7 +17,6 @@ django-material==1.0.0
 django-materializecss-form==1.0.1
 django-password-reset==1.0
 django-social-share==1.1.2
-django-watson==1.4.3
 djangorestframework==3.6.3
 gunicorn==19.7.1
 ipdb==0.10.3

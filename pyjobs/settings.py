@@ -49,7 +49,6 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'raven.contrib.django.raven_compat',
     'bootstrap3',
-    'watson',
     'bootstrap_pagination',
 ]
 
