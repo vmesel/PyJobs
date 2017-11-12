@@ -1,3 +1,12 @@
 -r requirements-dev.txt
-gunicorn
-psycopg
+gunicorn==19.7.1
+psycopg2==2.7.3
+dj-database-url==0.4.2
+Django==1.11.5
+django-bootstrap3==9.0.0
+django-material==1.0.0
+python-decouple==3.0
+pytz==2017.3
+whitenoise==3.3.0
+sendgrid==3.6.5
+sendgrid-django==4.0.4
