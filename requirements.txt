@@ -9,3 +9,4 @@ pytz==2017.3
 whitenoise==3.3.0
 sendgrid==3.6.5
 sendgrid-django==4.0.4
+django-filter==1.1.0
