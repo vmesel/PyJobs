@@ -82,6 +82,7 @@ def create_job(request):
 def job_info(request, pk):
     job = get_object_or_404(Job, pk=int(pk))
 
+    interesse = False
     if request.user.is_authenticated():
         interest = InterestedPerson.objects.filter(usuario=request.user, job=job)
         if request.method == "POST":
@@ -90,5 +91,4 @@ def job_info(request, pk):
 
         interesse = interest.exists()
 
-    interesse = False
     return render(request, "job.html", {"job": job, "user": request.user, "interest": interesse})
