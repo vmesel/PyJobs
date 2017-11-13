@@ -6,12 +6,13 @@ from apps.jobs.models import Job, InterestedPerson
 from apps.jobs.forms import JobForm
 from apps.core.models import Company
 from apps.core.forms import EditCompanyForm
-
+from apps.jobs.filters import JobFilter
 
 def find_job(request):
     if request.method == "GET":
         jobs = Job.objects.filter(publico=True)
-        paginator = Paginator(jobs, 5)
+        jobs_filtered = JobFilter(request.GET, queryset=jobs)
+        paginator = Paginator(jobs_filtered.qs, 5)
         page = request.GET.get('page')
         if page is None:
             page = 1
@@ -27,7 +28,8 @@ def find_job(request):
             'pages': paginator.page_range,
             'actual_page': int(page),
             'n_pages': int(paginator.num_pages),
-            "user": request.user
+            "user": request.user,
+            "jobfilter": jobs_filtered.form
         }
         return render(request, "jobs.html", context)
 
