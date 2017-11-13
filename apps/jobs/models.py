@@ -26,6 +26,9 @@ class Job(models.Model):
         verbose_name_plural = 'Vagas'
         ordering = ['-data_adicionado']
 
+    def __str__(self):
+        return self.titulo_do_job
+
 
 class InterestedPerson(models.Model):
     job = models.ForeignKey(Job, default="")
