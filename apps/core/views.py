@@ -1,3 +1,4 @@
+import csv
 from django.views import generic
 from django.views.generic import CreateView
 from django.http import JsonResponse
@@ -14,12 +15,12 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from apps.core.models import Skills, Company
-from apps.jobs.models import Job
+from apps.jobs.models import Job, InterestedPerson
 from apps.core.forms import *
 from apps.jobs.forms import JobForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.http import HttpResponse
 
 def cadastrese(request):
     if request.user.is_authenticated():
@@ -162,3 +163,20 @@ def deletar_job(request, pk):
         job.delete()
         messages.success(request, "Job deletado com sucesso")
         return redirect("core:dashboard_view")
+
+@login_required
+def interessados_no_job(request, pk):
+    response = HttpResponse(content_type='text/csv')
+    job = Job.objects.get(pk=pk)
+    response['Content-Disposition'] = 'attachment;filename=export.csv'
+    if job.empresa.usuario == request.user:
+        interessados = InterestedPerson.objects.filter(job=job)
+        writer = csv.writer(response)
+        rows = []
+        for interessado in interessados:
+            pessoa = interessado.usuario
+            pessoa_perfil = pessoa.profile
+            rows.append([str(pessoa.get_full_name()), str(pessoa.email), str(pessoa_perfil.telefone), str(pessoa_perfil.github), str(pessoa_perfil.linkedin), str(pessoa_perfil.portfolio)])
+        for row in rows:
+            writer.writerow(row)
+        return response
