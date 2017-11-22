@@ -19,9 +19,8 @@ def has_curriculumdb_plan(view):
 def lista_de_curriculos(request):
     profiles = Profile.objects.filter(interesse_banco_cv=True)
     paginator = Paginator(profiles, 5)
-    page = request.GET.get('page')
-    if page is None:
-        page = 1
+    page = request.GET.get('page', 1)
+
     try:
         cv_pag = paginator.page(page)
     except PageNotAnInteger:
