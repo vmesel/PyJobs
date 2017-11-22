@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 from pyjobs.views import *
 from apps.jobs.urls import *
-from rest_framework import routers
+#from rest_framework import routers
 from pyjobs import settings
 from django.contrib.staticfiles import views
 from django.conf.urls.static import static
@@ -16,6 +16,6 @@ urlpatterns = [
     url(r'^', include('apps.jobs.urls', namespace='jobs')),
     url(r'^', include('apps.core.urls', namespace='core')),
     url(r'^cvdb/', include('apps.curriculumdb.urls', namespace='curriculumdb')),
-    # include('password_reset.urls')
+    url('^', include('django.contrib.auth.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
