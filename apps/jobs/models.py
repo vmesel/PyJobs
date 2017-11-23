@@ -20,6 +20,14 @@ class Job(models.Model):
     local = models.CharField("Local da vaga", max_length=100, default="", help_text="Preencha com o lugar da vaga, caso seja remota, explicite!")
     tipo_freela = models.BooleanField("O job é freela?", default=1, help_text="Selecione apenas se o job for para freelancers")
     publico = models.BooleanField("Este job é público?", default=0)
+    salario_minimo = models.DecimalField("Salário mínino",
+        default=0, null=False, db_index=True,
+        max_digits=10, decimal_places=2
+    )
+    salario_maximo = models.DecimalField("Salário máximo",
+        default=0, null=False, db_index=True,
+        max_digits=10, decimal_places=2
+    )
 
     class Meta:
         verbose_name = 'Vaga'

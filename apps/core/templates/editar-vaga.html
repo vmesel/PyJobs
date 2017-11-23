@@ -16,3 +16,27 @@
 </section>
 </div>
 {%endblock content%}
+
+{% block aditional_scripts %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#id_salario_minimo,#id_salario_maximo').inputmask({
+        alias: 'numeric',
+        prefix: 'R$ ',
+        placeholder: '0',
+        radixPoint: ',',
+        digits: 2,
+        autoGroup: true,
+        groupSeparator: '.',
+        groupSize: 3,
+        integerDigits: 10,
+        fractionalDigits: 2,
+        allowPlus: false,
+        allowMinus: false,
+        digitsOptional: false,
+
+    });
+});
+</script>
+{% endblock aditional_scripts %}
