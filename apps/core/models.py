@@ -11,8 +11,9 @@ class Profile(models.Model):
         "Telefone",
         max_length=16,
         validators=[
-            RegexValidator(regex='^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$',
-            message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.")]
+            RegexValidator(
+                regex='^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$',
+                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.")]
     )
     github = models.URLField("URL do seu GitHub", default="", blank=True)
     linkedin = models.URLField("URL do seu Linkedin", default="", blank=True)

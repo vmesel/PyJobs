@@ -8,6 +8,7 @@ from apps.core.models import Company
 from apps.core.forms import EditCompanyForm
 from apps.jobs.filters import JobFilter
 
+
 def find_job(request):
     if request.method == "GET":
         jobs = Job.objects.filter(publico=True)
