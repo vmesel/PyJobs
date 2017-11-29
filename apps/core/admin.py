@@ -3,6 +3,7 @@ from apps.core.models import Profile, Company, Skills
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -10,8 +11,9 @@ class ProfileInline(admin.StackedInline):
     verbose_name = "Perfil"
     fk_name = "usuario"
 
+
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
+    inlines = (ProfileInline,)
 
     def get_inline_instances(self, request, obj=None):
         if not obj:
@@ -22,5 +24,5 @@ class CustomUserAdmin(UserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 
-admin.site.register(Company) # , CompanyAdmin)
-admin.site.register(Skills) # , CompanyAdmin)
+admin.site.register(Company)  # , CompanyAdmin)
+admin.site.register(Skills)  # , CompanyAdmin)

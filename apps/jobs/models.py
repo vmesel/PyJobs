@@ -17,8 +17,10 @@ class Job(models.Model):
     descricao = models.TextField("Descrição do job", default="")
     requisitos = models.TextField("Requisitos para o Job", default="")
     data_adicionado = models.DateTimeField("Data que o job foi adicionado", auto_now_add=True)
-    local = models.CharField("Local da vaga", max_length=100, default="", help_text="Preencha com o lugar da vaga, caso seja remota, explicite!")
-    tipo_freela = models.BooleanField("O job é freela?", default=1, help_text="Selecione apenas se o job for para freelancers")
+    local = models.CharField("Local da vaga", max_length=100, default="",
+                             help_text="Preencha com o lugar da vaga, caso seja remota, explicite!")
+    tipo_freela = models.BooleanField("O job é freela?", default=1,
+                                      help_text="Selecione apenas se o job for para freelancers")
     publico = models.BooleanField("Este job é público?", default=0)
     salario_minimo = models.DecimalField("Salário mínino",
         default=0, null=False, db_index=True,

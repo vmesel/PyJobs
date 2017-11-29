@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
 from apps.core.models import Profile
 
 
@@ -13,7 +13,9 @@ def has_curriculumdb_plan(view):
             return redirect("/cadastro-job/")
         else:
             return redirect("/")
+
     return wrap
+
 
 @has_curriculumdb_plan
 def lista_de_curriculos(request):
@@ -30,10 +32,11 @@ def lista_de_curriculos(request):
 
     context = {
         'interessados': cv_pag,
-        "user":request.user
+        "user": request.user
     }
 
     return render(request, "cvs.html", context)
+
 
 @has_curriculumdb_plan
 def curriculo(request, pk):

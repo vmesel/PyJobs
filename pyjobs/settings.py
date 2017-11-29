@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from decouple import config, Csv
 import dj_database_url
-#import djcelery
+
+# import djcelery
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -40,19 +40,19 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-LOCAL_APPS= [
-    'apps.jobs', #TODO TROCAR PARA JOB
+LOCAL_APPS = [
+    'apps.jobs',  # TODO TROCAR PARA JOB
     'apps.core',
     'apps.curriculumdb',
 ]
 
-THIRD_PARTY_APPS = [  
+THIRD_PARTY_APPS = [
     'material',
-    #'django_extensions',
-    #'raven.contrib.django.raven_compat',
+    # 'django_extensions',
+    # 'raven.contrib.django.raven_compat',
     'bootstrap3',
 ]
- 
+
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
@@ -85,30 +85,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pyjobs.wsgi.application'
 
-
-DATABASES = {}
-
-DATABASES["default"] = dj_database_url.config(default='sqlite:///%s/db.sqlite3' % (BASE_DIR))
+DATABASES = {"default": dj_database_url.config(default='sqlite:///%s/db.sqlite3' % (BASE_DIR))}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -123,7 +119,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -135,8 +130,8 @@ if os.environ.get("SENTRY_DSN") is not None:
         'dsn': os.environ["SENTRY_DSN"],
     }
 
-LOGIN_URL='/login/'
-LOGIN_REDIRECT_URL='/dashboard/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
