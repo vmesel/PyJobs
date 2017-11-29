@@ -3,9 +3,11 @@ from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 from apps.core.models import Skills
 
+
 class Command(BaseCommand):
     # TODO: Testar essa classe
-    def _get_skills(self):
+    @staticmethod
+    def _get_skills():
         base = os.path.dirname(os.path.abspath('__file__'))
         full_path = "{}/apps/core/management/commands/_skills.txt".format(base)
         skills = []

@@ -5,12 +5,18 @@ from apps.core.models import Skills, Profile, Company
 
 skills = Skills.objects.all()
 
+
 class CadastreSeForm(UserCreationForm):
     telefone = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex: 11998445522'}), required=True)
-    github = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu GitHub (não obrigatório)'}), required=False)
-    linkedin = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu Linkedin (não obrigatório)'}), required=False)
-    portfolio = forms.URLField(widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu portfolio (não obrigatório)'}), required=False)
-
+    github = forms.URLField(
+        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu GitHub (não obrigatório)'}),
+        required=False)
+    linkedin = forms.URLField(
+        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu Linkedin (não obrigatório)'}),
+        required=False)
+    portfolio = forms.URLField(
+        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu portfolio (não obrigatório)'}),
+        required=False)
 
     skills = forms.ModelMultipleChoiceField(
         label="Skills",
@@ -28,6 +34,7 @@ class CadastreSeForm(UserCreationForm):
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
 
+
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -38,6 +45,7 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('telefone', 'github', 'linkedin', 'portfolio', 'interesse_banco_cv', 'skills',)
+
 
 class EditCompanyForm(forms.ModelForm):
     class Meta:

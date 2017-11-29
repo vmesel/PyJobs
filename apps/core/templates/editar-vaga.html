@@ -3,8 +3,9 @@
 {%block title%}Cadastre um job!{%endblock title%}
 {%block ptitle%}Cadastre um job!{%endblock ptitle%}
 {% block content %}
-<section id="cadastro" style="margin-top:10px;">
-  <center><h2>Edite seu job</h2></center>
+<!--suppress ALL -->
+    <section id="cadastro" style="margin-top:10px;">
+  <div style="text-align: center;"><h2>Edite seu job</h2></div>
   <form class="" action="." method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
