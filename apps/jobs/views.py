@@ -14,9 +14,7 @@ def find_job(request):
         jobs = Job.objects.filter(publico=True)
         jobs_filtered = JobFilter(request.GET, queryset=jobs)
         paginator = Paginator(jobs_filtered.qs, 5)
-        page = request.GET.get('page')
-        if page is None:
-            page = 1
+        page = request.GET.get('page', 1)
         try:
             jobs_pag = paginator.page(page)
         except PageNotAnInteger:

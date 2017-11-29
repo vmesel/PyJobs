@@ -123,9 +123,8 @@ def vagas(request):
     jobs = Job.objects.filter(empresa=company)
 
     paginator = Paginator(jobs, 5)
-    page = request.GET.get('page')
-    if page is None:
-        page = 1
+    page = request.GET.get('page', 1)
+
     try:
         jobs_pag = paginator.page(page)
     except PageNotAnInteger:

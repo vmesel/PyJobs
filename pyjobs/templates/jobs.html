@@ -33,6 +33,9 @@
     <b><p>Aceita home office: {% if job.home_office%}Sim{% else %}Não{% endif %}</p></b>
     <p>Data de adição: {{job.data_adicionado}}</p>
     <p>Local do job: {{job.local}}</p>
+    {% if job.salario_maximo > 0 %}
+    <p>Salário: R$ {{ job.salario_minimo }} a R$ {{ job.salario_maximo }}</p>
+    {% endif %}
   </div>
   <div class="col-md-2">
     <a href="/job/{{job.pk}}"><button type="button" class="btn btn-success">SAIBA MAIS</button></a>
@@ -64,3 +67,26 @@
   </ul>
 </nav>
 {% endblock content %}
+{% block aditional_scripts %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#id_salario').inputmask({
+        alias: 'numeric',
+        prefix: 'R$ ',
+        placeholder: '0',
+        radixPoint: ',',
+        digits: 2,
+        autoGroup: true,
+        groupSeparator: '.',
+        groupSize: 3,
+        integerDigits: 10,
+        fractionalDigits: 2,
+        allowPlus: false,
+        allowMinus: false,
+        digitsOptional: false,
+
+    });
+});
+</script>
+{% endblock aditional_scripts %}
