@@ -5,14 +5,25 @@ Olá {empresa},
 Agora que você criou a vaga {vaga}, nós lhe enviaremos os detalhes de quem se inscreveu para ela, assim você conseguirá\
  entrar em contato com eles
 
-Em breve, nós lhe contataremos com as pessoas que se inscreveram para a sua vaga!
-
-Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+Em breve iremos lhe enviar o link da sua vaga para divulgação!
 
 Abraços,
 Vinicius Mesel
 @vmesel
 """.format(empresa=empresa, vaga=vaga)
+
+def vaga_publicada(empresa, vaga, pk):
+    return """
+Olá {empresa},
+
+Agora a vaga {vaga} foi avaliada por nossos colaboradores e foi publicada!
+
+Para acessar a sua vaga, entre no link: http://www.pyjobs.com.br/job/{pk}/
+
+Abraços,
+Vinicius Mesel
+@vmesel
+""".format(empresa=empresa, vaga=vaga, pk=pk)
 
 
 def contato_cadastrado(pessoa, vaga, empresa=False):
