@@ -20,44 +20,54 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.1/css/mdb.min.css" rel="stylesheet">
     <meta property="og:image" content="https://15809-presscdn-0-93-pagely.netdna-ssl.com/wp-content/uploads/2016/02/MTE5NDg0MDYxMTk4NTUwNTQz.png" />
     <meta property="og:site_name" content="PyJobs" />
-    <meta property="og:title" content="{% block ptitle %}{% endblock ptitle %}" />
+    <meta property="og:title" content="Encontre os melhores profissionais Python em um clique" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description"
-    content="PyJobs, um site para ajudar os membros da comunidade Python a divulgarem trabalhos freelancers." />
+    content="PyJobs, um site para divulgar oportunidades Python." />
 
     <!-- Template styles -->
     <style>
         /* TEMPLATE STYLES */
+
         html,
         body,
         .view {
             height: 100%;
         }
+
         /* Navigation*/
+
         .navbar {
             background-color: transparent;
         }
+
         .scrolling-navbar {
             -webkit-transition: background .5s ease-in-out, padding .5s ease-in-out;
             -moz-transition: background .5s ease-in-out, padding .5s ease-in-out;
             transition: background .5s ease-in-out, padding .5s ease-in-out;
         }
+
         .top-nav-collapse {
             background-color: #011474;
         }
+
         footer.page-footer {
             background-color: #f1dc1c;
             margin-top: 2rem;
         }
+
         @media only screen and (max-width: 768px) {
             .navbar {
                 background-color: #011474;
             }
         }
+
         /*Call to action*/
+
         .flex-center {
             color: #fff;
         }
+
         .view {
             background: url("http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg") no-repeat center center fixed;
             -webkit-background-size: cover;
@@ -65,15 +75,19 @@
             -o-background-size: cover;
             background-size: cover;
         }
+
         /*Contact section*/
+
         #contact .fa {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             color: #1C2331;
         }
+
         .footer-content > *, .footer-content ul > li > a {
             color: #3E4551;
         }
+
     </style>
 
 </head>
@@ -93,24 +107,21 @@
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto navbar-left">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="/">Início <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/jobs/">Para Pythonistas</a>
+                            <a class="nav-link" href="/jobs/">Procurando jobs?</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/cadastro-job/">Para Recrutadores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/cadastro-job/">Vantagens para Empresas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link highlight" href="/cadastro-job/">Publicar Vaga</a>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/cadastro-job/">Procurando profissionais?</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://www.apoia.se/pyjobs" target="_blank">Doe</a>
                         </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="/anuncie/">Anuncie</a>
+                        </li> -->
                     </ul>
                     <ul class="nav navbar-nav navbar-right"></ul>
                       {% if user.is_authenticated %}
@@ -142,11 +153,10 @@
         <div class="full-bg-img flex-center">
             <ul>
                 <li>
-                  <h1 class="h1-responsive wow fadeInDown" data-wow-delay="0.2s"><b>PyJobs</b></h1>
-                  <h2 class="wow fadeInDown" data-wow-delay="0.5s">Conectando Pythonistas às melhores oportunidades!</h2>
+                  <h1 class="h1-responsive wow fadeInDown" data-wow-delay="0.2s"><b>Contrate os melhores profissionais Python!</b></h1>
+                  <h2 class="wow fadeInDown" data-wow-delay="0.5s">Encontre os melhores profissionais Python para estar em sua empresa</h2>
                   <h3 class="wow fadeInDown" data-wow-delay="0.5s">
-                      <a href="/jobs/"><button type="button" class="btn btn-success">SOU UM PYTHONISTA</button></a>
-                      <a href="/cadastro-job/"><button type="button" class="btn btn btn-info">BUSCO PROFISSIONAIS</button></a>
+                      <a href="/cadastro/"><button type="button" class="btn btn btn-info">CADASTRE-SE</button></a>
                   </h3>
                 </li>
             </ul>
@@ -156,43 +166,52 @@
     <div id="info"></div>
     <!-- Main container-->
     <div class="container">
-      <div class="divider-new">
-          <h2 class="h2-responsive">Como Funciona?</h2>
-      </div>
       <div class="row">
-        <div class="col-md-6" id="participe">
-          <div style="text-align: center;">
-            <h3>Para os Pythonistas:</h3>
-            <a href="/jobs/"><button type="button" class="btn btn-success">Procurar por Jobs</button></a>
+        <div class="col-md-12">
+          <div class="divider-new">
+              <h2 class="h2-responsive">Empresas que anunciaram no PyJobs</h2>
+          </div>
+          <center>
+            <ul style="list-style:none;">
+                <li style="display: inline;">
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJcAAAAlCAMAAAB4Q4s1AAAAkFBMVEX///9BxN06OHo4NnkoJnI2NHj4/f7ExNU0MncvLXUyMHbR0d4wwdsgHW/6+vwrKHOe3uyKiazz8/fr6/Fvbprv+vx6eaLk5Oy/6fIlInGenbpizeJHRYJCQH+Q2uqUk7NOTIZVU4rW8fdfXZB60+WyscgVEWvZ2eNoZpbh9Pm6us6r4u6npsAGAGgaFmwPCmlBTgFGAAAE20lEQVRYhe1Y23aqOhRFCHILoqCAYgUV63V3///f7WSt3Ii0HeecDvfLmS91hZDMzHULdZz/8a8xrXcNQz8//G0mJg49pXTCwf7OVyMz6vrlpJzVDjkJ0MndmjC9N5ROX03rMBnQ4sz6AYk7THg1r9pmxYk1isV0Ljz8Yl6HEVqa2GquxMSBPOA4y7dnYCZo5Ldy33XLjXyKc4OZOTUonMEohx44q4VXY6zAlfzhznAx8jr9JoSso1y8/njnZgq/Nx6Jfc+PI3Kp8CGfS9ILTi0/uPWxOP+CvxtNi69BfrHDLU63heDb640plUkJVr3qqakl8ipilyGTq2ZgPdivqss8F+HF6Qn0CmFkDcZpDY9INdvyUW+rBLuEzPbfcueWLBbByfIibe6H68EUiA49LOJrEfFVXTROGRhsi8KLXQ1vDcSTNRCLmHwVcPTIjckIh+G/AOdUnvRUlcf8AYONlkf4tR+NN0ZbBg3sJVbtfCHXbI+0/NAXxAJwLeFGfHScYwi7L3iguXwFvxMLlvDmmp2tKs9JCyFwVSR0md89E6O00WW15YL5e4gMAnKxYGtBAz/bHvdhhA4DPy0jdPQmkwQ5WzCQuVPAOaMWpGsXGPh3OlRrqKFkNdmZzamArQjPQRAh2sixsONbFWWmQzDfgn5xjHFXwAozUNE/6mO6We6Y6MXWjR6qG5uV3ZcgwuKShw9ET67irBCKgtWJ6JHZ4LppYEruEq5N/gZyLYZbCA5UNp5pPaz9AwcqwfjhvazCROJyOctQO4Zh7+MEjgeRtFQSOznw4kfDE7liroQsXlT46akj9aO3C4jUqK1S5YHYyFGGDd+XCJplhLTCpSU5z9MZZA4wHON1RdvKxeaT1lN88FXflr4K2I/hvgnXKBOFAOuV60VGha+QV+sEa+XRL/SaW3I1n1zGMLW57zy/kLz8i3oemLyCGCMsOj2tEM+4x93w4gwxlbxkENXNkBkLrzHNqrWMGZTLgYoUqeet4cfC9WV8ne0VYvRxasmlS0KvRg5PzO4jzEpZ3EXmL7mdSUFmUBwijOWj6gPh3vDkUkkuC4YJWUNlgCGz7woFy37RC2V+34hRnjDSsfLKggvTM6MaYPdxjQJrQrVHo4BdJzYo3V2tF1EwLxXlEFuLF95yZ1ZdsP+BeoEooRBHuoApwcblchy1tfLk4YkWMOuHzM7ElEtWKY+8HfcZUoaqIYIrqyp8HhZqhUTWNdXATagMpBOI/ZWRktalfxhmlxguLcoWYeT56DI3TfQoYY39gYFuaIOdnF14RmipjARNmr7Rdxvaz4fMhrx4fJjdI99GroaHImBwxVDYsIOTVr2BLtbZMsTY7V7yWA2YWWnJmlBsdo/8stb3wgwCKYARD3tyjiGYJuqNDgYiZxwj1xqQC0rq6q6ZWbySNLOa7ckjURiGcbZeiuqRZllG3kWwJ++EmanqCjnm6OMTXnbzEbTUJ6RiZpexdl9YI06wuByP5UmOFwmHKpoVmOpC0+LFN7cX+YqYeR+biibww99phcf10neMEdwtYnRi9UW4/fwwL5TLf9LcxODLh9X35xl10z8P/hcUVgH8BNd5Q/E7ra/H/m3y48Ara/qlXIjpta4Pqxd97eepzxCV3898LfJu23Xdtvp+5qsxY/jbHP4Z/gC0+1ADwT1z4QAAAABJRU5ErkJggg==" alt=""></li>
+                <li style="display: inline;"><img src="http://propmark.com.br/static/upload/2017/02/589cae167f460-589cae55e9be2-980x480.jpg" alt="" height="70" width="151"></li>
+                <li style="display: inline;"><img src="https://vignette.wikia.nocookie.net/logopedia/images/8/8e/B2W_logo.png/revision/latest?cb=20131119171859" alt="" height="70" width="70"></li>
+                <li style="display: inline;"><img src="http://www.centroempresarialdovale.com.br/empresas/%7BF5CF149D-BB51-4F40-8738-6074D68B39DE%7D_logo_tivit.jpg" alt="" height="70" width="70"></li>
+                <li style="display: inline;"><img src="" alt="" height="19" width="151"></li>
+                <li style="display: inline;">+ 30 empresas</li>
+            </ul>
+          </center>
         </div>
-        </div>
-        <div class="col-md-6" id="participe">
-        <div style="text-align: center;">
-          <h3>Para as Empresas:</h3>
-          <a href="/cadastro-job/"><button type="button" class="btn btn-success">Buscar um Profissional</button></a>
-        </div>
-      </center>
       </div>
       <div class="row">
         <div class="col-md-6 ">
           <div class="divider-new">
-              <h2 class="h2-responsive">Iniciativa PyJobs</h2>
+              <h2 class="h2-responsive">Serviços do PyJobs</h2>
           </div>
 
           <!--Section: Inciativa-->
               <p>
-                O PyJobs é uma iniciativa dos membros da comunidade Python. Temos como objetivo apresentar aos Pythonistas vagas exclusivamente de Python.
+                O PyJobs, mesmo sendo uma iniciativa open-source e de uso gratuito, oferece alguns serviços para ajudar as empresas a encontrar os melhores profissionais. Estes serviços são:
+                <ul>
+                  <li style="list-style-type: square;">encontrando o especialista Python em todo o território nacional;</li>
+                  <li style="list-style-type: square;">filtrando os Pythonistas que se inscreveram em sua vaga;</li>
+                  <li style="list-style-type: square;">E outros serviços customizados!</li>
+                </ul>
                 </p>
-
+                <a href="mailto:viniciuscarqueijo@gmail.com"><button type="button" class="btn btn btn-info">ENTRE EM CONTATO</button></a>
               </div>
         <div class="col-md-6 ">
           <div class="divider-new">
-              <h2 class="h2-responsive">Quer publicar uma Vaga?</h2>
+              <h2 class="h2-responsive">Vantagens do PyJobs</h2>
           </div>
 
           <!--Section: Inciativa-->
               <p>
-                Ao cadastrar sua vaga no PyJobs, você disperta a atenção dos melhores Pythonistas do mercado. Cadastra agora gratuitamente.
+                O PyJobs, é a única central de vagas de Python totalmente feita para auxiliar as empresas e a comunidade a encontrarem as melhores oportunidades. O site já conta com mais de 500 membros e 40 vagas cadastradas.
+              </p>
+              <p>
+                Além disto, o PyJobs está presente em todas as regiões do país com representantes dos grupos de usuários de Python locais, regionais e nacionais.
               </p>
 
               </div>
@@ -212,7 +231,7 @@
                 <!--First column-->
                 <div class="col-md-3 offset-lg-1 hidden-lg-down">
                     <h5 class="title">SOBRE O PyJobs</h5>
-                    <p>Buscamos atender empresas em busca de profissionais, conectando a comunidade Python às demandas do mercado.</p>
+                    <p>Iniciativa para montar um banco de dados central de jobs na linguagem Python.</p>
                 </div>
                 <!--/.First column-->
 
@@ -220,12 +239,10 @@
 
                 <!--Second column-->
                 <div class="col-lg-2 col-md-4 offset-lg-1">
-                    <h5 class="title">Serviços:</h5>
+                    <h5 class="title">O Projeto:</h5>
                     <ul>
-                        <li><a href="#">Para Pythonista</a></li>
-                        <li><a href="#">Para Empresa</a></li>
-                        <li><a href="#">Consultoria</a></li>
-                        <li><a href="#">Publicar Vagas</a></li>
+                        <li><a href="#">Para quem é Pythonista</a></li>
+                        <li><a href="#">Para quem é Empresa</a></li>
                         <li><a href="mailto:viniciuscarqueijo@gmail.com">Contato</a></li>
                     </ul>
                 </div>

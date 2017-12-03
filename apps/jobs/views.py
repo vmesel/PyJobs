@@ -36,8 +36,9 @@ def find_job(request):
 
 
 def create_job(request):
-    template_name = "cadastro.html"
+    template_name = "empresa-lp.html"
     if request.user.is_authenticated():
+        template_name = "cadastro.html"
         context = {}
         if Company.objects.filter(usuario=request.user).count() == 1:
             context["form"] = JobForm(request.POST or None)

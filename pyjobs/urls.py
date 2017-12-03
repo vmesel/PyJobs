@@ -10,6 +10,7 @@ from pyjobs.views import *
 urlpatterns = [
                   # Default URLs
                   url(r'^$', home_view, name='index'),
+                  url(r'^anuncie/$', ads_view, name='index'),
                   url(r'^admin/', admin.site.urls),
 
                   url(r'^', include('apps.jobs.urls', namespace='jobs')),
