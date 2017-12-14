@@ -7,10 +7,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render_to_response, render
 from django.contrib import messages
-from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from datetime import date, timedelta
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,6 +19,13 @@ from apps.jobs.forms import JobForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordChangeForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import redirect, render
+
+from apps.core.forms import *
+from apps.jobs.forms import JobForm
+from apps.jobs.models import Job
 
 def cadastrese(request):
     if request.user.is_authenticated():
@@ -51,10 +56,12 @@ def cadastrese(request):
         context = {
             "form": form,
             "h2": "Cadastre-se e conheça todos os Jobs em Python ou os cadastre",
-            "description": "O PyJobs é uma plataforma que permite a qualquer usuário cadastrar jobs e se inscrever a todos que estiverem disponíveis."
+            "description": "O PyJobs é uma plataforma que permite a qualquer usuário cadastrar jobs e se inscrever a\
+             todos que estiverem disponíveis."
         }
 
         return render(request, template_name, context)
+
 
 @login_required
 def change_password(request):
@@ -73,12 +80,13 @@ def change_password(request):
         'form': form
     })
 
+
 @login_required
 def dashboard(request):
     user = request.user
 
     context = {
-        "user":request.user,
+        "user": request.user,
         "userform": EditUserForm(instance=request.user),
         "profileform": EditProfileForm(instance=request.user.profile),
     }
@@ -94,6 +102,7 @@ def dashboard(request):
 
     return render(request, template_name, context)
 
+
 @login_required
 def update_user(request):
     user = request.user
@@ -103,6 +112,7 @@ def update_user(request):
     messages.success(request, 'Usuário Atualizado com Sucesso!')
     return redirect("/dashboard/")
 
+
 @login_required
 def update_profile(request):
     profile = request.user.profile
@@ -111,6 +121,7 @@ def update_profile(request):
         form.save()
     messages.success(request, 'Perfil Atualizado com Sucesso!')
     return redirect("/dashboard/")
+
 
 @login_required
 def update_company(request):
@@ -140,9 +151,10 @@ def vagas(request):
 
     context = {
         'jobs': jobs_pag,
-        "user":request.user
+        "user": request.user
     }
     return render(request, "jobs-empresa.html", context)
+
 
 @login_required
 def editar_vaga(request, pk):

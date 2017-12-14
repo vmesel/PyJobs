@@ -1,4 +1,5 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
+
 from apps.jobs.views import *
 from apps.core.views import interessados_no_job
 

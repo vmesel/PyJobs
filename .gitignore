@@ -163,6 +163,9 @@ coverage.xml
 # Translations
 *.mo
 
+#VSCode stuff
+.vscode
+
 # Django stuff:
 
 # Flask stuff:

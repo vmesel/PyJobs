@@ -8,6 +8,7 @@ from apps.core.models import Company
 from apps.core.forms import EditCompanyForm
 from apps.jobs.filters import JobFilter
 
+
 def find_job(request):
     if request.method == "GET":
         jobs = Job.objects.filter(publico=True)
@@ -35,8 +36,9 @@ def find_job(request):
 
 
 def create_job(request):
-    template_name = "cadastro.html"
+    template_name = "empresa-lp.html"
     if request.user.is_authenticated():
+        template_name = "cadastro.html"
         context = {}
         if Company.objects.filter(usuario=request.user).count() == 1:
             context["form"] = JobForm(request.POST or None)
@@ -85,7 +87,7 @@ def job_info(request, pk):
     interesse = False
     if request.user.is_authenticated():
         interest = InterestedPerson.objects.filter(usuario=request.user, job=job)
-        if request.method == "POST":
+        if request.method == "POST" and not interest:
             InterestedPerson.objects.create(usuario=request.user, job=job)
             messages.success(request, "Cadastramos seu interesse na vaga com sucesso")
 
