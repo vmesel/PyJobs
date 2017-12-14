@@ -181,7 +181,7 @@ def interessados_no_job(request, pk):
     response = HttpResponse(content_type='text/csv')
     job = Job.objects.get(pk=pk)
     response['Content-Disposition'] = 'attachment;filename=export.csv'
-    if job.empresa.usuario == request.user:
+    if request.user == job.empresa.usuario or request.user.is_superuser:
         interessados = InterestedPerson.objects.filter(job=job)
         writer = csv.writer(response)
         rows = []

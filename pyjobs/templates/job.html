@@ -19,7 +19,11 @@
 <input type="submit" class="btn btn-primary" name="enviar" value="Você já se cadastrou nesta vaga">
     {%else%}
     <input type="submit" class="btn btn-success" name="enviar" value="Cadastrar interesse na vaga">
-
+    {%endif%}
+    {% if request.user.is_superuser %}
+    <a href="/interessados/{{job.pk}}/">
+      <input type="button" name="Download interessados" class="btn btn-success" value="Baixe os interessados na vaga">
+    </a>
     {%endif%}
   </form>
   {% else %}
