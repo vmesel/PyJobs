@@ -10,7 +10,7 @@ Para instalar o repositório do PyJobs em seu computador você deve seguir algun
 
 
 ### Para o setup de desenvolvedor
-```
+```bash
 cd PyJobs/
 virtualenv pyjobs
 source pyjobs/bin/activate
@@ -21,5 +21,22 @@ export SENDGRID_API_KEY='sua-key-do-sendgrid-aqui'
 export SECRET_KEY='sua-secret-key'
 python manage.py migrate
 ```
+
+### Para o setup de desenvolvedor com docker
+Crie um arquivo chamado .env no diretório raiz do projeto e adicione o seguinte conteúdo:
+
+```bash
+DEBUG=True
+SENDGRID_API_KEY=sua-key-do-sendgrid-aqui
+SECRET_KEY=sua-secret-key
+```
+Com o arquivo criado execute os comandos abaixos:
+
+```bash
+docker-compose build
+docker-compose run web python manage.py migrate
+docker-compose up
+```
+OBS: Você deve ter o docker e o docker-compose previamente instalado em sua máquina.
 
 Para fazer o deploy no Heroku, basta pegar estes mesmos exports e rodar no Heroku
