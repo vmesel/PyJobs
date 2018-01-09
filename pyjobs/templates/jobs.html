@@ -12,10 +12,9 @@
   </a>
   <hr>
 <div class="row">
-    <div class="collapse" id="collapsible-body">
-      <h3>Filtre os jobs:</h3>
-      <form class="" action="." method="get">
-        {%bootstrap_form jobfilter%}
+    <div class="collapse show" id="collapsible-body">
+      <form class="form-inline" action="." method="get" role="form">
+        {% bootstrap_form jobfilter form_group_class='form-group col-md-2' %}
         {% buttons %}
           <button type="submit" class="btn btn-primary">
             {% bootstrap_icon "star" %} Filtrar
