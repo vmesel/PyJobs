@@ -47,6 +47,7 @@ class Job(models.Model):
                     link=self.pk
                 )
                 bot.send_message(chat_id = config("TELEGRAM_CHATID"), text=message_text)
+                bot.send_message(chat_id = "@pythonbrasil", text=message_text)
                 msg_email = vaga_publicada(empresa=self.empresa.nome, vaga=self.titulo_do_job, pk=self.pk)
                 receivers = [self.empresa.email]
                 send_mail(
