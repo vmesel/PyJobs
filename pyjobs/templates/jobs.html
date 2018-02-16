@@ -31,6 +31,7 @@
     <b><p>Empresa: {{job.empresa}}</p></b>
     <b><p>Tipo do Job: {% if job.tipo_freela %}Freela{% else %}Vaga{% endif %}</p></b>
     <b><p>Aceita home office: {% if job.home_office%}Sim{% else %}Não{% endif %}</p></b>
+    <b><p>Nível: {{ job.get_nivel_display }}</p></b>
     <p>Data de adição: {{job.data_adicionado}}</p>
     <p>Local do job: {{job.local}}</p>
   </div>

@@ -11,5 +11,6 @@ class JobForm(ModelForm):
             "local",
             "descricao",
             "requisitos",
-            "tipo_freela"
+            "tipo_freela",
+            "nivel"
         ]
