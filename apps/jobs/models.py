@@ -16,6 +16,7 @@ from decouple import config
 class Job(models.Model):
 
     NIVEL_CHOICES = (
+        ('estagiario', 'Estagiário(a)'),
         ('junior', 'Júnior'),
         ('pleno', 'Pleno'),
         ('senior', 'Sênior'),
