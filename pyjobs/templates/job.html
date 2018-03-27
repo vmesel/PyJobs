@@ -8,6 +8,7 @@
 <b><p>Data de adição: {{job.data_adicionado}}</p></b>
 <p>Aceita home office: {% if job.home_office%}Sim{% else %}Não{% endif %}</p>
 <p>Localização: {{job.local}}</p>
+<p>Nível: {{ job.get_nivel_display }}</p>
 <!-- JOB -->
 <hr/>
 <div class="row">

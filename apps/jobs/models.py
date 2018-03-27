@@ -14,6 +14,14 @@ from decouple import config
 
 
 class Job(models.Model):
+
+    NIVEL_CHOICES = (
+        ('estagiario', 'Estagiário(a)'),
+        ('junior', 'Júnior'),
+        ('pleno', 'Pleno'),
+        ('senior', 'Sênior'),
+    )
+
     titulo_do_job = models.CharField("Título do job", max_length=100, default="")
     empresa = models.ForeignKey(Company)
     home_office = models.BooleanField("Aceita home office", default=False)
@@ -25,6 +33,7 @@ class Job(models.Model):
     tipo_freela = models.BooleanField("O job é freela?", default=1,
                                       help_text="Selecione apenas se o job for para freelancers")
     publico = models.BooleanField("Este job é público?", default=0)
+    nivel = models.CharField("Nível", max_length=30, choices=NIVEL_CHOICES)
     __original_public = False
 
     class Meta:

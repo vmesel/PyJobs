@@ -59,6 +59,7 @@ def create_job(request):
                         "requisitos": form.cleaned_data.get("requisitos"),
                         "local": form.cleaned_data.get("local"),
                         "tipo_freela": form.cleaned_data.get("tipo_freela"),
+                        "nivel": form.cleaned_data.get("nivel"),
                         "empresa": request.user.company
                     }
                     Job.objects.create(**form_data)
