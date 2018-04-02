@@ -81,8 +81,8 @@ def create_job(request):
     return render(request, template_name, {"form": form, "user": request.user})
 
 
-def job_info(request, pk):
-    job = get_object_or_404(Job, pk=int(pk))
+def job_info(request, slug):
+    job = get_object_or_404(Job, slug=slug)
 
     interesse = False
     if request.user.is_authenticated():
