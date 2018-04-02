@@ -26,6 +26,7 @@ class Job(models.Model):
                                       help_text="Selecione apenas se o job for para freelancers")
     publico = models.BooleanField("Este job é público?", default=0)
     __original_public = False
+    slug = models.SlugField("Slug", max_length=255, null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Vaga'
@@ -39,14 +40,17 @@ class Job(models.Model):
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.__original_public == 0:
             if self.publico != self.__original_public:
-                bot = telegram.Bot(config("TELEGRAM_TOKEN"))
-                message_text = "Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/".format(
-                    job=self.titulo_do_job,
-                    empresa=self.empresa,
-                    local=self.local,
-                    link=self.pk
-                )
-                bot.send_message(chat_id = config("TELEGRAM_CHATID"), text=message_text)
+
+                if config('SEND_MSG_TELEGRAM', False):
+                    bot = telegram.Bot(config("TELEGRAM_TOKEN"))
+                    message_text = "Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/".format(
+                        job=self.titulo_do_job,
+                        empresa=self.empresa,
+                        local=self.local,
+                        link=self.pk
+                    )
+                    bot.send_message(chat_id = config("TELEGRAM_CHATID"), text=message_text)
+
                 msg_email = vaga_publicada(empresa=self.empresa.nome, vaga=self.titulo_do_job, pk=self.pk)
                 receivers = [self.empresa.email]
                 send_mail(
