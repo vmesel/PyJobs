@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from decouple import config, Csv
-import dj_database_url
+from decouple import config
+from dj_database_url import config as dbconf
+
 
 # import djcelery
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -51,6 +52,9 @@ THIRD_PARTY_APPS = [
     # 'django_extensions',
     # 'raven.contrib.django.raven_compat',
     'bootstrap3',
+    'rest_framework',
+    'rest_framework.authtoken',
+
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -83,9 +87,17 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'PAGINATE_BY': 10
+}
+
+
 WSGI_APPLICATION = 'pyjobs.wsgi.application'
 
-DATABASES = {"default": dj_database_url.config(default='sqlite:///%s/db.sqlite3' % (BASE_DIR))}
+DATABASES = {"default": dbconf(default='sqlite:///%s/db.sqlite3' % (BASE_DIR))}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
