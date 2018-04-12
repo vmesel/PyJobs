@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^update/profile/', update_profile, name="update_profile"),
     url(r'^update/company/', update_company, name="update_company"),
     url(r'^password/$', change_password, name='change_password'),
+    url(r'^generate-token/$', generate_token, name='generate-token'),
     url(
         r'^login/$',
         auth_views.login,

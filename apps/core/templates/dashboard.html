@@ -18,6 +18,9 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#panel4" role="tab">Sua Empresa</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#panel5" role="tab">Token</a>
+      </li>
   </ul>
   <!-- Tab panels -->
   <div class="tab-content card">
@@ -98,5 +101,36 @@
           </div>
       </div>
       <!--/.Panel 3-->
+      <div class="tab-pane fade" id="panel5" role="tabpanel">
+          <br>
+          <div class="container">
+            <p>
+              {% if token is None%}
+              Seu token: '<spam id=token> </spam>'
+              {% else %}
+              Seu token: '<spam id=token>Bearer {{token}}</spam>'
+              {% endif %}
+            </p>
+            <a id='generate-token' class="btn btn-info "><span class="glyphicon glyphicon-comment"></span>Gerar novo Token</a>
+          </div>
+      </div>
   </div>
+
 {% endblock content %}
+{% block aditional_scripts %}
+<script>
+
+  $('#generate-token').on('click', function(){
+    $.ajax({
+            type: "GET",
+            url: "{% url 'core:generate-token' %}",
+            success: function (retorno) {
+                $('#token').html(retorno)
+            },
+            error: function(){
+              alert('Erro ao gerar novo Token')
+            }
+          });
+  })
+</script>
+{% endblock aditional_scripts %}

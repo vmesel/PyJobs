@@ -1,31 +1,19 @@
 import csv
-from django.views import generic
-from django.views.generic import CreateView
-from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render_to_response, render
+from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
-from django.core.exceptions import ObjectDoesNotExist
-from apps.core.models import Skills, Company
+from apps.core.models import Company
 from apps.jobs.models import Job, InterestedPerson
 from apps.core.forms import *
 from apps.jobs.forms import JobForm
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
-from django.contrib.auth.forms import PasswordChangeForm
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import redirect, render
 
-from apps.core.forms import *
-from apps.jobs.forms import JobForm
-from apps.jobs.models import Job
+from rest_framework.authtoken.models import Token
+
 
 def cadastrese(request):
     if request.user.is_authenticated():
@@ -89,6 +77,7 @@ def dashboard(request):
         "user": request.user,
         "userform": EditUserForm(instance=request.user),
         "profileform": EditProfileForm(instance=request.user.profile),
+        "token": Token.objects.filter(user=request.user).first()
     }
 
     if Company.objects.filter(usuario=user).count() == 1:
@@ -192,3 +181,10 @@ def interessados_no_job(request, pk):
         for row in rows:
             writer.writerow(row)
         return response
+
+
+@login_required
+def generate_token(request):
+    Token.objects.filter(user=request.user).delete()
+    t = Token.objects.create(user=request.user)
+    return HttpResponse('Bearer {}'.format(t))
