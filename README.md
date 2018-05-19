@@ -1,42 +1,21 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/86f23287eac22e4885bd/maintainability)](https://codeclimate.com/github/vmesel/PyJobs/maintainability)
-
-# PyJobs (Antigo pyfreelas)
-
-Repositório do site PyJobs, um sistema de freelances desenvolvido totalmente em Python para Pythonistas.
-
-## Como instalar e contribuir com o site
-
-Para instalar o repositório do PyJobs em seu computador você deve seguir alguns passos listados a seguir:
+# PyJobs - O Site de Vagas Python Open Source
 
 
-### Para o setup de desenvolvedor
-```bash
-cd PyJobs/
-virtualenv pyjobs
-source pyjobs/bin/activate
-pip install -r requirements.txt
-export DATABASE_URL="sqlite:///$(pwd)/db.sqlite3" # Pode ser qualquer outro banco
-export DEBUG=True
-export SENDGRID_API_KEY='sua-key-do-sendgrid-aqui'
-export SECRET_KEY='sua-secret-key'
-python manage.py migrate
+Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta PyJobs contendo as seguintes informações:
+
+```
+RECAPTCHA_SITE_KEY=
+RECAPTCHA_SECRET_KEY=
+TELEGRAM_TOKEN=TOKEN_AQUI
+TELEGRAM_CHATID=CHATID_AQUI
+DEBUG=False
+EMAIL_BACKEND=
+SENDGRID_API_KEY=
+SENDGRID_PASSWORD=
+SENDGRID_USERNAME=
+SECRET_KEY=
 ```
 
-### Para o setup de desenvolvedor com docker
-Crie um arquivo chamado .env no diretório raiz do projeto e adicione o seguinte conteúdo:
+Para utilizar o Docker com o Docer Compose:
 
-```bash
-DEBUG=True
-SENDGRID_API_KEY=sua-key-do-sendgrid-aqui
-SECRET_KEY=sua-secret-key
-```
-Com o arquivo criado execute os comandos abaixos:
-
-```bash
-docker-compose build
-docker-compose run web python manage.py migrate
-docker-compose up
-```
-OBS: Você deve ter o docker e o docker-compose previamente instalado em sua máquina.
-
-Para fazer o deploy no Heroku, basta pegar estes mesmos exports e rodar no Heroku
+Rode `docker-compose build` e depois rode `docker-compose up`

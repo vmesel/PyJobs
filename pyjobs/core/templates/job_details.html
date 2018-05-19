@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{job.title}} no PyJobs
+{% endblock %}
+{%block main%}
+    <main class="page faq-page">
+        <section class="clean-block clean-faq dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">{{job.title}}</h2>
+                    <p>Local da vaga: {{job.workplace}}</p>
+                    <p>Empresa: {{job.company_name}}</p>
+                </div>
+                <div class="block-content">
+                  {% if job.application_link %}
+                  <a href="{{job.application_link}}">
+                  <button class="btn btn-primary" type="button">Ir para o site da Vaga</button>
+                  </a>
+                  {% else %}
+                    {% if logged_in %}
+                      {% if applied %}
+                        <button class="btn btn-primary" type="button">Você já aplicou a esta vaga!</button>
+                      {%else%}
+                      <form action="." method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit">Aplicar para esta vaga pelo PyJobs</button>
+                      </form>
+                      {% endif %}
+                    {%else%}
+                      <button class="btn btn-primary" type="button">Você precisa estar logado para aplicar para esta vaga!</button>
+                    {% endif %}
+                  {% endif %}
+                    <div class="faq-item">
+                        <h4 class="question">Descrição da vaga</h4>
+                        <div class="answer">
+                          <p>
+                            {{job.description|linebreaks}}
+                          </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="question">Requisitos</h4>
+                        <div class="answer">
+                          <p>
+                            {{job.requirements|linebreaks}}
+                          </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{%endblock%}

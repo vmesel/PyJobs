@@ -1,0 +1,56 @@
+{% load widget_tweaks %}
+<div class="modal fade" role="dialog" tabindex="-1" id="modal-cadastro">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cadastre uma vaga</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Cadastre sua vaga Python e tenha acesso aos melhores candidatos Python do brasil.</p>
+        <p>
+          <strong>O campo link para a vaga só deve ser usado para vagas que estejam fora da plataforma PyJobs!</strong>
+        </p>
+        <form class="" action="{% url 'register_new_job' %}" method="post">
+        {% csrf_token %}
+        {% for hidden_field in form.hidden_fields %}
+          {{ hidden_field }}
+        {% endfor %}
+        {% for field in new_job_form.visible_fields %}
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                {{ field.label_tag }}
+              </span>
+            </div>
+            {% if field.errors %}
+            {% render_field field class="form-control is-invalid" %}
+            {% for error in field.errors %}
+            <div class="invalid-feedback">
+              {{ error }}
+            </div>
+            {% endfor %}
+            {%else%}
+              {% render_field field class="form-control" %}
+            {%endif%}
+            <div class="input-group-append">
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+        <div class="g-recaptcha" data-sitekey="6Lerz1cUAAAAAK9xC1q1Hbqpfbtb75ck26IZVRPf"></div>
+      </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" type="button" data-dismiss="modal">Cancelar</button>
+      <button class="btn btn-primary" type="submit">Postar vaga</button>
+    </div>
+    </form>
+  </div>
+</div>
+</div>

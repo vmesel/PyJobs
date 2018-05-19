@@ -1,11 +1,22 @@
-version: '2'
+version: '3.3'
 services:
-   web:
-     env_file:
-       - .env
-     build: .
-     command: python manage.py runserver 0.0.0.0:8000
-     volumes:
-       - .:/code
-     ports:
-       - "8000:8000"
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./pyjobs:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+     - db
+
+  db:
+    image: postgres:9.5.6-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: pyjobs
+      POSTGRES_PASSWORD: pyjobs
+      POSTGRES_DB: pyjobs

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title%} PyJobs - A Central de Jobs Python
+{%endblock%}
+{%block main%}
+    <main class="page landing-page">
+        <section class="clean-block clean-hero" style="background-image:url(&quot;http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg&quot;);color:rgba(9, 162, 255, 0.90);">
+            <div class="text">
+                <h2>Procurando por oportunidades Python?</h2>
+                <p>Conheça as melhores oportunidades Python em apenas um clique com o PyJobs!</p>
+                <a href="#oportunidades">
+                  <button class="btn btn-outline-light btn-lg" type="button">Veja as oportunidades</button>
+                </a>
+                <a href="https://www.apoia.se/pyjobs">
+                  <button class="btn btn-lg btn-success" type="button">Doe para o PyJobs</button>
+                </a>
+              </div>
+        </section>
+        <section class="clean-block clean-info dark" style="padding-bottom:25px;">
+            <div class="container">
+                <div class="block-heading" style="margin-top:-40px;">
+                    <h2 class="text-info">Sobre</h2>
+                    <hr>
+                </div>
+                <div class="row">
+                  <div class="col-md-6" style="text-align:center;">
+                      <h4>Mais de</h4>
+                      <h3>500 Profissionais</h3>
+                      <p>Contam com o PyJobs diariamente para busca de empregos</p>
+                  </div>
+                  <div class="col-md-6" style="text-align:center;">
+                      <h4>Mais de</h4>
+                      <h3>100 Empresas</h3>
+                      <p>Contam com o PyJobs para encontrar seus profissionais Python</p>
+                  </div>
+                </div>
+            </div>
+        </section>
+        <section class="clean-block features">
+            <div class="container">
+                <div id="oportunidades" class="block-heading">
+                    <h2 class="text-info">Conheça as melhores oportunidades Python</h2>
+                    <p>Todas as oportunidades listadas no PyJobs passaram por um processo de curadoria para garantir a melhor qualidade o possível ao desenvolvedor</p>
+                </div>
+                {% if premium_available_jobs %}
+                {% for job in premium_available_jobs %}
+                <div class="row justify-content-center" style="margin-top:10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                              <a href="/job/{{job.pk}}">
+                                <h4 class="card-title">{{job.title}}</h4>
+                              </a>
+                                <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
+                                <p class="card-text">{{job.get_excerpt}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'job_view' job.pk %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Mais Detalhes</button></a></div>
+                </div>
+                {%endfor%}
+                {%else%}
+                <div class="row justify-content-center" style="margin-top:10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title" style="color:#777;">Tenha sua vaga destacada aqui!</h4>
+                                <h6 class="text-muted card-subtitle mb-2">Saiba como ter a sua vaga no topo e tenha sua empresa em destaque</h6>
+                                <p class="card-text"  style="color:#777;">Encontre os melhores profissionais Python e tenha mais destaque na comunidade com a vaga destacada. Ela lhe proporcionará maior visibilidade e maior chance de contratação!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'contact' %}"><button class="btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Entre em contato</button></a></div>
+                  </div>
+                {% endif %}
+                <div></div>
+                <br>
+                <hr>
+                {% for job in publicly_available_jobs %}
+                <div class="row justify-content-center" style="margin-top:10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                              <a href="/job/{{job.pk}}">
+                                <h4 class="card-title">{{job.title}}</h4>
+                              </a>
+                                <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
+                                <p class="card-text">{{job.get_excerpt}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'job_view' job.pk %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Mais Detalhes</button></a></div>
+                </div>
+                {% endfor %}
+                <nav style="margin-top:10px;">
+                    <ul class="pagination">
+                      {%for page in pages%}
+                        <li class="page-item"><a class="page-link" href="{% url 'index' %}?page={{page}}">{{page}}</a></li>
+                      {%endfor%}
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </main>
+  {%endblock main%}
