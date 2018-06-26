@@ -2,6 +2,8 @@ def empresa_cadastrou_vaga(empresa, vaga):
     return """
 Olá {empresa},
 
+Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
+
 Agora que você criou a vaga {vaga}, nós lhe enviaremos os detalhes de quem se inscreveu para ela, assim você conseguirá\
  entrar em contato com eles
 
@@ -10,11 +12,14 @@ Em breve iremos lhe enviar o link da sua vaga para divulgação!
 Abraços,
 Vinicius Mesel
 @vmesel
+Doe em: http://apoia.se/pyjobs
 """.format(empresa=empresa, vaga=vaga)
 
 def vaga_publicada(empresa, vaga, pk):
     return """
 Olá {empresa},
+
+Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
 
 Agora a vaga {vaga} foi avaliada por nossos colaboradores e foi publicada!
 
@@ -23,12 +28,15 @@ Para acessar a sua vaga, entre no link: http://www.pyjobs.com.br/job/{pk}/
 Abraços,
 Vinicius Mesel
 @vmesel
+Doe em: http://apoia.se/pyjobs
 """.format(empresa=empresa, vaga=vaga, pk=pk)
 
 
 def contato_cadastrado_empresa(pessoa, vaga):
     return """
     Olá,
+
+    Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
 
     Você recebeu uma nova pessoa interessada em sua vaga: {vaga}
 
@@ -48,6 +56,7 @@ def contato_cadastrado_empresa(pessoa, vaga):
     Abraços,
     Vinicius Mesel
     @vmesel
+    Doe em: http://apoia.se/pyjobs
     """.format(
     nome=pessoa.get_full_name(),
     vaga=vaga,
@@ -64,6 +73,8 @@ Olá {nome},
 
 Recebemos seu interesse na oportunidade: {vaga}
 
+Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
+
 Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve,\
  eles entrarão em contato com você!
 
@@ -74,6 +85,7 @@ Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
 Abraços,
 Vinicius Mesel
 @vmesel
+Doe em: http://apoia.se/pyjobs
 """.format(nome=pessoa.get_full_name(), vaga=vaga)
 
 
