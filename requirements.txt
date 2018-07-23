@@ -10,7 +10,9 @@ django-filter==1.1.0
 django-material==1.0.0
 django-model-utils==3.0.0
 django-recaptcha==1.4.0
+django-tastypie==0.14.1
 django-widget-tweaks==1.4.2
+facebook-sdk==2.0.0
 future==0.16.0
 gunicorn==19.7.1
 idna==2.6
@@ -25,8 +27,10 @@ prompt-toolkit==1.0.15
 psycopg2==2.7.3
 ptyprocess==0.5.2
 Pygments==2.2.0
+python-dateutil==2.7.3
 python-decouple==3.0
 python-http-client==3.0.0
+python-mimeparse==1.6.0
 python-telegram-bot==8.1.1
 pytz==2017.3
 raven==6.8.0
