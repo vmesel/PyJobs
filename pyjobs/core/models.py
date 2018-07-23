@@ -3,10 +3,10 @@ from django.db.models.signals import post_save
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
-import telegram
 from decouple import config
 from django.core.mail import send_mail
 from core.email_utils import *
+from core.utils import *
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -114,14 +114,14 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
-    bot = telegram.Bot(config('TELEGRAM_TOKEN'))
     message_text = "Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/".format(
         job=instance.title,
         empresa=instance.company_name,
         local=instance.workplace,
         link=instance.pk
     )
-    bot.send_message(chat_id = config("TELEGRAM_CHATID"), text=message_text)
+    post_fb_page(message_text)
+    post_telegram_channel(message_text)
     msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
     receivers = [instance.company_email]
     send_mail(
