@@ -13,16 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from .settings import *
 from core.views import *
+from api.resources import *
 from django.contrib.auth import views as auth_views
 
+job_resource = JobResource()
 
 urlpatterns = [
     url(r'^admin_v2/', admin.site.urls),
+    url(r'^api/', include(job_resource.urls)),
     url(r'^$', index, name="index"),
     url(r'^job/(?P<pk>\d+)/$', job_view, name='job_view'),
     url(r'^contact/$', contact, name='contact'),
