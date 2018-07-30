@@ -53,6 +53,11 @@ def job_view(request, pk):
     return render(request, template_name="job_details.html", context=context)
 
 
+def summary_view(request):
+    jobs = Job()
+    context = {"jobs": jobs.get_weekly_summary()}
+    return render(request, template_name="summary.html", context=context)
+
 def register_new_job(request):
     if request.method != "POST":
         return redirect('/')
@@ -105,28 +110,42 @@ def register_new_job(request):
 
 
 def contact(request):
+    context = {}
+    context["new_job_form"] = JobForm
+
     if request.method == "POST":
         form = ContactForm(request.POST or None)
-        if form.is_valid():
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': config('RECAPTCHA_SECRET_KEY'),
+            'response': recaptcha_response
+        }
+        r = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data = data
+        )
+        result = r.json()
+        if form.is_valid() and result['success']:
             form.save()
+            context["message_first"] = "Mensagem enviada com sucesso",
+            context["message_second"] = "Vá para a home do site!"
             return render(
                 request,
                 template_name = "generic.html",
-                context = {
-                    "message_first": "Mensagem enviada com sucesso",
-                    "message_second": "Vá para a home do site!"
-                }
+                context = context
             )
         else:
+            context["message_first"] = "Falha na hora de mandar a mensagem",
+            context["message_second"] = "Você preencheu algum campo da maneira errada, tente novamente!"
             return render(
                 request,
                 template_name = "generic.html",
-                context = {
-                    "message_first": "Falha na hora de mandar a mensagem",
-                    "message_second": "Você preencheu algum campo da maneira errada, tente novamente!"
-                }
+                context=context
             )
-    return render(request, "contact-us.html", {"form": ContactForm})
+
+    context["form"] = ContactForm
+
+    return render(request, "contact-us.html", context)
 
 
 def pythonistas_area(request):
@@ -134,6 +153,9 @@ def pythonistas_area(request):
 
 
 def pythonistas_signup(request):
+    context = {}
+    context["new_job_form"] = JobForm
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -152,10 +174,12 @@ def pythonistas_signup(request):
             login(request, user)
             return redirect("/")
         else:
-            return render(request, "pythonistas-signup.html", {"form": form})
+            context["form"] = form
+            return render(request, "pythonistas-signup.html", context)
     else:
         form = RegisterForm()
-        return render(request, "pythonistas-signup.html", {"form": form})
+        context["form"] = form
+        return render(request, "pythonistas-signup.html", context)
 
 
 def pythonista_change_password(request):
@@ -172,9 +196,12 @@ def pythonista_change_password(request):
             messages.error(request, 'Por favor, corrija os erros abaixo.')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'pythonistas-area-password-change.html', {
-        'form': form
-    })
+
+    context = {}
+    context["form"] = form
+    context["new_job_form"] = JobForm
+
+    return render(request, 'pythonistas-area-password-change.html', context)
 
 
 def pythonista_change_info(request):
@@ -193,5 +220,6 @@ def pythonista_change_info(request):
     else:
         form = EditProfileForm(instance=profile)
     return render(request, 'pythonistas-area-info-change.html', {
-        'form': form
+        'form': form,
+        "new_job_form": JobForm
     })

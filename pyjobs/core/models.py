@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.db import models
@@ -5,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from decouple import config
 from django.core.mail import send_mail
+
 from core.email_utils import *
 from core.utils import *
 
@@ -70,6 +73,14 @@ class Job(models.Model):
     def apply(self, request_user):
         JobApplication.objects.create(job=self, user=request_user)
         return True
+
+    def get_weekly_summary(self):
+        today = datetime.today()
+        past_date = datetime.today() - timedelta(days=7)
+        return Job.objects.filter(
+            created_at__gte=past_date,
+            created_at__lte=today,
+        )
 
 
 class JobApplication(models.Model):
