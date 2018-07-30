@@ -112,7 +112,17 @@ def register_new_job(request):
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST or None)
-        if form.is_valid():
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': config('RECAPTCHA_SECRET_KEY'),
+            'response': recaptcha_response
+        }
+        r = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data = data
+        )
+        result = r.json()
+        if form.is_valid() and result['success']:
             form.save()
             return render(
                 request,
