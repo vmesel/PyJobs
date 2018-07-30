@@ -71,6 +71,7 @@
         </div>
     </footer>
     {% include 'modal_new_job.html' %}
+    {% include 'modal_donate.html' %}
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -83,6 +84,11 @@
       $("#link-modal-cadastro-footer").click(function(){
           $("#modal-cadastro").modal();
       });
+      if (document.cookie.indexOf("visited=") >= 0) {}
+      else {
+        document.cookie = "visited=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        $("#modal-donate").modal();
+      }
     });
     </script>
     <script>
