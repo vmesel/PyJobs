@@ -53,6 +53,11 @@ def job_view(request, pk):
     return render(request, template_name="job_details.html", context=context)
 
 
+def summary_view(request):
+    jobs = Job()
+    context = {"jobs": jobs.get_weekly_summary()}
+    return render(request, template_name="summary.html", context=context)
+
 def register_new_job(request):
     if request.method != "POST":
         return redirect('/')
