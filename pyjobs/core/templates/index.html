@@ -76,7 +76,6 @@
                 <div></div>
                 <br>
                 <hr>
-                {% if publicly_available_jobs|length > 0 %}
                 <div class="row justify-content-center" style="margin-top:10px;">
                     <div class="col">
                         <div class="card">
@@ -106,12 +105,14 @@
                                             </div>
                                         </div>
                                     </form>
+                                    {% if publicly_available_jobs|length <= 0 %}
+                                    <strong>Nenhuma vaga encontrada...</strong>
+                                    {% endif %}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endif %}
                 {% for job in publicly_available_jobs %}
                 <div class="row justify-content-center" style="margin-top:10px;">
                     <div class="col">

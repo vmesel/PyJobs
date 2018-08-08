@@ -13,9 +13,9 @@ from decouple import config
 import requests
 
 def index(request):
-    search = request.GET.get('search')
+    search = request.GET.get('search', '')
     # Just to avoid search for less then 3 letters
-    search = search if search is not None and len(search) > 3 else None
+    search = search if len(search) > 3 else None
     # Passing the value to Paginator
     paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
 
