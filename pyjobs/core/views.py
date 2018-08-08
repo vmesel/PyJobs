@@ -13,7 +13,12 @@ from decouple import config
 import requests
 
 def index(request):
-    paginator = Paginator(Job.get_publicly_available_jobs(), 5)
+    search = request.GET.get('search')
+    # Just to avoid search for less then 3 letters
+    search = search if search is not None and len(search) > 3 else None
+    # Passing the value to Paginator
+    paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
+
     page = request.GET.get('page')
     try:
         public_jobs_to_display = paginator.page(page)
@@ -24,7 +29,8 @@ def index(request):
         "publicly_available_jobs": public_jobs_to_display,
         "premium_available_jobs": Job.get_premium_jobs(),
         "new_job_form": JobForm,
-        "pages": paginator.page_range
+        "pages": paginator.page_range,
+        "search": search if search is not None else ''
     }
     return render(request, template_name="index.html", context=context_dict)
 

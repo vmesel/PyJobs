@@ -71,11 +71,47 @@
                         </div>
                     </div>
                     <div class="col col-md-3 d-none d-md-block"><a href="{% url 'contact' %}"><button class="btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Entre em contato</button></a></div>
-                  </div>
+                </div>
                 {% endif %}
                 <div></div>
                 <br>
                 <hr>
+                {% if publicly_available_jobs|length > 0 %}
+                <div class="row justify-content-center" style="margin-top:10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title" style="color:#777;">
+                                    <i class="icon-magnifier icons"></i>&nbsp;&nbsp;Pesquisar vagas:
+                                </h4>
+                                <p class="card-text"  style="color:#777;">
+                                    Use a pesquisa para procurar vagas na cidade que deseja, com o título, descrição ou requisitos.
+                                    Ex: São Paulo, Data Scientist
+                                </p>
+                                <p class="card-text"  style="color:#777;">
+                                    <form action="" target="_self">
+                                        <div class="row justify-content-center" style="margin-top:10px;">
+                                            <div class="col">
+                                                <input type="text" 
+                                                        placeholder="Procurar por:"
+                                                        class="form-control"
+                                                        minlength="3"
+                                                        maxlength="25"
+                                                        name="search"
+                                                        value="{{ search }}"
+                                                        style="max-width: 550px; width: 100%;" />
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn btn-primary" type="submit">Pesquisar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 {% for job in publicly_available_jobs %}
                 <div class="row justify-content-center" style="margin-top:10px;">
                     <div class="col">
