@@ -45,6 +45,7 @@ jobs:
           command: |
             . venv/bin/activate
             python ./pyjobs/manage.py test
+            pip install coverage
 
       - store_artifacts:
           path: test-reports
@@ -53,5 +54,6 @@ jobs:
       - run:
           name: Send CodeCov Status
           command: |
-            cd src/test-reports/
+            cd test-reports/
+            coverage run ./pyjobs/manage.py test
             bash <(curl -s https://codecov.io/bash)
