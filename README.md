@@ -1,3 +1,7 @@
+[![Build Status](https://circleci.com/gh/vmesel/PyJobs.svg?branch=master)](https://circleci.com/gh/vmesel/PyJobs)
+[![codecov](https://codecov.io/gh/ikaromn/PyJobs/branch/master/graph/badge.svg)](https://codecov.io/gh/ikaromn/PyJobs)
+
+
 # PyJobs - O Site de Vagas Python Open Source
 
 

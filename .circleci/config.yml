@@ -44,9 +44,14 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py test
+            python ./pyjobs/manage.py test
 
       - store_artifacts:
           path: test-reports
           destination: test-reports
-          
+
+      - run:
+          name: Send CodeCov Status
+          command: |
+            cd src/test-reports/
+            bash <(curl -s https://codecov.io/bash)
