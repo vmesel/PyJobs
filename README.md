@@ -16,6 +16,6 @@ SENDGRID_USERNAME=
 SECRET_KEY=
 ```
 
-Para utilizar o Docker com o Docer Compose:
+Para utilizar o Docker com o Docker Compose:
 
 Rode `docker-compose build` e depois rode `docker-compose up`
