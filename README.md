@@ -1,5 +1,5 @@
 # PyJobs - O Site de Vagas Python Open Source
-
+[![chatroom icon](https://patrolavia.github.io/telegram-badge/chat.png)](https://t.me/joinchat/Cc8X5A-re7F8F4AIP0lSeg)
 
 ### Clonar o repositório
 ```
