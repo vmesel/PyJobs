@@ -16,9 +16,19 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
-from .settings import *
-from core.views import *
-from api.resources import *
+from .settings import STATIC_URL, STATIC_ROOT
+from core.views import (
+    index,
+    job_view,
+    summary_view,
+    register_new_job,
+    contact,
+    pythonistas_area,
+    pythonistas_signup,
+    pythonista_change_password,
+    pythonista_change_info
+)
+from api.resources import JobResource
 from django.contrib.auth import views as auth_views
 
 job_resource = JobResource()
@@ -32,14 +42,39 @@ urlpatterns = [
     url(r'^contact/$', contact, name='contact'),
     url(r'^register/new/job/$', register_new_job, name='register_new_job'),
     url(r'^pythonistas/$', pythonistas_area, name='pythonistas_area'),
-    url(r'^pythonistas/signup/$', pythonistas_signup, name='pythonistas_signup'),
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(
+        r'^pythonistas/signup/$',
+        pythonistas_signup,
+        name='pythonistas_signup'
+    ),
+    url(
+        r'^login/$',
+        auth_views.login,
+        {'template_name': 'login.html'},
+        name='login'
+    ),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^password/$', pythonista_change_password, name='change_password'),
     url(r'^info/$', pythonista_change_info, name='change_info'),
-    url(r'^password_reset/$', auth_views.password_reset, {'template_name': 'pythonistas-area-password-change.html'}, name='password_reset'),
-    url(r'^password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        auth_views.password_reset_confirm, name='password_reset_confirm'),
-    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+    url(
+        r'^password_reset/$',
+        auth_views.password_reset,
+        {'template_name': 'pythonistas-area-password-change.html'},
+        name='password_reset'
+    ),
+    url(
+        r'^password_reset/done/$',
+        auth_views.password_reset_done,
+        name='password_reset_done'
+    ),
+    url(
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',  # noqa
+        auth_views.password_reset_confirm,
+        name='password_reset_confirm'
+    ),
+    url(
+        r'^reset/done/$',
+        auth_views.password_reset_complete,
+        name='password_reset_complete'
+    ),
 ] + static(STATIC_URL, document_root=STATIC_ROOT)

@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 from core.models import Job
 from django.test import TestCase
+
 
 class JobTest_01(TestCase):
     def setUp(self):
@@ -10,8 +11,8 @@ class JobTest_01(TestCase):
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
-            application_link = "http://www.xpto.com.br/apply",
-            company_email = "vm@xpto.com",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
             description="Job bem maneiro"
         )
         self.job.save()
@@ -26,8 +27,10 @@ class JobTest_01(TestCase):
         self.assertEqual(str(self.job), "Vaga 1")
 
     def test_job_application_link(self):
-        self.assertEqual(str(self.job.get_application_link()), "http://www.xpto.com.br/apply")
-
+        self.assertEqual(
+            str(self.job.get_application_link()),
+            "http://www.xpto.com.br/apply"
+        )
 
 
 class JobTest_02(TestCase):
@@ -36,7 +39,7 @@ class JobTest_02(TestCase):
             title="Vaga 2",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             public=True
         )
@@ -58,7 +61,7 @@ class JobTest_03(TestCase):
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
             public=True
@@ -74,13 +77,14 @@ class JobTest_03(TestCase):
     def test_publicly_available(self):
         self.assertTrue((self.job not in Job.get_publicly_available_jobs()))
 
+
 class JobTest_Application(TestCase):
     def setUp(self):
         self.job = Job(
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
             public=True
@@ -93,7 +97,7 @@ class JobTest_Application(TestCase):
         application_status = self.job.applied(self.user)
         self.assertEqual(application_status, False)
 
-    def test_user_is_not_applied(self):
+    def test_user_is_not_applied_with_true(self):
         self.job.apply(self.user)
         application_status = self.job.applied(self.user)
         self.assertEqual(application_status, True)

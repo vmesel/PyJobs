@@ -8,27 +8,57 @@ from core.models import Job, Contact, Profile
 class JobForm(ModelForm):
     class Meta:
         model = Job
-        fields = [ 'title', 'workplace', 'company_name', 'application_link', 'company_email', 'description', 'requirements']
+        fields = [
+            'title',
+            'workplace',
+            'company_name',
+            'application_link',
+            'company_email',
+            'description',
+            'requirements'
+        ]
 
 
 class ContactForm(ModelForm):
     class Meta:
         model = Contact
-        fields = ["name","subject","email","message"]
+        fields = [
+            "name",
+            "subject",
+            "email",
+            "message"
+        ]
 
 
 class RegisterForm(UserCreationForm):
     github = forms.URLField(
-        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu GitHub (não obrigatório)'}),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Preencha com o link do seu GitHub (não obrigatório)'  # noqa
+            }
+        ),
         required=False)
     linkedin = forms.URLField(
-        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu Linkedin (não obrigatório)'}),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Preencha com o link do seu Linkedin (não obrigatório)'  # noqa
+            }
+        ),
         required=False)
     portfolio = forms.URLField(
-        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o link do seu portfolio (não obrigatório)'}),
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Preencha com o link do seu portfolio (não obrigatório)'  # noqa
+            }
+        ),
         required=False)
-    cellphone = forms.CharField(label='Celular',
-        widget=forms.TextInput(attrs={'placeholder': 'Preencha com o seu telefone'}),
+    cellphone = forms.CharField(
+        label='Celular',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Preencha com o seu telefone'
+            }
+        ),
         required=True)
 
     class Meta:

@@ -1,10 +1,14 @@
 from django.urls import resolve
 from django.http import HttpRequest
-from django.test import TestCase, RequestFactory, Client
-from django.contrib.auth.models import User, AnonymousUser
+from django.test import TestCase, Client
+from django.contrib.auth.models import User
 
-from core.views import *
+from core.views import (
+    index,
+    job_view
+)
 from core.models import Job
+
 
 class HomeJobsViewsTest(TestCase):
     def setUp(self):
@@ -12,8 +16,8 @@ class HomeJobsViewsTest(TestCase):
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
-            application_link = "http://www.xpto.com.br/apply",
-            company_email = "vm@xpto.com",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
             description="Job bem maneiro"
         )
         self.job.save()
@@ -39,8 +43,8 @@ class JobDetailsViewTest(TestCase):
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
-            application_link = "http://www.xpto.com.br/apply",
-            company_email = "vm@xpto.com",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             requirements="Job bem maneiro",
         )
@@ -64,20 +68,23 @@ class PyJobsJobApplication(TestCase):
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
             public=True
         )
         self.job.save()
         self.user = User.objects.create_user(
-                username='jacob', email='jacob@gmail.com', password='top_secret')
+            username='jacob',
+            email='jacob@gmail.com',
+            password='top_secret'
+        )
         self.client = Client()
 
     def test_check_applied_for_job_anon(self):
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode('utf-8')
-        expected_response = "Você precisa estar logado para aplicar para esta vaga!"
+        expected_response = "Você precisa estar logado para aplicar para esta vaga!"  # noqa
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):
