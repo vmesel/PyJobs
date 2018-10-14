@@ -1,6 +1,8 @@
 # PyJobs - O Site de Vagas Python Open Source
 [![chatroom icon](https://patrolavia.github.io/telegram-badge/chat.png)](https://t.me/joinchat/Cc8X5A-re7F8F4AIP0lSeg)
 
+O PyJobs é o site de job listing da comunidade Python Brasil, nele você consegue se cadastrar para diversas vagas de emprego e de freelas que podem aparecer na comunidade. Você pode contribuir com código ou ainda com valores monetários no: [Apoia-Se](https://apoia.se/pyjobs)
+
 ### Clonar o repositório
 ```
 git clone https://github.com/vmesel/PyJobs.git
