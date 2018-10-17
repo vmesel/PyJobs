@@ -131,9 +131,11 @@
                 {% endfor %}
                 <nav style="margin-top:10px;">
                     <ul class="pagination">
-                      {%for page in pages%}
-                        <li class="page-item"><a class="page-link" href="{% url 'index' %}?page={{page}}">{{page}}</a></li>
-                      {%endfor%}
+                      {% for page in pages %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'index' %}?page={{page}}{% if 'search' in request.GET %}&search={{ request.GET.search }}{% endif %}">{{ page }}</a>
+                        </li>
+                      {% endfor %}
                     </ul>
                 </nav>
             </div>
