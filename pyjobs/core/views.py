@@ -34,6 +34,8 @@ def index(request):
     }
     return render(request, template_name="index.html", context=context_dict)
 
+def robots_view(request):
+    return render(request, template_name="robots.txt")
 
 def job_view(request, pk):
     context = {

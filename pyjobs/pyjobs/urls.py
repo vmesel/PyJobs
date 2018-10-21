@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^pythonistas/$', pythonistas_area, name='pythonistas_area'),
     url(r'^pythonistas/signup/$', pythonistas_signup, name='pythonistas_signup'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^robots.txt$', robots_view, name='robots'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^password/$', pythonista_change_password, name='change_password'),
     url(r'^info/$', pythonista_change_info, name='change_info'),
