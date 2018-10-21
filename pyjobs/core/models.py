@@ -65,7 +65,7 @@ class Job(models.Model):
                 models.Q(workplace__icontains=search_value) | \
                 models.Q(description__icontains=search_value) | \
                 models.Q(requirements__icontains=search_value)
-            return Job.objects.filter(ft, premium=False, public=True).order_by('-created_at')    
+            return Job.objects.filter(ft, premium=False, public=True).order_by('-created_at')
         return Job.objects.filter(premium=False, public=True).order_by('-created_at')
 
     def get_excerpt(self):
