@@ -1,16 +1,18 @@
+import requests
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-
-from core.models import Job, Profile, JobApplication
-from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
-
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
+from django.views.generic import TemplateView
+
+from core.models import Job, Profile, JobApplication
+from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
+
 
 from decouple import config
-import requests
 
 def index(request):
     search = request.GET.get('search', '')
@@ -156,6 +158,10 @@ def contact(request):
 
 def pythonistas_area(request):
     return render(request, "pythonistas-area.html")
+
+
+class Pythonistas(TemplateView):
+    template_name = "pythonistas-area.html"
 
 
 def pythonistas_signup(request):
