@@ -1,12 +1,12 @@
 import requests
-
+from datetime import datetime, timedelta
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from core.models import Job, Profile, JobApplication
 from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
@@ -65,6 +65,22 @@ def summary_view(request):
     jobs = Job()
     context = {"jobs": jobs.get_weekly_summary()}
     return render(request, template_name="summary.html", context=context)
+
+
+class SummaryListView(ListView):
+    model = Job
+    template_name = "summary.html"
+
+    def get_queryset(self):
+        today = datetime.today()
+        past_date = datetime.today() - timedelta(days=7)
+
+        queryset = Job.objects.filter(
+            created_at__gte=past_date,
+            created_at__lte=today,
+        )
+        return queryset
+
 
 def register_new_job(request):
     if request.method != "POST":
@@ -154,10 +170,6 @@ def contact(request):
     context["form"] = ContactForm
 
     return render(request, "contact-us.html", context)
-
-
-def pythonistas_area(request):
-    return render(request, "pythonistas-area.html")
 
 
 class Pythonistas(TemplateView):

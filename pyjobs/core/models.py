@@ -81,13 +81,6 @@ class Job(models.Model):
         JobApplication.objects.create(job=self, user=request_user)
         return True
 
-    def get_weekly_summary(self):
-        today = datetime.today()
-        past_date = datetime.today() - timedelta(days=7)
-        return Job.objects.filter(
-            created_at__gte=past_date,
-            created_at__lte=today,
-        )
 
 
 class JobApplication(models.Model):

@@ -8,9 +8,9 @@
     <h1>Resumo de vagas da semana:</h1>
     <p>Olá a todos, seja bem vindo ao resumo semanal de vagas do PyJobs! Aqui estão as mais novas vagas do site!</p>
     <ul>
-      {% for job in jobs %}
-      <li>{{job.title}} na {{job.company_name}} em: {{job.workplace}} - http://www.pyjobs.com.br/job/{{job.pk}}</li>
-      {% endfor %}
+        {% for job in object_list %}
+        <li>{{job.title}} na {{job.company_name}} em: {{job.workplace}} - http://www.pyjobs.com.br/job/{{job.pk}}</li>
+        {% endfor %}
     </ul>
   </body>
 </html>
