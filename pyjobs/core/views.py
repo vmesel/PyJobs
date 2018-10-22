@@ -7,34 +7,37 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
 from django.views.generic import TemplateView, ListView
+from django.db import models
 
 from core.models import Job, Profile, JobApplication
 from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
-
-
 from decouple import config
 
-def index(request):
-    search = request.GET.get('search', '')
-    # Just to avoid search for less then 3 letters
-    search = search if len(search) > 3 else None
-    # Passing the value to Paginator
-    paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
 
-    page = request.GET.get('page')
-    try:
-        public_jobs_to_display = paginator.page(page)
-    except:
-        public_jobs_to_display = paginator.page(1)
+class Index(ListView):
+    template_name = 'index.html'
+    model = Job
+    paginate_by = 5
 
-    context_dict = {
-        "publicly_available_jobs": public_jobs_to_display,
-        "premium_available_jobs": Job.get_premium_jobs(),
-        "new_job_form": JobForm,
-        "pages": paginator.page_range,
-        "search": search if search is not None else ''
-    }
-    return render(request, template_name="index.html", context=context_dict)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['premium_jobs'] = Job.objects.filter(
+            premium=True, public=True).order_by('-created_at')[:2]
+        context['publicly_jobs'] = Job.objects.filter(
+            premium=False, public=True).order_by('-created_at')
+        return context
+
+    def get_queryset(self):
+        queryset = Job.objects.all()
+        q = self.request.GET.get('q', '')
+        if q:
+            queryset = queryset.filter(
+                models.Q(title__icontains=q)
+                | models.Q(workplace__icontains=q)
+                | models.Q(description__icontains=q)
+                | models.Q(requirements__icontains=q)
+            )
+        return queryset
 
 
 def job_view(request, pk):
@@ -59,12 +62,6 @@ def job_view(request, pk):
             context["job"].apply(request.user) #aplica o usuario
             return redirect('/job/{}/'.format(context["job"].pk))
     return render(request, template_name="job_details.html", context=context)
-
-
-def summary_view(request):
-    jobs = Job()
-    context = {"jobs": jobs.get_weekly_summary()}
-    return render(request, template_name="summary.html", context=context)
 
 
 class SummaryListView(ListView):

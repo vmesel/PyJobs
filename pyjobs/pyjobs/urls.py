@@ -26,7 +26,7 @@ job_resource = JobResource()
 urlpatterns = [
     url(r'^admin_v2/', admin.site.urls),
     url(r'^api/', include(job_resource.urls)),
-    url(r'^$', index, name="index"),
+    url(r'^$', Index.as_view(), name="index"),
     url(r'^job/(?P<pk>\d+)/$', job_view, name='job_view'),
     url(r'^summary/$', SummaryListView.as_view(), name='job_view'),
     url(r'^contact/$', contact, name='contact'),

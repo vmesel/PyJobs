@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pagination %}
 {% load static %}
 {%block title%} PyJobs - A Central de Jobs Python
 {%endblock%}
@@ -42,8 +43,8 @@
                     <h2 class="text-info">Conheça as melhores oportunidades Python</h2>
                     <p>Todas as oportunidades listadas no PyJobs passaram por um processo de curadoria para garantir a melhor qualidade o possível ao desenvolvedor</p>
                 </div>
-                {% if premium_available_jobs %}
-                {% for job in premium_available_jobs %}
+                {% if premium_jobs %}
+                {% for job in premium_jobs %}
                 <div class="row justify-content-center" style="margin-top:10px;">
                     <div class="col">
                         <div class="card">
@@ -88,7 +89,7 @@
                                     Ex: São Paulo, Data Scientist
                                 </p>
                                 <p class="card-text"  style="color:#777;">
-                                    <form action="" target="_self">
+                                    <form action="{% url 'index' %}" role="search">
                                         <div class="row justify-content-center" style="margin-top:10px;">
                                             <div class="col">
                                                 <input type="text" 
@@ -96,7 +97,7 @@
                                                         class="form-control"
                                                         minlength="3"
                                                         maxlength="25"
-                                                        name="search"
+                                                        name="q"
                                                         value="{{ search }}"
                                                         style="max-width: 550px; width: 100%;" />
                                             </div>
@@ -105,7 +106,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    {% if publicly_available_jobs|length <= 0 %}
+                                    {% if publicly_jobs|length <= 0 %}
                                     <strong>Nenhuma vaga encontrada...</strong>
                                     {% endif %}
                                 </p>
@@ -113,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                {% for job in publicly_available_jobs %}
+                {% for job in object_list %}
                 <div class="row justify-content-center" style="margin-top:10px;">
                     <div class="col">
                         <div class="card">
@@ -130,11 +131,7 @@
                 </div>
                 {% endfor %}
                 <nav style="margin-top:10px;">
-                    <ul class="pagination">
-                      {%for page in pages%}
-                        <li class="page-item"><a class="page-link" href="{% url 'index' %}?page={{page}}">{{page}}</a></li>
-                      {%endfor%}
-                    </ul>
+                    {% pagination request paginator page_obj %}
                 </nav>
             </div>
         </section>

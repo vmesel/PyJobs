@@ -55,19 +55,6 @@ class Job(models.Model):
         else:
             return False
 
-    def get_premium_jobs():
-        return Job.objects.filter(premium=True, public=True).order_by('-created_at')[:2]
-
-    def get_publicly_available_jobs(search_value=None):
-        # User are using search... making an ilike query into CharFields
-        if search_value is not None:
-            ft = models.Q(title__icontains=search_value) | \
-                models.Q(workplace__icontains=search_value) | \
-                models.Q(description__icontains=search_value) | \
-                models.Q(requirements__icontains=search_value)
-            return Job.objects.filter(ft, premium=False, public=True).order_by('-created_at')    
-        return Job.objects.filter(premium=False, public=True).order_by('-created_at')
-
     def get_excerpt(self):
         return self.description[:500]
 
