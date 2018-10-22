@@ -19,17 +19,33 @@ def index(request):
     # Passing the value to Paginator
     paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
 
-    page = request.GET.get('page')
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
     try:
         public_jobs_to_display = paginator.page(page)
     except:
         public_jobs_to_display = paginator.page(1)
 
+    # Get the index of the current page
+    index = public_jobs_to_display.number - 1  # edited to something easier without index
+    # This value is maximum index of your pages, so the last page - 1
+    max_index = len(paginator.page_range)
+    # You want a range of 7, so lets calculate where to slice the list
+    start_index = index - 3 if index >= 3 else 0
+    end_index = index + 3 if index <= max_index - 3 else max_index
+    # Get our new page range. In the latest versions of Django page_range returns 
+    # an iterator. Thus pass it to list, to make our slice possible again.
+    page_range = list(paginator.page_range)[start_index:end_index]
+
     context_dict = {
         "publicly_available_jobs": public_jobs_to_display,
         "premium_available_jobs": Job.get_premium_jobs(),
         "new_job_form": JobForm,
-        "pages": paginator.page_range,
+        "jobs": jobs,
+        "page_range": page_range,
         "search": search if search is not None else ''
     }
     return render(request, template_name="index.html", context=context_dict)
