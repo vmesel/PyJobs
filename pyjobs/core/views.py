@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from core.models import Job, Profile, JobApplication
 from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
@@ -20,11 +20,13 @@ def index(request):
     paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
 
     page = int(request.GET.get('page', '1'))
-
+    
     try:
         public_jobs_to_display = paginator.page(page)
-    except:
+    except PageNotAnInteger:
         public_jobs_to_display = paginator.page(1)
+    except EmptyPage:
+        public_jobs_to_display = paginator.page(paginator.num_pages)
 
     context_dict = {
         "publicly_available_jobs": public_jobs_to_display,
