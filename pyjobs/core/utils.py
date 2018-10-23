@@ -16,7 +16,7 @@ def post_fb_page(message):
     return True
 
 def post_telegram_channel(message):
-    bot = telegram.Bot(config('TELEGRAM_TOKEN'))
+    bot = telegram.Bot('691028089:AAHDzhD1xFuxuk7u7r52Ct5mg4aEmgclmdg')
     try:
         bot.send_message(chat_id = config("TELEGRAM_CHATID"), text=message)
     except:
