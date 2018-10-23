@@ -130,35 +130,7 @@
                 </div>
                 {% endfor %}
                 <nav style="margin-top:10px;">
-                    <ul class="pagination">
-                        {% if jobs.has_previous %}
-                            <li><a class="page-link" href="?page={{ jobs.previous_page_number }}"><span aria-hidden="true">&laquo;</span><i class="page-item" aria-hidden="true"></i></a></li>
-                        {% else %}
-                            <li class=" page-link disabled"> <span aria-hidden="true">&laquo;</span><i class="page-item" aria-hidden="true"></i></li>
-                        {% endif %}
-                        
-                        {% if jobs.number|add:'-4' > 1 %}
-                            <li><a class="page-link" href="?page={{ jobs.number|add:'-5' }}">&hellip;</a></li>
-                        {% endif %}
-                        
-                        {% for i in jobs.paginator.page_range %}
-                            {% if jobs.number == i %}
-                                <li class="page-item active"><span><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                            {% elif i > jobs.number|add:'-5' and i < jobs.number|add:'5' %}
-                                <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                        
-                        {% if jobs.paginator.num_pages > jobs.number|add:'4' %}
-                            <li><a class="page-link" href="?page={{ jobs.number|add:'5' }}">&hellip;</a></li>
-                        {% endif %}
-                        
-                        {% if jobs.has_next %}
-                            <li><a class="page-link" href="?page={{ jobs.next_page_number }}"><span aria-hidden="true">&raquo;</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
-                        {% else %}
-                            <li class="page-link disabled"><span aria-hidden="true">&raquo;</span><i class="fa fa-chevron-right" aria-hidden="true"></i></li>
-                        {% endif %}
-                    </ul>
+                    {% include 'pagination.html' %}
                 </nav>
             </div>
         </section>
