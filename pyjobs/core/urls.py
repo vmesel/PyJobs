@@ -1,10 +1,9 @@
 from django.conf.urls import url
 
-from .views import *
+from core.views import *
 
 
 urlpatterns = [
-
     url(r'^$', index, name="index"),
     url(r'^job/(?P<pk>\d+)/$', job_view, name='job_view'),
     url(r'^summary/$', summary_view, name='job_view'),
