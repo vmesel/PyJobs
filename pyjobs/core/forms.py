@@ -8,7 +8,11 @@ from core.models import Job, Contact, Profile
 class JobForm(ModelForm):
     class Meta:
         model = Job
-        fields = [ 'title', 'workplace', 'company_name', 'application_link', 'company_email', 'description', 'requirements']
+        fields = [ 
+            'title', 'workplace', 'company_name',
+            'application_link', 'company_email',
+            'description', 'requirements'
+            ]
 
 
 class ContactForm(ModelForm):

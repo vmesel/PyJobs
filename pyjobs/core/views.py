@@ -1,18 +1,20 @@
 import requests
+from decouple import config
 from datetime import datetime, timedelta
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
-
-from django.views.generic import TemplateView, ListView, CreateView, FormView
+from django.views.generic import TemplateView, ListView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 from django.db import models
 
 from core.models import Job, Profile, JobApplication
 from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
-from decouple import config
 
 
 class Index(ListView):
@@ -82,17 +84,42 @@ class SummaryListView(ListView):
 
 class RegisterJob(LoginRequiredMixin, FormView):
     template_name = 'form_job.html'
+    model = Job
     form_class = JobForm
-    success_url = '/register/job/'
+    success_url = reverse_lazy('register_job')
 
     def form_valid(self, form):
+        import ipdb; ipdb.set_trace()
+        self.request.recaptcha_is_valid = None
 
-        if form.is_valid():
-            messages.info(self.request, 'Suas vendas estão sendo processadas')
+        recaptcha_response = self.request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': config('RECAPTCHA_SECRET_KEY'),
+            'response': recaptcha_response
+        }
+        # without ssl certificat check
+        r = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data=data, verify=False
+            )
+
+        # with ssl certificat check
+        r = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data=data
+            )
+    
+        result = r.json()
+        if result['success']:
+            self.request.recaptcha_is_valid = True
+            form.save()
+            messages.success(self.request, 'Job criado com sucesso')
         else:
-            messages.error(self.request, 'Formulário inválido')
-
-        return super().form_valid(form)
+            self.request.recaptcha_is_valid = False
+            messages.error(self.request, 'reCAPTCHA Invalido . Por Favor Verifique .')
+            return redirect(reverse_lazy('register_job'))
+        
+        return redirect(reverse_lazy('register_job'))
     
 
 def register_new_job(request):

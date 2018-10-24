@@ -122,12 +122,7 @@ def new_job_was_created(sender, instance, created, **kwargs):
     post_telegram_channel(message_text)
     msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
     receivers = [instance.company_email]
-    send_mail(
-        "Sua oportunidade está disponível no PyJobs",
-        msg_email,
-        "pyjobs@pyjobs.com.br",
-        receivers
-    )
+
 
 
 @receiver(post_save, sender=Contact)
