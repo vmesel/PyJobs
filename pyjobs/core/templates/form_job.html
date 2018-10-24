@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{%block main%}
+<main class="">
+
+    <section class="clean-block features">
+    <div class="block-heading">
+            <div class="block-heading">
+                    <h4 class="text-info">Cadastre sua vaga Python e tenha acesso aos melhores candidatos Python do brasil.</h1>
+                <p>
+                    <strong>O campo link para a vaga só deve ser usado para vagas que estejam fora da plataforma PyJobs!</strong>
+                </p>
+            </div>
+    </div>
+        <div class="container">
+            <form action="" method="post">{% csrf_token %}
+
+                {% for field in form %}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                {{ field.label_tag }}
+                            </span>
+                        </div>
+                        {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        {%else%}
+                        {% render_field field class="form-control" %}
+                        {%endif%}
+                        <div class="input-group-append">
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+                <br>
+                <button class="btn btn-light" type="button" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" type="submit">Postar vaga</button>
+            </form>
+        </div>
+        </div>
+    </section>
+</main>
+{%endblock%}

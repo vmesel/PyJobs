@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^summary/$', SummaryListView.as_view(), name='job_view'),
     url(r'^contact/$', contact, name='contact'),
     url(r'^register/new/job/$', register_new_job, name='register_new_job'),
+    url(r'^register/job/$', RegisterJob.as_view(), name='register_job'),
     url(r'^pythonistas/$', Pythonistas.as_view(), name='pythonistas_area'),
     url(r'^pythonistas/signup/$', pythonistas_signup, name='pythonistas_signup'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),

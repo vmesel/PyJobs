@@ -6,7 +6,8 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 
 from core.models import Job, Profile, JobApplication
@@ -78,6 +79,21 @@ class SummaryListView(ListView):
         )
         return queryset
 
+
+class RegisterJob(LoginRequiredMixin, FormView):
+    template_name = 'form_job.html'
+    form_class = JobForm
+    success_url = '/register/job/'
+
+    def form_valid(self, form):
+
+        if form.is_valid():
+            messages.info(self.request, 'Suas vendas estão sendo processadas')
+        else:
+            messages.error(self.request, 'Formulário inválido')
+
+        return super().form_valid(form)
+    
 
 def register_new_job(request):
     if request.method != "POST":
