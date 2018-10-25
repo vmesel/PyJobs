@@ -43,6 +43,18 @@
                     <h2 class="text-info">Conheça as melhores oportunidades Python</h2>
                     <p>Todas as oportunidades listadas no PyJobs passaram por um processo de curadoria para garantir a melhor qualidade o possível ao desenvolvedor</p>
                 </div>
+                <div class="row justify-content-center" style="margin-top:10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title" style="color:#777;">Tenha sua vaga destacada aqui!</h4>
+                                <h6 class="text-muted card-subtitle mb-2">Saiba como ter a sua vaga no topo e tenha sua empresa em destaque</h6>
+                                <p class="card-text"  style="color:#777;">Encontre os melhores profissionais Python e tenha mais destaque na comunidade com a vaga destacada. Ela lhe proporcionará maior visibilidade e maior chance de contratação!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'contact' %}"><button class="btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Entre em contato</button></a></div>
+                </div>
                 {% if premium_jobs %}
                 {% for job in premium_jobs %}
                 <div class="row justify-content-center" style="margin-top:10px;">
@@ -93,7 +105,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    {% if publicly_jobs|length <= 0 %}
+                                    {% if object_list|length <= 0 %}
                                     <strong>Nenhuma vaga encontrada...</strong>
                                     {% endif %}
                                 </p>
