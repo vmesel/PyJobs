@@ -120,8 +120,6 @@ def new_job_was_created(sender, instance, created, **kwargs):
     )
     post_fb_page(message_text)
     post_telegram_channel(message_text)
-    msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
-    receivers = [instance.company_email]
 
 
 

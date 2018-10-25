@@ -26,12 +26,10 @@ class Index(ListView):
         context = super().get_context_data(**kwargs)
         context['premium_jobs'] = Job.objects.filter(
             premium=True, public=True).order_by('-created_at')[:2]
-        context['publicly_jobs'] = Job.objects.filter(
-            premium=False, public=True).order_by('-created_at')
         return context
 
     def get_queryset(self):
-        queryset = Job.objects.all()
+        queryset = Job.objects.all().order_by('-created_at')
         q = self.request.GET.get('q', '')
         if q:
             queryset = queryset.filter(
@@ -41,6 +39,10 @@ class Index(ListView):
                 | models.Q(requirements__icontains=q)
             )
         return queryset
+
+
+class RobotsView(TemplateView):
+    template_name = "robots.txt"
 
 
 def job_view(request, pk):
