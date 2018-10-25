@@ -89,90 +89,18 @@ class RegisterJob(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('register_job')
 
     def form_valid(self, form):
-        import ipdb; ipdb.set_trace()
-        self.request.recaptcha_is_valid = None
 
-        recaptcha_response = self.request.POST.get('g-recaptcha-response')
-        data = {
-            'secret': config('RECAPTCHA_SECRET_KEY'),
-            'response': recaptcha_response
-        }
-        # without ssl certificat check
-        r = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            data=data, verify=False
-            )
-
-        # with ssl certificat check
-        r = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            data=data
-            )
-    
-        result = r.json()
-        if result['success']:
-            self.request.recaptcha_is_valid = True
+        if self.request.recaptcha_is_valid:
             form.save()
             messages.success(self.request, 'Job criado com sucesso')
+            return redirect(reverse_lazy('register_job'))
+
         else:
             self.request.recaptcha_is_valid = False
             messages.error(self.request, 'reCAPTCHA Invalido . Por Favor Verifique .')
             return redirect(reverse_lazy('register_job'))
-        
-        return redirect(reverse_lazy('register_job'))
+
     
-
-def register_new_job(request):
-    if request.method != "POST":
-        return redirect('/')
-    else:
-        new_job = JobForm(request.POST)
-        if new_job.is_valid():
-            # Begin Captcha validation
-            recaptcha_response = request.POST.get('g-recaptcha-response')
-            data = {
-                'secret': config('RECAPTCHA_SECRET_KEY'),
-                'response': recaptcha_response
-            }
-            r = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data = data
-            )
-
-            result = r.json()
-            if result['success']:
-                new_job.save()
-                return render(
-                    request,
-                    template_name = "generic.html",
-                    context = {
-                        "message_first": "Job criado com sucesso",
-                        "message_second": "Vá para a home do site!",
-                        "new_job_form": JobForm,
-                    }
-                )
-            else:
-                return render(
-                    request,
-                    template_name = "generic.html",
-                    context = {
-                        "message_first": "Preencha corretamente o captcha",
-                        "message_second": "Você não completou a validação do captcha!",
-                        "new_job_form": new_job,
-                    }
-                )
-        else:
-            return render(
-                request,
-                template_name = "generic.html",
-                context = {
-                    "message_first": "Falha na hora de criar o job",
-                    "message_second": "Você preencheu algum campo da maneira errada, tente novamente!",
-                    "new_job_form": new_job,
-                }
-            )
-
-
 def contact(request):
     context = {}
     context["new_job_form"] = JobForm
