@@ -6,7 +6,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib import messages
 from django.views.generic import TemplateView, ListView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
@@ -15,7 +14,6 @@ from django.db import models
 
 from core.models import Job, Profile, JobApplication
 from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
-
 
 class Index(ListView):
     template_name = 'index.html'
@@ -89,9 +87,8 @@ class RegisterJob(LoginRequiredMixin, FormView):
     model = Job
     form_class = JobForm
     success_url = reverse_lazy('register_job')
-
+    
     def form_valid(self, form):
-
         if self.request.recaptcha_is_valid:
             form.save()
             messages.success(self.request, 'Job criado com sucesso')

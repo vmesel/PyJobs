@@ -1,11 +1,11 @@
 import requests
 from decouple import config
-from django.contrib import messages
-from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from functools import wraps
+
 
 def check_recaptcha(function):
-    def wrap(request, *args, **kwargs):
+    @wraps(function)
+    def wrapped(request, *args, **kwargs):
         request.recaptcha_is_valid = None
         if request.method == 'POST':
             recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -30,7 +30,4 @@ def check_recaptcha(function):
             else:
                 request.recaptcha_is_valid = False
         return function(request, *args, **kwargs)
-
-    wrap.__doc__ = function.__doc__
-    wrap.__name__ = function.__name__
-    return wrap
+    return wrapped 
