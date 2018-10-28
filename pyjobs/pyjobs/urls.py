@@ -27,7 +27,6 @@ urlpatterns = [
     url(r'^api/', include(job_resource.urls)),
     url(r'', include('core.urls')),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^robots.txt$', robots_view, name='robots'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
 
     url(r'^password_reset/$', auth_views.password_reset,

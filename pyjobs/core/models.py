@@ -89,6 +89,8 @@ class Job(models.Model):
             created_at__lte=today,
         )
 
+    def get_absolute_url(self):
+        return "/job/{}".format(self.pk)
 
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="")

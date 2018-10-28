@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'api',
     'widget_tweaks',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
