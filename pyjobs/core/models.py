@@ -44,7 +44,7 @@ class Job(models.Model):
     requirements = models.TextField("Requisitos da vaga", default="")
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
-    ad_interested = models.BooleanField("Interessado em ter sua vaga destacada?", default=False)
+    ad_interested = models.BooleanField("Queremos ter essa vaga divulgada em mais de 15 comunidades Python", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
