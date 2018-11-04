@@ -72,19 +72,40 @@ def register_new_job(request):
     else:
         new_job = JobForm(request.POST)
         if new_job.is_valid():
-            # Begin Captcha validation
-            recaptcha_response = request.POST.get('g-recaptcha-response')
-            data = {
-                'secret': config('RECAPTCHA_SECRET_KEY'),
-                'response': recaptcha_response
-            }
-            r = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data = data
-            )
+            if config('RECAPTCHA_SECRET_KEY', None) != None:
+                recaptcha_response = request.POST.get('g-recaptcha-response')
+                data = {
+                    'secret': config('RECAPTCHA_SECRET_KEY'),
+                    'response': recaptcha_response
+                }
+                r = requests.post(
+                    'https://www.google.com/recaptcha/api/siteverify',
+                    data = data
+                )
 
-            result = r.json()
-            if result['success']:
+                result = r.json()
+                if result['success']:
+                    new_job.save()
+                    return render(
+                        request,
+                        template_name = "generic.html",
+                        context = {
+                            "message_first": "Job criado com sucesso",
+                            "message_second": "Vá para a home do site!",
+                            "new_job_form": JobForm,
+                        }
+                    )
+                else:
+                    return render(
+                        request,
+                        template_name = "generic.html",
+                        context = {
+                            "message_first": "Preencha corretamente o captcha",
+                            "message_second": "Você não completou a validação do captcha!",
+                            "new_job_form": new_job,
+                        }
+                    )
+            else:
                 new_job.save()
                 return render(
                     request,
@@ -93,16 +114,6 @@ def register_new_job(request):
                         "message_first": "Job criado com sucesso",
                         "message_second": "Vá para a home do site!",
                         "new_job_form": JobForm,
-                    }
-                )
-            else:
-                return render(
-                    request,
-                    template_name = "generic.html",
-                    context = {
-                        "message_first": "Preencha corretamente o captcha",
-                        "message_second": "Você não completou a validação do captcha!",
-                        "new_job_form": new_job,
                     }
                 )
         else:

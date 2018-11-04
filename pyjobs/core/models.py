@@ -44,6 +44,7 @@ class Job(models.Model):
     requirements = models.TextField("Requisitos da vaga", default="")
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
+    ad_interested = models.BooleanField("Interessado em ter sua vaga destacada?", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -149,6 +150,18 @@ def new_job_was_created(sender, instance, created, **kwargs):
         msg_email,
         "pyjobs@pyjobs.com.br",
         receivers
+    )
+
+@receiver(post_save, sender=Job)
+def new_job_was_created_and_ad_interested(sender, instance, created, **kwargs):
+    message_text = "http://www.pyjobs.com.br/job/{link}/ - Interessado em Destaque no PyJobs".format(
+        link=instance.pk
+    )
+    send_mail(
+        "Novo interessado em destaque no PyJobs",
+        message_text,
+        "pyjobs@pyjobs.com.br",
+        ["viniciuscarqueijo@gmail.com"]
     )
 
 
