@@ -22,7 +22,7 @@ class Index(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['premium_jobs'] = Job.objects.filter(
+        context['premium_jobs'] = self.model.objects.filter(
             premium=True, public=True).order_by('-created_at')[:2]
         return context
 
