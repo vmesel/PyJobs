@@ -27,16 +27,17 @@ class Index(ListView):
         return context
 
     def get_queryset(self):
-        queryset = Job.objects.all().order_by('-created_at')
+        queryset = super().get_queryset()
+        qs = queryset.all().order_by('-created_at')
         q = self.request.GET.get('q', '')
         if q:
-            queryset = queryset.filter(
+            queryset = qs.filter(
                 models.Q(title__icontains=q)
                 | models.Q(workplace__icontains=q)
                 | models.Q(description__icontains=q)
                 | models.Q(requirements__icontains=q)
             )
-        return queryset
+        return qs
 
 
 class RobotsView(TemplateView):
