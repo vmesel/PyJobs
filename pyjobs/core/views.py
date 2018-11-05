@@ -82,7 +82,7 @@ class SummaryListView(ListView):
         return queryset
 
 
-class RegisterJob(LoginRequiredMixin, FormView):
+class RegisterJob(FormView, LoginRequiredMixin):
     template_name = 'form_job.html'
     model = Job
     form_class = JobForm
