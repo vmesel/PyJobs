@@ -5,11 +5,11 @@ from django.db.models.signals import post_save
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
-from decouple import config
 from django.core.mail import send_mail
 
 from core.email_utils import *
 from core.utils import *
+from core.newsletter import *
 
 class Messages(models.Model):
     message_title = models.CharField("Título da Mensagem", max_length=100, default="", blank=False)
@@ -87,6 +87,12 @@ class Job(models.Model):
             created_at__gt=datetime.today()-timedelta(days=30)
         ).order_by('-created_at')
 
+    def get_feed_jobs():
+        return Job.objects.filter(premium=False, public=True,
+            created_at__lte=datetime.today(),
+            created_at__gt=datetime.today()-timedelta(days=7)
+        ).order_by('-created_at')
+
     def get_excerpt(self):
         return self.description[:500]
 
@@ -129,6 +135,11 @@ class Contact(models.Model):
     subject = models.CharField("Assunto", max_length=100, default="", blank=False)
     email = models.EmailField("Email", default="", blank=False)
     message = models.TextField("Mensagem", default="", blank=False)
+
+
+@receiver(post_save, sender=Profile)
+def add_user_to_mailchimp(sender, instance, created, **kwargs):
+    subscribe_user_to_chimp(instance)
 
 
 @receiver(post_save, sender=JobApplication)
