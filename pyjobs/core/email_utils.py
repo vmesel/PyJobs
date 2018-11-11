@@ -73,8 +73,6 @@ Olá {nome},
 
 Recebemos seu interesse na oportunidade: {vaga}
 
-Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
-
 Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve,\
  eles entrarão em contato com você!
 
@@ -85,7 +83,6 @@ Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
 Abraços,
 Vinicius Mesel
 @vmesel
-Doe em: http://apoia.se/pyjobs
 """.format(nome=pessoa.get_full_name(), vaga=vaga)
 
 

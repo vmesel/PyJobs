@@ -11,6 +11,15 @@ from django.core.mail import send_mail
 from core.email_utils import *
 from core.utils import *
 
+class Messages(models.Model):
+    message_title = models.CharField("Título da Mensagem", max_length=100, default="", blank=False)
+    message_type = models.CharField("Ticker usado no backend para ID da msg", default="offer", max_length=200, blank=False)
+    message_content = models.TextField("Texto do E-mail", default="")
+
+    class Meta:
+        verbose_name = "Mensagem"
+        verbose_name_plural = "Mensagens"
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     github = models.URLField(verbose_name="GitHub", blank=True, default="")
@@ -142,36 +151,41 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
     )
 
 
-@receiver(post_save, sender=Job)
-def new_job_was_created(sender, instance, created, **kwargs):
-    message_text = "Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/".format(
-        job=instance.title,
-        empresa=instance.company_name,
-        local=instance.workplace,
-        link=instance.pk
-    )
-    post_fb_page(message_text)
-    post_telegram_channel(message_text)
-    msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
-    receivers = [instance.company_email]
+def send_offer_email_template(job):
+    message = Messages.objects.filter(message_type="offer")[0]
+    message_text = message.message_content.format(company=job.company_name)
+    message_title = message.message_title.format(title=job.title)
     send_mail(
-        "Sua oportunidade está disponível no PyJobs",
-        msg_email,
-        "pyjobs@pyjobs.com.br",
-        receivers
+        message_title,
+        message_text,
+        "viniciuscarqueijo@gmail.com",
+        [job.company_email]
     )
 
 @receiver(post_save, sender=Job)
-def new_job_was_created_and_ad_interested(sender, instance, created, **kwargs):
-    message_text = "http://www.pyjobs.com.br/job/{link}/ - Interessado em Destaque no PyJobs".format(
-        link=instance.pk
-    )
-    send_mail(
-        "Novo interessado em destaque no PyJobs",
-        message_text,
-        "pyjobs@pyjobs.com.br",
-        ["viniciuscarqueijo@gmail.com"]
-    )
+def new_job_was_created(sender, instance, created, **kwargs):
+    if created == True:
+        message_text = "Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/".format(
+            job=instance.title,
+            empresa=instance.company_name,
+            local=instance.workplace,
+            link=instance.pk
+        )
+        post_fb_page(message_text)
+        post_telegram_channel(message_text)
+        msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
+        receivers = [instance.company_email]
+        send_mail(
+            "Sua oportunidade está disponível no PyJobs",
+            msg_email,
+            "pyjobs@pyjobs.com.br",
+            receivers
+        )
+        if instance.ad_interested:
+            try:
+                send_offer_email_template(instance)
+            except:
+                pass
 
 
 @receiver(post_save, sender=Contact)
