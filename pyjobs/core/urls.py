@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^$', index, name="index"),
     url(r'^job/(?P<pk>\d+)/$', job_view, name='job_view'),
     url(r'^summary/$', summary_view, name='job_view'),
+    url(r'^services/$', services_view, name='services'),
     url(r'^contact/$', contact, name='contact'),
     url(r'^register/new/job/$', register_new_job, name='register_new_job'),
     url(r'^pythonistas/$', pythonistas_area, name='pythonistas_area'),

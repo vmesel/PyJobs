@@ -36,6 +36,13 @@ def index(request):
     }
     return render(request, template_name="index.html", context=context_dict)
 
+def services_view(request):
+    context_dict = {
+        "new_job_form": JobForm,
+    }
+    return render(request, template_name="services.html", context=context_dict)
+
+
 def robots_view(request):
     return render(request, template_name="robots.txt")
 
