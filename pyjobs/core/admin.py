@@ -12,7 +12,7 @@ def add_subscriber(modeladmin, request, queryset):
         subscribe_user_to_chimp(prof)
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ('title', 'company_name', 'ad_interested', 'public', 'premium')
+    list_display = ('title', 'company_name', 'ad_interested', 'public', 'premium', 'created_at')
     actions = [send_email_offer]
 
 class ProfileAdmin(admin.ModelAdmin):
