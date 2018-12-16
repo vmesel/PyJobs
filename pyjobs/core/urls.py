@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^info/$', pythonista_change_info, name='change_info'),
     url(r'^robots.txt$', robots_view, name='robots'),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'jobs': PyJobsSitemap()}},
-    name='django.contrib.sitemaps.views.sitemap')
+    name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^feed/$', JobsFeed())
 ]

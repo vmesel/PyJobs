@@ -8,6 +8,8 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
+from django.contrib.syndication.views import Feed
+from django.urls import reverse
 
 from decouple import config
 import requests
@@ -242,3 +244,20 @@ def pythonista_change_info(request):
         'form': form,
         "new_job_form": JobForm
     })
+
+class JobsFeed(Feed):
+    title = 'PyJobs - Sua central de vagas Python'
+    link = '/feed/'
+    description = 'As últimas vagas Python cadastradas no PyJobs'
+
+    def items(self):
+        return Job.get_feed_jobs()
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.get_excerpt()
+
+    def item_link(self, item):
+        return reverse('job_view', args=[item.pk])
