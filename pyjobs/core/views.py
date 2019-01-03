@@ -268,3 +268,6 @@ class JobsFeed(Feed):
 
     def item_link(self, item):
         return reverse('job_view', args=[item.pk])
+
+    def item_pubdate(self, item):
+        return item.created_at
