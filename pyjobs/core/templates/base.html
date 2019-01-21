@@ -23,6 +23,7 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description"
     content="Aqui é o portal onde você encontrará seu futuro emprego Python. No PyJobs vagas e pessoas especialistas em Python não faltam! Somos a referência na linguagem em todo o país." />
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="{% static 'assets/fonts/simple-line-icons.min.css' %}">
@@ -89,7 +90,7 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>© 2018 PyJobs</p>
+            <p>© 2019 PyJobs</p>
         </div>
     </footer>
     {% include 'modal_new_job.html' %}
@@ -106,9 +107,9 @@
       $("#link-modal-cadastro-footer").click(function(){
           $("#modal-cadastro").modal();
       });
-      if (document.cookie.indexOf("visited=") >= 0) {}
+      if (document.cookie.indexOf("visitado=") >= 0) {}
       else {
-        document.cookie = "visited=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
         $("#modal-donate").modal();
       }
     });

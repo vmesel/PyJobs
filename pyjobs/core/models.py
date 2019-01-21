@@ -33,6 +33,7 @@ class Profile(models.Model):
                 message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.")]
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    skills = models.ManyToManyField("Skills")
 
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)
@@ -44,17 +45,18 @@ class Profile(models.Model):
 
 
 class Job(models.Model):
-    title = models.CharField("Título da Vaga", max_length=100, default="", blank=False)
-    workplace = models.CharField("Local", max_length=100, default="", blank=False)
-    company_name = models.CharField("Nome da Empresa", max_length=100, default="", blank=False)
-    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="")
-    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False)
-    description = models.TextField("Descrição da vaga", default="")
-    requirements = models.TextField("Requisitos da vaga", default="")
+    title = models.CharField("Título da Vaga", max_length=100, default="", blank=False, help_text = "Ex.: Desenvolvedor")
+    workplace = models.CharField("Local", max_length=100, default="", blank=False, help_text = "Ex.: Santana - São Paulo")
+    company_name = models.CharField("Nome da Empresa", max_length=100, default="", blank=False, help_text = "Ex.: ACME Inc")
+    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text = "Ex.: http://goo.gl/hahaha")
+    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text = "Ex.: abc@def.com")
+    description = models.TextField("Descrição da vaga", default="", help_text = "Descreva um pouco da sua empresa e da vaga, tente ser breve")
+    requirements = models.TextField("Requisitos da vaga", default="", help_text = "Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java")
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
-    ad_interested = models.BooleanField("Tenha a vaga destacada e tenha 4x mais currículos", default=False)
+    ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    skills = models.ManyToManyField("Skills")
 
     def __str__(self):
         return self.title
@@ -117,6 +119,11 @@ class Job(models.Model):
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
 
+    def get_timedate_ago_format(self):
+        n_days = datetime.now() - self.created_at
+        return n_days.days
+
+
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="")
     job = models.ForeignKey(Job, default="")
@@ -136,6 +143,14 @@ class Contact(models.Model):
     email = models.EmailField("Email", default="", blank=False)
     message = models.TextField("Mensagem", default="", blank=False)
 
+class Skills(models.Model):
+    name = models.CharField("Skill", max_length=100, default="", blank=False)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
 
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):

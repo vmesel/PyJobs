@@ -1,5 +1,10 @@
 from django.contrib import admin
-from core.models import Job, Profile, JobApplication, Contact, Messages, send_offer_email_template
+from core.models import \
+    (
+        Job, Profile, JobApplication,
+        Contact, Messages, send_offer_email_template,
+        Skills
+    )
 from django.core.mail import send_mail
 from core.newsletter import subscribe_user_to_chimp
 
@@ -23,3 +28,4 @@ admin.site.register(Profile, ProfileAdmin)
 admin.site.register(JobApplication)
 admin.site.register(Contact)
 admin.site.register(Messages)
+admin.site.register(Skills)
