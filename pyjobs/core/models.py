@@ -120,7 +120,8 @@ class Job(models.Model):
         return "/job/{}".format(self.pk)
 
     def get_timedate_ago_format(self):
-        n_days = datetime.now() - self.created_at
+        today = datetime.now().replace(tzinfo=None)
+        n_days = today - self.created_at.replace(tzinfo=None)
         return n_days.days
 
 
