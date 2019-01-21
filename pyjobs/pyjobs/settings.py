@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'core',
     'api',
     'widget_tweaks',
-    'django.contrib.sitemaps'
+    'django.contrib.sitemaps',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
