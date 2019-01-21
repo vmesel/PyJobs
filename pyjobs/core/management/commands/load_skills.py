@@ -5,10 +5,8 @@ from core.models import Skills
 
 class Command(BaseCommand):
     def _get_skills(self):
-        base = os.path.dirname(os.path.abspath('__file__'))
-        full_path = "{}/core/management/commands/_skills.txt".format(base)
         skills = []
-        raw_skills = open(full_path)
+        raw_skills = open("_skills.txt")
         lines = [line for line in raw_skills.readlines()]
         raw_skills.close()
         for line in lines:
