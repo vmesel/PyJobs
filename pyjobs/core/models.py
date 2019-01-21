@@ -119,11 +119,6 @@ class Job(models.Model):
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
 
-    def get_timedate_ago_format(self):
-        today = datetime.now().replace(tzinfo=None)
-        n_days = today - self.created_at.replace(tzinfo=None)
-        return n_days.days
-
 
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="")

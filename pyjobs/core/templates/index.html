@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {%block title%} PyJobs - A Central de Jobs Python
 {%endblock%}
 {%block main%}
@@ -62,7 +63,7 @@
                                 <h4 class="card-title" style="font-weight: bold;">[Destaque] {{job.title}}</h4>
                               </a>
                                 <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
-                                <h6 class="text-muted card-subtitle mb-2">Postada há: {{job.get_timedate_ago_format}} dias</h6>
+                                <h6 class="text-muted card-subtitle mb-2">Postada: {{job.created_at|naturalday}}</h6>
                                 <hr/>
                                 {%for skill in job.skills.all%}
                                     <span class="badge badge-pill badge-primary">{{skill}}</span>
@@ -123,7 +124,7 @@
                                 <h4 class="card-title">{{job.title}}</h4>
                               </a>
                                 <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
-                                <h6 class="text-muted card-subtitle mb-2">Postada há: {{job.get_timedate_ago_format}} dias</h6>
+                                <h6 class="text-muted card-subtitle mb-2">Postada: {{job.created_at|naturalday}}</h6>
                                 <hr/>
                                 {%for skill in job.skills.all%}
                                     <span class="badge badge-pill badge-primary">{{skill}}</span>
