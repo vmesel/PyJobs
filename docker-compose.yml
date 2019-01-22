@@ -9,7 +9,7 @@ services:
     ports:
       - '8000:8000'
     depends_on:
-     - db
+      - db
 
   db:
     image: postgres:9.5.6-alpine
@@ -20,3 +20,5 @@ services:
       POSTGRES_USER: pyjobs
       POSTGRES_PASSWORD: pyjobs
       POSTGRES_DB: pyjobs
+    volumes:
+      - ./db:/var/lib/postgresql/data
