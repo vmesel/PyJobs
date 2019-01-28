@@ -2,8 +2,6 @@ def empresa_cadastrou_vaga(empresa, vaga):
     return """
 Olá {empresa},
 
-Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
-
 Agora que você criou a vaga {vaga}, nós lhe enviaremos os detalhes de quem se inscreveu para ela, assim você conseguirá\
  entrar em contato com eles
 
@@ -18,8 +16,6 @@ def vaga_publicada(empresa, vaga, pk):
     return """
 Olá {empresa},
 
-Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
-
 Agora a vaga {vaga} foi avaliada por nossos colaboradores e foi publicada!
 
 Para acessar a sua vaga, entre no link: http://www.pyjobs.com.br/job/{pk}/
@@ -33,8 +29,6 @@ Vinicius Mesel
 def contato_cadastrado_empresa(pessoa, vaga):
     return """
     Olá,
-
-    Aproveite e ajude o PyJobs a se manter online doando através do: https://apoia.se/pyjobs
 
     Você recebeu uma nova pessoa interessada em sua vaga: {vaga}
 
