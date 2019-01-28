@@ -12,9 +12,24 @@ from core.utils import *
 from core.newsletter import *
 
 class Messages(models.Model):
-    message_title = models.CharField("Título da Mensagem", max_length=100, default="", blank=False)
-    message_type = models.CharField("Ticker usado no backend para ID da msg", default="offer", max_length=200, blank=False)
-    message_content = models.TextField("Texto do E-mail", default="")
+    message_title = models.CharField(
+        "Título da Mensagem",
+        max_length=100,
+        default="",
+        blank=False
+    )
+
+    message_type = models.CharField(
+        "Ticker usado no backend para ID da msg",
+        default="offer",
+        max_length=200,
+        blank=False
+    )
+
+    message_content = models.TextField(
+        "Texto do E-mail",
+        default=""
+    )
 
     class Meta:
         verbose_name = "Mensagem"
@@ -30,8 +45,11 @@ class Profile(models.Model):
         validators=[
             RegexValidator(
                 regex='^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$',
-                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.")]
+                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen."
+            )
+        ]
     )
+
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skills")
 

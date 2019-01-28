@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import Sitemap
 from core.models import Job
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^robots.txt$', robots_view, name='robots'),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'jobs': PyJobsSitemap()}},
     name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^select2/', include('django_select2.urls')),
     url(r'^feed/$', JobsFeed())
 ]

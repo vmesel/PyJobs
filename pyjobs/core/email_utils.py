@@ -12,7 +12,6 @@ Em breve iremos lhe enviar o link da sua vaga para divulgação!
 Abraços,
 Vinicius Mesel
 @vmesel
-Doe em: http://apoia.se/pyjobs
 """.format(empresa=empresa, vaga=vaga)
 
 def vaga_publicada(empresa, vaga, pk):
@@ -28,7 +27,6 @@ Para acessar a sua vaga, entre no link: http://www.pyjobs.com.br/job/{pk}/
 Abraços,
 Vinicius Mesel
 @vmesel
-Doe em: http://apoia.se/pyjobs
 """.format(empresa=empresa, vaga=vaga, pk=pk)
 
 
@@ -56,7 +54,6 @@ def contato_cadastrado_empresa(pessoa, vaga):
     Abraços,
     Vinicius Mesel
     @vmesel
-    Doe em: http://apoia.se/pyjobs
     """.format(
     nome=pessoa.get_full_name(),
     vaga=vaga,

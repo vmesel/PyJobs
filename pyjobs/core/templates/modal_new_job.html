@@ -1,4 +1,9 @@
 {% load widget_tweaks %}
+<style media="screen">
+    #id_skills{
+        width: 400px;
+    }
+</style>
 <div class="modal fade" role="dialog" tabindex="-1" id="modal-cadastro">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -19,7 +24,7 @@
           {{ hidden_field }}
         {% endfor %}
         {% for field in new_job_form.visible_fields %}
-            {% if field.html_name != "ad_interested" %}
+            {% if field.html_name != "ad_interested" and field.html_name != "skills" %}
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -44,7 +49,12 @@
                 {% endif %}
               </div>
             </div>
+            {%elif field.html_name == "skills"%}
+                    <h4>Skills:</h4>
+                    <p>Coloque as skills para facilitar a busca por seu candidato de sucesso</p>
+                  {% render_field field %}
             {%else%}
+            <hr>
                 <p>{{field}} Eu desejo ter acesso aos serviços do PyJobs e ao clube de profissionais exclusivos.</p>
             {% endif %}
 

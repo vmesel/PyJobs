@@ -18,8 +18,8 @@
         color: #000;
         border: 0px solid #000;
     }
-
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -114,6 +114,7 @@
     {% include 'modal_donate.html' %}
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
     <script type="text/javascript">
@@ -138,6 +139,11 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-103581044-1', 'auto');
       ga('send', 'pageview');
+      </script>
+      <script type="text/javascript">
+      $(document).ready(function() {
+        $('.django-select2').select2();
+      });
       </script>
     {%block extra_scripts%}
     {%endblock%}

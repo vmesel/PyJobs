@@ -54,7 +54,9 @@ def job_view(request, pk):
         "title": get_object_or_404(Job, pk=pk).title
     }
     try:
-        interest = JobApplication.objects.filter(user=request.user, job=context["job"])
+        interest = JobApplication.objects.filter(
+            user=request.user, job=context["job"]
+        )
         if interest.exists():
             context["applied"] = True
         else:
