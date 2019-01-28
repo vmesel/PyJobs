@@ -42,11 +42,6 @@
                 {%else%}
                   {% render_field field class="form-control" placeholder=field.help_text %}
                 {%endif%}
-                {% if field.html_name == "skills" %}
-                <div class="input-group-append">
-                    <small class="form-text text-muted">Para selecionar mais de uma skill, clique apertando a tecla CTRL.</small>
-                </div>
-                {% endif %}
               </div>
             </div>
             {%elif field.html_name == "skills"%}
