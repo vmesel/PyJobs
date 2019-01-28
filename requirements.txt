@@ -4,12 +4,14 @@ chardet==3.0.4
 decorator==4.2.1
 dj-database-url==0.4.2
 Django==1.11.15
+django-appconf==1.0.2
 django-bootstrap3==9.0.0
 django-cities==0.5.0.5
 django-filter==1.1.0
 django-material==1.0.0
 django-model-utils==3.0.0
 django-recaptcha==1.4.0
+django-select2==6.3.1
 django-tastypie==0.14.1
 django-widget-tweaks==1.4.2
 facebook-sdk==2.0.0
@@ -24,6 +26,7 @@ mailchimp3==3.0.6
 parso==0.1.1
 pexpect==4.4.0
 pickleshare==0.7.4
+pkg-resources==0.0.0
 prompt-toolkit==1.0.15
 psycopg2==2.7.6.1
 ptyprocess==0.5.2
@@ -37,7 +40,6 @@ pytz==2017.3
 raven==6.8.0
 requests==2.20.0
 sendgrid==3.6.5
-sentry-sdk==0.6.8
 sendgrid-django==4.0.4
 simplegeneric==0.8.1
 six==1.11.0
