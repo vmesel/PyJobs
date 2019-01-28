@@ -42,7 +42,6 @@ def services_view(request):
     }
     return render(request, template_name="services.html", context=context_dict)
 
-
 def robots_view(request):
     return render(request, template_name="robots.txt")
 
@@ -70,7 +69,6 @@ def job_view(request, pk):
             context["job"].apply(request.user) #aplica o usuario
             return redirect('/job/{}/'.format(context["job"].pk))
     return render(request, template_name="job_details.html", context=context)
-
 
 def summary_view(request):
     jobs = Job()

@@ -63,9 +63,18 @@ class Profile(models.Model):
 
 
 class Job(models.Model):
-    title = models.CharField("Título da Vaga", max_length=100, default="", blank=False, help_text = "Ex.: Desenvolvedor")
-    workplace = models.CharField("Local", max_length=100, default="", blank=False, help_text = "Ex.: Santana - São Paulo")
-    company_name = models.CharField("Nome da Empresa", max_length=100, default="", blank=False, help_text = "Ex.: ACME Inc")
+    title = models.CharField(
+        "Título da Vaga", max_length=100, default="",
+        blank=False, help_text = "Ex.: Desenvolvedor"
+    )
+    workplace = models.CharField(
+        "Local", max_length=100, default="",
+        blank=False, help_text = "Ex.: Santana - São Paulo"
+    )
+    company_name = models.CharField(
+        "Nome da Empresa", max_length=100, default="",
+        blank=False, help_text = "Ex.: ACME Inc"
+    )
     application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text = "Ex.: http://goo.gl/hahaha")
     company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text = "Ex.: abc@def.com")
     description = models.TextField("Descrição da vaga", default="", help_text = "Descreva um pouco da sua empresa e da vaga, tente ser breve")
@@ -80,10 +89,7 @@ class Job(models.Model):
         return self.title
 
     def get_application_link(self):
-        if self.application_link != "":
-            return self.application_link
-        else:
-            return False
+        return self.application_link if self.application_link != "" else False
 
     def get_premium_jobs():
         return Job.objects.filter(premium=True, public=True,
@@ -92,20 +98,19 @@ class Job(models.Model):
         ).order_by('-created_at')[:5]
 
     def get_publicly_available_jobs(search_value=None):
+        ft = models.Q()
+
         if search_value is not None:
             ft = models.Q(title__icontains=search_value) | \
                 models.Q(workplace__icontains=search_value) | \
                 models.Q(description__icontains=search_value) | \
                 models.Q(requirements__icontains=search_value)
-            return Job.objects.filter(ft, premium=False, public=True,
-                created_at__lte=datetime.today(),
-                created_at__gt=datetime.today()-timedelta(days=30)
-            ).order_by('-created_at')
 
-        return Job.objects.filter(premium=False, public=True,
+        return Job.objects.filter(ft, premium=False, public=True,
             created_at__lte=datetime.today(),
             created_at__gt=datetime.today()-timedelta(days=30)
         ).order_by('-created_at')
+
 
     def get_feed_jobs():
         return Job.objects.filter(premium=False, public=True,
@@ -117,10 +122,9 @@ class Job(models.Model):
         return self.description[:500]
 
     def applied(self, request_user):
-        if JobApplication.objects.filter(job=self, user=request_user).exists():
-            return True
-        else:
-            return False
+        return True if JobApplication.objects.\
+            filter(job=self, user=request_user).exists() \
+            else False
 
     def apply(self, request_user):
         JobApplication.objects.create(job=self, user=request_user)
@@ -128,7 +132,7 @@ class Job(models.Model):
 
     def get_weekly_summary(self):
         today = datetime.today()
-        past_date = datetime.today() - timedelta(days=7)
+        past_date = today - timedelta(days=7)
         return Job.objects.filter(
             created_at__gte=past_date,
             created_at__lte=today,
@@ -175,19 +179,18 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
     msg_email_person = contato_cadastrado_pessoa(pessoa=instance.user, vaga=instance.job)
     msg_email_company = contato_cadastrado_empresa(pessoa=instance.user, vaga=instance.job)
-    receiver_person = [instance.user.email]
-    receiver_company = [instance.job.company_email]
+
     send_mail(
         "Parabéns! Você se inscreveu na vaga!",
         msg_email_person,
         "pyjobs@pyjobs.com.br",
-        receiver_person
+        [instance.user.email]
     )
     send_mail(
         "Você possui mais um candidato para a sua vaga",
         msg_email_company,
         "pyjobs@pyjobs.com.br",
-        receiver_company
+        [instance.job.company_email]
     )
 
 
@@ -214,12 +217,11 @@ def new_job_was_created(sender, instance, created, **kwargs):
         post_fb_page(message_text)
         post_telegram_channel(message_text)
         msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
-        receivers = [instance.company_email]
         send_mail(
             "Sua oportunidade está disponível no PyJobs",
             msg_email,
             "pyjobs@pyjobs.com.br",
-            receivers
+            [instance.company_email]
         )
         if instance.ad_interested:
             try:
