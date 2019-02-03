@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.models import User, AnonymousUser
-from core.models import Job
+from pyjobs.core.models import Job
 from django.test import TestCase
 
 class JobTest_01(TestCase):

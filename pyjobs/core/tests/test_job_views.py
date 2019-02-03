@@ -3,8 +3,8 @@ from django.http import HttpRequest
 from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import User, AnonymousUser
 
-from core.views import *
-from core.models import Job
+from pyjobs.core.views import *
+from pyjobs.core.models import Job
 
 class HomeJobsViewsTest(TestCase):
     def setUp(self):

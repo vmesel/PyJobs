@@ -1,7 +1,7 @@
 import os
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
-from core.models import Skills
+from pyjobs.core.models import Skills
 
 class Command(BaseCommand):
     def _get_skills(self):

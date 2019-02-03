@@ -5,7 +5,7 @@ from django import forms
 
 from django_select2.forms import Select2Widget, Select2MultipleWidget
 
-from core.models import Job, Contact, Profile
+from pyjobs.core.models import Job, Contact, Profile
 
 
 class JobForm(ModelForm):

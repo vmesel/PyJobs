@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 
-from core.models import Job, Profile, JobApplication
-from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
+from pyjobs.core.models import Job, Profile, JobApplication
+from pyjobs.core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
 
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm

@@ -1,8 +1,8 @@
 from django.conf.urls import url, include
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import Sitemap
-from core.models import Job
-from core.views import *
+from pyjobs.core.models import Job
+from pyjobs.core.views import *
 
 class PyJobsSitemap(Sitemap):
     changefreq = "always"

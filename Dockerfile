@@ -5,6 +5,7 @@ RUN mkdir /code
 
 WORKDIR /code
 
+COPY manage.py manage.py
 COPY /pyjobs/ /code/
 COPY requirements.txt /code/
 

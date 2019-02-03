@@ -16,8 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
-from .settings import *
-from api.resources import *
+from pyjobs.settings import *
+from pyjobs.api.resources import *
 from django.contrib.auth import views as auth_views
 
 job_resource = JobResource()
@@ -25,7 +25,7 @@ job_resource = JobResource()
 urlpatterns = [
     url(r'^admin_v2/', admin.site.urls),
     url(r'^api/', include(job_resource.urls)),
-    url(r'', include('core.urls')),
+    url(r'', include('pyjobs.core.urls')),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
 

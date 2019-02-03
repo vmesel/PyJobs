@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.core.mail import send_mail
 
-from core.email_utils import *
-from core.utils import *
-from core.newsletter import *
+from pyjobs.core.email_utils import *
+from pyjobs.core.utils import *
+from pyjobs.core.newsletter import *
 
 class Messages(models.Model):
     message_title = models.CharField(
