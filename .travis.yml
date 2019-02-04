@@ -2,14 +2,15 @@ language: python
 python:
   - 3.6
 env:
-  - "PIP_NO_BINARY=:all:"
+  - SECRET_KEY=here-comes-a-secret-key PIPENV_IGNORE_VIRTUALENVS=1
 install:
-  - pip install -U pip pipenv
+  - pip install -U pip
+  - pip install -U pipenv
   - pipenv install --dev --system
 before_script:
   - python manage.py migrate
 script:
-  - coverage run manage.py test --parallel
+  - coverage run manage.py test
 addons:
   code_climate:
     repo_token: d00a646dd653557dee1029960b0157368f641db4802f51c8df64ae4f6397f933
