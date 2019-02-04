@@ -18,6 +18,7 @@ before_script:
 script:
   - coverage run manage.py test
 after_script:
+  - coverage xml
   - ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT
 addons:
   code_climate:
