@@ -64,6 +64,21 @@ class Profile(models.Model):
         verbose_name_plural = "Perfis"
         ordering = ['-created_at']
 
+    def profile_skill_grade(self, job_pk):
+        job_to_evaluate = Job.objects.get(pk=job_pk)
+
+        job_required_skills = [skill.pk for skill in job_to_evaluate.skills.all()]
+        user_skills = [skill.pk for skill in self.skills.all()]
+
+        if len(user_skills) < 1:
+            return False
+
+        intersect_skills = [
+            skill for skill in user_skills if skill in job_required_skills
+        ]
+        return (len(intersect_skills)/len(job_required_skills))*100
+
+
 
 class Job(models.Model):
     title = models.CharField(
