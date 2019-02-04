@@ -18,7 +18,7 @@ before_script:
 script:
   - coverage run manage.py test
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT
 addons:
   code_climate:
     repo_token: d00a646dd653557dee1029960b0157368f641db4802f51c8df64ae4f6397f933
