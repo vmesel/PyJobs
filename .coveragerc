@@ -1,0 +1,6 @@
+  [run]
+  source = pyjobs
+  omit =
+      pyjobs/core/tests/*.py
+      pyjobs/core/migrations/*.py
+      pyjobs/wsgi.py
