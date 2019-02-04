@@ -22,3 +22,5 @@ services:
       POSTGRES_USER: pyjobs
       POSTGRES_PASSWORD: pyjobs
       POSTGRES_DB: pyjobs
+    volumes:
+      - ./db:/var/lib/postgresql/data

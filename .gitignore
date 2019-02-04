@@ -1,4 +1,4 @@
-reated by https://www.gitignore.io/api/pydev,python,django,pycharm,pycharm+all
+Created by https://www.gitignore.io/api/pydev,python,django,pycharm,pycharm+all
 
 ### Django ###
 *.log
@@ -213,3 +213,6 @@ ENV/
 /site
 
 # End of https://www.gitignore.io/api/pydev,python,django,pycharm,pycharm+all
+
+# Postgres Docker container data directory
+db/

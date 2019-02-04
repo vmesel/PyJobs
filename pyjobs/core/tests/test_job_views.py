@@ -1,19 +1,24 @@
-from django.urls import resolve
-from django.http import HttpRequest
-from django.test import TestCase, RequestFactory, Client
-from django.contrib.auth.models import User, AnonymousUser
+from unittest.mock import patch
 
-from pyjobs.core.views import *
+from django.contrib.auth.models import User
+from django.http import HttpRequest
+from django.test import TestCase, Client
+from django.urls import resolve
+
 from pyjobs.core.models import Job, Profile
+from pyjobs.core.views import index
+
 
 class HomeJobsViewsTest(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
-            application_link = "http://www.xpto.com.br/apply",
-            company_email = "vm@xpto.com",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
             description="Job bem maneiro"
         )
         self.job.save()
@@ -34,13 +39,15 @@ class HomeJobsViewsTest(TestCase):
 
 
 class JobDetailsViewTest(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
-            application_link = "http://www.xpto.com.br/apply",
-            company_email = "vm@xpto.com",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             requirements="Job bem maneiro",
         )
@@ -69,12 +76,14 @@ class JobDetailsViewTest(TestCase):
 
 
 class PyJobsJobApplication(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
             public=True
@@ -87,11 +96,11 @@ class PyJobsJobApplication(TestCase):
         )
 
         self.profile = Profile.objects.create(
-            user  = self.user,
-            github = "http://www.github.com/foobar",
-            linkedin = "http://www.linkedin.com/in/foobar",
-            portfolio = "http://www.foobar.com/",
-            cellphone = "11981435390"
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390"
         )
 
         self.client = Client()
