@@ -117,3 +117,13 @@ class PyJobsJobApplication(TestCase):
         request = request_client.content.decode('utf-8')
         expected_response = "Aplicar para esta vaga pelo PyJobs"
         self.assertTrue(expected_response in request)
+
+
+class PyJobsContact(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_check_if_is_correct_page(self):
+        response = self.client.get("/contact/").content.decode('utf-8')
+        self.assertTrue("Contato" in response)

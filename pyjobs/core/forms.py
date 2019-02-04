@@ -74,4 +74,7 @@ class RegisterForm(UserCreationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('github', 'linkedin', 'portfolio', 'cellphone')
+        fields = ('github', 'linkedin', 'portfolio', 'cellphone', 'skills')
+        widgets = {
+            'skills': Select2MultipleWidget
+        }

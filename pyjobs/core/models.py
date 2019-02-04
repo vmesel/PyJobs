@@ -35,6 +35,7 @@ class Messages(models.Model):
         verbose_name = "Mensagem"
         verbose_name_plural = "Mensagens"
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     github = models.URLField(verbose_name="GitHub", blank=True, default="")
@@ -77,7 +78,6 @@ class Profile(models.Model):
             skill for skill in user_skills if skill in job_required_skills
         ]
         return (len(intersect_skills)/len(job_required_skills))*100
-
 
 
 class Job(models.Model):
@@ -226,12 +226,11 @@ def send_offer_email_template(job):
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
     if created == True:
-        message_text = "Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/".format(
-            job=instance.title,
-            empresa=instance.company_name,
-            local=instance.workplace,
-            link=instance.pk
-        )
+        job=instance.title,
+        empresa=instance.company_name,
+        local=instance.workplace,
+        link=instance.pk
+        message_text = f"Nova oportunidade! {job} - {empresa} em {local}\n http://www.pyjobs.com.br/job/{link}/"
         post_fb_page(message_text)
         post_telegram_channel(message_text)
         msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)

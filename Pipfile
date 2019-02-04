@@ -8,6 +8,7 @@ coverage = "*"
 ipdb = "*"
 ipython = "*"
 model-mommy = "*"
+nose = "*"
 
 [packages]
 dj-database-url = "*"
