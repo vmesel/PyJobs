@@ -112,13 +112,11 @@ LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Sao_Paulo'
 
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -128,17 +126,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'staticfiles'),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'))
 
-if os.environ.get("SENTRY_DSN") is not None:
-    RAVEN_CONFIG = {
-        'dsn': os.environ["SENTRY_DSN"],
-    }
+RAVEN_CONFIG = {'dsn': config("SENTRY_DSN")}
 
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = '/login'
 default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
-SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+SENDGRID_API_KEY = config('SENDGRID_API_KEY')
