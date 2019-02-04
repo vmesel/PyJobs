@@ -2,6 +2,7 @@
 [![Chatroom](https://img.shields.io/badge/chat-Telegram-blue.svg)](https://t.me/joinchat/Cc8X5A-re7F8F4AIP0lSeg)
 [![Build Status](https://img.shields.io/travis/vmesel/PyJobs/master.svg)](https://travis-ci.org/vmesel/PyJobs)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/vmesel/PyJobs.svg)](https://codeclimate.com/github/vmesel/PyJobs/maintainability)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/vmesel/PyJobs.svg)](https://codeclimate.com/github/vmesel/PyJobs/test_coverage)
 
 O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue se cadastrar para diversas vagas de emprego e de freelas que podem aparecer no país. Você pode contribuir com código ou ainda com valores monetários no: [Apoia-Se](https://apoia.se/pyjobs)
 
