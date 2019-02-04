@@ -128,10 +128,10 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'))
 
-RAVEN_CONFIG = {'dsn': config("SENTRY_DSN")}
+RAVEN_CONFIG = {'dsn': config("SENTRY_DSN", default=None)}
 
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = '/login'
 default_email_backend = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
-SENDGRID_API_KEY = config('SENDGRID_API_KEY')
+SENDGRID_API_KEY = config('SENDGRID_API_KEY', default=None)
