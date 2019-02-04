@@ -56,6 +56,7 @@ ipython_genutils = "==0.2.0"
 prompt_toolkit = "==1.0.15"
 Pygments = "==2.2.0"
 python_http_client = "==3.0.0"
+coverage = "*"
 
 [requires]
 python_version = "3.6"
