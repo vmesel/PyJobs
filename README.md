@@ -1,5 +1,7 @@
 # PyJobs - O Site de Vagas Python Open Source
 [![chatroom icon](https://patrolavia.github.io/telegram-badge/chat.png)](https://t.me/joinchat/Cc8X5A-re7F8F4AIP0lSeg)
+<a href="https://codeclimate.com/github/vmesel/PyJobs/maintainability"><img src="https://api.codeclimate.com/v1/badges/86f23287eac22e4885bd/maintainability" /></a>
+[![Build Status](https://travis-ci.org/vmesel/PyJobs.svg?branch=master)](https://travis-ci.org/vmesel/PyJobs)
 
 O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue se cadastrar para diversas vagas de emprego e de freelas que podem aparecer no país. Você pode contribuir com código ou ainda com valores monetários no: [Apoia-Se](https://apoia.se/pyjobs)
 

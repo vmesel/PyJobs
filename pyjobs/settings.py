@@ -126,7 +126,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'))
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 
 RAVEN_CONFIG = {'dsn': config("SENTRY_DSN", default=None)}
 
