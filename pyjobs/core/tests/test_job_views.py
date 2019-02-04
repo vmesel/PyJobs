@@ -118,6 +118,17 @@ class PyJobsJobApplication(TestCase):
         expected_response = "Aplicar para esta vaga pelo PyJobs"
         self.assertTrue(expected_response in request)
 
+    def test_check_if_profile_with_no_skills_can_apply(self):
+        self.client.login(username="jacob", password="top_secret")
+        job_url = "/job/{}/".format(self.job.pk)
+        request_client = self.client.get(job_url)
+        request = request_client.content.decode('utf-8')
+        request_apply = self.client.post(job_url, follow=True)
+
+        self.assertTrue(
+            "Você já aplicou a esta vaga!" in request_apply.content.decode('utf-8')
+        )
+
 
 class PyJobsContact(TestCase):
 
