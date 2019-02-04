@@ -132,6 +132,10 @@ RAVEN_CONFIG = {'dsn': config("SENTRY_DSN", default=None)}
 
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = '/login'
-default_email_backend = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = config('EMAIL_BACKEND', default=default_email_backend)
+
+EMAIL_BACKEND = config(
+    'EMAIL_BACKEND',
+    default = 'django.core.mail.backends.console.EmailBackend'
+)
+
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default=None)

@@ -56,6 +56,9 @@ class Profile(models.Model):
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)
 
+    def __repr__(self):
+        return "{} {}".format(self.user.first_name, self.user.last_name)
+
     class Meta:
         verbose_name = "Perfil"
         verbose_name_plural = "Perfis"

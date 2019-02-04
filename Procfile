@@ -1,1 +1,1 @@
-web: gunicorn pyjobs.wsgi --chdir pyjobs --log-file -
+web: gunicorn pyjobs.wsgi --log-file -
