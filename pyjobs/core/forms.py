@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
@@ -5,7 +6,7 @@ from django import forms
 
 from django_select2.forms import Select2Widget, Select2MultipleWidget
 
-from pyjobs.core.models import Job, Contact, Profile
+from pyjobs.core.models import Job, Contact, Profile, Skills
 
 
 class JobForm(ModelForm):
@@ -60,6 +61,10 @@ class RegisterForm(UserCreationForm):
             }
         ), required=True)
 
+    skills = forms.ModelMultipleChoiceField(label="Skills",
+        queryset=Skills.objects.all()
+    )
+
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "username")
@@ -69,6 +74,25 @@ class RegisterForm(UserCreationForm):
 
         for fieldname in ['password1', 'password2']:
             self.fields[fieldname].help_text = None
+
+    def save(self, commit=True):
+        instance = super(RegisterForm, self).save(commit=False)
+        if commit:
+            instance.save()
+
+            profile = Profile(
+                user=instance,
+                github=self.cleaned_data["github"],
+                linkedin=self.cleaned_data["linkedin"],
+                portfolio=self.cleaned_data["portfolio"],
+                cellphone=self.cleaned_data["cellphone"]
+            )
+            authenticate(username=instance.username, password=self.cleaned_data.get('password1'))
+            profile.save()
+            profile.skills = self.cleaned_data["skills"]
+            profile.save()
+        return instance
+
 
 
 class EditProfileForm(forms.ModelForm):

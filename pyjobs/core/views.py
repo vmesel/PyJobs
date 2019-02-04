@@ -176,33 +176,17 @@ def pythonistas_area(request):
     return render(request, "pythonistas-area.html")
 
 def pythonistas_signup(request):
-    context = {}
-    context["new_job_form"] = JobForm
+    context = {
+        "new_job_form": JobForm,
+        "form": RegisterForm(request.POST or None),
+    }
 
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            profile = Profile(
-                user=user,
-                github=form.cleaned_data["github"],
-                linkedin=form.cleaned_data["linkedin"],
-                portfolio=form.cleaned_data["portfolio"],
-                cellphone=form.cleaned_data["cellphone"],
-            )
-            profile.save()
-            login(request, user)
-            return redirect("/")
-        else:
-            context["form"] = form
-            return render(request, "pythonistas-signup.html", context)
-    else:
-        form = RegisterForm()
-        context["form"] = form
-        return render(request, "pythonistas-signup.html", context)
+    if request.method == "POST" and context["form"].is_valid():
+        user = context["form"].save()
+        login(request, user)
+        return redirect("/")
+
+    return render(request, "pythonistas-signup.html", context)
 
 @login_required
 def pythonista_change_password(request):
