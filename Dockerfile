@@ -1,12 +1,12 @@
 FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir /code
-
 WORKDIR /code
 
 COPY manage.py manage.py
+COPY Pipfile Pipfile
+COPY Pipfile.lock Pipfile.lock
 COPY /pyjobs/ /code/
-COPY requirements.txt /code/
 
-RUN pip install -r requirements.txt
+RUN pip install pipenv
+RUN pipenv install --system --deploy --ignore-pipfile

@@ -1,0 +1,22 @@
+language: python
+sudo: false
+branches:
+  only:
+    - master
+python:
+  - 3.6
+env:
+  - "PIP_NO_BINARY=:all:"
+install:
+  - pip install -U pip pipenv
+  - pipenv install --dev --system
+before_script:
+  - python manage.py migrate
+  - python manage.py collectstatic --no-input
+script:
+  - coverage run manage.py test --parallel
+after_success:
+  - coveralls
+addons:
+  code_climate:
+    repo_token: c42dbb6e9c46bd32673908a66bb1c50908dd52040cb395a9ca375b153d971716
