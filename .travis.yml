@@ -15,6 +15,7 @@ install:
   - pipenv install --dev --system
 before_script:
   - python manage.py migrate
+  - python manage.py collectstatic --no-input
 script:
   - coverage run manage.py test
 after_script:
