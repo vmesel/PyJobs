@@ -1,17 +1,22 @@
 from datetime import datetime
+from unittest.mock import patch
 
-from django.contrib.auth.models import User, AnonymousUser
-from pyjobs.core.models import Job, Profile
+from django.contrib.auth.models import User
 from django.test import TestCase
 
+from pyjobs.core.models import Job, Profile
+
+
 class JobTest_01(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
-            application_link = "http://www.xpto.com.br/apply",
-            company_email = "vm@xpto.com",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
             description="Job bem maneiro"
         )
         self.job.save()
@@ -26,17 +31,21 @@ class JobTest_01(TestCase):
         self.assertEqual(str(self.job), "Vaga 1")
 
     def test_job_application_link(self):
-        self.assertEqual(str(self.job.get_application_link()), "http://www.xpto.com.br/apply")
-
+        self.assertEqual(
+            str(self.job.get_application_link()),
+            "http://www.xpto.com.br/apply"
+        )
 
 
 class JobTest_02(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 2",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             public=True
         )
@@ -53,12 +62,14 @@ class JobTest_02(TestCase):
 
 
 class JobTest_03(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
             public=True
@@ -74,13 +85,16 @@ class JobTest_03(TestCase):
     def test_publicly_available(self):
         self.assertTrue((self.job not in Job.get_publicly_available_jobs()))
 
+
 class JobTest_Application(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
-            company_email = "vm@xpto.com",
+            company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
             public=True
@@ -92,11 +106,11 @@ class JobTest_Application(TestCase):
         )
 
         self.profile = Profile.objects.create(
-            user  = self.user,
-            github = "http://www.github.com/foobar",
-            linkedin = "http://www.linkedin.com/in/foobar",
-            portfolio = "http://www.foobar.com/",
-            cellphone = "11981435390"
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390"
         )
 
         self.job.save()
@@ -105,7 +119,7 @@ class JobTest_Application(TestCase):
         application_status = self.job.applied(self.user)
         self.assertEqual(application_status, False)
 
-    def test_user_is_not_applied(self):
+    def test_user_is_applied(self):
         self.job.apply(self.user)
         application_status = self.job.applied(self.user)
         self.assertEqual(application_status, True)
