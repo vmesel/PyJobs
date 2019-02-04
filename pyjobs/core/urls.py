@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import Sitemap
-from core.models import Job
-from core.views import *
+from pyjobs.core.models import Job
+from pyjobs.core.views import *
 
 class PyJobsSitemap(Sitemap):
     changefreq = "always"
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^$', index, name="index"),
     url(r'^job/(?P<pk>\d+)/$', job_view, name='job_view'),
     url(r'^summary/$', summary_view, name='job_view'),
+    url(r'^services/$', services_view, name='services'),
     url(r'^contact/$', contact, name='contact'),
     url(r'^register/new/job/$', register_new_job, name='register_new_job'),
     url(r'^pythonistas/$', pythonistas_area, name='pythonistas_area'),
@@ -29,5 +30,6 @@ urlpatterns = [
     url(r'^robots.txt$', robots_view, name='robots'),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'jobs': PyJobsSitemap()}},
     name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^select2/', include('django_select2.urls')),
     url(r'^feed/$', JobsFeed())
 ]

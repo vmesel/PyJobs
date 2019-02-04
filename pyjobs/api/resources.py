@@ -1,5 +1,5 @@
 from tastypie.resources import ModelResource
-from core.models import Job
+from pyjobs.core.models import Job
 
 class JobResource(ModelResource):
     class Meta:

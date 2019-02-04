@@ -1,4 +1,9 @@
 {% load widget_tweaks %}
+<style media="screen">
+    #id_skills{
+        width: 400px;
+    }
+</style>
 <div class="modal fade" role="dialog" tabindex="-1" id="modal-cadastro">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -19,31 +24,36 @@
           {{ hidden_field }}
         {% endfor %}
         {% for field in new_job_form.visible_fields %}
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                {{ field.label_tag }}
-              </span>
+            {% if field.html_name != "ad_interested" and field.html_name != "skills" %}
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    {{ field.label_tag }}
+                  </span>
+                </div>
+                {% if field.errors %}
+                {% render_field field class="form-control is-invalid" %}
+                {% for error in field.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+                {% endfor %}
+                {%else%}
+                  {% render_field field class="form-control" placeholder=field.help_text %}
+                {%endif%}
+              </div>
             </div>
-            {% if field.errors %}
-            {% render_field field class="form-control is-invalid" %}
-            {% for error in field.errors %}
-            <div class="invalid-feedback">
-              {{ error }}
-            </div>
-            {% endfor %}
+            {%elif field.html_name == "skills"%}
+                    <h4>Skills:</h4>
+                    <p>Coloque as skills para facilitar a busca por seu candidato de sucesso</p>
+                  {% render_field field %}
             {%else%}
-              {% render_field field class="form-control" %}
-            {%endif%}
-            <div class="input-group-append">
-              {% if field.help_text %}
-                <small class="form-text text-muted">{{ field.help_text }}</small>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        {%endfor%}
+            <hr>
+                <p>{{field}} Eu desejo ter acesso aos serviços do PyJobs e ao clube de profissionais exclusivos.</p>
+            {% endif %}
+
+        {% endfor %}
         <div class="g-recaptcha" data-sitekey="6Lerz1cUAAAAAK9xC1q1Hbqpfbtb75ck26IZVRPf"></div>
       </div>
     <div class="modal-footer">

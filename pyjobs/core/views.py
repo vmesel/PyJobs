@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 
-from core.models import Job, Profile, JobApplication
-from core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
+from pyjobs.core.models import Job, Profile, JobApplication
+from pyjobs.core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
 
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -36,6 +36,12 @@ def index(request):
     }
     return render(request, template_name="index.html", context=context_dict)
 
+def services_view(request):
+    context_dict = {
+        "new_job_form": JobForm,
+    }
+    return render(request, template_name="services.html", context=context_dict)
+
 def robots_view(request):
     return render(request, template_name="robots.txt")
 
@@ -47,7 +53,9 @@ def job_view(request, pk):
         "title": get_object_or_404(Job, pk=pk).title
     }
     try:
-        interest = JobApplication.objects.filter(user=request.user, job=context["job"])
+        interest = JobApplication.objects.filter(
+            user=request.user, job=context["job"]
+        )
         if interest.exists():
             context["applied"] = True
         else:
@@ -61,7 +69,6 @@ def job_view(request, pk):
             context["job"].apply(request.user) #aplica o usuario
             return redirect('/job/{}/'.format(context["job"].pk))
     return render(request, template_name="job_details.html", context=context)
-
 
 def summary_view(request):
     jobs = Job()
@@ -261,3 +268,6 @@ class JobsFeed(Feed):
 
     def item_link(self, item):
         return reverse('job_view', args=[item.pk])
+
+    def item_pubdate(self, item):
+        return item.created_at

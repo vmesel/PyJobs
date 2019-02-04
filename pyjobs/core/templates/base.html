@@ -3,6 +3,23 @@
 <html>
 
 <head>
+    <style media="screen">
+    .btn-chamada {
+        background-color: #ffe01b;
+        color: #000;
+        border: 0px solid #000;
+    }
+
+    .btn-destacada {
+        height: 75px;
+        width: 100%;
+        margin-top: 25px;
+        background-color: #ffe01b;
+        color: #000;
+        border: 0px solid #000;
+    }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -23,10 +40,28 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description"
     content="Aqui é o portal onde você encontrará seu futuro emprego Python. No PyJobs vagas e pessoas especialistas em Python não faltam! Somos a referência na linguagem em todo o país." />
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="{% static 'assets/fonts/simple-line-icons.min.css' %}">
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '355041588645833');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=355041588645833&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
 </head>
 
 <body>
@@ -42,7 +77,9 @@
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}#oportunidades">VAGAS</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link active" id="link-modal-cadastro" style="cursor: pointer;">CADASTRE UMA VAGA</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'contact' %}">CONTATO</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'contact' %}">CONTATO</a></li> -->
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'services' %}">NOSSOS SERVI&Ccedil;OS</a></li>
+
                     {% if user.is_authenticated %}
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'pythonistas_area' %}">ÁREA DO PYTHONISTA</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'logout' %}">LOGOUT</a></li>
@@ -70,13 +107,14 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>© 2018 PyJobs</p>
+            <p>© 2019 PyJobs</p>
         </div>
     </footer>
     {% include 'modal_new_job.html' %}
     {% include 'modal_donate.html' %}
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
     <script type="text/javascript">
@@ -87,9 +125,9 @@
       $("#link-modal-cadastro-footer").click(function(){
           $("#modal-cadastro").modal();
       });
-      if (document.cookie.indexOf("visited=") >= 0) {}
+      if (document.cookie.indexOf("visitado=") >= 0) {}
       else {
-        document.cookie = "visited=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
         $("#modal-donate").modal();
       }
     });
@@ -101,6 +139,11 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-103581044-1', 'auto');
       ga('send', 'pageview');
+      </script>
+      <script type="text/javascript">
+      $(document).ready(function() {
+        $('.django-select2').select2();
+      });
       </script>
     {%block extra_scripts%}
     {%endblock%}

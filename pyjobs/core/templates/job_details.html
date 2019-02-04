@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}
 {{job.title}} no PyJobs
 {% endblock %}
@@ -11,6 +12,7 @@
                     <h1 class="text-info">{{job.title}}</h1>
                     <p>Local da vaga: {{job.workplace}}</p>
                     <p>Empresa: {{job.company_name}}</p>
+                    <p>Postada: {{job.created_at|naturalday}}</p>
                 </div>
                 <div class="block-content">
                   {% if job.application_link %}
@@ -31,6 +33,13 @@
                       <button class="btn btn-primary" type="button">Você precisa estar logado para aplicar para esta vaga!</button>
                     {% endif %}
                   {% endif %}
+                    <div class="faq-item">
+                        <div class="answer">
+                            {%for skill in job.skills.all%}
+                                <span class="badge badge-pill badge-primary">{{skill}}</span>
+                            {%endfor%}
+                        </div>
+                    </div>
                     <div class="faq-item">
                         <h4 class="question">Descrição da vaga</h4>
                         <div class="answer">

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.models import User, AnonymousUser
-from core.models import Job
+from pyjobs.core.models import Job, Profile
 from django.test import TestCase
 
 class JobTest_01(TestCase):
@@ -86,7 +86,19 @@ class JobTest_Application(TestCase):
             public=True
         )
         self.user = User.objects.create_user(
-            username='jacob', email='jacob@gmail.com', password='top_secret')
+            username='jacob',
+            email='jacob@gmail.com',
+            password='top_secret'
+        )
+
+        self.profile = Profile.objects.create(
+            user  = self.user,
+            github = "http://www.github.com/foobar",
+            linkedin = "http://www.linkedin.com/in/foobar",
+            portfolio = "http://www.foobar.com/",
+            cellphone = "11981435390"
+        )
+
         self.job.save()
 
     def test_user_is_not_applied(self):
