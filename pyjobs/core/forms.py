@@ -61,8 +61,9 @@ class RegisterForm(UserCreationForm):
             }
         ), required=True)
 
-    skills = forms.ModelMultipleChoiceField(label="Skills",
-        queryset=Skills.objects.all()
+    skills_ = forms.ModelMultipleChoiceField(label="Skills",
+        queryset=Skills.objects.all(),
+        widget=Select2MultipleWidget
     )
 
     class Meta:
@@ -89,7 +90,7 @@ class RegisterForm(UserCreationForm):
             )
             authenticate(username=instance.username, password=self.cleaned_data.get('password1'))
             profile.save()
-            profile.skills = self.cleaned_data["skills"]
+            profile.skills = self.cleaned_data["skills_"]
             profile.save()
         return instance
 

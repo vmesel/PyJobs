@@ -15,6 +15,7 @@
                     {{ hidden_field }}
                   {% endfor %}
                   {% for field in form.visible_fields %}
+                  {% if field.html_name != "skills_" %}
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -39,9 +40,18 @@
                       </div>
                     </div>
                   </div>
+                  {%else%}
+                  <div class="form-group">
+                      <br>
+                      <label for="exampleInputEmail1">Skills</label>
+                      <small class="form-text text-muted">Preencha com as skills que você se encontra apto a executar ou que possua conhecimento</small>
+                      <br>
+                      {% render_field field  %}
+                    </div>
+                  {%endif%}
                   {%endfor%}
                     <div class="form-group">
-                      <button class="btn btn-primary btn-block" type="submit">Send</button>
+                      <button class="btn btn-primary btn-block" type="submit">Quero ser membro do PyJobs!</button>
                     </div>
                 </form>
             </div>
