@@ -6,7 +6,8 @@ COPY manage.py manage.py
 COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
 
-RUN pip install pipenv & \
-    pipenv install --system --deploy --dev
+RUN pip install -U pip && \
+    pip install -U pipenv && \
+    pipenv install --system --dev
 
 COPY /pyjobs/ /code/
