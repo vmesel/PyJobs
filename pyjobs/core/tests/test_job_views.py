@@ -4,7 +4,7 @@ from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import User, AnonymousUser
 
 from pyjobs.core.views import *
-from pyjobs.core.models import Job
+from pyjobs.core.models import Job, Profile
 
 class HomeJobsViewsTest(TestCase):
     def setUp(self):
@@ -45,22 +45,32 @@ class JobDetailsViewTest(TestCase):
             requirements="Job bem maneiro",
         )
         self.job.save()
-        self.job_request = HttpRequest()
-        self.job_view_html = job_view(self.job_request, self.job.pk)\
+        self.client = Client()
+        self.job_view_html = self.client.get(f"/job/{self.job.pk}/")\
             .content.decode('utf-8')
 
-    def test_job_details_view(self):
+    def test_job_title_in_view(self):
         self.assertTrue(self.job.title in self.job_view_html)
+
+    def test_job_workplace_in_view(self):
         self.assertTrue(self.job.workplace in self.job_view_html)
+
+    def test_job_company_in_view(self):
         self.assertTrue(self.job.company_name in self.job_view_html)
+
+    def test_job_application_link_in_view(self):
         self.assertTrue(self.job.application_link in self.job_view_html)
+
+    def test_job_description_in_view(self):
         self.assertTrue(self.job.description in self.job_view_html)
+
+    def test_job_requirements_in_view(self):
         self.assertTrue(self.job.requirements in self.job_view_html)
 
 
 class PyJobsJobApplication(TestCase):
     def setUp(self):
-        self.job = Job(
+        self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",
             company_name="XPTO",
@@ -69,9 +79,21 @@ class PyJobsJobApplication(TestCase):
             premium=True,
             public=True
         )
-        self.job.save()
+
         self.user = User.objects.create_user(
-                username='jacob', email='jacob@gmail.com', password='top_secret')
+            username='jacob',
+            email='jacob@gmail.com',
+            password='top_secret'
+        )
+
+        self.profile = Profile.objects.create(
+            user  = self.user,
+            github = "http://www.github.com/foobar",
+            linkedin = "http://www.linkedin.com/in/foobar",
+            portfolio = "http://www.foobar.com/",
+            cellphone = "11981435390"
+        )
+
         self.client = Client()
 
     def test_check_applied_for_job_anon(self):
