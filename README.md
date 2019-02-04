@@ -7,23 +7,11 @@ O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue
 ```
 git clone https://github.com/vmesel/PyJobs.git
 cd PyJobs/
+cp .env-sample .env
 
 ```
 
 Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta PyJobs contendo as seguintes informações:
-
-```
-RECAPTCHA_SITE_KEY=
-RECAPTCHA_SECRET_KEY=
-TELEGRAM_TOKEN=TOKEN_AQUI
-TELEGRAM_CHATID=CHATID_AQUI
-DEBUG=False
-EMAIL_BACKEND=
-SENDGRID_API_KEY=
-SENDGRID_PASSWORD=
-SENDGRID_USERNAME=
-SECRET_KEY=
-```
 
 ### Dependências
 
@@ -47,4 +35,4 @@ Ao tentar utilizar o formulário sem configurar os dados do RECAPTCHA o servidor
 
 #### Erro ao enviar algum e-mail.
 
-Possivelmente, se você tiver exportado a variável de ambiente do SENDGRID com as API keys inválidas, você muito provavelmente terá algum erro. Para evitar isso, utilize o backend padrão do Django para envios de e-mails, assim eles aparecerão no terminal. 
+Possivelmente, se você tiver exportado a variável de ambiente do SENDGRID com as API keys inválidas, você muito provavelmente terá algum erro. Para evitar isso, utilize o backend padrão do Django para envios de e-mails, assim eles aparecerão no terminal.
