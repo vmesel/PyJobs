@@ -7,6 +7,8 @@ verify_ssl = true
 coverage = "*"
 ipdb = "*"
 ipython = "*"
+model-mommy = "*"
+nose = "*"
 
 [packages]
 dj-database-url = "*"
