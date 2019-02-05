@@ -11,7 +11,6 @@ O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue
 git clone https://github.com/vmesel/PyJobs.git
 cd PyJobs/
 cp .env-sample .env
-
 ```
 
 Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta PyJobs contendo as seguintes informações:
@@ -21,13 +20,18 @@ Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta P
 1. [Instalar docker](https://docs.docker.com/install/)
 2. [Instalar o docker-compose](https://docs.docker.com/compose/install/)
 
-
 ### Para utilizar o Docker com o Docker Compose:
 
 ```
 docker-compose build
 docker-compose run web python manage.py migrate
 docker-compose up
+```
+
+#### Testes
+
+```
+docker-compose run --rm web make test
 ```
 
 ### Possíveis dificuldades com o desenvolvimento do PyJobs
