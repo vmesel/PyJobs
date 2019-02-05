@@ -7,9 +7,15 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.core.mail import send_mail
 
-from pyjobs.core.email_utils import *
-from pyjobs.core.utils import *
-from pyjobs.core.newsletter import *
+from pyjobs.core.email_utils import (
+    contact_email,
+    contato_cadastrado_empresa,
+    contato_cadastrado_pessoa,
+    vaga_publicada,
+)
+from pyjobs.core.utils import post_fb_page, post_telegram_channel
+from pyjobs.core.newsletter import subscribe_user_to_chimp
+
 
 class Messages(models.Model):
     message_title = models.CharField(
@@ -41,7 +47,8 @@ class Profile(models.Model):
     github = models.URLField(verbose_name="GitHub", blank=True, default="")
     linkedin = models.URLField(verbose_name="LinkedIn", blank=True, default="")
     portfolio = models.URLField(verbose_name="Portfolio", blank=True, default="")
-    cellphone = models.CharField(verbose_name="Telefone",
+    cellphone = models.CharField(
+        verbose_name="Telefone",
         max_length=16,
         validators=[
             RegexValidator(
@@ -83,20 +90,20 @@ class Profile(models.Model):
 class Job(models.Model):
     title = models.CharField(
         "Título da Vaga", max_length=100, default="",
-        blank=False, help_text = "Ex.: Desenvolvedor"
+        blank=False, help_text="Ex.: Desenvolvedor"
     )
     workplace = models.CharField(
         "Local", max_length=100, default="",
-        blank=False, help_text = "Ex.: Santana - São Paulo"
+        blank=False, help_text="Ex.: Santana - São Paulo"
     )
     company_name = models.CharField(
         "Nome da Empresa", max_length=100, default="",
-        blank=False, help_text = "Ex.: ACME Inc"
+        blank=False, help_text="Ex.: ACME Inc"
     )
-    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text = "Ex.: http://goo.gl/hahaha")
-    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text = "Ex.: abc@def.com")
-    description = models.TextField("Descrição da vaga", default="", help_text = "Descreva um pouco da sua empresa e da vaga, tente ser breve")
-    requirements = models.TextField("Requisitos da vaga", default="", help_text = "Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java")
+    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text="Ex.: http://goo.gl/hahaha")
+    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text="Ex.: abc@def.com")
+    description = models.TextField("Descrição da vaga", default="", help_text="Descreva um pouco da sua empresa e da vaga, tente ser breve")
+    requirements = models.TextField("Requisitos da vaga", default="", help_text="Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java")
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
@@ -229,13 +236,14 @@ def send_offer_email_template(job):
         [job.company_email]
     )
 
+
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
-    if created == True:
-        job=instance.title,
-        empresa=instance.company_name,
-        local=instance.workplace,
-        link=instance.pk
+    if created:
+        job = instance.title,
+        empresa = instance.company_name,
+        local = instance.workplace,
+        link = instance.pk
         message_text = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/".format(
             job, empresa, local, link
         )
