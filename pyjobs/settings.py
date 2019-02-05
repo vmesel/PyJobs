@@ -138,3 +138,10 @@ EMAIL_BACKEND = config(
 )
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default=None)
+
+
+# MailChimp
+
+MAILCHIMP_API_KEY = config("MAILCHIMP_API_KEY", default=None)
+MAILCHIMP_USERNAME = config("MAILCHIMP_USERNAME", default=None)
+MAILCHIMP_LIST_KEY = config("MAILCHIMP_LIST_KEY", default=None)
