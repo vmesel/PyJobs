@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "83239e809bc1f40c213224fe15fe8bdc8424fcadc75cb806d141ff7a5d11204b"
+            "sha256": "3f0cd2a20ec1db36af86ff8e603d60ab1235e0a8df6d3fa49e4b9b7f18db1e74"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -136,6 +136,14 @@
             "index": "pypi",
             "version": "==0.5.0.6"
         },
+        "django-extensions": {
+            "hashes": [
+                "sha256:6fcedb2ea660c9dbf9ac59441721ffdd4ab5b753fbd6159c3e28f391a65bab46",
+                "sha256:a607459e5fa8c579a672131b63366fa52fab80adb2a862d362f5fb48cd2d2cac"
+            ],
+            "index": "pypi",
+            "version": "==2.1.5"
+        },
         "django-filter": {
             "hashes": [
                 "sha256:3dafb7d2810790498895c22a1f31b2375795910680ac9c1432821cbedb1e176d",
@@ -174,13 +182,6 @@
             ],
             "index": "pypi",
             "version": "==6.3.1"
-        },
-        "django-tastypie": {
-            "hashes": [
-                "sha256:a3a2413510009649e0eac885ead96891c783ced788fd94231dc2f72b7a1b4c04"
-            ],
-            "index": "pypi",
-            "version": "==0.14.2"
         },
         "django-widget-tweaks": {
             "hashes": [
@@ -265,6 +266,7 @@
         },
         "pycparser": {
             "hashes": [
+                "sha256:7edfb6d590484ee60cc092bd9ae2428f0ddc89ee9fcd1ca922091c6bb9c527f0",
                 "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
             ],
             "version": "==2.19"
@@ -289,13 +291,6 @@
                 "sha256:7e430f4b9dd2b621b0051f6a362f103447ea8e267594c602a5c502a0c694ee38"
             ],
             "version": "==3.1.0"
-        },
-        "python-mimeparse": {
-            "hashes": [
-                "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",
-                "sha256:a295f03ff20341491bfe4717a39cd0a8cc9afad619ba44b77e86b0ab8a2b8282"
-            ],
-            "version": "==1.6.0"
         },
         "python-telegram-bot": {
             "hashes": [
@@ -328,6 +323,13 @@
             ],
             "index": "pypi",
             "version": "==2.21.0"
+        },
+        "restless": {
+            "hashes": [
+                "sha256:f66b590cd1a248fd60a7f6540dff318a180bcbf073eefa16ac5ea978c161087b"
+            ],
+            "index": "pypi",
+            "version": "==2.1.1"
         },
         "sendgrid": {
             "hashes": [

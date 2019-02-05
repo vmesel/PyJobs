@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -7,9 +6,16 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.core.mail import send_mail
 
-from pyjobs.core.email_utils import *
-from pyjobs.core.utils import *
-from pyjobs.core.newsletter import *
+from pyjobs.core.email_utils import (
+    contact_email,
+    contato_cadastrado_empresa,
+    contato_cadastrado_pessoa,
+    vaga_publicada,
+)
+from pyjobs.core.utils import post_telegram_channel
+from pyjobs.core.newsletter import subscribe_user_to_chimp
+from pyjobs.core.managers import PublicQuerySet
+
 
 class Messages(models.Model):
     message_title = models.CharField(
@@ -41,7 +47,8 @@ class Profile(models.Model):
     github = models.URLField(verbose_name="GitHub", blank=True, default="")
     linkedin = models.URLField(verbose_name="LinkedIn", blank=True, default="")
     portfolio = models.URLField(verbose_name="Portfolio", blank=True, default="")
-    cellphone = models.CharField(verbose_name="Telefone",
+    cellphone = models.CharField(
+        verbose_name="Telefone",
         max_length=16,
         validators=[
             RegexValidator(
@@ -83,25 +90,33 @@ class Profile(models.Model):
 class Job(models.Model):
     title = models.CharField(
         "Título da Vaga", max_length=100, default="",
-        blank=False, help_text = "Ex.: Desenvolvedor"
+        blank=False, help_text="Ex.: Desenvolvedor"
     )
     workplace = models.CharField(
         "Local", max_length=100, default="",
-        blank=False, help_text = "Ex.: Santana - São Paulo"
+        blank=False, help_text="Ex.: Santana - São Paulo"
     )
     company_name = models.CharField(
         "Nome da Empresa", max_length=100, default="",
-        blank=False, help_text = "Ex.: ACME Inc"
+        blank=False, help_text="Ex.: ACME Inc"
     )
-    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text = "Ex.: http://goo.gl/hahaha")
-    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text = "Ex.: abc@def.com")
-    description = models.TextField("Descrição da vaga", default="", help_text = "Descreva um pouco da sua empresa e da vaga, tente ser breve")
-    requirements = models.TextField("Requisitos da vaga", default="", help_text = "Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java")
+    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text="Ex.: http://goo.gl/hahaha")
+    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text="Ex.: abc@def.com")
+    description = models.TextField("Descrição da vaga", default="", help_text="Descreva um pouco da sua empresa e da vaga, tente ser breve")
+    requirements = models.TextField("Requisitos da vaga", default="", help_text="Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java")
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skills")
+
+    objects = models.Manager.from_queryset(PublicQuerySet)()
+
+    class Meta:
+        ordering = ('-created_at',)
+        indexes = [
+            models.Index(fields=['created_at']),
+        ]
 
     def __str__(self):
         return self.title
@@ -110,31 +125,13 @@ class Job(models.Model):
         return self.application_link if self.application_link != "" else False
 
     def get_premium_jobs():
-        return Job.objects.filter(premium=True, public=True,
-            created_at__lte=datetime.today(),
-            created_at__gt=datetime.today()-timedelta(days=30)
-        ).order_by('-created_at')[:5]
+        return Job.objects.premium().created_in_the_last(30)[:5]
 
-    def get_publicly_available_jobs(search_value=None):
-        ft = models.Q()
-
-        if search_value is not None:
-            ft = models.Q(title__icontains=search_value) | \
-                models.Q(workplace__icontains=search_value) | \
-                models.Q(description__icontains=search_value) | \
-                models.Q(requirements__icontains=search_value)
-
-        return Job.objects.filter(ft, premium=False, public=True,
-            created_at__lte=datetime.today(),
-            created_at__gt=datetime.today()-timedelta(days=30)
-        ).order_by('-created_at')
-
+    def get_publicly_available_jobs(term=None):
+        return Job.objects.not_premium().created_in_the_last(30).search(term)
 
     def get_feed_jobs():
-        return Job.objects.filter(premium=False, public=True,
-            created_at__lte=datetime.today(),
-            created_at__gt=datetime.today()-timedelta(days=7)
-        ).order_by('-created_at')
+        return Job.objects.not_premium.created_in_the_last(7)
 
     def get_excerpt(self):
         return self.description[:500]
@@ -149,12 +146,7 @@ class Job(models.Model):
         return True
 
     def get_weekly_summary(self):
-        today = datetime.today()
-        past_date = today - timedelta(days=7)
-        return Job.objects.filter(
-            created_at__gte=past_date,
-            created_at__lte=today,
-        )
+        return Job.objects.created_in_the_last(7)
 
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
@@ -179,6 +171,7 @@ class Contact(models.Model):
     email = models.EmailField("Email", default="", blank=False)
     message = models.TextField("Mensagem", default="", blank=False)
 
+
 class Skills(models.Model):
     name = models.CharField("Skill", max_length=100, default="", blank=False)
 
@@ -187,6 +180,7 @@ class Skills(models.Model):
 
     def __repr__(self):
         return self.name
+
 
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
@@ -223,13 +217,14 @@ def send_offer_email_template(job):
         [job.company_email]
     )
 
+
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
-    if created == True:
-        job=instance.title
-        empresa=instance.company_name
-        local=instance.workplace
-        link=instance.pk
+    if created:
+        job = instance.title
+        empresa = instance.company_name
+        local = instance.workplace
+        link = instance.pk
         message_text = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/".format(
             job, empresa, local, link
         )
