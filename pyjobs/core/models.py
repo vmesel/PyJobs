@@ -226,9 +226,9 @@ def send_offer_email_template(job):
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
     if created == True:
-        job=instance.title,
-        empresa=instance.company_name,
-        local=instance.workplace,
+        job=instance.title
+        empresa=instance.company_name
+        local=instance.workplace
         link=instance.pk
         message_text = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/".format(
             job, empresa, local, link
