@@ -52,6 +52,7 @@ class JobResource(DjangoPaginatedResource):
     preparer = FieldsPreparer(fields={
         f.name: f.name
         for f in Job._meta.fields
+        if f.name not in {'premium', 'public', 'ad_interested'}
     })
 
     def list(self):

@@ -51,7 +51,10 @@ class TestJobResourceDetail(TestCase):
         self.assertEqual(200, self.response.status_code)
 
     def test_contents(self):
-        fields = (field.name for field in Job._meta.fields)
+        fields = (
+            field.name for field in Job._meta.fields
+            if field.name not in {'premium', 'public', 'ad_interested'}
+        )
         for field in fields:
             if field == 'created_at':  # format dadetime as string
                 self.job.created_at = str(self.job.created_at).replace(' ', 'T')
