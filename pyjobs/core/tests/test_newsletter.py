@@ -26,4 +26,4 @@ class NewsletterTest(TestCase):
         self.profile.save()
 
     def test_subscribe_to_newsletter(self):
-        self.assertEqual(subscribe_user_to_chimp(self.profile), False)
+        self.assertFalse(subscribe_user_to_chimp(self.profile))
