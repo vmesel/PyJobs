@@ -3,3 +3,7 @@ test:
 	coverage html
 	isort **/*.py --check-only
 	black . --check
+
+style:
+	isort **/*.py
+	black .

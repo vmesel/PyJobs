@@ -30,6 +30,14 @@ docker-compose up
 
 #### Testes
 
+A bateria de testes e verificações utiliza também critérios de guias de estilo. Para formatar o código automaticamente use:
+
+```
+docker-compose run --rm web make style
+```
+
+Depois rode os testes com:
+
 ```
 docker-compose run --rm web make test
 ```
