@@ -6,8 +6,7 @@ from pyjobs.core.utils import post_telegram_channel
 
 class TelegramPosterTest(TestCase):
 
-    @patch('telegram.Bot')
-    def setUp(self, _mocked_telegram_bot):
+    def setUp(self):
         self.message = "Hello, World!"
 
     @patch('pyjobs.core.utils.config')
