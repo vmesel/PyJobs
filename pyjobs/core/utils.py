@@ -8,7 +8,6 @@ def post_telegram_channel(message):
     if telegram_token and chat_id:
         bot = Bot(telegram_token)
         try:
-            bot = Bot(telegram_token)
             bot.send_message(chat_id=chat_id, text=message)
             return True, 'success'
 
