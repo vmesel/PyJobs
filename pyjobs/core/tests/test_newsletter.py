@@ -8,8 +8,7 @@ from pyjobs.core.newsletter import subscribe_user_to_chimp
 
 class NewsletterTest(TestCase):
 
-    @patch('mailchimp3.MailChimp')
-    def setUp(self, _mocked_mailchimp_object):
+    def setUp(self):
         self.user = User.objects.create_user(
             username='v@m.com',
             email="v@m.com",
