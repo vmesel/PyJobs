@@ -128,7 +128,9 @@ class JobTest_Application(TestCase):
 
 
 class JobTest_04(TestCase):
-    def setUp(self):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -139,7 +141,7 @@ class JobTest_04(TestCase):
             public=True
         )
 
-        skills = mommy.make('core.Skills', _quantity=7, _fill_optional=True)
+        mommy.make('core.Skills', _quantity=7, _fill_optional=True)
 
         self.job.skills = range(1, 5)
 
@@ -163,7 +165,7 @@ class JobTest_04(TestCase):
         self.assertEqual(grade, False)
 
     def test_user_0_graded(self):
-        self.profile.skills = range(5,8)
+        self.profile.skills = range(5, 8)
 
         grade = self.profile.profile_skill_grade(self.job.pk)
 
