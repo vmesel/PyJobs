@@ -55,7 +55,7 @@ class JobResource(DjangoPaginatedResource):
     })
 
     def list(self):
-        return Job.objects.public()
+        return Job.objects.all()
 
     def detail(self, pk):
-        return Job.objects.public().get(id=pk)
+        return Job.objects.get(id=pk)

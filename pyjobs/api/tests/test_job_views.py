@@ -28,7 +28,7 @@ class TestJobResourceList(TestCase):
 
     def test_pagination(self):
         self.assertEqual(self.response.json['meta']['limit'], PER_PAGE)
-        self.assertEqual(self.response.json['meta']['total_count'], PER_PAGE + 1)
+        self.assertEqual(self.response.json['meta']['total_count'], PER_PAGE + 2)
         self.assertTrue(self.response.json['meta']['next'])
 
     def test_contents(self):
@@ -61,13 +61,3 @@ class TestJobResourceDetail(TestCase):
                     getattr(self.job, field),
                     self.response.json[field]
                 )
-
-
-class TestNonPublicJobResourceDetail(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
-    def test_private_job_is_not_listed(self, _mocked_post_telegram_channel):
-        private_job = mommy.make(Job, public=False)
-        url = resolve_url('api:job_detail', pk=private_job.pk)
-        response = self.client.get(url)
-        self.assertEqual(404, response.status_code)
