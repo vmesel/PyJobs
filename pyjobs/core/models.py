@@ -103,6 +103,12 @@ class Job(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skills")
 
+    class Meta:
+        ordering = ('-created_at',)
+        indexes = [
+            models.Index(fields=['created_at']),
+        ]
+
     def __str__(self):
         return self.title
 
