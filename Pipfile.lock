@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "83239e809bc1f40c213224fe15fe8bdc8424fcadc75cb806d141ff7a5d11204b"
+            "sha256": "17d9a15fb734f95748fe9bf2b2cf9e289d371dd43894f172afb8385906aaef45"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -175,13 +175,6 @@
             "index": "pypi",
             "version": "==6.3.1"
         },
-        "django-tastypie": {
-            "hashes": [
-                "sha256:a3a2413510009649e0eac885ead96891c783ced788fd94231dc2f72b7a1b4c04"
-            ],
-            "index": "pypi",
-            "version": "==0.14.2"
-        },
         "django-widget-tweaks": {
             "hashes": [
                 "sha256:a69cba6c8a6b98f0cf6eef0535f8212d635e19044ee4533d4d78df700c2e233f",
@@ -265,7 +258,8 @@
         },
         "pycparser": {
             "hashes": [
-                "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
+                "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3",
+                "sha256:ee56eca7520be335db780fab1eae7c9f48254378a92e0525e82df83343dbb16c"
             ],
             "version": "==2.19"
         },
@@ -289,13 +283,6 @@
                 "sha256:7e430f4b9dd2b621b0051f6a362f103447ea8e267594c602a5c502a0c694ee38"
             ],
             "version": "==3.1.0"
-        },
-        "python-mimeparse": {
-            "hashes": [
-                "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",
-                "sha256:a295f03ff20341491bfe4717a39cd0a8cc9afad619ba44b77e86b0ab8a2b8282"
-            ],
-            "version": "==1.6.0"
         },
         "python-telegram-bot": {
             "hashes": [
@@ -328,6 +315,13 @@
             ],
             "index": "pypi",
             "version": "==2.21.0"
+        },
+        "restless": {
+            "hashes": [
+                "sha256:f66b590cd1a248fd60a7f6540dff318a180bcbf073eefa16ac5ea978c161087b"
+            ],
+            "index": "pypi",
+            "version": "==2.1.1"
         },
         "sendgrid": {
             "hashes": [

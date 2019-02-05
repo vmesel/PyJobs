@@ -17,14 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from pyjobs.settings import *
-from pyjobs.api.resources import *
 from django.contrib.auth import views as auth_views
 
-job_resource = JobResource()
 
 urlpatterns = [
     url(r'^admin_v2/', admin.site.urls),
-    url(r'^api/', include(job_resource.urls)),
+    url('api/', include('pyjobs.api.urls', namespace='api')),
     url(r'', include('pyjobs.core.urls')),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
