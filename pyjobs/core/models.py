@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -126,31 +125,13 @@ class Job(models.Model):
         return self.application_link if self.application_link != "" else False
 
     def get_premium_jobs():
-        return Job.objects.filter(premium=True, public=True,
-            created_at__lte=datetime.today(),
-            created_at__gt=datetime.today()-timedelta(days=30)
-        ).order_by('-created_at')[:5]
+        return Job.objects.premium().created_in_the_last(30)[:5]
 
-    def get_publicly_available_jobs(search_value=None):
-        ft = models.Q()
-
-        if search_value is not None:
-            ft = models.Q(title__icontains=search_value) | \
-                models.Q(workplace__icontains=search_value) | \
-                models.Q(description__icontains=search_value) | \
-                models.Q(requirements__icontains=search_value)
-
-        return Job.objects.filter(ft, premium=False, public=True,
-            created_at__lte=datetime.today(),
-            created_at__gt=datetime.today()-timedelta(days=30)
-        ).order_by('-created_at')
-
+    def get_publicly_available_jobs(term=None):
+        return Job.objects.not_premium().created_in_the_last(30).search(term)
 
     def get_feed_jobs():
-        return Job.objects.filter(premium=False, public=True,
-            created_at__lte=datetime.today(),
-            created_at__gt=datetime.today()-timedelta(days=7)
-        ).order_by('-created_at')
+        return Job.objects.not_premium.created_in_the_last(7)
 
     def get_excerpt(self):
         return self.description[:500]
@@ -165,12 +146,7 @@ class Job(models.Model):
         return True
 
     def get_weekly_summary(self):
-        today = datetime.today()
-        past_date = today - timedelta(days=7)
-        return Job.objects.filter(
-            created_at__gte=past_date,
-            created_at__lte=today,
-        )
+        return Job.objects.created_in_the_last(7)
 
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
@@ -195,6 +171,7 @@ class Contact(models.Model):
     email = models.EmailField("Email", default="", blank=False)
     message = models.TextField("Mensagem", default="", blank=False)
 
+
 class Skills(models.Model):
     name = models.CharField("Skill", max_length=100, default="", blank=False)
 
@@ -203,6 +180,7 @@ class Skills(models.Model):
 
     def __repr__(self):
         return self.name
+
 
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
