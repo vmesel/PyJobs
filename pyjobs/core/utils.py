@@ -1,13 +1,18 @@
 from decouple import config
-from telegram import Bot
+from telegram import Bot, TelegramError
 
 
 def post_telegram_channel(message):
     telegram_token = config('TELEGRAM_TOKEN', default=None)
-    if telegram_token != None:
-        bot = Bot(telegram_token)
+    chat_id = config("TELEGRAM_CHATID", default=None)
+
+    if None not in [telegram_token, chat_id]:
         try:
-            bot.send_message(chat_id = config("TELEGRAM_CHATID"), text=message)
-        except:
-            pass
-    return True
+            bot = Bot(telegram_token)
+            bot.send_message(chat_id=chat_id, text=message)
+            return True, 'success'
+
+        except TelegramError:
+            return False, 'wrong_auth_keys'
+
+    return False, 'missing_auth_keys'
