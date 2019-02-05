@@ -151,3 +151,8 @@ MAILCHIMP_LIST_KEY = config("MAILCHIMP_LIST_KEY", default=None)
 
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN", default=None)
 TELEGRAM_CHATID = config("TELEGRAM_CHATID", default=None)
+
+
+# Recaptcha
+
+RECAPTCHA_SECRET_KEY = config("RECAPTCHA_SECRET_KEY", default=None)
