@@ -5,7 +5,7 @@ def post_telegram_channel(message):
     telegram_token = config('TELEGRAM_TOKEN', default=None)
     chat_id = config("TELEGRAM_CHATID", default=None)
 
-    if None not in [telegram_token, chat_id]:
+    if telegram_token and chat_id:
         bot = Bot(telegram_token)
         try:
             bot = Bot(telegram_token)
