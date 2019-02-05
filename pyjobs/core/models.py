@@ -15,6 +15,7 @@ from pyjobs.core.email_utils import (
 )
 from pyjobs.core.utils import post_fb_page, post_telegram_channel
 from pyjobs.core.newsletter import subscribe_user_to_chimp
+from pyjobs.core.managers import PublicQuerySet
 
 
 class Messages(models.Model):
@@ -109,6 +110,8 @@ class Job(models.Model):
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skills")
+
+    objects = models.Manager.from_queryset(PublicQuerySet)()
 
     class Meta:
         ordering = ('-created_at',)

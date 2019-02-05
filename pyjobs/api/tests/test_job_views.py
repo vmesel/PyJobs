@@ -16,7 +16,8 @@ class TestJobResourceList(TestCase):
 
     @patch('pyjobs.core.models.post_telegram_channel')
     def setUp(self, _mocked_post_telegram_channel):
-        self.jobs = mommy.make(Job, _quantity=PER_PAGE + 1)
+        self.jobs = mommy.make(Job, _quantity=PER_PAGE + 1, public=True)
+        mommy.make(Job, public=False)
         url = resolve_url('api:job_list')
         self.response = self.client.get(url)
         self.response.text = self.response.content.decode('utf-8')
@@ -40,7 +41,7 @@ class TestJobResourceDetail(TestCase):
 
     @patch('pyjobs.core.models.post_telegram_channel')
     def setUp(self, _mocked_post_telegram_channel):
-        self.job = mommy.make(Job, _fill_optional=True)
+        self.job = mommy.make(Job, _fill_optional=True, public=True)
         url = resolve_url('api:job_detail', pk=self.job.pk)
         self.response = self.client.get(url)
         self.response.text = self.response.content.decode('utf-8')
@@ -60,3 +61,13 @@ class TestJobResourceDetail(TestCase):
                     getattr(self.job, field),
                     self.response.json[field]
                 )
+
+
+class TestNonPublicJobResourceDetail(TestCase):
+
+    @patch('pyjobs.core.models.post_telegram_channel')
+    def test_private_job_is_not_listed(self, _mocked_post_telegram_channel):
+        private_job = mommy.make(Job, public=False)
+        url = resolve_url('api:job_detail', pk=private_job.pk)
+        response = self.client.get(url)
+        self.assertEqual(404, response.status_code)
