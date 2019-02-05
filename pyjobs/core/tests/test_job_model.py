@@ -4,7 +4,9 @@ from unittest.mock import patch
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from pyjobs.core.models import Job, Profile
+from model_mommy import mommy
+
+from pyjobs.core.models import Job, Profile, Skills
 
 
 class JobTest_01(TestCase):
@@ -123,3 +125,53 @@ class JobTest_Application(TestCase):
         self.job.apply(self.user)
         application_status = self.job.applied(self.user)
         self.assertEqual(application_status, True)
+
+
+class JobTest_04(TestCase):
+    def setUp(self):
+        self.job = Job.objects.create(
+            title="Vaga 3",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+            public=True
+        )
+
+        skills = mommy.make('core.Skills', _quantity=7, _fill_optional=True)
+
+        self.job.skills = range(1, 5)
+
+        self.user = User.objects.create_user(
+            username='jacob',
+            email='jacob@gmail.com',
+            password='top_secret'
+        )
+
+        self.profile = Profile.objects.create(
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390"
+        )
+
+    def test_user_has_no_skills(self):
+        grade = self.profile.profile_skill_grade(self.job.pk)
+
+        self.assertEqual(grade, False)
+
+    def test_user_0_graded(self):
+        self.profile.skills = range(5,8)
+
+        grade = self.profile.profile_skill_grade(self.job.pk)
+
+        self.assertEqual(grade, 0.0)
+
+    def test_user_100_graded(self):
+        self.profile.skills = [skill.pk for skill in self.job.skills.all()]
+
+        grade = self.profile.profile_skill_grade(self.job.pk)
+
+        self.assertEqual(grade, 100.0)

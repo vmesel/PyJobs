@@ -6,6 +6,7 @@ from pyjobs.core.forms import JobForm, ContactForm, RegisterForm, EditProfileFor
 
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from django.contrib.syndication.views import Feed
@@ -15,17 +16,12 @@ from decouple import config
 import requests
 
 def index(request):
-    search = request.GET.get('search', '')
-    # Just to avoid search for less then 3 letters
-    search = search if len(search) > 3 else None
-    # Passing the value to Paginator
+    search = request.GET.get('search', '') \
+        if len(request.GET.get('search', '')) > 3 else None
+
     paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
 
-    page = request.GET.get('page')
-    try:
-        public_jobs_to_display = paginator.page(page)
-    except:
-        public_jobs_to_display = paginator.page(1)
+    public_jobs_to_display = paginator.page(request.GET.get('page', 1))
 
     context_dict = {
         "publicly_available_jobs": public_jobs_to_display,
@@ -175,82 +171,63 @@ def contact(request):
 
     return render(request, "contact-us.html", context)
 
-
+@login_required
 def pythonistas_area(request):
     return render(request, "pythonistas-area.html")
 
-
 def pythonistas_signup(request):
-    context = {}
-    context["new_job_form"] = JobForm
+    context = {
+        "new_job_form": JobForm,
+        "form": RegisterForm(request.POST or None),
+    }
 
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            profile = Profile(
-                user=user,
-                github=form.cleaned_data["github"],
-                linkedin=form.cleaned_data["linkedin"],
-                portfolio=form.cleaned_data["portfolio"],
-                cellphone=form.cleaned_data["cellphone"],
-            )
-            profile.save()
-            login(request, user)
-            return redirect("/")
-        else:
-            context["form"] = form
-            return render(request, "pythonistas-signup.html", context)
-    else:
-        form = RegisterForm()
-        context["form"] = form
-        return render(request, "pythonistas-signup.html", context)
+    if request.method == "POST" and context["form"].is_valid():
+        user = context["form"].save()
+        login(request, user)
+        return redirect("/")
 
+    return render(request, "pythonistas-signup.html", context)
 
+@login_required
 def pythonista_change_password(request):
+    template_name = 'pythonistas-area-password-change.html'
+    context = {
+        'form': PasswordChangeForm(request.user),
+        'new_job_form': JobForm
+    }
+
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            return render(request, 'pythonistas-area-password-change.html', {
-                'form': form,
-                'message': 'Sua senha foi alterada com sucesso!'
-            })
+        if context["form"].is_valid():
+            context["form"] = PasswordChangeForm(request.user, request.POST)
+            user = context["form"].save()
+            context['message'] = 'Sua senha foi alterada com sucesso!'
+            update_session_auth_hash(request, user)
+            return render(request, template_name, context)
         else:
+            context["form"] = PasswordChangeForm(request.user, request.POST)
             messages.error(request, 'Por favor, corrija os erros abaixo.')
-    else:
-        form = PasswordChangeForm(request.user)
-
-    context = {}
-    context["form"] = form
-    context["new_job_form"] = JobForm
-
     return render(request, 'pythonistas-area-password-change.html', context)
 
-
+@login_required
 def pythonista_change_info(request):
-    profile = Profile.objects.filter(user = request.user).first()
-    form = EditProfileForm(instance=profile)
+    profile = request.user.profile
+    template = 'pythonistas-area-info-change.html'
+    context = {
+        "form": EditProfileForm(instance=profile)
+    }
+
     if request.method == 'POST':
-        form = EditProfileForm(instance=profile, data=request.POST)
-        if form.is_valid():
-            user = form.save()
-            return render(request, 'pythonistas-area-password-change.html', {
-                'form': form,
-                'message': 'Suas informações foram atualizadas com sucesso!'
-            })
+        context["form"] = EditProfileForm(instance=profile, data=request.POST)
+        if context["form"].is_valid():
+            user = context["form"].save()
+            context['message'] = 'Suas informações foram atualizadas com sucesso!'
+            return render(request, template, context)
         else:
+            context['message'] = 'Por favor, corrija os erros abaixo.'
             messages.error(request, 'Por favor, corrija os erros abaixo.')
-    else:
-        form = EditProfileForm(instance=profile)
-    return render(request, 'pythonistas-area-info-change.html', {
-        'form': form,
-        "new_job_form": JobForm
-    })
+
+    return render(request, template, context)
+
 
 class JobsFeed(Feed):
     title = 'PyJobs - Sua central de vagas Python'
