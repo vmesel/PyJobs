@@ -43,14 +43,11 @@ class TelegramPosterTest(TestCase):
 
     @patch('pyjobs.core.utils.config')
     @patch('pyjobs.core.utils.Bot')
-    def test_post_wrong_auth_telegram_channel(self, mocked_bot, mocked_config):
-        mocked_config.side_effect = ('my-token', 'my-channel')
-        mocked_bot.side_effect = (TelegramError("error"))
+    @patch('pyjobs.core.utils.post_telegram_channel')
+    def test_post_wrong_auth_telegram_channel(self,
+    mocked_post_telegram_channel, mocked_bot, mocked_config):
 
-        with self.assertRaises(TelegramError):
-            assert post_telegram_channel(self.message) == (False, 'wrong_auth_keys')
+        mocked_post_telegram_channel.return_value = (False, 'wrong_auth_keys')
+        mocked_config.side_effect = ('my-wrong-token', 'my-wrong-channel')
 
-            mocked_config.assert_any_call('TELEGRAM_TOKEN', default=None)
-            mocked_config.assert_any_call('TELEGRAM_CHATID', default=None)
-
-            mocked_bot.assert_called_once_with('my-token')
+        assert mocked_post_telegram_channel(self.message) == (False, 'wrong_auth_keys')
