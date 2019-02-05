@@ -7,6 +7,7 @@ from pyjobs.core.utils import post_telegram_channel
 
 
 class TelegramPosterTest(TestCase):
+
     def setUp(self):
         self.message = "Hello, World!"
 
