@@ -137,9 +137,7 @@ class Job(models.Model):
         return self.description[:500]
 
     def applied(self, request_user):
-        return True if JobApplication.objects.\
-            filter(job=self, user=request_user).exists() \
-            else False
+        return JobApplication.objects.filter(job=self, user=request_user).exists()
 
     def apply(self, request_user):
         JobApplication.objects.create(job=self, user=request_user)
