@@ -2,7 +2,7 @@ from django.contrib import admin
 from pyjobs.core.models import \
     (
         Job, Profile, JobApplication,
-        Contact, Messages, send_offer_email_template,
+        Contact, Messages, send_offer_email_template_failback,
         Skills
     )
 from django.core.mail import send_mail
@@ -10,7 +10,7 @@ from pyjobs.core.newsletter import subscribe_user_to_chimp
 
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:
-        send_offer_email_template(j)
+        send_offer_email_template_failback(j)
 
 def add_subscriber(modeladmin, request, queryset):
     for prof in queryset:

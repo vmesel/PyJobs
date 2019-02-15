@@ -16,6 +16,7 @@ from pyjobs.core.utils import post_telegram_channel
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.managers import PublicQuerySet
 
+from raven.contrib.django.raven_compat.models import client
 
 class Messages(models.Model):
     message_title = models.CharField(
@@ -213,8 +214,19 @@ def send_offer_email_template(job):
     send_mail(
         message_title,
         message_text,
-        "viniciuscarqueijo@gmail.com",
-        [job.company_email]
+        "vinicius@pyjobs.com.br",
+        [job.company_email, "viniciuscarqueijo@gmail.com"]
+    )
+
+def send_offer_email_template_failback(job):
+    message = Messages.objects.filter(message_type="offer")[0]
+    message_text = message.message_content.format(company=job.company_name)
+    message_title = message.message_title.format(title=job.title)
+    send_mail(
+        message_title,
+        message_text,
+        "vinicius@pyjobs.com.br",
+        [job.company_email, "viniciuscarqueijo@gmail.com"]
     )
 
 
@@ -241,7 +253,7 @@ def new_job_was_created(sender, instance, created, **kwargs):
             try:
                 send_offer_email_template(instance)
             except:
-                pass
+                client.captureException()
 
 
 @receiver(post_save, sender=Contact)
