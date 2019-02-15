@@ -132,7 +132,7 @@ class Job(models.Model):
         return Job.objects.not_premium().created_in_the_last(30).search(term)
 
     def get_feed_jobs():
-        return Job.objects.not_premium.created_in_the_last(7)
+        return Job.objects.not_premium().created_in_the_last(7)
 
     def get_excerpt(self):
         return self.description[:500]
