@@ -19,7 +19,7 @@ def index(request):
     search = request.GET.get('search', '') \
         if len(request.GET.get('search', '')) > 3 else None
 
-    paginator = Paginator(Job.get_publicly_available_jobs(search), 5)
+    paginator = Paginator(Job.get_publicly_available_jobs(search), 7)
 
     public_jobs_to_display = paginator.page(request.GET.get('page', 1))
 
