@@ -1,17 +1,15 @@
-from decouple import config
+from django.conf import settings
 from telegram import Bot, TelegramError
 
+
 def post_telegram_channel(message):
-    telegram_token = config('TELEGRAM_TOKEN', default=None)
-    chat_id = config("TELEGRAM_CHATID", default=None)
+    if not settings.TELEGRAM_TOKEN and not settings.TELEGRAM_CHATID:
+        return False, "missing_auth_keys"
 
-    if telegram_token and chat_id:
-        bot = Bot(telegram_token)
-        try:
-            bot.send_message(chat_id=chat_id, text=message)
-            return True, 'success'
+    bot = Bot(settings.TELEGRAM_TOKEN)
+    try:
+        bot.send_message(chat_id=settings.TELEGRAM_CHATID, text=message)
+    except TelegramError:
+        return False, "wrong_auth_keys"
 
-        except TelegramError:
-            return False, 'wrong_auth_keys'
-
-    return False, 'missing_auth_keys'
+    return True, "success"

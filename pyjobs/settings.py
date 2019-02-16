@@ -139,3 +139,21 @@ EMAIL_BACKEND = config(
 )
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default=None)
+
+
+# MailChimp
+
+MAILCHIMP_API_KEY = config("MAILCHIMP_API_KEY", default=None)
+MAILCHIMP_USERNAME = config("MAILCHIMP_USERNAME", default=None)
+MAILCHIMP_LIST_KEY = config("MAILCHIMP_LIST_KEY", default=None)
+
+
+# Telegram
+
+TELEGRAM_TOKEN = config("TELEGRAM_TOKEN", default=None)
+TELEGRAM_CHATID = config("TELEGRAM_CHATID", default=None)
+
+
+# Recaptcha
+
+RECAPTCHA_SECRET_KEY = config("RECAPTCHA_SECRET_KEY", default=None)

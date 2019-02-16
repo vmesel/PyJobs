@@ -1,19 +1,22 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
-
-from pyjobs.core.models import Job, Profile, JobApplication
-from pyjobs.core.forms import JobForm, ContactForm, RegisterForm, EditProfileForm
-
-from django.contrib.auth import login, authenticate, update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-
-from django.contrib.syndication.views import Feed
-from django.urls import reverse
-
-from decouple import config
 import requests
+
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.syndication.views import Feed
+from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from pyjobs.core.forms import (
+    ContactForm,
+    EditProfileForm,
+    JobForm,
+    RegisterForm
+)
+from pyjobs.core.models import Job, JobApplication
+
 
 def index(request):
     search = request.GET.get('search', '') \
@@ -77,10 +80,10 @@ def register_new_job(request):
     else:
         new_job = JobForm(request.POST)
         if new_job.is_valid():
-            if config('RECAPTCHA_SECRET_KEY', None) != None:
+            if settings.RECAPTCHA_SECRET_KEY:
                 recaptcha_response = request.POST.get('g-recaptcha-response')
                 data = {
-                    'secret': config('RECAPTCHA_SECRET_KEY'),
+                    'secret': settings.RECAPTCHA_SECRET_KEY,
                     'response': recaptcha_response
                 }
                 r = requests.post(
@@ -141,7 +144,7 @@ def contact(request):
         form = ContactForm(request.POST or None)
         recaptcha_response = request.POST.get('g-recaptcha-response')
         data = {
-            'secret': config('RECAPTCHA_SECRET_KEY'),
+            'secret': settings.RECAPTCHA_SECRET_KEY,
             'response': recaptcha_response
         }
         r = requests.post(
