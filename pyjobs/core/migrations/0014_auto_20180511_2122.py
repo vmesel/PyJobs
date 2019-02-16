@@ -9,19 +9,23 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0013_profile_cellphone'),
-    ]
+    dependencies = [("core", "0013_profile_cellphone")]
 
     operations = [
         migrations.AlterField(
-            model_name='jobapplication',
-            name='job',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='core.Job'),
+            model_name="jobapplication",
+            name="job",
+            field=models.ForeignKey(
+                default="", on_delete=django.db.models.deletion.CASCADE, to="core.Job"
+            ),
         ),
         migrations.AlterField(
-            model_name='jobapplication',
-            name='user',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="jobapplication",
+            name="user",
+            field=models.ForeignKey(
+                default="",
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

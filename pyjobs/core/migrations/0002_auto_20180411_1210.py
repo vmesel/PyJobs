@@ -11,29 +11,33 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='github',
-            field=models.URLField(blank=True, default='', verbose_name='GitHub'),
+            model_name="profile",
+            name="github",
+            field=models.URLField(blank=True, default="", verbose_name="GitHub"),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='linkedin',
-            field=models.URLField(blank=True, default='', verbose_name='LinkedIn'),
+            model_name="profile",
+            name="linkedin",
+            field=models.URLField(blank=True, default="", verbose_name="LinkedIn"),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='portfolio',
-            field=models.URLField(blank=True, default='', verbose_name='Portfolio'),
+            model_name="profile",
+            name="portfolio",
+            field=models.URLField(blank=True, default="", verbose_name="Portfolio"),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='user',
-            field=models.OneToOneField(default='', on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="profile",
+            name="user",
+            field=models.OneToOneField(
+                default="",
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]

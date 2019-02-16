@@ -7,14 +7,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0017_auto_20181111_1844'),
-    ]
+    dependencies = [("core", "0017_auto_20181111_1844")]
 
     operations = [
         migrations.AddField(
-            model_name='messages',
-            name='message_type',
-            field=models.CharField(default='', max_length=200, verbose_name='Ticker usado no backend para ID da msg'),
-        ),
+            model_name="messages",
+            name="message_type",
+            field=models.CharField(
+                default="",
+                max_length=200,
+                verbose_name="Ticker usado no backend para ID da msg",
+            ),
+        )
     ]

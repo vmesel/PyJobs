@@ -7,19 +7,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0005_job_public'),
-    ]
+    dependencies = [("core", "0005_job_public")]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='requirements',
-            field=models.TextField(default='', verbose_name='Requisitos da vaga'),
+            model_name="job",
+            name="requirements",
+            field=models.TextField(default="", verbose_name="Requisitos da vaga"),
         ),
         migrations.AlterField(
-            model_name='job',
-            name='description',
-            field=models.TextField(default='', verbose_name='Descrição da vaga'),
+            model_name="job",
+            name="description",
+            field=models.TextField(default="", verbose_name="Descrição da vaga"),
         ),
     ]

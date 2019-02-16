@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class CoreConfig(AppConfig):
-    name = 'pyjobs.core'
+    name = "pyjobs.core"

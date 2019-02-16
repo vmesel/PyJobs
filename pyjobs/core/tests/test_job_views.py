@@ -10,8 +10,7 @@ from pyjobs.core.views import index
 
 
 class HomeJobsViewsTest(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -19,12 +18,12 @@ class HomeJobsViewsTest(TestCase):
             company_name="XPTO",
             application_link="http://www.xpto.com.br/apply",
             company_email="vm@xpto.com",
-            description="Job bem maneiro"
+            description="Job bem maneiro",
         )
         self.job.save()
-        self.home_page = resolve('/')
+        self.home_page = resolve("/")
         self.request = HttpRequest()
-        self.home_page_html = index(self.request).content.decode('utf-8')
+        self.home_page_html = index(self.request).content.decode("utf-8")
 
     def test_job_is_in_websites_home(self):
         self.assertEqual(self.home_page.func, index)
@@ -39,8 +38,7 @@ class HomeJobsViewsTest(TestCase):
 
 
 class JobDetailsViewTest(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -53,8 +51,9 @@ class JobDetailsViewTest(TestCase):
         )
         self.job.save()
         self.client = Client()
-        self.job_view_html = self.client.get(f"/job/{self.job.pk}/")\
-            .content.decode('utf-8')
+        self.job_view_html = self.client.get(f"/job/{self.job.pk}/").content.decode(
+            "utf-8"
+        )
 
     def test_job_title_in_view(self):
         self.assertTrue(self.job.title in self.job_view_html)
@@ -76,8 +75,7 @@ class JobDetailsViewTest(TestCase):
 
 
 class PyJobsJobApplication(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
@@ -86,13 +84,11 @@ class PyJobsJobApplication(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
-            public=True
+            public=True,
         )
 
         self.user = User.objects.create_user(
-            username='jacob',
-            email='jacob@gmail.com',
-            password='top_secret'
+            username="jacob", email="jacob@gmail.com", password="top_secret"
         )
 
         self.profile = Profile.objects.create(
@@ -100,21 +96,21 @@ class PyJobsJobApplication(TestCase):
             github="http://www.github.com/foobar",
             linkedin="http://www.linkedin.com/in/foobar",
             portfolio="http://www.foobar.com/",
-            cellphone="11981435390"
+            cellphone="11981435390",
         )
 
         self.client = Client()
 
     def test_check_applied_for_job_anon(self):
         request_client = self.client.get("/job/{}/".format(self.job.pk))
-        request = request_client.content.decode('utf-8')
+        request = request_client.content.decode("utf-8")
         expected_response = "Você precisa estar logado para aplicar para esta vaga!"
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):
         self.client.login(username="jacob", password="top_secret")
         request_client = self.client.get("/job/{}/".format(self.job.pk))
-        request = request_client.content.decode('utf-8')
+        request = request_client.content.decode("utf-8")
         expected_response = "Aplicar para esta vaga pelo PyJobs"
         self.assertTrue(expected_response in request)
 
@@ -122,19 +118,18 @@ class PyJobsJobApplication(TestCase):
         self.client.login(username="jacob", password="top_secret")
         job_url = "/job/{}/".format(self.job.pk)
         request_client = self.client.get(job_url)
-        request = request_client.content.decode('utf-8')
+        request = request_client.content.decode("utf-8")
         request_apply = self.client.post(job_url, follow=True)
 
         self.assertTrue(
-            "Você já aplicou a esta vaga!" in request_apply.content.decode('utf-8')
+            "Você já aplicou a esta vaga!" in request_apply.content.decode("utf-8")
         )
 
 
 class PyJobsContact(TestCase):
-
     def setUp(self):
         self.client = Client()
 
     def test_check_if_is_correct_page(self):
-        response = self.client.get("/contact/").content.decode('utf-8')
+        response = self.client.get("/contact/").content.decode("utf-8")
         self.assertTrue("Contato" in response)

@@ -8,19 +8,24 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0008_contact'),
-    ]
+    dependencies = [("core", "0008_contact")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='profile',
-            name='user',
-        ),
+        migrations.RemoveField(model_name="profile", name="user"),
         migrations.AddField(
-            model_name='profile',
-            name='phone',
-            field=models.CharField(default='', max_length=16, validators=[django.core.validators.RegexValidator(message='Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.', regex='^((?:\\([1-9]{2}\\)|\\([1-9]{2}\\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$')], verbose_name='Telefone'),
+            model_name="profile",
+            name="phone",
+            field=models.CharField(
+                default="",
+                max_length=16,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.",
+                        regex="^((?:\\([1-9]{2}\\)|\\([1-9]{2}\\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$",
+                    )
+                ],
+                verbose_name="Telefone",
+            ),
             preserve_default=False,
         ),
     ]

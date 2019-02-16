@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
@@ -7,8 +6,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
 
-from pyjobs.core.email_utils import (contact_email, contato_cadastrado_empresa,
-                                     contato_cadastrado_pessoa, vaga_publicada)
+from pyjobs.core.email_utils import (
+    contact_email,
+    contato_cadastrado_empresa,
+    contato_cadastrado_pessoa,
+    vaga_publicada,
+)
 from pyjobs.core.managers import PublicQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.utils import post_telegram_channel
@@ -16,23 +19,17 @@ from pyjobs.core.utils import post_telegram_channel
 
 class Messages(models.Model):
     message_title = models.CharField(
-        "Título da Mensagem",
-        max_length=100,
-        default="",
-        blank=False
+        "Título da Mensagem", max_length=100, default="", blank=False
     )
 
     message_type = models.CharField(
         "Ticker usado no backend para ID da msg",
         default="offer",
         max_length=200,
-        blank=False
+        blank=False,
     )
 
-    message_content = models.TextField(
-        "Texto do E-mail",
-        default=""
-    )
+    message_content = models.TextField("Texto do E-mail", default="")
 
     class Meta:
         verbose_name = "Mensagem"
@@ -49,10 +46,10 @@ class Profile(models.Model):
         max_length=16,
         validators=[
             RegexValidator(
-                regex='^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$',
-                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen."
+                regex="^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$",
+                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.",
             )
-        ]
+        ],
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -67,14 +64,14 @@ class Profile(models.Model):
     class Meta:
         verbose_name = "Perfil"
         verbose_name_plural = "Perfis"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def profile_skill_grade(self, job):
-        skills = self.skills.values_list('pk', flat=True)
+        skills = self.skills.values_list("pk", flat=True)
         if not skills:
             return False
 
-        required = Job.objects.get(pk=job).skills.values_list('pk', flat=True)
+        required = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
         if not required:
             return 0
 
@@ -84,21 +81,45 @@ class Profile(models.Model):
 
 class Job(models.Model):
     title = models.CharField(
-        "Título da Vaga", max_length=100, default="",
-        blank=False, help_text="Ex.: Desenvolvedor"
+        "Título da Vaga",
+        max_length=100,
+        default="",
+        blank=False,
+        help_text="Ex.: Desenvolvedor",
     )
     workplace = models.CharField(
-        "Local", max_length=100, default="",
-        blank=False, help_text="Ex.: Santana - São Paulo"
+        "Local",
+        max_length=100,
+        default="",
+        blank=False,
+        help_text="Ex.: Santana - São Paulo",
     )
     company_name = models.CharField(
-        "Nome da Empresa", max_length=100, default="",
-        blank=False, help_text="Ex.: ACME Inc"
+        "Nome da Empresa",
+        max_length=100,
+        default="",
+        blank=False,
+        help_text="Ex.: ACME Inc",
     )
-    application_link = models.URLField(verbose_name="Link para a Vaga", blank=True, default="", help_text="Ex.: http://goo.gl/hahaha")
-    company_email = models.EmailField(verbose_name="Email da Empresa", blank=False, help_text="Ex.: abc@def.com")
-    description = models.TextField("Descrição da vaga", default="", help_text="Descreva um pouco da sua empresa e da vaga, tente ser breve")
-    requirements = models.TextField("Requisitos da vaga", default="", help_text="Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java")
+    application_link = models.URLField(
+        verbose_name="Link para a Vaga",
+        blank=True,
+        default="",
+        help_text="Ex.: http://goo.gl/hahaha",
+    )
+    company_email = models.EmailField(
+        verbose_name="Email da Empresa", blank=False, help_text="Ex.: abc@def.com"
+    )
+    description = models.TextField(
+        "Descrição da vaga",
+        default="",
+        help_text="Descreva um pouco da sua empresa e da vaga, tente ser breve",
+    )
+    requirements = models.TextField(
+        "Requisitos da vaga",
+        default="",
+        help_text="Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java",
+    )
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
@@ -108,10 +129,8 @@ class Job(models.Model):
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
     class Meta:
-        ordering = ('-created_at',)
-        indexes = [
-            models.Index(fields=['created_at']),
-        ]
+        ordering = ("-created_at",)
+        indexes = [models.Index(fields=["created_at"])]
 
     def __str__(self):
         return self.title
@@ -182,20 +201,24 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=JobApplication)
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
-    msg_email_person = contato_cadastrado_pessoa(pessoa=instance.user, vaga=instance.job)
-    msg_email_company = contato_cadastrado_empresa(pessoa=instance.user, vaga=instance.job)
+    msg_email_person = contato_cadastrado_pessoa(
+        pessoa=instance.user, vaga=instance.job
+    )
+    msg_email_company = contato_cadastrado_empresa(
+        pessoa=instance.user, vaga=instance.job
+    )
 
     send_mail(
         "Parabéns! Você se inscreveu na vaga!",
         msg_email_person,
         "pyjobs@pyjobs.com.br",
-        [instance.user.email]
+        [instance.user.email],
     )
     send_mail(
         "Você possui mais um candidato para a sua vaga",
         msg_email_company,
         "pyjobs@pyjobs.com.br",
-        [instance.job.company_email]
+        [instance.job.company_email],
     )
 
 
@@ -207,8 +230,9 @@ def send_offer_email_template(job):
         message_title,
         message_text,
         "vinicius@pyjobs.com.br",
-        [job.company_email, "viniciuscarqueijo@gmail.com"]
+        [job.company_email, "viniciuscarqueijo@gmail.com"],
     )
+
 
 def send_offer_email_template_failback(job):
     message = Messages.objects.filter(message_type="offer")[0]
@@ -218,7 +242,7 @@ def send_offer_email_template_failback(job):
         message_title,
         message_text,
         "vinicius@pyjobs.com.br",
-        [job.company_email, "viniciuscarqueijo@gmail.com"]
+        [job.company_email, "viniciuscarqueijo@gmail.com"],
     )
 
 
@@ -233,13 +257,15 @@ def new_job_was_created(sender, instance, created, **kwargs):
             job, empresa, local, link
         )
         post_telegram_channel(message_text)
-        msg_email = vaga_publicada(empresa=instance.company_name, vaga=instance.title, pk=instance.pk)
+        msg_email = vaga_publicada(
+            empresa=instance.company_name, vaga=instance.title, pk=instance.pk
+        )
 
         send_mail(
             "Sua oportunidade está disponível no PyJobs",
             msg_email,
             "pyjobs@pyjobs.com.br",
-            [instance.company_email]
+            [instance.company_email],
         )
         if instance.ad_interested:
             try:
@@ -250,10 +276,12 @@ def new_job_was_created(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Contact)
 def new_contact(sender, instance, created, **kwargs):
-    msg_email = contact_email(instance.name, instance.email, instance.subject, instance.message)
+    msg_email = contact_email(
+        instance.name, instance.email, instance.subject, instance.message
+    )
     send_mail(
         "Contato PyJobs: {}".format(instance.subject),
         msg_email,
         "pyjobs@pyjobs.com.br",
-        ["viniciuscarqueijo@gmail.com"]
+        ["viniciuscarqueijo@gmail.com"],
     )

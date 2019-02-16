@@ -7,27 +7,64 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0003_profile_created_at'),
-    ]
+    dependencies = [("core", "0003_profile_created_at")]
 
     operations = [
         migrations.CreateModel(
-            name='Job',
+            name="Job",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(default='', max_length=100, verbose_name='Título da Vaga')),
-                ('workplace', models.CharField(default='', max_length=100, verbose_name='Local')),
-                ('company_name', models.CharField(default='', max_length=100, verbose_name='Nome da Empresa')),
-                ('application_link', models.URLField(blank=True, default='', verbose_name='Link para a Vaga')),
-                ('company_email', models.EmailField(max_length=254, verbose_name='Email da Empresa')),
-                ('description', models.TextField(default='', verbose_name='Descrição do job')),
-                ('premium', models.BooleanField(default=False, verbose_name='Premium?')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        default="", max_length=100, verbose_name="Título da Vaga"
+                    ),
+                ),
+                (
+                    "workplace",
+                    models.CharField(default="", max_length=100, verbose_name="Local"),
+                ),
+                (
+                    "company_name",
+                    models.CharField(
+                        default="", max_length=100, verbose_name="Nome da Empresa"
+                    ),
+                ),
+                (
+                    "application_link",
+                    models.URLField(
+                        blank=True, default="", verbose_name="Link para a Vaga"
+                    ),
+                ),
+                (
+                    "company_email",
+                    models.EmailField(max_length=254, verbose_name="Email da Empresa"),
+                ),
+                (
+                    "description",
+                    models.TextField(default="", verbose_name="Descrição do job"),
+                ),
+                (
+                    "premium",
+                    models.BooleanField(default=False, verbose_name="Premium?"),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.AlterModelOptions(
-            name='profile',
-            options={'ordering': ['-created_at'], 'verbose_name': 'Perfil', 'verbose_name_plural': 'Perfis'},
+            name="profile",
+            options={
+                "ordering": ["-created_at"],
+                "verbose_name": "Perfil",
+                "verbose_name_plural": "Perfis",
+            },
         ),
     ]
