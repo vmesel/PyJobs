@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.http import HttpRequest
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 from django.urls import resolve
 
 from pyjobs.core.models import Job, Profile

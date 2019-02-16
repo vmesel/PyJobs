@@ -1,7 +1,6 @@
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 
 from pyjobs.api.views import JobResource
-
 
 app_name = 'api'
 urlpatterns = [

@@ -1,9 +1,9 @@
+from django.test import TestCase
+from model_mommy import mommy
+
 from pyjobs.core.forms import *
 from pyjobs.core.models import Skills
 
-from django.test import TestCase
-
-from model_mommy import mommy
 
 class RegisterFormTest(TestCase):
     def test_empty_form_is_not_valid(self):

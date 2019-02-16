@@ -1,12 +1,11 @@
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm
 from django import forms
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.forms import ModelForm
+from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from django_select2.forms import Select2Widget, Select2MultipleWidget
-
-from pyjobs.core.models import Job, Contact, Profile, Skills
+from pyjobs.core.models import Contact, Job, Profile, Skills
 
 
 class JobForm(ModelForm):

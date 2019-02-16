@@ -8,7 +8,6 @@ from model_mommy import mommy
 from pyjobs.api.views import JobResource
 from pyjobs.core.models import Job
 
-
 PER_PAGE = JobResource.page_size
 
 

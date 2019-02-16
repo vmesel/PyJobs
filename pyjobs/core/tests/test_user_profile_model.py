@@ -2,7 +2,9 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.test import TestCase
+
 from pyjobs.core.models import Profile
+
 
 class ProfileTest(TestCase):
     def setUp(self):

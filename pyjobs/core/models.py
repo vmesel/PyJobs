@@ -1,22 +1,18 @@
 
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from django.db import models
 from django.contrib.auth.models import User
-from django.core.validators import RegexValidator
 from django.core.mail import send_mail
-
-from pyjobs.core.email_utils import (
-    contact_email,
-    contato_cadastrado_empresa,
-    contato_cadastrado_pessoa,
-    vaga_publicada,
-)
-from pyjobs.core.utils import post_telegram_channel
-from pyjobs.core.newsletter import subscribe_user_to_chimp
-from pyjobs.core.managers import PublicQuerySet
-
+from django.core.validators import RegexValidator
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
+
+from pyjobs.core.email_utils import (contact_email, contato_cadastrado_empresa,
+                                     contato_cadastrado_pessoa, vaga_publicada)
+from pyjobs.core.managers import PublicQuerySet
+from pyjobs.core.newsletter import subscribe_user_to_chimp
+from pyjobs.core.utils import post_telegram_channel
+
 
 class Messages(models.Model):
     message_title = models.CharField(

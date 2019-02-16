@@ -3,7 +3,6 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.test import TestCase
-
 from model_mommy import mommy
 
 from pyjobs.core.models import Job, Profile, Skills

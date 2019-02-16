@@ -1,10 +1,11 @@
-from django.test import TestCase
 from unittest.mock import patch
 
 from django.contrib.auth.models import User
-from pyjobs.core.models import Job, Profile
+from django.test import TestCase
 
+from pyjobs.core.models import Job, Profile
 from pyjobs.core.newsletter import subscribe_user_to_chimp
+
 
 class NewsletterTest(TestCase):
 

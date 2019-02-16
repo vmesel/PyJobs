@@ -1,5 +1,4 @@
 import requests
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
@@ -9,12 +8,9 @@ from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from pyjobs.core.forms import (
-    ContactForm,
-    EditProfileForm,
-    JobForm,
-    RegisterForm
-)
+
+from pyjobs.core.forms import (ContactForm, EditProfileForm, JobForm,
+                               RegisterForm)
 from pyjobs.core.models import Job, JobApplication
 
 
