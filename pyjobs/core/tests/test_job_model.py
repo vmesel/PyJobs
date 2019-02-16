@@ -143,7 +143,8 @@ class JobTest_04(TestCase):
 
         mommy.make('core.Skills', _quantity=7, _fill_optional=True)
 
-        self.job.skills = range(1, 5)
+        self.job.skills = Skills.objects.all()[:5]
+        self.job.save()
 
         self.user = User.objects.create_user(
             username='jacob',
@@ -160,20 +161,14 @@ class JobTest_04(TestCase):
         )
 
     def test_user_has_no_skills(self):
-        grade = self.profile.profile_skill_grade(self.job.pk)
-
-        self.assertEqual(grade, False)
+        self.assertFalse(self.profile.profile_skill_grade(self.job.pk))
 
     def test_user_0_graded(self):
-        self.profile.skills = range(5, 8)
-
-        grade = self.profile.profile_skill_grade(self.job.pk)
-
-        self.assertEqual(grade, 0.0)
+        self.profile.skills = Skills.objects.all()[5:]
+        self.profile.save()
+        self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 0.0)
 
     def test_user_100_graded(self):
-        self.profile.skills = [skill.pk for skill in self.job.skills.all()]
-
-        grade = self.profile.profile_skill_grade(self.job.pk)
-
-        self.assertEqual(grade, 100.0)
+        self.profile.skills = Skills.objects.all()
+        self.profile.save()
+        self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 100.0)
