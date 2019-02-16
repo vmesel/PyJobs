@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_extensions',
     'pyjobs.core',
     'pyjobs.api',
     'widget_tweaks',
@@ -124,7 +125,7 @@ USE_TZ = False
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'staticfiles'),)
 
 RAVEN_CONFIG = {'dsn': config("SENTRY_DSN", default=None)}
@@ -138,3 +139,21 @@ EMAIL_BACKEND = config(
 )
 
 SENDGRID_API_KEY = config('SENDGRID_API_KEY', default=None)
+
+
+# MailChimp
+
+MAILCHIMP_API_KEY = config("MAILCHIMP_API_KEY", default=None)
+MAILCHIMP_USERNAME = config("MAILCHIMP_USERNAME", default=None)
+MAILCHIMP_LIST_KEY = config("MAILCHIMP_LIST_KEY", default=None)
+
+
+# Telegram
+
+TELEGRAM_TOKEN = config("TELEGRAM_TOKEN", default=None)
+TELEGRAM_CHATID = config("TELEGRAM_CHATID", default=None)
+
+
+# Recaptcha
+
+RECAPTCHA_SECRET_KEY = config("RECAPTCHA_SECRET_KEY", default=None)

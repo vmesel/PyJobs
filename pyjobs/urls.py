@@ -15,16 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.conf.urls.static import static
-from pyjobs.settings import *
-from pyjobs.api.resources import *
 from django.contrib.auth import views as auth_views
 
-job_resource = JobResource()
 
 urlpatterns = [
     url(r'^admin_v2/', admin.site.urls),
-    url(r'^api/', include(job_resource.urls)),
+    url('api/', include('pyjobs.api.urls', namespace='api')),
     url(r'', include('pyjobs.core.urls')),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
@@ -35,4 +31,4 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-] + static(STATIC_URL, document_root=STATIC_ROOT)
+]
