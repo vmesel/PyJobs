@@ -5,6 +5,8 @@ from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve
 
+from model_mommy import mommy
+
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.views import index
 
@@ -133,3 +135,82 @@ class PyJobsContact(TestCase):
     def test_check_if_is_correct_page(self):
         response = self.client.get("/contact/").content.decode("utf-8")
         self.assertTrue("Contato" in response)
+
+
+class PyJobsMultipleJobsPagesTest(TestCase):
+
+    def setUp(self):
+        mommy.make('core.Job', _quantity=14)
+        self.client = Client()
+
+    def test_first_page(self):
+        response = self.client.get("/?page=1")
+        self.assertTrue(response.status_code == 200)
+
+    def test_second_page(self):
+        response = self.client.get("/?page=2")
+        self.assertTrue(response.status_code == 200)
+
+    def test_third_page_redirection(self):
+        response = self.client.get("/?page=3")
+        self.assertRedirects(
+            response,
+            "/",
+            status_code=302,
+            target_status_code=200
+        )
+
+    def test_string_in_page_redirection(self):
+        response = self.client.get("/?page=ola")
+        self.assertRedirects(
+            response,
+            "/",
+            status_code=302,
+            target_status_code=200
+        )
+
+
+class PyJobsSummaryPageTest(TestCase):
+
+    def setUp(self):
+        mommy.make('core.Job', _quantity=1)
+        self.client = Client()
+
+    def test_if_returns_right_status_code(self):
+        response = self.client.get("/summary/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_if_job_data_is_in_page(self):
+        response = self.client.get("/summary/")
+        first_job = Job.objects.all().first()
+        self.assertContains(response, first_job.title)
+        self.assertContains(response, first_job.company_name)
+        self.assertContains(response, first_job.workplace)
+
+
+class PyJobsFeedTest(TestCase):
+
+    def setUp(self):
+        mommy.make('core.Job', _quantity=1)
+        self.client = Client()
+
+    def test_if_feed_returns_right_status_code(self):
+        response = self.client.get("/feed/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_if_job_data_is_in_feed(self):
+        response = self.client.get("/feed/")
+        first_job = Job.objects.all().first()
+        self.assertContains(response, first_job.title)
+        self.assertContains(response, first_job.company_name)
+        self.assertContains(response, first_job.workplace)
+
+
+class PyJobsRobotsTXTTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_robots_txt_status_code(self):
+        response = self.client.get("/robots.txt")
+        self.assertEqual(response.status_code, 200)

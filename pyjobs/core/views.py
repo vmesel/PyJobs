@@ -9,7 +9,13 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
+from pyjobs.core.forms import (
+    ContactForm,
+    EditProfileForm,
+    JobForm,
+    RegisterForm
+)
+
 from pyjobs.core.models import Job, JobApplication
 
 
@@ -23,6 +29,16 @@ def index(request):
     paginator = Paginator(Job.get_publicly_available_jobs(search), 7)
 
     public_jobs_to_display = paginator.page(request.GET.get("page", 1))
+  
+    try:
+        page_number = int(request.GET.get('page', 1))
+    except ValueError:
+        return redirect("/")
+
+    if page_number > paginator.num_pages:
+        return redirect("/")
+
+    public_jobs_to_display = paginator.page(page_number)
 
     context_dict = {
         "publicly_available_jobs": public_jobs_to_display,
