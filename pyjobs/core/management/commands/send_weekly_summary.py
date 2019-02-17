@@ -22,10 +22,12 @@ def format_message_text(jobs):
     summary_list += jobs
     return "\n".join(summary_list)
 
+
 def check_today_is_the_right_day():
     if datetime.today().weekday() == 0:
         return True
     return False
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
