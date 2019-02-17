@@ -242,3 +242,24 @@ class JobsFeed(Feed):
 
     def item_pubdate(self, item):
         return item.created_at
+
+
+class PremiumJobsFeed(Feed):
+    title = "PyJobs - Sua central de vagas Python"
+    link = "/feed/"
+    description = "As últimas vagas Python destacadas no PyJobs"
+
+    def items(self):
+        return Job.get_premium_jobs()
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.get_excerpt()
+
+    def item_link(self, item):
+        return reverse("job_view", args=[item.pk])
+
+    def item_pubdate(self, item):
+        return item.created_at

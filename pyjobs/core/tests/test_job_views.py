@@ -193,6 +193,23 @@ class PyJobsFeedTest(TestCase):
         self.assertContains(response, first_job.workplace)
 
 
+class PyJobsPremiumFeedTest(TestCase):
+    def setUp(self):
+        mommy.make("core.Job", _quantity=1, premium=True)
+        self.client = Client()
+
+    def test_if_premium_feed_returns_right_status_code(self):
+        response = self.client.get("/feed/premium/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_if_premium_job_data_is_in_feed(self):
+        response = self.client.get("/feed/premium/")
+        first_job = Job.objects.all().first()
+        self.assertContains(response, first_job.title)
+        self.assertContains(response, first_job.company_name)
+        self.assertContains(response, first_job.workplace)
+
+
 class PyJobsRobotsTXTTest(TestCase):
     def setUp(self):
         self.client = Client()
