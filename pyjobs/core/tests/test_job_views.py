@@ -138,9 +138,8 @@ class PyJobsContact(TestCase):
 
 
 class PyJobsMultipleJobsPagesTest(TestCase):
-
     def setUp(self):
-        mommy.make('core.Job', _quantity=14)
+        mommy.make("core.Job", _quantity=14)
         self.client = Client()
 
     def test_first_page(self):
@@ -153,27 +152,16 @@ class PyJobsMultipleJobsPagesTest(TestCase):
 
     def test_third_page_redirection(self):
         response = self.client.get("/?page=3")
-        self.assertRedirects(
-            response,
-            "/",
-            status_code=302,
-            target_status_code=200
-        )
+        self.assertRedirects(response, "/", status_code=302, target_status_code=200)
 
     def test_string_in_page_redirection(self):
         response = self.client.get("/?page=ola")
-        self.assertRedirects(
-            response,
-            "/",
-            status_code=302,
-            target_status_code=200
-        )
+        self.assertRedirects(response, "/", status_code=302, target_status_code=200)
 
 
 class PyJobsSummaryPageTest(TestCase):
-
     def setUp(self):
-        mommy.make('core.Job', _quantity=1)
+        mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
     def test_if_returns_right_status_code(self):
@@ -189,9 +177,8 @@ class PyJobsSummaryPageTest(TestCase):
 
 
 class PyJobsFeedTest(TestCase):
-
     def setUp(self):
-        mommy.make('core.Job', _quantity=1)
+        mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
     def test_if_feed_returns_right_status_code(self):
@@ -207,7 +194,6 @@ class PyJobsFeedTest(TestCase):
 
 
 class PyJobsRobotsTXTTest(TestCase):
-
     def setUp(self):
         self.client = Client()
 
