@@ -1,5 +1,8 @@
 # PyJobs - O Site de Vagas Python Open Source
-[![chatroom icon](https://patrolavia.github.io/telegram-badge/chat.png)](https://t.me/joinchat/Cc8X5A-re7F8F4AIP0lSeg)
+[![Chatroom](https://img.shields.io/badge/chat-Telegram-blue.svg)](https://t.me/joinchat/Cc8X5A-re7F8F4AIP0lSeg)
+[![Build Status](https://img.shields.io/travis/vmesel/PyJobs/master.svg)](https://travis-ci.org/vmesel/PyJobs)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/vmesel/PyJobs.svg)](https://codeclimate.com/github/vmesel/PyJobs/maintainability)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/vmesel/PyJobs.svg)](https://codeclimate.com/github/vmesel/PyJobs/test_coverage)
 
 O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue se cadastrar para diversas vagas de emprego e de freelas que podem aparecer no país. Você pode contribuir com código ou ainda com valores monetários no: [Apoia-Se](https://apoia.se/pyjobs)
 
@@ -7,29 +10,16 @@ O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue
 ```
 git clone https://github.com/vmesel/PyJobs.git
 cd PyJobs/
-
+cp .env-sample .env
+pipenv install
 ```
 
 Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta PyJobs contendo as seguintes informações:
-
-```
-RECAPTCHA_SITE_KEY=
-RECAPTCHA_SECRET_KEY=
-TELEGRAM_TOKEN=TOKEN_AQUI
-TELEGRAM_CHATID=CHATID_AQUI
-DEBUG=False
-EMAIL_BACKEND=
-SENDGRID_API_KEY=
-SENDGRID_PASSWORD=
-SENDGRID_USERNAME=
-SECRET_KEY=
-```
 
 ### Dependências
 
 1. [Instalar docker](https://docs.docker.com/install/)
 2. [Instalar o docker-compose](https://docs.docker.com/compose/install/)
-
 
 ### Para utilizar o Docker com o Docker Compose:
 
@@ -37,6 +27,20 @@ SECRET_KEY=
 docker-compose build
 docker-compose run web python manage.py migrate
 docker-compose up
+```
+
+#### Testes
+
+A bateria de testes e verificações utiliza também critérios de guias de estilo. Para formatar o código automaticamente use:
+
+```
+docker-compose run --rm web make style
+```
+
+Depois rode os testes com:
+
+```
+docker-compose run --rm web make test
 ```
 
 ### Possíveis dificuldades com o desenvolvimento do PyJobs
@@ -47,4 +51,4 @@ Ao tentar utilizar o formulário sem configurar os dados do RECAPTCHA o servidor
 
 #### Erro ao enviar algum e-mail.
 
-Possivelmente, se você tiver exportado a variável de ambiente do SENDGRID com as API keys inválidas, você muito provavelmente terá algum erro. Para evitar isso, utilize o backend padrão do Django para envios de e-mails, assim eles aparecerão no terminal. 
+Possivelmente, se você tiver exportado a variável de ambiente do SENDGRID com as API keys inválidas, você muito provavelmente terá algum erro. Para evitar isso, utilize o backend padrão do Django para envios de e-mails, assim eles aparecerão no terminal.

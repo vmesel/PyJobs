@@ -7,22 +7,37 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0015_job_ad_interested'),
-    ]
+    dependencies = [("core", "0015_job_ad_interested")]
 
     operations = [
         migrations.CreateModel(
-            name='Messages',
+            name="Messages",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('message_title', models.TextField(default='', verbose_name='Título do E-mail')),
-                ('message_content', models.TextField(default='', verbose_name='Texto do E-mail')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "message_title",
+                    models.TextField(default="", verbose_name="Título do E-mail"),
+                ),
+                (
+                    "message_content",
+                    models.TextField(default="", verbose_name="Texto do E-mail"),
+                ),
             ],
         ),
         migrations.AlterField(
-            model_name='job',
-            name='ad_interested',
-            field=models.BooleanField(default=False, verbose_name='Tenha a vaga destacada e tenha 4x mais currículos'),
+            model_name="job",
+            name="ad_interested",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Tenha a vaga destacada e tenha 4x mais currículos",
+            ),
         ),
     ]

@@ -1,0 +1,26 @@
+language: python
+python:
+  - 3.6
+env:
+  global:
+    - SECRET_KEY=here-comes-a-secret-key
+    - PIPENV_IGNORE_VIRTUALENVS=1
+    - CC_TEST_REPORTER_ID=d00a646dd653557dee1029960b0157368f641db4802f51c8df64ae4f6397f933
+install:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  - pip install -U pip
+  - pip install -U pipenv
+  - pipenv install --dev --system
+before_script:
+  - python manage.py migrate
+  - python manage.py collectstatic --no-input
+script:
+  - make test
+after_script:
+  - coverage xml
+  - ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT
+addons:
+  code_climate:
+    repo_token: d00a646dd653557dee1029960b0157368f641db4802f51c8df64ae4f6397f933

@@ -7,19 +7,36 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0007_auto_20180413_1940'),
-    ]
+    dependencies = [("core", "0007_auto_20180413_1940")]
 
     operations = [
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(default='', max_length=100, verbose_name='Nome')),
-                ('subject', models.CharField(default='', max_length=100, verbose_name='Assunto')),
-                ('email', models.EmailField(default='', max_length=254, verbose_name='Email')),
-                ('message', models.TextField(default='', verbose_name='Mensagem')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(default="", max_length=100, verbose_name="Nome"),
+                ),
+                (
+                    "subject",
+                    models.CharField(
+                        default="", max_length=100, verbose_name="Assunto"
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(default="", max_length=254, verbose_name="Email"),
+                ),
+                ("message", models.TextField(default="", verbose_name="Mensagem")),
             ],
-        ),
+        )
     ]

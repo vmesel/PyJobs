@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {%block title%} PyJobs - A Central de Jobs Python
 {%endblock%}
 {%block main%}
     <main class="page landing-page">
         <section class="clean-block clean-hero" style="background-image:url(&quot;http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg&quot;);color:rgba(9, 162, 255, 0.90);">
             <div class="text">
-                <h2>Procurando por oportunidades Python?</h2>
-                <p>Conheça as melhores oportunidades Python em apenas um clique com o PyJobs!</p>
-                <a href="#oportunidades">
-                  <button class="btn btn-outline-light btn-lg" type="button">Veja as oportunidades</button>
-                </a>
-                <a href="https://www.apoia.se/pyjobs">
-                  <button class="btn btn-lg btn-success" type="button">Doe para o PyJobs</button>
-                </a>
+                <h2>Procurando o melhor desenvolvedor Python para sua empresa?</h2>
+                <p>Cadastre agora uma vaga e tenha acesso aos melhores profissionais do Brasil!</p>
+                <button class="btn btn-lg btn-chamada" type="button" id="link-modal-cadastro-footer">Cadastre uma vaga AGORA!</button>
+                <!-- <a href="/services/">
+                  <button class="btn btn-lg btn-success" type="button">Conheça nossos Serviços</button>
+                </a> -->
               </div>
         </section>
         <section class="clean-block clean-info dark" style="padding-bottom:25px;">
@@ -25,12 +24,12 @@
                 <div class="row">
                   <div class="col-md-6" style="text-align:center;">
                       <h4>Mais de</h4>
-                      <h3>500 Profissionais</h3>
+                      <h3>700 Profissionais</h3>
                       <p>Contam com o PyJobs diariamente para busca de empregos</p>
                   </div>
                   <div class="col-md-6" style="text-align:center;">
                       <h4>Mais de</h4>
-                      <h3>100 Empresas</h3>
+                      <h3>300 Empresas</h3>
                       <p>Contam com o PyJobs para encontrar seus profissionais Python</p>
                   </div>
                 </div>
@@ -52,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'contact' %}"><button class="btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Entre em contato</button></a></div>
+                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'contact' %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Entre em contato</button></a></div>
                 </div>
                 {% if premium_available_jobs %}
                 {% for job in premium_available_jobs %}
@@ -61,14 +60,18 @@
                         <div class="card">
                             <div class="card-body">
                               <a href="/job/{{job.pk}}">
-                                <h4 class="card-title">{{job.title}}</h4>
+                                <h4 class="card-title" style="font-weight: bold;">[Destaque] {{job.title}}</h4>
                               </a>
                                 <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
-                                <p class="card-text">{{job.get_excerpt}}</p>
+                                <h6 class="text-muted card-subtitle mb-2">Postada: {{job.created_at|naturalday}}</h6>
+                                <hr/>
+                                {%for skill in job.skills.all%}
+                                    <span class="badge badge-pill badge-primary">{{skill}}</span>
+                                {%endfor%}
                             </div>
                         </div>
                     </div>
-                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'job_view' job.pk %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Mais Detalhes</button></a></div>
+                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'job_view' job.pk %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;background-color:#ffe01b;color:#000;border: 0px solid #000;">Se Inscreva AGORA!</button></a></div>
                 </div>
                 {%endfor%}
                 {% endif %}
@@ -121,7 +124,11 @@
                                 <h4 class="card-title">{{job.title}}</h4>
                               </a>
                                 <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
-                                <p class="card-text">{{job.get_excerpt}}</p>
+                                <h6 class="text-muted card-subtitle mb-2">Postada: {{job.created_at|naturalday}}</h6>
+                                <hr/>
+                                {%for skill in job.skills.all%}
+                                    <span class="badge badge-pill badge-primary">{{skill}}</span>
+                                {%endfor%}
                             </div>
                         </div>
                     </div>

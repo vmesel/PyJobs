@@ -1,0 +1,44 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "*"
+coverage = "*"
+ipdb = "*"
+ipython = "*"
+isort = "*"
+model-mommy = "*"
+nose = "*"
+
+[packages]
+dj-database-url = "*"
+Django = "<2.0.0"
+django-appconf = "*"
+django-bootstrap3 = "*"
+django-cities = "*"
+django-extensions = "*"
+django-filter = "*"
+django-material = "*"
+django-model-utils = "*"
+django-recaptcha = "*"
+Django-Select2 = "*"
+django-widget-tweaks = "*"
+gunicorn = "*"
+mailchimp3 = "*"
+psycopg2-binary = "*"
+python-dateutil = "*"
+python-decouple = "*"
+python-telegram-bot = "*"
+pytz = "*"
+raven = "*"
+requests = "*"
+restless = "*"
+sendgrid = "*"
+sendgrid-django = "*"
+tqdm = "*"
+whitenoise = "*"
+
+[requires]
+python_version = "3.6"
