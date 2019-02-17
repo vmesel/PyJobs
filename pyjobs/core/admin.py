@@ -23,6 +23,10 @@ def add_subscriber(modeladmin, request, queryset):
         subscribe_user_to_chimp(prof)
 
 
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ("user", "job", "created_at")
+
+
 class JobAdmin(admin.ModelAdmin):
     list_display = (
         "title",
@@ -41,7 +45,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(Job, JobAdmin)
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(JobApplication)
+admin.site.register(JobApplication, JobApplicationAdmin)
 admin.site.register(Contact)
 admin.site.register(Messages)
 admin.site.register(Skills)
