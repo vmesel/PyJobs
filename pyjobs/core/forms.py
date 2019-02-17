@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from pyjobs.core.models import Contact, Job, Profile, Skills
+from pyjobs.core.models import Contact, Job, Profile, Skill
 
 
 class JobForm(ModelForm):
@@ -69,7 +69,7 @@ class RegisterForm(UserCreationForm):
     )
 
     skills_ = forms.ModelMultipleChoiceField(
-        label="Skills", queryset=Skills.objects.all(), widget=Select2MultipleWidget
+        label="Skills", queryset=Skill.objects.all(), widget=Select2MultipleWidget
     )
 
     class Meta:

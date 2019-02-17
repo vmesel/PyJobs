@@ -7,7 +7,7 @@ from pyjobs.core.models import (
     JobApplication,
     Messages,
     Profile,
-    Skills,
+    Skill,
     send_offer_email_template_failback,
 )
 from pyjobs.core.newsletter import subscribe_user_to_chimp
@@ -48,4 +48,4 @@ admin.site.register(Profile, ProfileAdmin)
 admin.site.register(JobApplication, JobApplicationAdmin)
 admin.site.register(Contact)
 admin.site.register(Messages)
-admin.site.register(Skills)
+admin.site.register(Skill)

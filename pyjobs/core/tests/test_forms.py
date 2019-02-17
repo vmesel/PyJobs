@@ -2,7 +2,7 @@ from django.test import TestCase
 from model_mommy import mommy
 
 from pyjobs.core.forms import *
-from pyjobs.core.models import Skills
+from pyjobs.core.models import Skill
 
 
 class RegisterFormTest(TestCase):
@@ -11,7 +11,7 @@ class RegisterFormTest(TestCase):
         self.assertTrue(form.is_valid() == False)
 
     def test_form_is_valid(self):
-        skills = mommy.make("core.Skills", _quantity=1, _fill_optional=True)
+        skills = mommy.make("core.Skill", _quantity=1, _fill_optional=True)
         form = RegisterForm(
             data={
                 "first_name": "Vinicius",
