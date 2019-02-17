@@ -7,19 +7,17 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0020_skills'),
-    ]
+    dependencies = [("core", "0020_skills")]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='skills',
-            field=models.ManyToManyField(to='core.Skills'),
+            model_name="job",
+            name="skills",
+            field=models.ManyToManyField(to="core.Skills"),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='skills',
-            field=models.ManyToManyField(to='core.Skills'),
+            model_name="profile",
+            name="skills",
+            field=models.ManyToManyField(to="core.Skills"),
         ),
     ]

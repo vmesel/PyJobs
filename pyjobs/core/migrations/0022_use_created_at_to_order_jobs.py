@@ -7,17 +7,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0021_auto_20190120_2135'),
-    ]
+    dependencies = [("core", "0021_auto_20190120_2135")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='job',
-            options={'ordering': ('-created_at',)},
+            name="job", options={"ordering": ("-created_at",)}
         ),
         migrations.AddIndex(
-            model_name='job',
-            index=models.Index(fields=['created_at'], name='core_job_created_8e7744_idx'),
+            model_name="job",
+            index=models.Index(
+                fields=["created_at"], name="core_job_created_8e7744_idx"
+            ),
         ),
     ]

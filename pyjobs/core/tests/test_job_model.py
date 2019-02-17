@@ -3,15 +3,13 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.test import TestCase
-
 from model_mommy import mommy
 
 from pyjobs.core.models import Job, Profile, Skills
 
 
 class JobTest_01(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -19,7 +17,7 @@ class JobTest_01(TestCase):
             company_name="XPTO",
             application_link="http://www.xpto.com.br/apply",
             company_email="vm@xpto.com",
-            description="Job bem maneiro"
+            description="Job bem maneiro",
         )
         self.job.save()
 
@@ -34,14 +32,12 @@ class JobTest_01(TestCase):
 
     def test_job_application_link(self):
         self.assertEqual(
-            str(self.job.get_application_link()),
-            "http://www.xpto.com.br/apply"
+            str(self.job.get_application_link()), "http://www.xpto.com.br/apply"
         )
 
 
 class JobTest_02(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 2",
@@ -49,7 +45,7 @@ class JobTest_02(TestCase):
             company_name="XPTO",
             company_email="vm@xpto.com",
             description="Job bem maneiro",
-            public=True
+            public=True,
         )
         self.job.save()
 
@@ -64,8 +60,7 @@ class JobTest_02(TestCase):
 
 
 class JobTest_03(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
@@ -74,7 +69,7 @@ class JobTest_03(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
-            public=True
+            public=True,
         )
         self.job.save()
 
@@ -89,8 +84,7 @@ class JobTest_03(TestCase):
 
 
 class JobTest_Application(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
@@ -99,12 +93,10 @@ class JobTest_Application(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
-            public=True
+            public=True,
         )
         self.user = User.objects.create_user(
-            username='jacob',
-            email='jacob@gmail.com',
-            password='top_secret'
+            username="jacob", email="jacob@gmail.com", password="top_secret"
         )
 
         self.profile = Profile.objects.create(
@@ -112,7 +104,7 @@ class JobTest_Application(TestCase):
             github="http://www.github.com/foobar",
             linkedin="http://www.linkedin.com/in/foobar",
             portfolio="http://www.foobar.com/",
-            cellphone="11981435390"
+            cellphone="11981435390",
         )
 
         self.job.save()
@@ -128,8 +120,7 @@ class JobTest_Application(TestCase):
 
 
 class JobTest_04(TestCase):
-
-    @patch('pyjobs.core.models.post_telegram_channel')
+    @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
@@ -138,18 +129,16 @@ class JobTest_04(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
-            public=True
+            public=True,
         )
 
-        mommy.make('core.Skills', _quantity=7, _fill_optional=True)
+        mommy.make("core.Skills", _quantity=7, _fill_optional=True)
 
         self.job.skills = Skills.objects.all()[:5]
         self.job.save()
 
         self.user = User.objects.create_user(
-            username='jacob',
-            email='jacob@gmail.com',
-            password='top_secret'
+            username="jacob", email="jacob@gmail.com", password="top_secret"
         )
 
         self.profile = Profile.objects.create(
@@ -157,7 +146,7 @@ class JobTest_04(TestCase):
             github="http://www.github.com/foobar",
             linkedin="http://www.linkedin.com/in/foobar",
             portfolio="http://www.foobar.com/",
-            cellphone="11981435390"
+            cellphone="11981435390",
         )
 
     def test_user_has_no_skills(self):

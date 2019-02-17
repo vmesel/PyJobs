@@ -16,9 +16,9 @@ class DjangoPaginatedResource(DjangoResource):
             return super(DjangoResource, self).serialize_list(data)
 
         paginator = Paginator(data, self.page_size)
-        page_number = self.request.GET.get('page', 1)
+        page_number = self.request.GET.get("page", 1)
         if page_number not in paginator.page_range:
-            raise BadRequest('Invalid page number')
+            raise BadRequest("Invalid page number")
 
         self.page = paginator.page(page_number)
         data = self.page.object_list
@@ -27,7 +27,7 @@ class DjangoPaginatedResource(DjangoResource):
     def wrap_list_response(self, data):
         response_dict = super(DjangoResource, self).wrap_list_response(data)
 
-        if not hasattr(self, 'page'):
+        if not hasattr(self, "page"):
             return response_dict
 
         next_page, previous_page = None, None
@@ -36,24 +36,26 @@ class DjangoPaginatedResource(DjangoResource):
         if self.page.has_previous() and self.page.previous_page_number():
             previous_page = True
 
-        response_dict['meta'] = {
-            'page': self.page.number,
-            'limit': self.page.paginator.per_page,
-            'total_pages': self.page.paginator.num_pages,
-            'total_count': self.page.paginator.count,
-            'next': next_page,
-            'previous': previous_page,
+        response_dict["meta"] = {
+            "page": self.page.number,
+            "limit": self.page.paginator.per_page,
+            "total_pages": self.page.paginator.num_pages,
+            "total_count": self.page.paginator.count,
+            "next": next_page,
+            "previous": previous_page,
         }
         return response_dict
 
 
 class JobResource(DjangoPaginatedResource):
     page_size = 20
-    preparer = FieldsPreparer(fields={
-        f.name: f.name
-        for f in Job._meta.fields
-        if f.name not in {'premium', 'public', 'ad_interested'}
-    })
+    preparer = FieldsPreparer(
+        fields={
+            f.name: f.name
+            for f in Job._meta.fields
+            if f.name not in {"premium", "public", "ad_interested"}
+        }
+    )
 
     def list(self):
         return Job.objects.all()

@@ -1,30 +1,43 @@
 from django.contrib import admin
-from pyjobs.core.models import \
-    (
-        Job, Profile, JobApplication,
-        Contact, Messages, send_offer_email_template_failback,
-        Skills
-    )
 from django.core.mail import send_mail
+
+from pyjobs.core.models import (
+    Contact,
+    Job,
+    JobApplication,
+    Messages,
+    Profile,
+    Skills,
+    send_offer_email_template_failback,
+)
 from pyjobs.core.newsletter import subscribe_user_to_chimp
+
 
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:
         send_offer_email_template_failback(j)
 
+
 def add_subscriber(modeladmin, request, queryset):
     for prof in queryset:
         subscribe_user_to_chimp(prof)
 
+
 class JobAdmin(admin.ModelAdmin):
     list_display = (
-        'title', 'company_name', 'ad_interested',
-        'public', 'premium', 'created_at'
+        "title",
+        "company_name",
+        "ad_interested",
+        "public",
+        "premium",
+        "created_at",
     )
     actions = [send_email_offer]
 
+
 class ProfileAdmin(admin.ModelAdmin):
     actions = [add_subscriber]
+
 
 admin.site.register(Job, JobAdmin)
 admin.site.register(Profile, ProfileAdmin)

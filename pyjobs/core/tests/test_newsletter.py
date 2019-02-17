@@ -1,26 +1,26 @@
-from django.test import TestCase
 from unittest.mock import patch
 
 from django.contrib.auth.models import User
-from pyjobs.core.models import Job, Profile
+from django.test import TestCase
 
+from pyjobs.core.models import Job, Profile
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 
-class NewsletterTest(TestCase):
 
+class NewsletterTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='v@m.com',
+            username="v@m.com",
             email="v@m.com",
             password="top_secret",
             first_name="Vinicius",
-            last_name="Mesel"
+            last_name="Mesel",
         )
         self.profile = Profile(
-            user = self.user,
-            github = "http://www.aaa.com.br",
-            linkedin = "http://www.aaa.com.br",
-            portfolio = "http://www.aaa.com.br",
+            user=self.user,
+            github="http://www.aaa.com.br",
+            linkedin="http://www.aaa.com.br",
+            portfolio="http://www.aaa.com.br",
         )
         self.profile.save()
 

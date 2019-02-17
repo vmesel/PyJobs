@@ -7,14 +7,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0014_auto_20180511_2122'),
-    ]
+    dependencies = [("core", "0014_auto_20180511_2122")]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='ad_interested',
-            field=models.BooleanField(default=False, verbose_name='Interessado em ficar em destaque no PyJobs?'),
-        ),
+            model_name="job",
+            name="ad_interested",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Interessado em ficar em destaque no PyJobs?",
+            ),
+        )
     ]

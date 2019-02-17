@@ -7,18 +7,18 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0016_auto_20181111_1842'),
-    ]
+    dependencies = [("core", "0016_auto_20181111_1842")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='messages',
-            options={'verbose_name': 'Mensagem', 'verbose_name_plural': 'Mensagens'},
+            name="messages",
+            options={"verbose_name": "Mensagem", "verbose_name_plural": "Mensagens"},
         ),
         migrations.AlterField(
-            model_name='messages',
-            name='message_title',
-            field=models.CharField(default='', max_length=200, verbose_name='Título do E-mail'),
+            model_name="messages",
+            name="message_title",
+            field=models.CharField(
+                default="", max_length=200, verbose_name="Título do E-mail"
+            ),
         ),
     ]

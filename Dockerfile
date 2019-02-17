@@ -3,11 +3,15 @@ ENV PYTHONUNBUFFERED 1
 ENV SECRET_KEY here-comes-a-secret-key  # merely a mock to allow collectstatic
 
 WORKDIR /code
+COPY Makefile Makefile
 COPY manage.py manage.py
 COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
 
-RUN pip install -U pip && \
+RUN apt-get update && \
+    apt-get install -y make && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install -U pip && \
     pip install -U pipenv && \
     pipenv install --system --dev
 

@@ -7,19 +7,23 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0018_messages_message_type'),
-    ]
+    dependencies = [("core", "0018_messages_message_type")]
 
     operations = [
         migrations.AlterField(
-            model_name='messages',
-            name='message_title',
-            field=models.CharField(default='', max_length=100, verbose_name='Título da Mensagem'),
+            model_name="messages",
+            name="message_title",
+            field=models.CharField(
+                default="", max_length=100, verbose_name="Título da Mensagem"
+            ),
         ),
         migrations.AlterField(
-            model_name='messages',
-            name='message_type',
-            field=models.CharField(default='offer', max_length=200, verbose_name='Ticker usado no backend para ID da msg'),
+            model_name="messages",
+            name="message_type",
+            field=models.CharField(
+                default="offer",
+                max_length=200,
+                verbose_name="Ticker usado no backend para ID da msg",
+            ),
         ),
     ]
