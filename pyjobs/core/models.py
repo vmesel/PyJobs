@@ -167,6 +167,7 @@ class Job(models.Model):
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="")
     job = models.ForeignKey(Job, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ("user", "job")
