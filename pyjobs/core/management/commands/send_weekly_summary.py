@@ -23,13 +23,14 @@ def format_message_text(jobs):
     return "\n".join(summary_list)
 
 def check_today_is_the_right_day():
-    datetime.today().weekday() == 0:
+    if datetime.today().weekday() == 0:
         return True
     return False
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         if not check_today_is_the_right_day():
+            print("Today is not the right day!")
             return False
 
         jobs = list(Job.get_premium_jobs())
@@ -42,4 +43,5 @@ class Command(BaseCommand):
 
         post_telegram_channel(format_message_text(formated_jobs))
 
+        print("Message sent!")
         return True
