@@ -1,5 +1,7 @@
 import os
 
+from datetime import datetime
+
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 
@@ -20,9 +22,16 @@ def format_message_text(jobs):
     summary_list += jobs
     return "\n".join(summary_list)
 
+def check_today_is_the_right_day():
+    datetime.today().weekday() == 0:
+        return True
+    return False
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        if not check_today_is_the_right_day():
+            return False
+
         jobs = list(Job.get_premium_jobs())
 
         missing_jobs = 10 - len(jobs)
@@ -32,3 +41,5 @@ class Command(BaseCommand):
         formated_jobs = [format_job(job) for job in jobs]
 
         post_telegram_channel(format_message_text(formated_jobs))
+
+        return True
