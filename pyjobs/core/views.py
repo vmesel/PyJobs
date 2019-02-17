@@ -26,6 +26,8 @@ def index(request):
         else None
     )
 
+    paginator = Paginator(Job.get_publicly_available_jobs(search), 7)
+
     try:
         page_number = int(request.GET.get('page', 1))
     except ValueError:
