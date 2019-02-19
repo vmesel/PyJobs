@@ -153,3 +153,9 @@ TELEGRAM_CHATID = config("TELEGRAM_CHATID", default=None)
 # Recaptcha
 
 RECAPTCHA_SECRET_KEY = config("RECAPTCHA_SECRET_KEY", default=None)
+
+# Force SSL
+
+if 'DYNO' in os.environ:
+    SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
