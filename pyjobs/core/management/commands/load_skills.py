@@ -3,7 +3,7 @@ import os
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 
-from pyjobs.core.models import Skills
+from pyjobs.core.models import Skill
 
 
 class Command(BaseCommand):
@@ -431,10 +431,10 @@ class Command(BaseCommand):
         ]
 
     def handle(self, *args, **options):
-        qs_skills = Skills.objects.all()
+        qs_skills = Skill.objects.all()
         skills = self._get_skills()
         for skill in skills:
             try:
-                skill_obj = Skills.objects.create(name=skill.strip())
+                skill_obj = Skill.objects.create(name=skill.strip())
             except IntegrityError as e:
                 print("Skill '{}' already exists in the database".format(skill))

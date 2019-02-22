@@ -1,5 +1,4 @@
 import os
-
 from datetime import datetime
 
 from django.core.management.base import BaseCommand

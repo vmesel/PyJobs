@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve
-
 from model_mommy import mommy
 
 from pyjobs.core.models import Job, Profile
@@ -138,7 +137,8 @@ class PyJobsContact(TestCase):
 
 
 class PyJobsMultipleJobsPagesTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=14)
         self.client = Client()
 
@@ -160,7 +160,8 @@ class PyJobsMultipleJobsPagesTest(TestCase):
 
 
 class PyJobsSummaryPageTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
@@ -177,7 +178,8 @@ class PyJobsSummaryPageTest(TestCase):
 
 
 class PyJobsFeedTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
@@ -194,7 +196,8 @@ class PyJobsFeedTest(TestCase):
 
 
 class PyJobsPremiumFeedTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1, premium=True)
         self.client = Client()
 

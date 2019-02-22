@@ -53,7 +53,7 @@ class Profile(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
-    skills = models.ManyToManyField("Skills")
+    skills = models.ManyToManyField("Skill")
 
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)
@@ -124,7 +124,7 @@ class Job(models.Model):
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    skills = models.ManyToManyField("Skills")
+    skills = models.ManyToManyField("Skill")
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
@@ -185,7 +185,7 @@ class Contact(models.Model):
     message = models.TextField("Mensagem", default="", blank=False)
 
 
-class Skills(models.Model):
+class Skill(models.Model):
     name = models.CharField("Skill", max_length=100, default="", blank=False)
 
     def __str__(self):

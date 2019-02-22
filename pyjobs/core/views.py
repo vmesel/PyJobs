@@ -10,7 +10,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
-
 from pyjobs.core.models import Job, JobApplication
 
 

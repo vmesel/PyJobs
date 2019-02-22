@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from model_mommy import mommy
 
-from pyjobs.core.models import Job, Profile, Skills
+from pyjobs.core.models import Job, Profile, Skill
 
 
 class JobTest_01(TestCase):
@@ -132,9 +132,9 @@ class JobTest_04(TestCase):
             public=True,
         )
 
-        mommy.make("core.Skills", _quantity=7, _fill_optional=True)
+        mommy.make("core.Skill", _quantity=7, _fill_optional=True)
 
-        self.job.skills = Skills.objects.all()[:5]
+        self.job.skills = Skill.objects.all()[:5]
         self.job.save()
 
         self.user = User.objects.create_user(
@@ -153,11 +153,11 @@ class JobTest_04(TestCase):
         self.assertFalse(self.profile.profile_skill_grade(self.job.pk))
 
     def test_user_0_graded(self):
-        self.profile.skills = Skills.objects.all()[5:]
+        self.profile.skills = Skill.objects.all()[5:]
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 0.0)
 
     def test_user_100_graded(self):
-        self.profile.skills = Skills.objects.all()
+        self.profile.skills = Skill.objects.all()
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 100.0)
