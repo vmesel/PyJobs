@@ -171,7 +171,8 @@ def contact(request):
 
 @login_required
 def pythonistas_area(request):
-    return render(request, "pythonistas-area.html")
+    context_dict = {"new_job_form": JobForm}
+    return render(request, "pythonistas-area.html", context=context_dict)
 
 
 def pythonistas_signup(request):
@@ -207,7 +208,7 @@ def pythonista_change_password(request):
 def pythonista_change_info(request):
     profile = request.user.profile
     template = "pythonistas-area-info-change.html"
-    context = {"form": EditProfileForm(instance=profile)}
+    context = {"form": EditProfileForm(instance=profile), "new_job_form": JobForm}
 
     if request.method == "POST":
         context["form"] = EditProfileForm(instance=profile, data=request.POST)
