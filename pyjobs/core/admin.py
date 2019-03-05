@@ -8,14 +8,14 @@ from pyjobs.core.models import (
     Messages,
     Profile,
     Skill,
-    send_offer_email_template_failback,
+    send_offer_email_template,
 )
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 
 
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:
-        send_offer_email_template_failback(j)
+        send_offer_email_template(j)
 
 
 def add_subscriber(modeladmin, request, queryset):

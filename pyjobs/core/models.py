@@ -235,18 +235,6 @@ def send_offer_email_template(job):
     )
 
 
-def send_offer_email_template_failback(job):
-    message = Messages.objects.filter(message_type="offer")[0]
-    message_text = message.message_content.format(company=job.company_name)
-    message_title = message.message_title.format(title=job.title)
-    send_mail(
-        message_title,
-        message_text,
-        "vinicius@pyjobs.com.br",
-        [job.company_email, "viniciuscarqueijo@gmail.com"],
-    )
-
-
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
     if created:
@@ -268,11 +256,10 @@ def new_job_was_created(sender, instance, created, **kwargs):
             "pyjobs@pyjobs.com.br",
             [instance.company_email],
         )
-        if instance.ad_interested:
-            try:
-                send_offer_email_template(instance)
-            except:
-                client.captureException()
+        try:
+            send_offer_email_template(instance)
+        except:
+            client.captureException()
 
 
 @receiver(post_save, sender=Contact)
