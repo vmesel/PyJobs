@@ -235,6 +235,18 @@ def send_offer_email_template(job):
     )
 
 
+def send_feedback_collection_email(job):
+    message = Messages.objects.filter(message_type="feedback")[0]
+    message_text = message.message_content.format(company=job.company_name)
+    message_title = message.message_title.format(title=job.title)
+    send_mail(
+        message_title,
+        message_text,
+        "vinicius@pyjobs.com.br",
+        [job.company_email, "viniciuscarqueijo@gmail.com"],
+    )
+
+
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
     if created:
