@@ -163,6 +163,8 @@ class Job(models.Model):
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
 
+    def get_jobs_to_get_feedback(self):
+        return Job.objects.created_days_ago(14)
 
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="")

@@ -104,8 +104,8 @@ def register_new_job(request):
                         request,
                         template_name="generic.html",
                         context={
-                            "message_first": "Job criado com sucesso",
-                            "message_second": "Vá para a home do site!",
+                            "message_first": "Acabamos de mandar um e-mail para vocês!",
+                            "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
                             "new_job_form": JobForm,
                         },
                     )
@@ -125,8 +125,8 @@ def register_new_job(request):
                     request,
                     template_name="generic.html",
                     context={
-                        "message_first": "Job criado com sucesso",
-                        "message_second": "Vá para a home do site!",
+                        "message_first": "Acabamos de mandar um e-mail para vocês!",
+                        "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
                         "new_job_form": JobForm,
                     },
                 )

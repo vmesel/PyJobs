@@ -19,6 +19,12 @@ class PublicQuerySet(models.QuerySet):
             created_at__lte=datetime.today(),
         )
 
+    def created_days_ago(self, days):
+        return self.filter(
+            created_at__gt=datetime.today() - timedelta(days=days + 1),
+            created_at__lte=datetime.today() - timedelta(days=days),
+        )
+
     def search(self, term):
         if not term:
             return self
