@@ -175,7 +175,7 @@ class JobTest_05(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
             premium=True,
-            public=True
+            public=True,
         )
 
         mommy.make("core.Skill", _quantity=1, _fill_optional=True)
@@ -183,7 +183,7 @@ class JobTest_05(TestCase):
         self.job.skills = Skill.objects.all()
         self.job.save()
 
-        self.job.created_at += - timedelta(14)
+        self.job.created_at += -timedelta(14)
         self.job.save()
 
     def test_if_job_is_listed_in_get_jobs_to_get_feedback(self):
