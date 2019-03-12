@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<jobs>
+    {%for job in jobs%}
+        <job id="{{job.pk}}">
+        <link><![CDATA[job.get_absolute_url()]]></link>
+        <name><![CDATA[]]></name>
+        <region><![CDATA[]]></region>
+        <salary><![CDATA[]]></salary>
+        <description><![CDATA[]]></description>
+        <apply_url></apply_url>
+        <company><![CDATA[]]></company>
+        <pubdate></pubdate>
+        <updated></updated>
+        <expire></expire>
+        <jobtype><![CDATA[Full-time]]></jobtype>
+        </job>
+    {%endfor%}
+</jobs>
