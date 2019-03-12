@@ -6,6 +6,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
 
+from datetime import timedelta
+
 from pyjobs.core.email_utils import (
     contact_email,
     contato_cadastrado_empresa,
@@ -165,6 +167,9 @@ class Job(models.Model):
 
     def get_jobs_to_get_feedback(self):
         return Job.objects.created_days_ago(14)
+
+    def get_expiration_date(self):
+        return self.created_at + timedelta(days=30)
 
 
 class JobApplication(models.Model):

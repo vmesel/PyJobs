@@ -2,16 +2,23 @@
 <jobs>
     {%for job in jobs%}
         <job id="{{job.pk}}">
-        <link><![CDATA[job.get_absolute_url()]]></link>
-        <name><![CDATA[]]></name>
-        <region><![CDATA[]]></region>
-        <salary><![CDATA[]]></salary>
-        <description><![CDATA[]]></description>
-        <apply_url></apply_url>
-        <company><![CDATA[]]></company>
-        <pubdate></pubdate>
-        <updated></updated>
-        <expire></expire>
+        <link><![CDATA[http://www.pyjobs.com.br{{job.get_absolute_url}}]]></link>
+        <name><![CDATA[{{job.title}}]]></name>
+        <region><![CDATA[{{job.workplace}}]]></region>
+        <description><![CDATA[
+          <h4>Descrição</h4><br/>
+
+          {{job.description}}<br/>
+
+          <h4>Requisitos</h4><br/>
+
+          {{job.requirements}}
+          ]]></description>
+        <apply_url><![CDATA[http://www.pyjobs.com.br{{job.get_absolute_url}}]]></apply_url>
+        <company><![CDATA[{{job.company_name}}]]></company>
+        <pubdate><![CDATA[{{job.created_at|date:"d.m.Y"}}]]></pubdate>
+        <updated><![CDATA[{{job.created_at|date:"d.m.Y"}}]]></updated>
+        <expire><![CDATA[{{job.get_expiration_date|date:"d.m.Y"}}]]></expire>
         <jobtype><![CDATA[Full-time]]></jobtype>
         </job>
     {%endfor%}
