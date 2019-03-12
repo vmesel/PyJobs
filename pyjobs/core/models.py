@@ -163,6 +163,9 @@ class Job(models.Model):
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
 
+    def get_jobs_to_get_feedback(self):
+        return Job.objects.created_days_ago(14)
+
 
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="")
@@ -225,6 +228,18 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
 
 def send_offer_email_template(job):
     message = Messages.objects.filter(message_type="offer")[0]
+    message_text = message.message_content.format(company=job.company_name)
+    message_title = message.message_title.format(title=job.title)
+    send_mail(
+        message_title,
+        message_text,
+        "vinicius@pyjobs.com.br",
+        [job.company_email, "viniciuscarqueijo@gmail.com"],
+    )
+
+
+def send_feedback_collection_email(job):
+    message = Messages.objects.filter(message_type="feedback")[0]
     message_text = message.message_content.format(company=job.company_name)
     message_title = message.message_title.format(title=job.title)
     send_mail(

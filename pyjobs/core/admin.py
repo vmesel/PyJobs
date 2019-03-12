@@ -9,6 +9,7 @@ from pyjobs.core.models import (
     Profile,
     Skill,
     send_offer_email_template,
+    send_feedback_collection_email,
 )
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 
@@ -16,6 +17,11 @@ from pyjobs.core.newsletter import subscribe_user_to_chimp
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:
         send_offer_email_template(j)
+
+
+def send_feedback_collection(modeladmin, request, queryset):
+    for j in queryset:
+        send_feedback_collection_email(j)
 
 
 def add_subscriber(modeladmin, request, queryset):
@@ -36,7 +42,7 @@ class JobAdmin(admin.ModelAdmin):
         "premium",
         "created_at",
     )
-    actions = [send_email_offer]
+    actions = [send_email_offer, send_feedback_collection]
 
 
 class ProfileAdmin(admin.ModelAdmin):
