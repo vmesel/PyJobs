@@ -6,14 +6,23 @@
         <name><![CDATA[{{job.title}}]]></name>
         <region><![CDATA[{{job.workplace}}]]></region>
         <description><![CDATA[
-          <h4>Descrição</h4><br/>
-
-          {{job.description}}<br/>
-
-          <h4>Requisitos</h4><br/>
-
-          {{job.requirements}}
-          ]]></description>
+        <div class="faq-item">
+            <h4 class="question">Descrição da vaga</h4>
+                <div class="answer">
+                  <p>
+                    {{job.description|linebreaks}}
+                  </p>
+                </div>
+        </div>
+        <div class="faq-item">
+            <h4 class="question">Requisitos</h4>
+                <div class="answer">
+                  <p>
+                    {{job.requirements|linebreaks}}
+                  </p>
+                </div>
+        </div>
+        ]]></description>  
         <apply_url><![CDATA[http://www.pyjobs.com.br{{job.get_absolute_url}}]]></apply_url>
         <company><![CDATA[{{job.company_name}}]]></company>
         <pubdate><![CDATA[{{job.created_at|date:"d.m.Y"}}]]></pubdate>
