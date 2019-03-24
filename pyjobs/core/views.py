@@ -263,3 +263,10 @@ class PremiumJobsFeed(Feed):
 
     def item_pubdate(self, item):
         return item.created_at
+
+
+def jooble_feed(request):
+    jobs = Job.objects.all()
+    return render(
+        request, "jooble.xml", context={"jobs": jobs}, content_type="text/xml"
+    )

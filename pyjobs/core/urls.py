@@ -28,6 +28,7 @@ urlpatterns = [
     url(r"^pythonistas/signup/$", pythonistas_signup, name="pythonistas_signup"),
     url(r"^password/$", pythonista_change_password, name="change_password"),
     url(r"^info/$", pythonista_change_info, name="change_info"),
+    url(r"^jooble/$", jooble_feed, name="jooble_feed"),
     url(r"^robots.txt$", robots_view, name="robots"),
     url(
         r"^sitemap\.xml$",
