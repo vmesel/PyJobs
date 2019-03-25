@@ -277,13 +277,37 @@ def jooble_feed(request):
 
 @staff_member_required
 def get_job_related_users(request, pk):
-    users_grades = [("job_pk", "grade", "user_pk")]
-    users_grades += [
-        (pk, profile.profile_skill_grade(pk), profile.pk) for profile in Profile.objects.all()
+    users_grades = [
+        (
+            "job_pk",
+            "grade",
+            "first_name",
+            "last_name",
+            "email",
+            "github",
+            "linkedin",
+            "cellphone",
+        )
     ]
 
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="job_{}_users.csv"'.format(pk)
+    users_grades += [
+        (
+            pk,
+            profile.profile_skill_grade(pk),
+            profile.user.first_name,
+            profile.user.last_name,
+            profile.user.email,
+            profile.github,
+            profile.linkedin,
+            profile.cellphone,
+        )
+        for profile in Profile.objects.all()
+    ]
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="job_{}_users.csv"'.format(
+        pk
+    )
     writer = csv.writer(response)
     writer.writerows(users_grades)
 
