@@ -1,16 +1,19 @@
+import csv
 import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
-from pyjobs.core.models import Job, JobApplication
+from pyjobs.core.models import Job, JobApplication, Profile
 
 
 def index(request):
@@ -270,3 +273,42 @@ def jooble_feed(request):
     return render(
         request, "jooble.xml", context={"jobs": jobs}, content_type="text/xml"
     )
+
+
+@staff_member_required
+def get_job_related_users(request, pk):
+    users_grades = [
+        (
+            "job_pk",
+            "grade",
+            "first_name",
+            "last_name",
+            "email",
+            "github",
+            "linkedin",
+            "cellphone",
+        )
+    ]
+
+    users_grades += [
+        (
+            pk,
+            profile.profile_skill_grade(pk),
+            profile.user.first_name,
+            profile.user.last_name,
+            profile.user.email,
+            profile.github,
+            profile.linkedin,
+            profile.cellphone,
+        )
+        for profile in Profile.objects.all()
+    ]
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="job_{}_users.csv"'.format(
+        pk
+    )
+    writer = csv.writer(response)
+    writer.writerows(users_grades)
+
+    return response
