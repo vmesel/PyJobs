@@ -82,6 +82,54 @@ class Profile(models.Model):
 
 
 class Job(models.Model):
+    STATE_CHOICES = [
+        (0, "Acre"),
+        (1, "Alagoas"),
+        (2, "Amapá"),
+        (3, "Amazonas"),
+        (4, "Bahia"),
+        (5, "Ceará"),
+        (6, "Distrito Federal"),
+        (7, "Espírito Santo"),
+        (8, "Goiás"),
+        (9, "Maranhão"),
+        (10, "Mato Grosso"),
+        (11, "Mato Grosso do Sul"),
+        (12, "Minas Gerais"),
+        (13, "Pará"),
+        (14, "Paraíba"),
+        (15, "Paraná"),
+        (16, "Pernambuco"),
+        (17, "Piauí"),
+        (18, "Rio de Janeiro"),
+        (19, "Rio Grande do Norte"),
+        (20, "Rio Grande do Sul"),
+        (21, "Rondônia"),
+        (22, "Roraima"),
+        (23, "Santa Catarina"),
+        (24, "São Paulo"),
+        (25, "Sergipe"),
+        (26, "Tocantins"),
+        (27, "Indeterminado"),
+    ]
+
+    SALARY_RANGES = [
+        (1, "R$ 0,00 a R$ 1.000,00"),
+        (2, "R$ 1.000,01 a R$ 3.000,00"),
+        (3, "R$ 3.000,01 a R$ 6.000,00"),
+        (4, "R$ 6.000,01 a R$ 10.000,00"),
+        (5, "R$ 10.000,01 ou mais"),
+        (6, "Indeterminado"),
+    ]
+
+    JOB_LEVELS = [
+        (1, "Estágio"),
+        (2, "Junior"),
+        (3, "Pleno"),
+        (4, "Sênior"),
+        (5, "Indeterminado"),
+    ]
+
     title = models.CharField(
         "Título da Vaga",
         max_length=100,
@@ -127,6 +175,16 @@ class Job(models.Model):
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skill")
+
+    # Filtering parts of the model
+
+    ## This will allow users to filter on the homepage for jobs that respect their
+    ## values, necessities or expectations
+
+    state = models.IntegerField("Estado", choices=STATE_CHOICES, default=27)
+    salary_range = models.IntegerField("Faixa Salarial", choices=SALARY_RANGES, default=6)
+    job_level = models.IntegerField("Nível do Profissional", choices=JOB_LEVELS, default=5)
+    remote = models.BooleanField("Esta vaga é remota?", default=False)
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
