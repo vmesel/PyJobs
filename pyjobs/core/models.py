@@ -129,6 +129,7 @@ JOB_LEVELS = [
     (5, "Indeterminado"),
 ]
 
+
 class Job(models.Model):
     title = models.CharField(
         "Título da Vaga",
@@ -182,8 +183,12 @@ class Job(models.Model):
     ## values, necessities or expectations
 
     state = models.IntegerField("Estado", choices=STATE_CHOICES, default=27)
-    salary_range = models.IntegerField("Faixa Salarial", choices=SALARY_RANGES, default=6)
-    job_level = models.IntegerField("Nível do Profissional", choices=JOB_LEVELS, default=5)
+    salary_range = models.IntegerField(
+        "Faixa Salarial", choices=SALARY_RANGES, default=6
+    )
+    job_level = models.IntegerField(
+        "Nível do Profissional", choices=JOB_LEVELS, default=5
+    )
     remote = models.BooleanField("Esta vaga é remota?", default=False)
 
     objects = models.Manager.from_queryset(PublicQuerySet)()

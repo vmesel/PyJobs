@@ -38,7 +38,7 @@ def index(request):
         "publicly_available_jobs": public_jobs_to_display,
         "premium_available_jobs": Job.get_premium_jobs(),
         "pages": paginator.page_range,
-        "filter": user_filtered_query_set
+        "filter": user_filtered_query_set,
     }
 
     return render(request, template_name="index.html", context=context_dict)
@@ -46,6 +46,7 @@ def index(request):
 
 def services_view(request):
     return render(request, template_name="services.html")
+
 
 def job_creation(request):
     context_dict = {"new_job_form": JobForm}
