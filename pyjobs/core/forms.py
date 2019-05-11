@@ -13,10 +13,14 @@ class JobForm(ModelForm):
         model = Job
         fields = [
             "title",
-            "workplace",
+            "job_level",
             "company_name",
+            "workplace",
+            "remote",
+            "state",
             "application_link",
             "company_email",
+            "salary_range",
             "description",
             "requirements",
             "skills",
@@ -28,6 +32,10 @@ class JobForm(ModelForm):
         super(JobForm, self).__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.widget.attrs.update({"placeholder": field.label})
+
+        for key, field in self.fields.items():
+            if key in ["state", "salary_range", "job_level"]:
+                field.choices = field.choices[:-1]
 
 
 class ContactForm(ModelForm):

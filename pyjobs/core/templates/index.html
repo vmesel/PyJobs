@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load widget_tweaks %}
 {%block title%} PyJobs - A Central de Jobs Python
 {%endblock%}
 {%block main%}
@@ -9,10 +10,9 @@
             <div class="text">
                 <h2>Procurando o melhor desenvolvedor Python para sua empresa?</h2>
                 <p>Cadastre agora uma vaga e tenha acesso aos melhores profissionais do Brasil!</p>
-                <button class="btn btn-lg btn-chamada" type="button" id="link-modal-cadastro-footer">Cadastre uma vaga AGORA!</button>
-                <!-- <a href="/services/">
-                  <button class="btn btn-lg btn-success" type="button">Conheça nossos Serviços</button>
-                </a> -->
+                <a href="{% url 'job_creation' %}">
+                    <button class="btn btn-lg btn-chamada" type="button">Cadastre uma vaga AGORA!</button>
+                </a>
               </div>
         </section>
         <section class="clean-block clean-info dark" style="padding-bottom:25px;">
@@ -86,30 +86,26 @@
                                     Use a pesquisa para procurar vagas na cidade que deseja, com o título, descrição ou requisitos.
                                     Ex: São Paulo, Data Scientist
                                 </p>
-                                <p class="card-text"  style="color:#777;">
-                                    <form action="" target="_self">
+                                    <form class="" method="get">
                                         <div class="row justify-content-center" style="margin-top:10px;">
-                                            <div class="col">
-                                                <input type="text"
-                                                        placeholder="Procurar por:"
-                                                        class="form-control"
-                                                        minlength="3"
-                                                        maxlength="25"
-                                                        name="search"
-                                                        value="{{ search }}"
-                                                        style="max-width: 550px; width: 100%;" />
+
+                                        {% for field in filter.form.visible_fields %}
+                                            <div class="form-group col-sm-4 col-md-4">
+                                                {{field.label_tag}}
+                                                {%render_field field class="form-control"%}
                                             </div>
-                                            <div class="col">
-                                                <button class="btn btn-primary" type="submit">Pesquisar</button>
-                                            </div>
+                                        {% endfor %}
                                         </div>
+                                        <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Filtrar
+                                      </button>
                                     </form>
-                                    {% if publicly_available_jobs|length <= 0 %}
-                                    <strong>Nenhuma vaga encontrada...</strong>
-                                    {% endif %}
-                                </p>
+
                             </div>
                         </div>
+                        {% if publicly_available_jobs|length <= 0 %}
+                            <strong>Nenhuma vaga encontrada...</strong>
+                        {% endif %}
                     </div>
                 </div>
                 {% for job in publicly_available_jobs %}
@@ -145,3 +141,12 @@
         </section>
     </main>
   {%endblock main%}
+  {% block extra_scripts%}
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#id_skills').select2();
+  });
+  </script>
+  {%endblock%}
