@@ -118,7 +118,7 @@ SALARY_RANGES = [
     (3, "R$ 3.000,01 a R$ 6.000,00"),
     (4, "R$ 6.000,01 a R$ 10.000,00"),
     (5, "R$ 10.000,01 ou mais"),
-    (6, "Indeterminado"),
+    (6, "A combinar"),
 ]
 
 JOB_LEVELS = [
