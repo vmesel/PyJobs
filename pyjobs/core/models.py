@@ -14,7 +14,7 @@ from pyjobs.core.email_utils import (
     contato_cadastrado_pessoa,
     vaga_publicada,
 )
-from pyjobs.core.managers import PublicQuerySet
+from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.utils import post_telegram_channel
 
@@ -68,17 +68,12 @@ class Profile(models.Model):
         verbose_name_plural = "Perfis"
         ordering = ["-created_at"]
 
+    objects = models.Manager.from_queryset(ProfilingQuerySet)()
+
     def profile_skill_grade(self, job):
         skills = self.skills.values_list("pk", flat=True)
-        if not skills:
-            return False
-
-        required = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
-        if not required:
-            return 0
-
-        intersect = set(skills) & set(required)
-        return (len(intersect) / len(required)) * 100
+        job_skills = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
+        return Profile.objects.grade(skills, job_skills)
 
 
 STATE_CHOICES = [
@@ -118,7 +113,7 @@ SALARY_RANGES = [
     (3, "R$ 3.000,01 a R$ 6.000,00"),
     (4, "R$ 6.000,01 a R$ 10.000,00"),
     (5, "R$ 10.000,01 ou mais"),
-    (6, "Indeterminado"),
+    (6, "A combinar"),
 ]
 
 JOB_LEVELS = [

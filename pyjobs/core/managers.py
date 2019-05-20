@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-
 from django.db import models
 
 
@@ -36,3 +35,12 @@ class PublicQuerySet(models.QuerySet):
             | models.Q(requirements__icontains=term)
         )
         return self.filter(params)
+
+
+class ProfilingQuerySet(models.QuerySet):
+    def grade(self, skills, job_skills):
+        if not skills or not job_skills:
+            return 0
+
+        intersect = set(skills) & set(job_skills)
+        return (len(intersect) / len(job_skills)) * 100
