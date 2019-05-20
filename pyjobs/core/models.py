@@ -76,7 +76,6 @@ class Profile(models.Model):
         return Profile.objects.grade(skills, job_skills)
 
 
-
 STATE_CHOICES = [
     (0, "Acre"),
     (1, "Alagoas"),

@@ -7,14 +7,23 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0027_auto_20190331_1204'),
-    ]
+    dependencies = [("core", "0027_auto_20190331_1204")]
 
     operations = [
         migrations.AlterField(
-            model_name='job',
-            name='salary_range',
-            field=models.IntegerField(choices=[(1, 'R$ 0,00 a R$ 1.000,00'), (2, 'R$ 1.000,01 a R$ 3.000,00'), (3, 'R$ 3.000,01 a R$ 6.000,00'), (4, 'R$ 6.000,01 a R$ 10.000,00'), (5, 'R$ 10.000,01 ou mais'), (6, 'A combinar')], default=6, verbose_name='Faixa Salarial'),
-        ),
+            model_name="job",
+            name="salary_range",
+            field=models.IntegerField(
+                choices=[
+                    (1, "R$ 0,00 a R$ 1.000,00"),
+                    (2, "R$ 1.000,01 a R$ 3.000,00"),
+                    (3, "R$ 3.000,01 a R$ 6.000,00"),
+                    (4, "R$ 6.000,01 a R$ 10.000,00"),
+                    (5, "R$ 10.000,01 ou mais"),
+                    (6, "A combinar"),
+                ],
+                default=6,
+                verbose_name="Faixa Salarial",
+            ),
+        )
     ]
