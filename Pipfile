@@ -14,7 +14,7 @@ nose = "*"
 
 [packages]
 dj-database-url = "*"
-Django = "<2.0.0"
+Django = "1.11.20"
 django-appconf = "*"
 django-bootstrap3 = "*"
 django-cities = "*"
@@ -39,6 +39,10 @@ sendgrid = "*"
 sendgrid-django = "*"
 tqdm = "*"
 whitenoise = "*"
+urllib3 = ">1.24.2"
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
