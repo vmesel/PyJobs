@@ -221,6 +221,7 @@ def pythonista_change_info(request):
 
     return render(request, template, context)
 
+
 @login_required
 def pythonista_applied_info(request):
     """
