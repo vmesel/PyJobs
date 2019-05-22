@@ -229,9 +229,7 @@ def pythonista_applied_info(request):
     """
     context = {}
     template = "pythonista-applied-jobs.html"
-    context["applications"] = JobApplication.objects.filter(
-        user = request.user.pk
-    )
+    context["applications"] = JobApplication.objects.filter(user=request.user.pk)
     return render(request, template, context)
 
 

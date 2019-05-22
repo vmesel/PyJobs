@@ -48,12 +48,8 @@ class JobAppliedToViewTest(TestCase):
         response = self.client.get("/applied-to/")
         self.assertContains(response, error_msg)
 
-
     def test_if_the_applied_job_is_there(self):
         self.client.login(username="jacob", password="top_secret")
-        JobApplication.objects.create(
-            job=self.job,
-            user=self.user
-        )
+        JobApplication.objects.create(job=self.job, user=self.user)
         response = self.client.get("/applied-to/")
         self.assertContains(response, self.job.title)
