@@ -9,27 +9,27 @@
                     <h2 class="text-info">Área do Pythonista</h2>
                 </div>
                 <div class="bg-white rounded box-shadow" style="padding: 1rem !important;">
-                    {%if applications > 0%}
+                    {%if applications %}
                     <h4 class="border-bottom border-gray pb-2 mb-0">Vagas que você aplicou via PyJobs:</h4>
                     {%else%}
                     <h4 class="border-bottom border-gray pb-2 mb-0">Você ainda não aplicou a nenhuma vaga via PyJobs!</h4>
                     {%endif%}
-                    <div class="card-deck mb-1 text-center">
                     {% for application in applications %}
+                        <div class="card-deck mb-1 text-center">
                             <div class="card mb-12 box-shadow">
                               <div class="card-header">
                                 <h4 class="my-0 font-weight-normal">{{application.job.title}}</h4>
                               </div>
                               <div class="card-body">
-                                <a href="{% url 'job_view' application.job.pk %}">
+                                <a href="{% url 'job_view' application.job.pk %}" style="text-decoration:none;">
                                 <button type="button" class="btn btn-lg btn-block btn-outline-primary">
                                     Ver vaga
                                 </button>
                                 </a>
                               </div>
                             </div>
+                        </div>
                     {%endfor%}
-                          </div>
                 </div>
             </div>
         </section>
