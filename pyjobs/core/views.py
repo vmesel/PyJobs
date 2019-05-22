@@ -221,6 +221,18 @@ def pythonista_change_info(request):
 
     return render(request, template, context)
 
+@login_required
+def pythonista_applied_info(request):
+    """
+    View to retrieve all user applications to job.
+    """
+    context = {}
+    template = "pythonista-applied-jobs.html"
+    context["applications"] = JobApplication.objects.filter(
+        user = request.user.pk
+    )
+    return render(request, template, context)
+
 
 class JobsFeed(Feed):
     title = "PyJobs - Sua central de vagas Python"

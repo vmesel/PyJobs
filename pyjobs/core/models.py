@@ -231,8 +231,8 @@ class Job(models.Model):
 
 
 class JobApplication(models.Model):
-    user = models.ForeignKey(User, default="")
-    job = models.ForeignKey(Job, default="")
+    user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, default="", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
