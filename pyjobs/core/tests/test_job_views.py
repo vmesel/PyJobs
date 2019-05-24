@@ -105,14 +105,16 @@ class PyJobsJobApplication(TestCase):
     def test_check_applied_for_job_anon(self):
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = "Você precisa estar logado para aplicar para esta vaga!"
+        expected_response = (
+            "Você precisa estar logado para se candidatar para esta vaga!"
+        )
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):
         self.client.login(username="jacob", password="top_secret")
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = "Aplicar para esta vaga pelo PyJobs"
+        expected_response = "Candidate-se para esta vaga pelo PyJobs"
         self.assertTrue(expected_response in request)
 
     def test_check_if_profile_with_no_skills_can_apply(self):

@@ -24,11 +24,11 @@
                       {%else%}
                       <form action="." method="post">
                         {% csrf_token %}
-                        <button class="btn btn-primary" type="submit">Aplicar para esta vaga pelo PyJobs</button>
+                        <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo PyJobs</button>
                       </form>
                       {% endif %}
                     {%else%}
-                      <button class="btn btn-primary" type="button">Você precisa estar logado para aplicar para esta vaga!</button>
+                      <button class="btn btn-primary" type="button">Você precisa estar logado para se candidatar para esta vaga!</button>
                     {% endif %}
                   {% endif %}
                     <div class="faq-item">
