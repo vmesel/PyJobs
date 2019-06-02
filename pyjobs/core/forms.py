@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from pyjobs.core.models import Contact, Job, Profile, Skills
+from pyjobs.core.models import Contact, Job, Profile, Skill
 
 
 class JobForm(ModelForm):
@@ -13,10 +13,14 @@ class JobForm(ModelForm):
         model = Job
         fields = [
             "title",
-            "workplace",
+            "job_level",
             "company_name",
+            "workplace",
+            "remote",
+            "state",
             "application_link",
             "company_email",
+            "salary_range",
             "description",
             "requirements",
             "skills",
@@ -28,6 +32,10 @@ class JobForm(ModelForm):
         super(JobForm, self).__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.widget.attrs.update({"placeholder": field.label})
+
+        for key, field in self.fields.items():
+            if key in ["state", "salary_range", "job_level"]:
+                field.choices = field.choices[:-1]
 
 
 class ContactForm(ModelForm):
@@ -69,7 +77,7 @@ class RegisterForm(UserCreationForm):
     )
 
     skills_ = forms.ModelMultipleChoiceField(
-        label="Skills", queryset=Skills.objects.all(), widget=Select2MultipleWidget
+        label="Skills", queryset=Skill.objects.all(), widget=Select2MultipleWidget
     )
 
     class Meta:

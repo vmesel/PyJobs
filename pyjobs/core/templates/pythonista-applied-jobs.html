@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{%block main%}
+    <main class="page contact-us-page">
+        <section class="clean-block clean-form dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Área do Pythonista</h2>
+                </div>
+                <div class="bg-white rounded box-shadow" style="padding: 1rem !important;">
+                    {%if applications %}
+                    <h4 class="border-bottom border-gray pb-2 mb-0">Vagas que você aplicou via PyJobs:</h4>
+                    {%else%}
+                    <h4 class="border-bottom border-gray pb-2 mb-0">Você ainda não aplicou a nenhuma vaga via PyJobs!</h4>
+                    {%endif%}
+                    {% for application in applications %}
+                        <div class="card-deck mb-1 text-center">
+                            <div class="card mb-12 box-shadow">
+                              <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">{{application.job.title}}</h4>
+                              </div>
+                              <div class="card-body">
+                                <a href="{% url 'job_view' application.job.pk %}" style="text-decoration:none;">
+                                <button type="button" class="btn btn-lg btn-block btn-outline-primary">
+                                    Ver vaga
+                                </button>
+                                </a>
+                              </div>
+                            </div>
+                        </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </section>
+    </main>
+{%endblock%}
+{%block extrascripts%}
+<style media="screen">
+    #h6-applied {
+        border-bottom: 1px solid #e5e5e5;
+    }
+</style>
+{%endblock%}

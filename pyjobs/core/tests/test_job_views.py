@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve
-
 from model_mommy import mommy
 
 from pyjobs.core.models import Job, Profile
@@ -106,14 +105,16 @@ class PyJobsJobApplication(TestCase):
     def test_check_applied_for_job_anon(self):
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = "Você precisa estar logado para aplicar para esta vaga!"
+        expected_response = (
+            "Você precisa estar logado para se candidatar para esta vaga!"
+        )
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):
         self.client.login(username="jacob", password="top_secret")
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = "Aplicar para esta vaga pelo PyJobs"
+        expected_response = "Candidate-se para esta vaga pelo PyJobs"
         self.assertTrue(expected_response in request)
 
     def test_check_if_profile_with_no_skills_can_apply(self):
@@ -138,7 +139,8 @@ class PyJobsContact(TestCase):
 
 
 class PyJobsMultipleJobsPagesTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=14)
         self.client = Client()
 
@@ -160,7 +162,8 @@ class PyJobsMultipleJobsPagesTest(TestCase):
 
 
 class PyJobsSummaryPageTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
@@ -177,7 +180,8 @@ class PyJobsSummaryPageTest(TestCase):
 
 
 class PyJobsFeedTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
@@ -187,6 +191,24 @@ class PyJobsFeedTest(TestCase):
 
     def test_if_job_data_is_in_feed(self):
         response = self.client.get("/feed/")
+        first_job = Job.objects.all().first()
+        self.assertContains(response, first_job.title)
+        self.assertContains(response, first_job.company_name)
+        self.assertContains(response, first_job.workplace)
+
+
+class PyJobsPremiumFeedTest(TestCase):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        mommy.make("core.Job", _quantity=1, premium=True)
+        self.client = Client()
+
+    def test_if_premium_feed_returns_right_status_code(self):
+        response = self.client.get("/feed/premium/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_if_premium_job_data_is_in_feed(self):
+        response = self.client.get("/feed/premium/")
         first_job = Job.objects.all().first()
         self.assertContains(response, first_job.title)
         self.assertContains(response, first_job.company_name)

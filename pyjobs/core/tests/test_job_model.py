@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from datetime import datetime
 from unittest.mock import patch
 
@@ -5,7 +7,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from model_mommy import mommy
 
-from pyjobs.core.models import Job, Profile, Skills
+from pyjobs.core.models import Job, Profile, Skill
 
 
 class JobTest_01(TestCase):
@@ -132,9 +134,9 @@ class JobTest_04(TestCase):
             public=True,
         )
 
-        mommy.make("core.Skills", _quantity=7, _fill_optional=True)
+        mommy.make("core.Skill", _quantity=7, _fill_optional=True)
 
-        self.job.skills = Skills.objects.all()[:5]
+        self.job.skills = Skill.objects.all()[:5]
         self.job.save()
 
         self.user = User.objects.create_user(
@@ -153,11 +155,37 @@ class JobTest_04(TestCase):
         self.assertFalse(self.profile.profile_skill_grade(self.job.pk))
 
     def test_user_0_graded(self):
-        self.profile.skills = Skills.objects.all()[5:]
+        self.profile.skills = Skill.objects.all()[5:]
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 0.0)
 
     def test_user_100_graded(self):
-        self.profile.skills = Skills.objects.all()
+        self.profile.skills = Skill.objects.all()
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 100.0)
+
+
+class JobTest_05(TestCase):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job.objects.create(
+            title="Vaga 3",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+            public=True,
+        )
+
+        mommy.make("core.Skill", _quantity=1, _fill_optional=True)
+
+        self.job.skills = Skill.objects.all()
+        self.job.save()
+
+        self.job.created_at += -timedelta(14)
+        self.job.save()
+
+    def test_if_job_is_listed_in_get_jobs_to_get_feedback(self):
+        jobs_to_feedback = self.job.get_jobs_to_get_feedback()
+        self.assertTrue(self.job in jobs_to_feedback)

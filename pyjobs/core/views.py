@@ -1,27 +1,28 @@
+import csv
 import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
-
-from pyjobs.core.models import Job, JobApplication
+from pyjobs.core.models import Job, JobApplication, Profile
+from pyjobs.core.filters import JobFilter
 
 
 def index(request):
-    search = (
-        request.GET.get("search", "")
-        if len(request.GET.get("search", "")) > 3
-        else None
-    )
+    publicly_available_jobs = Job.get_publicly_available_jobs()
 
-    paginator = Paginator(Job.get_publicly_available_jobs(search), 7)
+    user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)
+
+    paginator = Paginator(user_filtered_query_set.qs, 7)
 
     try:
         page_number = int(request.GET.get("page", 1))
@@ -36,16 +37,20 @@ def index(request):
     context_dict = {
         "publicly_available_jobs": public_jobs_to_display,
         "premium_available_jobs": Job.get_premium_jobs(),
-        "new_job_form": JobForm,
         "pages": paginator.page_range,
-        "search": search if search is not None else "",
+        "filter": user_filtered_query_set,
     }
+
     return render(request, template_name="index.html", context=context_dict)
 
 
 def services_view(request):
+    return render(request, template_name="services.html")
+
+
+def job_creation(request):
     context_dict = {"new_job_form": JobForm}
-    return render(request, template_name="services.html", context=context_dict)
+    return render(request, template_name="job_registration.html", context=context_dict)
 
 
 def robots_view(request):
@@ -55,7 +60,6 @@ def robots_view(request):
 def job_view(request, pk):
     context = {
         "job": get_object_or_404(Job, pk=pk),
-        "new_job_form": JobForm,
         "logged_in": False,
         "title": get_object_or_404(Job, pk=pk).title,
     }
@@ -105,9 +109,8 @@ def register_new_job(request):
                         request,
                         template_name="generic.html",
                         context={
-                            "message_first": "Job criado com sucesso",
-                            "message_second": "Vá para a home do site!",
-                            "new_job_form": JobForm,
+                            "message_first": "Acabamos de mandar um e-mail para vocês!",
+                            "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
                         },
                     )
                 else:
@@ -117,7 +120,6 @@ def register_new_job(request):
                         context={
                             "message_first": "Preencha corretamente o captcha",
                             "message_second": "Você não completou a validação do captcha!",
-                            "new_job_form": new_job,
                         },
                     )
             else:
@@ -126,9 +128,8 @@ def register_new_job(request):
                     request,
                     template_name="generic.html",
                     context={
-                        "message_first": "Job criado com sucesso",
-                        "message_second": "Vá para a home do site!",
-                        "new_job_form": JobForm,
+                        "message_first": "Acabamos de mandar um e-mail para vocês!",
+                        "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
                     },
                 )
         else:
@@ -138,14 +139,12 @@ def register_new_job(request):
                 context={
                     "message_first": "Falha na hora de criar o job",
                     "message_second": "Você preencheu algum campo da maneira errada, tente novamente!",
-                    "new_job_form": new_job,
                 },
             )
 
 
 def contact(request):
     context = {}
-    context["new_job_form"] = JobForm
 
     if request.method == "POST":
         form = ContactForm(request.POST or None)
@@ -176,7 +175,7 @@ def pythonistas_area(request):
 
 
 def pythonistas_signup(request):
-    context = {"new_job_form": JobForm, "form": RegisterForm(request.POST or None)}
+    context = {"form": RegisterForm(request.POST or None)}
 
     if request.method == "POST" and context["form"].is_valid():
         user = context["form"].save()
@@ -189,7 +188,7 @@ def pythonistas_signup(request):
 @login_required
 def pythonista_change_password(request):
     template_name = "pythonistas-area-password-change.html"
-    context = {"form": PasswordChangeForm(request.user), "new_job_form": JobForm}
+    context = {"form": PasswordChangeForm(request.user)}
 
     if request.method == "POST":
         if context["form"].is_valid():
@@ -223,6 +222,17 @@ def pythonista_change_info(request):
     return render(request, template, context)
 
 
+@login_required
+def pythonista_applied_info(request):
+    """
+    View to retrieve all user applications to job.
+    """
+    context = {}
+    template = "pythonista-applied-jobs.html"
+    context["applications"] = JobApplication.objects.filter(user=request.user.pk)
+    return render(request, template, context)
+
+
 class JobsFeed(Feed):
     title = "PyJobs - Sua central de vagas Python"
     link = "/feed/"
@@ -242,3 +252,70 @@ class JobsFeed(Feed):
 
     def item_pubdate(self, item):
         return item.created_at
+
+
+class PremiumJobsFeed(Feed):
+    title = "PyJobs - Sua central de vagas Python"
+    link = "/feed/"
+    description = "As últimas vagas Python destacadas no PyJobs"
+
+    def items(self):
+        return Job.get_premium_jobs()
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.get_excerpt()
+
+    def item_link(self, item):
+        return reverse("job_view", args=[item.pk])
+
+    def item_pubdate(self, item):
+        return item.created_at
+
+
+def jooble_feed(request):
+    jobs = Job.objects.all()
+    return render(
+        request, "jooble.xml", context={"jobs": jobs}, content_type="text/xml"
+    )
+
+
+@staff_member_required
+def get_job_related_users(request, pk):
+    users_grades = [
+        (
+            "job_pk",
+            "grade",
+            "first_name",
+            "last_name",
+            "email",
+            "github",
+            "linkedin",
+            "cellphone",
+        )
+    ]
+
+    users_grades += [
+        (
+            pk,
+            profile.profile_skill_grade(pk),
+            profile.user.first_name,
+            profile.user.last_name,
+            profile.user.email,
+            profile.github,
+            profile.linkedin,
+            profile.cellphone,
+        )
+        for profile in Profile.objects.all()
+    ]
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="job_{}_users.csv"'.format(
+        pk
+    )
+    writer = csv.writer(response)
+    writer.writerows(users_grades)
+
+    return response

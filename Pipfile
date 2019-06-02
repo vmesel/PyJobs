@@ -23,7 +23,7 @@ django-filter = "*"
 django-material = "*"
 django-model-utils = "*"
 django-recaptcha = "*"
-Django-Select2 = "*"
+Django-Select2 = "<7.0.0"
 django-widget-tweaks = "*"
 gunicorn = "*"
 mailchimp3 = "*"
@@ -42,3 +42,6 @@ whitenoise = "*"
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true

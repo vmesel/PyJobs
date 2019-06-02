@@ -18,6 +18,10 @@
         color: #000;
         border: 0px solid #000;
     }
+
+    #id_skills{
+        width: 100%;
+    }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Google Tag Manager -->
@@ -76,7 +80,7 @@
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}#oportunidades">VAGAS</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" id="link-modal-cadastro" style="cursor: pointer;">CADASTRE UMA VAGA</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'job_creation' %}">CADASTRE UMA VAGA</a></li>
                     <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'contact' %}">CONTATO</a></li> -->
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'services' %}">NOSSOS SERVI&Ccedil;OS</a></li>
 
@@ -102,6 +106,7 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="#oportunidades">Oportunidades Python</a></li>
                         <li><a id="link-modal-cadastro-footer">Cadastre uma vaga</a></li>
+                        <li><a href="https://br.jooble.org/vagas-de-emprego-desenvolvedor-python">Jooble</a></li>
                     </ul>
                 </div>
             </div>
@@ -110,28 +115,11 @@
             <p>© 2019 PyJobs</p>
         </div>
     </footer>
-    {% include 'modal_new_job.html' %}
-    {% include 'modal_donate.html' %}
 
     <script src="{% static 'assets/js/jquery.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-      $("#link-modal-cadastro").click(function(){
-          $("#modal-cadastro").modal();
-      });
-      $("#link-modal-cadastro-footer").click(function(){
-          $("#modal-cadastro").modal();
-      });
-      if (document.cookie.indexOf("visitado=") >= 0) {}
-      else {
-        document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-        $("#modal-donate").modal();
-      }
-    });
-    </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -139,11 +127,6 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-103581044-1', 'auto');
       ga('send', 'pageview');
-      </script>
-      <script type="text/javascript">
-      $(document).ready(function() {
-        $('.django-select2').select2();
-      });
       </script>
     {%block extra_scripts%}
     {%endblock%}

@@ -29,11 +29,6 @@ class TestJobResourceList(TestCase):
         self.assertEqual(self.response.json["meta"]["total_count"], PER_PAGE + 2)
         self.assertTrue(self.response.json["meta"]["next"])
 
-    def test_contents(self):
-        for job in self.jobs[PER_PAGE:]:  # skip jobs beyond the first page
-            with self.subTest():
-                self.assertIn(job.company_email, self.response.text)
-
 
 class TestJobResourceDetail(TestCase):
     @patch("pyjobs.core.models.post_telegram_channel")

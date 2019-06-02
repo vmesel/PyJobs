@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %}
+Cadastre uma vaga - PyJobs
+{% endblock %}
+{%block main%}
+    <main class="page faq-page">
+        <section class="clean-block clean-faq dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h1 class="text-info">Cadastre a sua vaga!</h1>
+                </div>
+                <div class="block-content">
+                    <div class="faq-item">
+                        <h4 class="question">Sobre o PyJobs</h4>
+                        <div class="answer">
+                          <p>
+                            O PyJobs é o maior site de profissionais Python do Brasil. Nós já contamos com mais de 15 mil profissionais altamente qualificados e mais de 2 anos de experiência em programadores Python.
+                          </p>
+                          <p>
+                            Preencha o formulário abaixo para o cadastro da vaga!
+                          </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <form class="" action="{% url 'register_new_job' %}" method="post">
+                        {% csrf_token %}
+                        {% for hidden_field in form.hidden_fields %}
+                          {{ hidden_field }}
+                        {% endfor %}
+                        {% for field in new_job_form.visible_fields %}
+                            {% if field.html_name != "ad_interested" and field.html_name != "skills" and field.html_name != "remote" %}
+                            <div class="form-group">
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">
+                                    {{ field.label_tag }}
+                                  </span>
+                                </div>
+                                {% if field.errors %}
+                                {% render_field field class="form-control is-invalid" %}
+                                {% for error in field.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                                {% endfor %}
+                                {%else%}
+                                  {% render_field field class="form-control" placeholder=field.help_text %}
+                                {%endif%}
+                              </div>
+                            </div>
+                            {%elif field.html_name == "skills"%}
+                                    <h4>Skills:</h4>
+                                    <p>Coloque as skills para facilitar a busca por seu candidato de sucesso</p>
+                                  {% render_field field %}
+                            {%elif field.html_name == "remote"%}
+                                <p>{{field}} Essa vaga permite trabalho remoto</p>
+                            {%else%}
+                            <hr>
+                                <p>{{field}} Eu desejo ter acesso aos serviços do PyJobs e ao clube de profissionais exclusivos.</p>
+                            {% endif %}
+
+                        {% endfor %}
+                        <div class="g-recaptcha" data-sitekey="6Lerz1cUAAAAAK9xC1q1Hbqpfbtb75ck26IZVRPf"></div>
+                        </div>
+                        <div class="modal-footer">
+                        <button class="btn btn-light" type="button" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary" type="submit">Postar vaga</button>
+                        </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+{%endblock%}
+{% block extra_scripts%}
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#id_skills').select2();
+});
+</script>
+{%endblock%}

@@ -6,13 +6,15 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
 
+from datetime import timedelta
+
 from pyjobs.core.email_utils import (
     contact_email,
     contato_cadastrado_empresa,
     contato_cadastrado_pessoa,
     vaga_publicada,
 )
-from pyjobs.core.managers import PublicQuerySet
+from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.utils import post_telegram_channel
 
@@ -53,7 +55,7 @@ class Profile(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
-    skills = models.ManyToManyField("Skills")
+    skills = models.ManyToManyField("Skill")
 
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)
@@ -66,17 +68,61 @@ class Profile(models.Model):
         verbose_name_plural = "Perfis"
         ordering = ["-created_at"]
 
+    objects = models.Manager.from_queryset(ProfilingQuerySet)()
+
     def profile_skill_grade(self, job):
         skills = self.skills.values_list("pk", flat=True)
-        if not skills:
-            return False
+        job_skills = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
+        return Profile.objects.grade(skills, job_skills)
 
-        required = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
-        if not required:
-            return 0
 
-        intersect = set(skills) & set(required)
-        return (len(intersect) / len(required)) * 100
+STATE_CHOICES = [
+    (0, "Acre"),
+    (1, "Alagoas"),
+    (2, "Amapá"),
+    (3, "Amazonas"),
+    (4, "Bahia"),
+    (5, "Ceará"),
+    (6, "Distrito Federal"),
+    (7, "Espírito Santo"),
+    (8, "Goiás"),
+    (9, "Maranhão"),
+    (10, "Mato Grosso"),
+    (11, "Mato Grosso do Sul"),
+    (12, "Minas Gerais"),
+    (13, "Pará"),
+    (14, "Paraíba"),
+    (15, "Paraná"),
+    (16, "Pernambuco"),
+    (17, "Piauí"),
+    (18, "Rio de Janeiro"),
+    (19, "Rio Grande do Norte"),
+    (20, "Rio Grande do Sul"),
+    (21, "Rondônia"),
+    (22, "Roraima"),
+    (23, "Santa Catarina"),
+    (24, "São Paulo"),
+    (25, "Sergipe"),
+    (26, "Tocantins"),
+    (27, "Indeterminado"),
+]
+
+SALARY_RANGES = [
+    (1, "R$ 0,00 a R$ 1.000,00"),
+    (2, "R$ 1.000,01 a R$ 3.000,00"),
+    (3, "R$ 3.000,01 a R$ 6.000,00"),
+    (4, "R$ 6.000,01 a R$ 10.000,00"),
+    (5, "R$ 10.000,01 ou mais"),
+    (6, "A combinar"),
+]
+
+JOB_LEVELS = [
+    (1, "Estágio"),
+    (2, "Junior"),
+    (3, "Pleno"),
+    (4, "Sênior"),
+    (5, "Indeterminado"),
+]
 
 
 class Job(models.Model):
@@ -124,7 +170,21 @@ class Job(models.Model):
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    skills = models.ManyToManyField("Skills")
+    skills = models.ManyToManyField("Skill")
+
+    # Filtering parts of the model
+
+    ## This will allow users to filter on the homepage for jobs that respect their
+    ## values, necessities or expectations
+
+    state = models.IntegerField("Estado", choices=STATE_CHOICES, default=27)
+    salary_range = models.IntegerField(
+        "Faixa Salarial", choices=SALARY_RANGES, default=6
+    )
+    job_level = models.IntegerField(
+        "Nível do Profissional", choices=JOB_LEVELS, default=5
+    )
+    remote = models.BooleanField("Esta vaga é remota?", default=False)
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
@@ -163,10 +223,17 @@ class Job(models.Model):
     def get_absolute_url(self):
         return "/job/{}".format(self.pk)
 
+    def get_jobs_to_get_feedback(self):
+        return Job.objects.created_days_ago(14)
+
+    def get_expiration_date(self):
+        return self.created_at + timedelta(days=30)
+
 
 class JobApplication(models.Model):
-    user = models.ForeignKey(User, default="")
-    job = models.ForeignKey(Job, default="")
+    user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, default="", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ("user", "job")
@@ -184,7 +251,7 @@ class Contact(models.Model):
     message = models.TextField("Mensagem", default="", blank=False)
 
 
-class Skills(models.Model):
+class Skill(models.Model):
     name = models.CharField("Skill", max_length=100, default="", blank=False)
 
     def __str__(self):
@@ -234,8 +301,8 @@ def send_offer_email_template(job):
     )
 
 
-def send_offer_email_template_failback(job):
-    message = Messages.objects.filter(message_type="offer")[0]
+def send_feedback_collection_email(job):
+    message = Messages.objects.filter(message_type="feedback")[0]
     message_text = message.message_content.format(company=job.company_name)
     message_title = message.message_title.format(title=job.title)
     send_mail(
@@ -267,11 +334,10 @@ def new_job_was_created(sender, instance, created, **kwargs):
             "pyjobs@pyjobs.com.br",
             [instance.company_email],
         )
-        if instance.ad_interested:
-            try:
-                send_offer_email_template(instance)
-            except:
-                client.captureException()
+        try:
+            send_offer_email_template(instance)
+        except:
+            client.captureException()
 
 
 @receiver(post_save, sender=Contact)
