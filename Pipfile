@@ -39,6 +39,7 @@ sendgrid = "*"
 sendgrid-django = "*"
 tqdm = "*"
 whitenoise = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.6"

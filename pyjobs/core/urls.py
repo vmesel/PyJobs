@@ -30,6 +30,7 @@ urlpatterns = [
     url(r"^info/$", pythonista_change_info, name="change_info"),
     url(r"^applied-to/$", pythonista_applied_info, name="applied_to_info"),
     url(r"^jooble/$", jooble_feed, name="jooble_feed"),
+    url(r"^thumb/(?P<pk>\d+)/$", thumbnail_view, name="thumbnail_view"),
     url(r"^job/(?P<pk>\d+)/rec/$", get_job_related_users, name="get_job_related_users"),
     url(r"^job/create/$", job_creation, name="job_creation"),
     url(r"^robots.txt$", robots_view, name="robots"),
