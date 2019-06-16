@@ -15,19 +15,28 @@ Vinicius Mesel
     )
 
 
-def vaga_publicada(empresa, vaga, pk):
+def vaga_publicada(job):
     return """
 Olá {empresa},
 
 Agora a vaga {vaga} foi avaliada por nossos colaboradores e foi publicada!
 
-Para acessar a sua vaga, entre no link: http://www.pyjobs.com.br/job/{pk}/
+Para acessar a sua vaga, entre no link:
+http://www.pyjobs.com.br/job/{pk}/
+
+Caso você queira excluir essa vaga, utilize esse link secreto que só você tem:
+http://www.pyjobs.com.br{delete_url}
+ATENÇÃO: esse link excluirá a vaga sem necessidade de confirmação ou senha!
+
 
 Abraços,
 Vinicius Mesel
 @vmesel
 """.format(
-        empresa=empresa, vaga=vaga, pk=pk
+        empresa=job.company_name,
+        vaga=job.title,
+        pk=job.pk,
+        delete_url=job.get_delete_url(),
     )
 
 

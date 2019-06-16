@@ -315,7 +315,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
 
 
 def send_offer_email_template(job):
-    message = Messages.objects.filter(message_type="offer")[0]
+    message = Messages.objects.filter(message_type="offer").first()
     message_text = message.message_content.format(company=job.company_name)
     message_title = message.message_title.format(title=job.title)
     send_mail(
@@ -340,29 +340,27 @@ def send_feedback_collection_email(job):
 
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
-    if created:
-        job = instance.title
-        empresa = instance.company_name
-        local = instance.workplace
-        link = instance.pk
-        message_text = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/".format(
-            job, empresa, local, link
-        )
-        post_telegram_channel(message_text)
-        msg_email = vaga_publicada(
-            empresa=instance.company_name, vaga=instance.title, pk=instance.pk
-        )
+    if not created:
+        return
 
-        send_mail(
-            "Sua oportunidade está disponível no PyJobs",
-            msg_email,
-            "pyjobs@pyjobs.com.br",
-            [instance.company_email],
-        )
-        try:
-            send_offer_email_template(instance)
-        except:
-            client.captureException()
+    # post to telegram
+    message_base = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/"
+    message_text = message_base.format(
+        instance.title, instance.company_name, instance.workplace, instance.pk
+    )
+    post_telegram_channel(message_text)
+
+    # sent email do company
+    send_mail(
+        "Sua oportunidade está disponível no PyJobs",
+        vaga_publicada(instance),
+        "pyjobs@pyjobs.com.br",
+        [instance.company_email],
+    )
+    try:
+        send_offer_email_template(instance)
+    except:
+        client.captureException()
 
 
 @receiver(post_save, sender=Contact)
