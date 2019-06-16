@@ -179,6 +179,7 @@ class Job(models.Model):
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skill")
+    is_open = models.BooleanField("Vaga aberta", default=True)
 
     # Filtering parts of the model
 
