@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
-
-from datetime import datetime
+from hashlib import sha512
 from unittest.mock import patch
 
 from django.contrib.auth.models import User
@@ -37,6 +36,10 @@ class JobTest_01(TestCase):
             str(self.job.get_application_link()), "http://www.xpto.com.br/apply"
         )
 
+    def test_delete_hash(self):
+        value = "::".join(("Foo Bar", str(self.job.pk), str(self.job.created_at)))
+        hash_obj = sha512(value.encode("utf-8"))
+        self.assertEqual(self.job.delete_hash("Foo Bar"), hash_obj.hexdigest())
 
 class JobTest_02(TestCase):
     @patch("pyjobs.core.models.post_telegram_channel")

@@ -1,3 +1,6 @@
+from datetime import timedelta
+from hashlib import sha512
+
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
@@ -6,8 +9,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
 
-from datetime import timedelta
 
+from pyjobs.settings import SECRET_KEY
 from pyjobs.core.email_utils import (
     contact_email,
     contato_cadastrado_empresa,
@@ -125,6 +128,10 @@ JOB_LEVELS = [
 ]
 
 
+class JobError(Exception):
+    pass
+
+
 class Job(models.Model):
     title = models.CharField(
         "Título da Vaga",
@@ -229,6 +236,14 @@ class Job(models.Model):
     def get_expiration_date(self):
         return self.created_at + timedelta(days=30)
 
+    def delete_hash(self, salt=None):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no delete hash")
+
+        salt = salt or SECRET_KEY
+        value = "::".join((salt, str(self.pk), str(self.created_at)))
+        obj = sha512(value.encode("utf-8"))
+        return obj.hexdigest()
 
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
