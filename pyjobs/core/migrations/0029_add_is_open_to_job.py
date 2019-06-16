@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0028_auto_20190515_1013'),
-    ]
+    dependencies = [("core", "0028_auto_20190515_1013")]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='is_open',
-            field=models.BooleanField(default=True, verbose_name='Vaga aberta'),
-        ),
+            model_name="job",
+            name="is_open",
+            field=models.BooleanField(default=True, verbose_name="Vaga aberta"),
+        )
     ]

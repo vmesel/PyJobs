@@ -261,3 +261,42 @@ class PyJobsJobDeleteView(TestCase):
         wrong_hash = right_hash[64:] + right_hash[:64]
         kwargs = {"pk": self.job.pk, "delete_hash": wrong_hash}
         self._assert_delete_link(kwargs, deleted=False)
+
+
+class PyJobsJobCloseView(TestCase):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job(
+            title="Vaga 1",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+        )
+        self.job.save()
+
+    def _assert_close_link(self, kwargs, closed):
+        url = reverse("close_job", kwargs=kwargs)
+        response = self.client.get(url)
+        if closed:
+            self.assertEqual(200, response.status_code)
+            self.assertEqual(0, Job.objects.filter(is_open=True).count())
+        else:
+            self.assertEqual(404, response.status_code)
+            self.assertEqual(1, Job.objects.filter(is_open=True).count())
+
+    def test_valid_close_view(self):
+        kwargs = {"pk": self.job.pk, "close_hash": self.job.close_hash()}
+        self._assert_close_link(kwargs, closed=True)
+
+    def test_close_view_for_non_existent_job(self):
+        wrong_pk = self.job.pk + 1
+        kwargs = {"pk": wrong_pk, "close_hash": self.job.close_hash()}
+        self._assert_close_link(kwargs, closed=False)
+
+    def test_close_view_with_wrong_hash(self):
+        right_hash = self.job.close_hash()
+        wrong_hash = right_hash[64:] + right_hash[:64]
+        kwargs = {"pk": self.job.pk, "close_hash": wrong_hash}
+        self._assert_close_link(kwargs, closed=False)

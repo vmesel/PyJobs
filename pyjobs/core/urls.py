@@ -25,6 +25,11 @@ urlpatterns = [
         delete_job,
         name="delete_job",
     ),
+    url(
+        r"^job/close/(?P<pk>\d+)/(?P<close_hash>[\da-f]{128})/$",
+        close_job,
+        name="close_job",
+    ),
     url(r"^summary/$", summary_view, name="job_view"),
     url(r"^services/$", services_view, name="services"),
     url(r"^contact/$", contact, name="contact"),

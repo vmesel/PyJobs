@@ -143,6 +143,20 @@ def delete_job(request, pk, delete_hash):
     return render(request, template_name="generic.html", context=context)
 
 
+def close_job(request, pk, close_hash):
+    job = get_object_or_404(Job, pk=pk)
+    if close_hash != job.close_hash():
+        raise Http404("No Job matches the given hash.")
+
+    context = {
+        "message_first": "Vaga fechada com sucesso!",
+        "message_second": job.title,
+    }
+    job.is_open = False
+    job.save()
+    return render(request, template_name="generic.html", context=context)
+
+
 def contact(request):
     context = {}
 

@@ -238,14 +238,20 @@ class Job(models.Model):
     def get_expiration_date(self):
         return self.created_at + timedelta(days=30)
 
-    def delete_hash(self, salt=None):
+    def _create_hash(self, name, salt=None):
         if not all((self.pk, self.created_at)):
-            raise JobError("Unsaved Job models have no delete hash")
+            raise JobError("Unsaved Job models have no delete or close hash")
 
         salt = salt or SECRET_KEY
-        value = "::".join((salt, str(self.pk), str(self.created_at)))
+        value = "::".join((name, salt, str(self.pk), str(self.created_at)))
         obj = sha512(value.encode("utf-8"))
         return obj.hexdigest()
+
+    def delete_hash(self, salt=None):
+        return self._create_hash("delete", salt)
+
+    def close_hash(self, salt=None):
+        return self._create_hash("close", salt)
 
     def get_delete_url(self):
         if not all((self.pk, self.created_at)):
@@ -253,6 +259,14 @@ class Job(models.Model):
 
         return reverse(
             "delete_job", kwargs={"pk": self.pk, "delete_hash": self.delete_hash()}
+        )
+
+    def get_close_url(self):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no close URL")
+
+        return reverse(
+            "close_job", kwargs={"pk": self.pk, "close_hash": self.close_hash()}
         )
 
 
