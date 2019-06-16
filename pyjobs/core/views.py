@@ -8,7 +8,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -128,6 +128,19 @@ def register_new_job(request):
             "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
         },
     )
+
+
+def delete_job(request, pk, delete_hash):
+    job = get_object_or_404(Job, pk=pk)
+    if delete_hash != job.delete_hash():
+        raise Http404("No Job matches the given hash.")
+
+    context = {
+        "message_first": "Vaga excluída com sucesso!",
+        "message_second": job.title[:],
+    }
+    job.delete()
+    return render(request, template_name="generic.html", context=context)
 
 
 def contact(request):

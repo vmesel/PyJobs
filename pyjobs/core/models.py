@@ -7,6 +7,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 from raven.contrib.django.raven_compat.models import client
 
 
@@ -244,6 +245,15 @@ class Job(models.Model):
         value = "::".join((salt, str(self.pk), str(self.created_at)))
         obj = sha512(value.encode("utf-8"))
         return obj.hexdigest()
+
+    def get_delete_url(self):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no delete URL")
+
+        return reverse(
+            "delete_job", kwargs={"pk": self.pk, "delete_hash": self.delete_hash()}
+        )
+
 
 class JobApplication(models.Model):
     user = models.ForeignKey(User, default="", on_delete=models.CASCADE)

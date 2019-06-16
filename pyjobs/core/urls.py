@@ -20,6 +20,11 @@ class PyJobsSitemap(Sitemap):
 urlpatterns = [
     url(r"^$", index, name="index"),
     url(r"^job/(?P<pk>\d+)/$", job_view, name="job_view"),
+    url(
+        r"^job/delete/(?P<pk>\d+)/(?P<delete_hash>[\da-f]{128})/$",
+        delete_job,
+        name="delete_job",
+    ),
     url(r"^summary/$", summary_view, name="job_view"),
     url(r"^services/$", services_view, name="services"),
     url(r"^contact/$", contact, name="contact"),

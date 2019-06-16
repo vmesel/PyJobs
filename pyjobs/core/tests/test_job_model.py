@@ -41,6 +41,11 @@ class JobTest_01(TestCase):
         hash_obj = sha512(value.encode("utf-8"))
         self.assertEqual(self.job.delete_hash("Foo Bar"), hash_obj.hexdigest())
 
+    def test_delete_url(self):
+        self.assertEqual(
+            f"/job/delete/{self.job.pk}/{self.job.delete_hash()}/",
+            self.job.get_delete_url(),
+        )
 class JobTest_02(TestCase):
     @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
