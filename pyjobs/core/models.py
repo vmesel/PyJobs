@@ -253,21 +253,18 @@ class Job(models.Model):
     def close_hash(self, salt=None):
         return self._create_hash("close", salt)
 
-    def get_delete_url(self):
+    def _get_hash_url(self, name):
         if not all((self.pk, self.created_at)):
-            raise JobError("Unsaved Job models have no delete URL")
+            raise JobError(f"Unsaved Job models have no {name} URL")
 
-        return reverse(
-            "delete_job", kwargs={"pk": self.pk, "delete_hash": self.delete_hash()}
-        )
+        kwargs = {"pk": self.pk, f"{name}_hash": getattr(self, f"{name}_hash")()}
+        return reverse(f"{name}_job", kwargs=kwargs)
+
+    def get_delete_url(self):
+        return self._get_hash_url("delete")
 
     def get_close_url(self):
-        if not all((self.pk, self.created_at)):
-            raise JobError("Unsaved Job models have no close URL")
-
-        return reverse(
-            "close_job", kwargs={"pk": self.pk, "close_hash": self.close_hash()}
-        )
+        return self._get_hash_url("close")
 
 
 class JobApplication(models.Model):
