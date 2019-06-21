@@ -31,11 +31,11 @@ def generate_thumbnail(job):
     im = Image.open("{}thumb_base.png".format(settings.THUMBNAILS_BASE_FOLDER))
     im = im.resize((1280, 720))
 
-    image_overlay = Image.new('RGB', (1280, 720), color=0)
+    image_overlay = Image.new("RGB", (1280, 720), color=0)
 
     image_overlay.putalpha(175)
 
-    im.paste(image_overlay, (0,0), image_overlay)
+    im.paste(image_overlay, (0, 0), image_overlay)
 
     draw = ImageDraw.Draw(im)
 
@@ -57,6 +57,5 @@ def generate_thumbnail(job):
     draw.text(
         ((1280 - w) / 2, 500), text="Via PyJobs", fill="white", font=font_med_cntr
     )
-
 
     return im
