@@ -90,6 +90,8 @@ DATABASES = {
 }
 
 
+THUMBNAILS_BASE_FOLDER = "%s/pyjobs/core/thumb/" % (BASE_DIR)
+
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 

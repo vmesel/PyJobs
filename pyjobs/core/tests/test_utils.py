@@ -3,7 +3,8 @@ from unittest.mock import patch
 from django.test import TestCase, override_settings
 from telegram import TelegramError
 
-from pyjobs.core.utils import post_telegram_channel
+from pyjobs.core.utils import *
+from pyjobs.core.models import Job
 
 
 class TelegramPosterTest(TestCase):

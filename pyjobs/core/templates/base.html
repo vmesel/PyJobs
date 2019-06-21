@@ -38,7 +38,9 @@
     <title>{% if title %}{%block title%}{%endblock%}{%else%}PyJobs - Sua central de vagas Python{%endif%}</title>
     <meta name="keywords" content="empregos, vagas, buscar vagas, vagas de emprego, vagas de programador python, emprego de programador python, empregos python, vagas python, buscar vagas python, vagas de emprego python">
     <meta name="twitter:description" content="Busque agora vagas de emprego de dev python. PyJobs, a gente trabalha pelo seu trabalho.">
+    {% block ogimage %}
     <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
+    {% endblock ogimage%}
     <meta property="og:site_name" content="PyJobs" />
     <meta property="og:title" content="{% if title %}{{title}}{%else%}PyJobs - Vagas de Emprego Python{%endif%}" />
     <meta property="og:locale" content="pt_BR" />

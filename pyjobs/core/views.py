@@ -15,6 +15,7 @@ from django.urls import reverse
 from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
 from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
+from pyjobs.core.utils import generate_thumbnail
 
 
 def index(request):
@@ -318,4 +319,14 @@ def get_job_related_users(request, pk):
     writer = csv.writer(response)
     writer.writerows(users_grades)
 
+    return response
+
+
+def thumbnail_view(request, pk):
+    job = Job.objects.filter(pk=pk).first()
+    im = generate_thumbnail(job=job)
+
+    # serialize to HTTP response
+    response = HttpResponse(content_type="image/png")
+    im.save(response, "PNG")
     return response
