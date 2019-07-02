@@ -71,8 +71,7 @@ def job_view(request, pk):
 
     if request.user.is_authenticated():
         context["applied"] = JobApplication.objects.filter(
-            user=request.user,
-            job=context["job"]
+            user=request.user, job=context["job"]
         ).exists()
         context["logged_in"] = True
 

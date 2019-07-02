@@ -86,6 +86,7 @@ JOB_LEVELS = [
     (5, "Indeterminado"),
 ]
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     github = models.URLField(verbose_name="GitHub", blank=True, default="")
@@ -105,9 +106,7 @@ class Profile(models.Model):
     salary_range = models.IntegerField(
         "Sua Faixa Salarial Atual", choices=SALARY_RANGES, default=6
     )
-    job_level = models.IntegerField(
-        "Seu nível atual", choices=JOB_LEVELS, default=5
-    )
+    job_level = models.IntegerField("Seu nível atual", choices=JOB_LEVELS, default=5)
     bio = models.TextField(
         "Sua Bio",
         default="",

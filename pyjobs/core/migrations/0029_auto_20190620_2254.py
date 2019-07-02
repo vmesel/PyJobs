@@ -7,29 +7,85 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0028_auto_20190515_1013'),
-    ]
+    dependencies = [("core", "0028_auto_20190515_1013")]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='bio',
-            field=models.TextField(default='', help_text='Descreva um pouco sobre você para as empresas poderem te conhecer melhor!', verbose_name='Sua Bio'),
+            model_name="profile",
+            name="bio",
+            field=models.TextField(
+                default="",
+                help_text="Descreva um pouco sobre você para as empresas poderem te conhecer melhor!",
+                verbose_name="Sua Bio",
+            ),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='job_level',
-            field=models.IntegerField(choices=[(1, 'Estágio'), (2, 'Junior'), (3, 'Pleno'), (4, 'Sênior'), (5, 'Indeterminado')], default=5, verbose_name='Seu nível atual'),
+            model_name="profile",
+            name="job_level",
+            field=models.IntegerField(
+                choices=[
+                    (1, "Estágio"),
+                    (2, "Junior"),
+                    (3, "Pleno"),
+                    (4, "Sênior"),
+                    (5, "Indeterminado"),
+                ],
+                default=5,
+                verbose_name="Seu nível atual",
+            ),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='salary_range',
-            field=models.IntegerField(choices=[(1, 'R$ 0,00 a R$ 1.000,00'), (2, 'R$ 1.000,01 a R$ 3.000,00'), (3, 'R$ 3.000,01 a R$ 6.000,00'), (4, 'R$ 6.000,01 a R$ 10.000,00'), (5, 'R$ 10.000,01 ou mais'), (6, 'A combinar')], default=6, verbose_name='Sua Faixa Salarial Atual'),
+            model_name="profile",
+            name="salary_range",
+            field=models.IntegerField(
+                choices=[
+                    (1, "R$ 0,00 a R$ 1.000,00"),
+                    (2, "R$ 1.000,01 a R$ 3.000,00"),
+                    (3, "R$ 3.000,01 a R$ 6.000,00"),
+                    (4, "R$ 6.000,01 a R$ 10.000,00"),
+                    (5, "R$ 10.000,01 ou mais"),
+                    (6, "A combinar"),
+                ],
+                default=6,
+                verbose_name="Sua Faixa Salarial Atual",
+            ),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='state',
-            field=models.IntegerField(choices=[(0, 'Acre'), (1, 'Alagoas'), (2, 'Amapá'), (3, 'Amazonas'), (4, 'Bahia'), (5, 'Ceará'), (6, 'Distrito Federal'), (7, 'Espírito Santo'), (8, 'Goiás'), (9, 'Maranhão'), (10, 'Mato Grosso'), (11, 'Mato Grosso do Sul'), (12, 'Minas Gerais'), (13, 'Pará'), (14, 'Paraíba'), (15, 'Paraná'), (16, 'Pernambuco'), (17, 'Piauí'), (18, 'Rio de Janeiro'), (19, 'Rio Grande do Norte'), (20, 'Rio Grande do Sul'), (21, 'Rondônia'), (22, 'Roraima'), (23, 'Santa Catarina'), (24, 'São Paulo'), (25, 'Sergipe'), (26, 'Tocantins'), (27, 'Indeterminado')], default=27, verbose_name='Seu Estado'),
+            model_name="profile",
+            name="state",
+            field=models.IntegerField(
+                choices=[
+                    (0, "Acre"),
+                    (1, "Alagoas"),
+                    (2, "Amapá"),
+                    (3, "Amazonas"),
+                    (4, "Bahia"),
+                    (5, "Ceará"),
+                    (6, "Distrito Federal"),
+                    (7, "Espírito Santo"),
+                    (8, "Goiás"),
+                    (9, "Maranhão"),
+                    (10, "Mato Grosso"),
+                    (11, "Mato Grosso do Sul"),
+                    (12, "Minas Gerais"),
+                    (13, "Pará"),
+                    (14, "Paraíba"),
+                    (15, "Paraná"),
+                    (16, "Pernambuco"),
+                    (17, "Piauí"),
+                    (18, "Rio de Janeiro"),
+                    (19, "Rio Grande do Norte"),
+                    (20, "Rio Grande do Sul"),
+                    (21, "Rondônia"),
+                    (22, "Roraima"),
+                    (23, "Santa Catarina"),
+                    (24, "São Paulo"),
+                    (25, "Sergipe"),
+                    (26, "Tocantins"),
+                    (27, "Indeterminado"),
+                ],
+                default=27,
+                verbose_name="Seu Estado",
+            ),
         ),
     ]
