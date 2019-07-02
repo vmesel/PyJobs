@@ -64,20 +64,19 @@ def job_view(request, pk):
         "logged_in": False,
         "title": get_object_or_404(Job, pk=pk).title,
     }
-    try:
-        interest = JobApplication.objects.filter(user=request.user, job=context["job"])
-        if interest.exists():
-            context["applied"] = True
-        else:
-            context["applied"] = False
-    except:
-        pass
+
+    if request.method == "POST":
+        context["job"].apply(request.user)  # aplica o usuario
+        return redirect("/job/{}/".format(context["job"].pk))
 
     if request.user.is_authenticated():
+        interest = JobApplication.objects.filter(
+            user=request.user,
+            job=context["job"]
+        )
         context["logged_in"] = True
-        if request.method == "POST":
-            context["job"].apply(request.user)  # aplica o usuario
-            return redirect("/job/{}/".format(context["job"].pk))
+        context["applied"] = interest.exists()
+
     return render(request, template_name="job_details.html", context=context)
 
 
