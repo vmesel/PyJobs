@@ -70,12 +70,11 @@ def job_view(request, pk):
         return redirect("/job/{}/".format(context["job"].pk))
 
     if request.user.is_authenticated():
-        interest = JobApplication.objects.filter(
+        context["applied"] = JobApplication.objects.filter(
             user=request.user,
             job=context["job"]
-        )
+        ).exists()
         context["logged_in"] = True
-        context["applied"] = interest.exists()
 
     return render(request, template_name="job_details.html", context=context)
 
