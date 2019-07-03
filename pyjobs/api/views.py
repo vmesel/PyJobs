@@ -3,6 +3,7 @@ from restless.dj import DjangoResource
 from restless.exceptions import BadRequest
 from restless.preparers import FieldsPreparer
 
+from pyjobs.api.serializers import PyJobsSerializer
 from pyjobs.core.models import Job
 
 
@@ -49,11 +50,12 @@ class DjangoPaginatedResource(DjangoResource):
 
 class JobResource(DjangoPaginatedResource):
     page_size = 20
+    serializer = PyJobsSerializer()
     preparer = FieldsPreparer(
         fields={
-            f.name: f.name
-            for f in Job._meta.fields
-            if f.name not in {"premium", "public", "ad_interested", "company_email"}
+            field.name: field.name
+            for field in Job._meta.fields
+            if field.name not in {"premium", "public", "ad_interested", "company_email"}
         }
     )
 
