@@ -41,13 +41,6 @@ class JobTest_01(TestCase):
     def test_job_url_is_sent_in_the_email(self):
         self.assertIn("/job/{}/".format(self.job.pk), self.email.body)
 
-    def test_delete_hash(self):
-        value = "::".join(
-            ("delete", "Foo Bar", str(self.job.pk), str(self.job.created_at))
-        )
-        hash_obj = sha512(value.encode("utf-8"))
-        self.assertEqual(self.job.delete_hash("Foo Bar"), hash_obj.hexdigest())
-
     def test_close_hash(self):
         value = "::".join(
             ("close", "Foo Bar", str(self.job.pk), str(self.job.created_at))
@@ -55,20 +48,11 @@ class JobTest_01(TestCase):
         hash_obj = sha512(value.encode("utf-8"))
         self.assertEqual(self.job.close_hash("Foo Bar"), hash_obj.hexdigest())
 
-    def test_delete_url(self):
-        self.assertEqual(
-            f"/job/delete/{self.job.pk}/{self.job.delete_hash()}/",
-            self.job.get_delete_url(),
-        )
-
     def test_close_url(self):
         self.assertEqual(
             f"/job/close/{self.job.pk}/{self.job.close_hash()}/",
             self.job.get_close_url(),
         )
-
-    def test_delete_url_is_sent_in_the_email(self):
-        self.assertIn(self.job.get_delete_url(), self.email.body)
 
     def test_close_url_is_sent_in_the_email(self):
         self.assertIn(self.job.get_close_url(), self.email.body)

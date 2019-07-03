@@ -27,9 +27,6 @@ http://www.pyjobs.com.br/job/{pk}/
 Caso você queira fechar essa vaga, utilize esse link secreto que só você tem:
 http://www.pyjobs.com.br{close_url}
 
-Caso você queira excluir essa vaga, utilize esse link secreto que só você tem:
-http://www.pyjobs.com.br{delete_url}
-
 ATENÇÃO: esses links fecham ou excluem a vaga sem necessidade de confirmação ou senha!
 
 
@@ -40,7 +37,6 @@ Vinicius Mesel
         empresa=job.company_name,
         vaga=job.title,
         pk=job.pk,
-        delete_url=job.get_delete_url(),
         close_url=job.get_close_url(),
     )
 
