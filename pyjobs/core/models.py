@@ -1,13 +1,17 @@
+from datetime import timedelta
+from hashlib import sha512
+
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 from raven.contrib.django.raven_compat.models import client
 
-from datetime import timedelta
 
+from pyjobs.settings import SECRET_KEY
 from pyjobs.core.email_utils import (
     contact_email,
     contato_cadastrado_empresa,
@@ -125,6 +129,10 @@ JOB_LEVELS = [
 ]
 
 
+class JobError(Exception):
+    pass
+
+
 class Job(models.Model):
     title = models.CharField(
         "Título da Vaga",
@@ -171,6 +179,7 @@ class Job(models.Model):
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skill")
+    is_open = models.BooleanField("Vaga aberta", default=True)
 
     # Filtering parts of the model
 
@@ -228,6 +237,22 @@ class Job(models.Model):
 
     def get_expiration_date(self):
         return self.created_at + timedelta(days=30)
+
+    def close_hash(self, salt=None):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no close hash")
+
+        salt = salt or SECRET_KEY
+        value = "::".join(("close", salt, str(self.pk), str(self.created_at)))
+        obj = sha512(value.encode("utf-8"))
+        return obj.hexdigest()
+
+    def get_close_url(self):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no close URL")
+
+        kwargs = {"pk": self.pk, "close_hash": self.close_hash()}
+        return reverse("close_job", kwargs=kwargs)
 
 
 class JobApplication(models.Model):
@@ -290,7 +315,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
 
 
 def send_offer_email_template(job):
-    message = Messages.objects.filter(message_type="offer")[0]
+    message = Messages.objects.filter(message_type="offer").first()
     message_text = message.message_content.format(company=job.company_name)
     message_title = message.message_title.format(title=job.title)
     send_mail(
@@ -315,29 +340,27 @@ def send_feedback_collection_email(job):
 
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
-    if created:
-        job = instance.title
-        empresa = instance.company_name
-        local = instance.workplace
-        link = instance.pk
-        message_text = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/".format(
-            job, empresa, local, link
-        )
-        post_telegram_channel(message_text)
-        msg_email = vaga_publicada(
-            empresa=instance.company_name, vaga=instance.title, pk=instance.pk
-        )
+    if not created:
+        return
 
-        send_mail(
-            "Sua oportunidade está disponível no PyJobs",
-            msg_email,
-            "pyjobs@pyjobs.com.br",
-            [instance.company_email],
-        )
-        try:
-            send_offer_email_template(instance)
-        except:
-            client.captureException()
+    # post to telegram
+    message_base = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/"
+    message_text = message_base.format(
+        instance.title, instance.company_name, instance.workplace, instance.pk
+    )
+    post_telegram_channel(message_text)
+
+    # sent email do company
+    send_mail(
+        "Sua oportunidade está disponível no PyJobs",
+        vaga_publicada(instance),
+        "pyjobs@pyjobs.com.br",
+        [instance.company_email],
+    )
+    try:
+        send_offer_email_template(instance)
+    except:
+        client.captureException()
 
 
 @receiver(post_save, sender=Contact)

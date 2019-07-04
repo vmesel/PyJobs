@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
-
-from datetime import datetime
+from hashlib import sha512
 from unittest.mock import patch
 
 from django.contrib.auth.models import User
+from django.core import mail
 from django.test import TestCase
 from model_mommy import mommy
 
@@ -22,6 +22,7 @@ class JobTest_01(TestCase):
             description="Job bem maneiro",
         )
         self.job.save()
+        self.email, *_ = mail.outbox
 
     def test_job_created(self):
         self.assertTrue(Job.objects.exists())
@@ -36,6 +37,25 @@ class JobTest_01(TestCase):
         self.assertEqual(
             str(self.job.get_application_link()), "http://www.xpto.com.br/apply"
         )
+
+    def test_job_url_is_sent_in_the_email(self):
+        self.assertIn("/job/{}/".format(self.job.pk), self.email.body)
+
+    def test_close_hash(self):
+        value = "::".join(
+            ("close", "Foo Bar", str(self.job.pk), str(self.job.created_at))
+        )
+        hash_obj = sha512(value.encode("utf-8"))
+        self.assertEqual(self.job.close_hash("Foo Bar"), hash_obj.hexdigest())
+
+    def test_close_url(self):
+        self.assertEqual(
+            f"/job/close/{self.job.pk}/{self.job.close_hash()}/",
+            self.job.get_close_url(),
+        )
+
+    def test_close_url_is_sent_in_the_email(self):
+        self.assertIn(self.job.get_close_url(), self.email.body)
 
 
 class JobTest_02(TestCase):
