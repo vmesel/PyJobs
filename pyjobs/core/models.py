@@ -42,44 +42,6 @@ class Messages(models.Model):
         verbose_name_plural = "Mensagens"
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    github = models.URLField(verbose_name="GitHub", blank=True, default="")
-    linkedin = models.URLField(verbose_name="LinkedIn", blank=True, default="")
-    portfolio = models.URLField(verbose_name="Portfolio", blank=True, default="")
-    cellphone = models.CharField(
-        verbose_name="Telefone",
-        max_length=16,
-        validators=[
-            RegexValidator(
-                regex="^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$",
-                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.",
-            )
-        ],
-    )
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    skills = models.ManyToManyField("Skill")
-
-    def __str__(self):
-        return "{} {}".format(self.user.first_name, self.user.last_name)
-
-    def __repr__(self):
-        return "{} {}".format(self.user.first_name, self.user.last_name)
-
-    class Meta:
-        verbose_name = "Perfil"
-        verbose_name_plural = "Perfis"
-        ordering = ["-created_at"]
-
-    objects = models.Manager.from_queryset(ProfilingQuerySet)()
-
-    def profile_skill_grade(self, job):
-        skills = self.skills.values_list("pk", flat=True)
-        job_skills = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
-        return Profile.objects.grade(skills, job_skills)
-
-
 STATE_CHOICES = [
     (0, "Acre"),
     (1, "Alagoas"),
@@ -127,6 +89,54 @@ JOB_LEVELS = [
     (4, "Sênior"),
     (5, "Indeterminado"),
 ]
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    github = models.URLField(verbose_name="GitHub", blank=True, default="")
+    linkedin = models.URLField(verbose_name="LinkedIn", blank=True, default="")
+    portfolio = models.URLField(verbose_name="Portfolio", blank=True, default="")
+    cellphone = models.CharField(
+        verbose_name="Telefone",
+        max_length=16,
+        validators=[
+            RegexValidator(
+                regex="^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$",
+                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.",
+            )
+        ],
+    )
+    state = models.IntegerField("Seu Estado", choices=STATE_CHOICES, default=27)
+    salary_range = models.IntegerField(
+        "Sua Faixa Salarial Atual", choices=SALARY_RANGES, default=6
+    )
+    job_level = models.IntegerField("Seu nível atual", choices=JOB_LEVELS, default=5)
+    bio = models.TextField(
+        "Sua Bio",
+        default="",
+        help_text="Descreva um pouco sobre você para as empresas poderem te conhecer melhor!",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    skills = models.ManyToManyField("Skill")
+
+    def __str__(self):
+        return "{} {}".format(self.user.first_name, self.user.last_name)
+
+    def __repr__(self):
+        return "{} {}".format(self.user.first_name, self.user.last_name)
+
+    class Meta:
+        verbose_name = "Perfil"
+        verbose_name_plural = "Perfis"
+        ordering = ["-created_at"]
+
+    objects = models.Manager.from_queryset(ProfilingQuerySet)()
+
+    def profile_skill_grade(self, job):
+        skills = self.skills.values_list("pk", flat=True)
+        job_skills = Job.objects.get(pk=job).skills.values_list("pk", flat=True)
+        return Profile.objects.grade(skills, job_skills)
 
 
 class JobError(Exception):

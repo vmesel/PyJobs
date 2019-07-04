@@ -27,7 +27,8 @@ http://www.pyjobs.com.br/job/{pk}/
 Caso você queira fechar essa vaga, utilize esse link secreto que só você tem:
 http://www.pyjobs.com.br{close_url}
 
-ATENÇÃO: esses links fecham ou excluem a vaga sem necessidade de confirmação ou senha!
+ATENÇÃO: este link fecha a vaga sem necessidade de confirmação ou senha! Caso haja algum problema,
+Por favor, nos contate!
 
 
 Abraços,
