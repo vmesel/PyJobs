@@ -65,8 +65,8 @@ class JobDetailsViewTest(TestCase):
     def test_job_company_in_view(self):
         self.assertTrue(self.job.company_name in self.job_view_html)
 
-    def test_job_application_link_in_view(self):
-        self.assertTrue(self.job.application_link in self.job_view_html)
+    def test_job_application_link_not_in_view(self):
+        self.assertTrue(self.job.application_link not in self.job_view_html)
 
     def test_job_description_in_view(self):
         self.assertTrue(self.job.description in self.job_view_html)
@@ -105,9 +105,7 @@ class PyJobsJobApplication(TestCase):
     def test_check_applied_for_job_anon(self):
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = (
-            "Você precisa estar logado para se candidatar para esta vaga!"
-        )
+        expected_response = "Se logue e aplique a vaga!"
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):
