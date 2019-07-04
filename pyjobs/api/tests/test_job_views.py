@@ -46,11 +46,11 @@ class TestJobResourceDetail(TestCase):
         fields = (
             field.name
             for field in Job._meta.fields
-            if field.name not in {"premium", "public", "ad_interested"}
+            if field.name not in {"premium", "public", "ad_interested", "company_email"}
         )
         for field in fields:
-            if field == "created_at":  # format dadetime as string
-                self.job.created_at = str(self.job.created_at).replace(" ", "T")
+            if field == "created_at":  # format datetime as string
+                self.job.created_at = self.job.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
             with self.subTest():
                 self.assertEqual(getattr(self.job, field), self.response.json[field])

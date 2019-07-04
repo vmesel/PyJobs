@@ -8,7 +8,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -87,58 +87,59 @@ def summary_view(request):
 def register_new_job(request):
     if request.method != "POST":
         return redirect("/")
-    else:
-        new_job = JobForm(request.POST)
-        if new_job.is_valid():
-            if settings.RECAPTCHA_SECRET_KEY:
-                recaptcha_response = request.POST.get("g-recaptcha-response")
-                data = {
-                    "secret": settings.RECAPTCHA_SECRET_KEY,
-                    "response": recaptcha_response,
-                }
-                r = requests.post(
-                    "https://www.google.com/recaptcha/api/siteverify", data=data
-                )
 
-                result = r.json()
-                if result["success"]:
-                    new_job.save()
-                    return render(
-                        request,
-                        template_name="generic.html",
-                        context={
-                            "message_first": "Acabamos de mandar um e-mail para vocês!",
-                            "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
-                        },
-                    )
-                else:
-                    return render(
-                        request,
-                        template_name="generic.html",
-                        context={
-                            "message_first": "Preencha corretamente o captcha",
-                            "message_second": "Você não completou a validação do captcha!",
-                        },
-                    )
-            else:
-                new_job.save()
-                return render(
-                    request,
-                    template_name="generic.html",
-                    context={
-                        "message_first": "Acabamos de mandar um e-mail para vocês!",
-                        "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
-                    },
-                )
-        else:
+    new_job = JobForm(request.POST)
+    if not new_job.is_valid():
+        return render(
+            request,
+            template_name="generic.html",
+            context={
+                "message_first": "Falha na hora de criar o job",
+                "message_second": "Você preencheu algum campo da maneira errada, tente novamente!",
+            },
+        )
+
+    if settings.RECAPTCHA_SECRET_KEY:
+        recaptcha_value = request.POST.get("g-recaptcha-response")
+        data = {"secret": settings.RECAPTCHA_SECRET_KEY, "response": recaptcha_value}
+        recaptcha_response = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify", data=data
+        )
+
+        result = recaptcha_response.json()
+        if not result["success"]:
             return render(
                 request,
                 template_name="generic.html",
                 context={
-                    "message_first": "Falha na hora de criar o job",
-                    "message_second": "Você preencheu algum campo da maneira errada, tente novamente!",
+                    "message_first": "Preencha corretamente o captcha",
+                    "message_second": "Você não completou a validação do captcha!",
                 },
             )
+
+    new_job.save()
+    return render(
+        request,
+        template_name="generic.html",
+        context={
+            "message_first": "Acabamos de mandar um e-mail para vocês!",
+            "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
+        },
+    )
+
+
+def close_job(request, pk, close_hash):
+    job = get_object_or_404(Job, pk=pk)
+    if close_hash != job.close_hash():
+        raise Http404("No Job matches the given hash.")
+
+    context = {
+        "message_first": "Vaga fechada com sucesso!",
+        "message_second": job.title,
+    }
+    job.is_open = False
+    job.save()
+    return render(request, template_name="generic.html", context=context)
 
 
 def contact(request):
