@@ -74,6 +74,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "pyjobs.core.context_processors.global_vars",
             ]
         },
     }
@@ -138,6 +139,7 @@ EMAIL_BACKEND = config(
 
 SENDGRID_API_KEY = config("SENDGRID_API_KEY", default=None)
 
+GA_CODE = config("GA_CODE", default="")
 
 # MailChimp
 
