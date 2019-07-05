@@ -94,6 +94,8 @@ class JobTest_03(TestCase):
             public=True,
         )
         self.job.save()
+        self.job.premium_at = self.job.created_at
+        self.job.save()
 
     def test_job_application_link(self):
         self.assertEqual(False, self.job.get_application_link())
