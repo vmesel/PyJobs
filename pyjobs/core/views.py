@@ -233,9 +233,15 @@ def pythonista_applied_info(request):
 
 
 class JobsFeed(Feed):
-    title = "PyJobs - Sua central de vagas Python"
+    title = "{} - Sua central de vagas {}".format(
+        settings.WEBSITE_NAME,
+        settings.WEBSITE_WORKING_LANGUAGE
+    )
     link = "/feed/"
-    description = "As últimas vagas Python cadastradas no PyJobs"
+    description = "As últimas vagas {} destacadas no {}".format(
+        settings.WEBSITE_WORKING_LANGUAGE,
+        settings.WEBSITE_NAME
+    )
 
     def items(self):
         return Job.get_feed_jobs()
@@ -254,9 +260,15 @@ class JobsFeed(Feed):
 
 
 class PremiumJobsFeed(Feed):
-    title = "PyJobs - Sua central de vagas Python"
+    title = "{} - Sua central de vagas {}".format(
+        settings.WEBSITE_NAME,
+        settings.WEBSITE_WORKING_LANGUAGE
+    )
     link = "/feed/"
-    description = "As últimas vagas Python destacadas no PyJobs"
+    description = "As últimas vagas {} destacadas no {}".format(
+        settings.WEBSITE_WORKING_LANGUAGE,
+        settings.WEBSITE_NAME
+    )
 
     def items(self):
         return Job.get_premium_jobs()
