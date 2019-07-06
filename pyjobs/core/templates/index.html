@@ -2,13 +2,13 @@
 {% load static %}
 {% load humanize %}
 {% load widget_tweaks %}
-{%block title%} PyJobs - A Central de Jobs Python
+{%block title%} {{WEBSITE_NAME}} - A Central de Jobs {{WEBSITE_WORKING_LANGUAGE}}
 {%endblock%}
 {%block main%}
     <main class="page landing-page">
         <section class="clean-block clean-hero" style="background-image:url(&quot;http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg&quot;);color:rgba(9, 162, 255, 0.90);">
             <div class="text">
-                <h2>Procurando o melhor desenvolvedor Python para sua empresa?</h2>
+                <h2>Procurando o melhor desenvolvedor {{WEBSITE_WORKING_LANGUAGE}} para sua empresa?</h2>
                 <p>Cadastre agora uma vaga e tenha acesso aos melhores profissionais do Brasil!</p>
                 <a href="{% url 'job_creation' %}">
                     <button class="btn btn-lg btn-chamada" type="button">Cadastre uma vaga AGORA!</button>
@@ -26,7 +26,7 @@
                       <img src="{%static 'assets/img/avatars/retake.jpg'%}" alt="" width="125" height="150">
                   </div>
                   <div class="col-md-9" style="text-align:center;">
-                        <h3>O PyJobs &eacute; um recurso inestim&aacute;vel para o nosso recrutamento. Sempre encontramos os melhores talentos aqui.</h3>
+                        <h3>O {{WEBSITE_NAME}} &eacute; um recurso inestim&aacute;vel para o nosso recrutamento. Sempre encontramos os melhores talentos aqui.</h3>
                         <p><b>Rommel Andriotti - Retake</b></p>
                   </div>
                 </div>
@@ -35,8 +35,8 @@
         <section class="clean-block features">
             <div class="container">
                 <div id="oportunidades" class="block-heading">
-                    <h2 class="text-info">Conheça as melhores oportunidades Python</h2>
-                    <p>Todas as oportunidades listadas no PyJobs passaram por um processo de curadoria para garantir a melhor qualidade o possível ao desenvolvedor</p>
+                    <h2 class="text-info">Conheça as melhores oportunidades {{WEBSITE_WORKING_LANGUAGE}}</h2>
+                    <p>Todas as oportunidades listadas no {{WEBSITE_NAME}} passaram por um processo de curadoria para garantir a melhor qualidade o possível ao desenvolvedor</p>
                 </div>
                 <div class="row justify-content-center" style="margin-top:10px;">
                     <div class="col">
@@ -44,7 +44,7 @@
                             <div class="card-body">
                                 <h4 class="card-title" style="color:#777;">Tenha sua vaga destacada aqui!</h4>
                                 <h6 class="text-muted card-subtitle mb-2">Saiba como ter a sua vaga no topo e tenha sua empresa em destaque</h6>
-                                <p class="card-text"  style="color:#777;">Encontre os melhores profissionais Python e tenha mais destaque na comunidade com a vaga destacada. Ela lhe proporcionará maior visibilidade e maior chance de contratação!</p>
+                                <p class="card-text"  style="color:#777;">Encontre os melhores profissionais {{WEBSITE_WORKING_LANGUAGE}} e tenha mais destaque na comunidade com a vaga destacada. Ela lhe proporcionará maior visibilidade e maior chance de contratação!</p>
                             </div>
                         </div>
                     </div>

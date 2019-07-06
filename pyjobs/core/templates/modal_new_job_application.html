@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Cadastre sua vaga Python e tenha acesso aos melhores candidatos Python do brasil.</p>
+        <p>Cadastre sua vaga {{WEBSITE_WORKING_LANGUAGE}} e tenha acesso aos melhores candidatos {{WEBSITE_WORKING_LANGUAGE}} do brasil.</p>
         <form class="" action="{% url 'register_new_job' %}" method="post">
         {% csrf_token %}
         {% for hidden_field in form.hidden_fields %}

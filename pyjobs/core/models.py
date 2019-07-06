@@ -1,6 +1,7 @@
 from datetime import timedelta
 from hashlib import sha512
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
@@ -322,13 +323,13 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
     send_mail(
         "Parabéns! Você se inscreveu na vaga!",
         msg_email_person,
-        "pyjobs@pyjobs.com.br",
+        settings.WEBSITE_GENERAL_EMAIL,
         [instance.user.email],
     )
     send_mail(
         "Você possui mais um candidato para a sua vaga",
         msg_email_company,
-        "pyjobs@pyjobs.com.br",
+        settings.WEBSITE_GENERAL_EMAIL,
         [instance.job.company_email],
     )
 
@@ -340,7 +341,7 @@ def send_offer_email_template(job):
     send_mail(
         message_title,
         message_text,
-        "vinicius@pyjobs.com.br",
+        settings.WEBSITE_OWNER_EMAIL,
         [job.company_email, "viniciuscarqueijo@gmail.com"],
     )
 
@@ -352,8 +353,8 @@ def send_feedback_collection_email(job):
     send_mail(
         message_title,
         message_text,
-        "vinicius@pyjobs.com.br",
-        [job.company_email, "viniciuscarqueijo@gmail.com"],
+        settings.WEBSITE_OWNER_EMAIL,
+        [job.company_email, settings.WEBSITE_OWNER_EMAIL],
     )
 
 
@@ -363,17 +364,21 @@ def new_job_was_created(sender, instance, created, **kwargs):
         return
 
     # post to telegram
-    message_base = "Nova oportunidade! {} - {} em {}\n http://www.pyjobs.com.br/job/{}/"
+    message_base = "Nova oportunidade! {} - {} em {}\n {}/job/{}/"
     message_text = message_base.format(
-        instance.title, instance.company_name, instance.workplace, instance.pk
+        instance.title,
+        instance.company_name,
+        instance.workplace,
+        settings.WEBSITE_HOME_URL,
+        instance.pk,
     )
     post_telegram_channel(message_text)
 
     # sent email do company
     send_mail(
-        "Sua oportunidade está disponível no PyJobs",
+        "Sua oportunidade está disponível no {}".format(settings.WEBSITE_NAME),
         vaga_publicada(instance),
-        "pyjobs@pyjobs.com.br",
+        settings.WEBSITE_GENERAL_EMAIL,
         [instance.company_email],
     )
     try:
@@ -388,8 +393,8 @@ def new_contact(sender, instance, created, **kwargs):
         instance.name, instance.email, instance.subject, instance.message
     )
     send_mail(
-        "Contato PyJobs: {}".format(instance.subject),
+        "Contato {}: {}".format(settings.WEBSITE_NAME, instance.subject),
         msg_email,
-        "pyjobs@pyjobs.com.br",
-        ["viniciuscarqueijo@gmail.com"],
+        settings.WEBSITE_GENERAL_EMAIL,
+        [settings.WEBSITE_OWNER_EMAIL],
     )

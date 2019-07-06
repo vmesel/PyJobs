@@ -2,7 +2,7 @@
 <jobs>
     {%for job in jobs%}
         <job id="{{job.pk}}">
-        <link><![CDATA[http://www.pyjobs.com.br{{job.get_absolute_url}}]]></link>
+        <link><![CDATA[http://www.{{WEBSITE_NAME}}.com.br{{job.get_absolute_url}}]]></link>
         <name><![CDATA[{{job.title}}]]></name>
         <region><![CDATA[{{job.workplace}}]]></region>
         <description><![CDATA[
@@ -22,8 +22,8 @@
                   </p>
                 </div>
         </div>
-        ]]></description>  
-        <apply_url><![CDATA[http://www.pyjobs.com.br{{job.get_absolute_url}}]]></apply_url>
+        ]]></description>
+        <apply_url><![CDATA[http://www.{{WEBSITE_NAME}}.com.br{{job.get_absolute_url}}]]></apply_url>
         <company><![CDATA[{{job.company_name}}]]></company>
         <pubdate><![CDATA[{{job.created_at|date:"d.m.Y"}}]]></pubdate>
         <updated><![CDATA[{{job.created_at|date:"d.m.Y"}}]]></updated>

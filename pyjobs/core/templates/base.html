@@ -33,19 +33,19 @@
     <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Aqui seu novo emprego Python acha você. Oportunidades para programadores Python nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor." name="description"/>
-    <meta name="description" content="Aqui é o portal onde você encontrará seu futuro emprego Python. No PyJobs vagas e pessoas especialistas em Python não faltam! Somos a referência na linguagem em todo o país.">
-    <title>{% if title %}{%block title%}{%endblock%}{%else%}PyJobs - Sua central de vagas Python{%endif%}</title>
-    <meta name="keywords" content="empregos, vagas, buscar vagas, vagas de emprego, vagas de programador python, emprego de programador python, empregos python, vagas python, buscar vagas python, vagas de emprego python">
-    <meta name="twitter:description" content="Busque agora vagas de emprego de dev python. PyJobs, a gente trabalha pelo seu trabalho.">
+    <meta content="Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor." name="description"/>
+    <meta name="description" content="Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.">
+    <title>{% if title %}{%block title%}{%endblock%}{%else%}{{WEBSITE_NAME}} - Sua central de vagas {{WEBSITE_WORKING_LANGUAGE}}{%endif%}</title>
+    <meta name="keywords" content="empregos, vagas, buscar vagas, vagas de emprego, vagas de programador {{WEBSITE_WORKING_LANGUAGE}}, emprego de programador {{WEBSITE_WORKING_LANGUAGE}}, empregos {{WEBSITE_WORKING_LANGUAGE}}, vagas {{WEBSITE_WORKING_LANGUAGE}}, buscar vagas {{WEBSITE_WORKING_LANGUAGE}}, vagas de emprego {{WEBSITE_WORKING_LANGUAGE}}">
+    <meta name="twitter:description" content="Busque agora vagas de emprego de dev {{WEBSITE_WORKING_LANGUAGE}}. {{WEBSITE_NAME}}, a gente trabalha pelo seu trabalho.">
     {% block ogimage %}
     <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
     {% endblock ogimage%}
-    <meta property="og:site_name" content="PyJobs" />
-    <meta property="og:title" content="{% if title %}{{title}}{%else%}PyJobs - Vagas de Emprego Python{%endif%}" />
+    <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
+    <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description"
-    content="Aqui é o portal onde você encontrará seu futuro emprego Python. No PyJobs vagas e pessoas especialistas em Python não faltam! Somos a referência na linguagem em todo o país." />
+    content="Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país." />
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -76,7 +76,7 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"> <h1> <a class="navbar-brand logo" href="/">PyJobs</a></h1><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"> <h1> <a class="navbar-brand logo" href="/">{{WEBSITE_NAME}}</a></h1><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
@@ -87,7 +87,7 @@
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'services' %}">NOSSOS SERVI&Ccedil;OS</a></li>
 
                     {% if user.is_authenticated %}
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'pythonistas_area' %}">ÁREA DO PYTHONISTA</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'pythonistas_area' %}">ÁREA DO {{USER_SUBSTANTIVE}}</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'logout' %}">LOGOUT</a></li>
                     {% else %}
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'pythonistas_signup' %}">SE CADASTRE</a></li>
@@ -103,10 +103,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">
-                    <h5>PyJobs</h5>
+                    <h5>{{WEBSITE_NAME}}</h5>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="#oportunidades">Oportunidades Python</a></li>
+                        <li><a href="#oportunidades">Oportunidades {{WEBSITE_WORKING_LANGUAGE}}</a></li>
                         <li><a id="link-modal-cadastro-footer">Cadastre uma vaga</a></li>
                         <li><a href="https://br.jooble.org/vagas-de-emprego-desenvolvedor-python">Jooble</a></li>
                     </ul>
@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="footer-copyright">
-            <p>© 2019 PyJobs</p>
+            <p>© 2019 {{WEBSITE_NAME}}</p>
         </div>
     </footer>
 

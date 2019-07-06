@@ -112,7 +112,7 @@ class PyJobsJobApplication(TestCase):
         self.client.login(username="jacob", password="top_secret")
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = "Candidate-se para esta vaga pelo PyJobs"
+        expected_response = "Candidate-se para esta vaga pelo"
         self.assertTrue(expected_response in request)
 
     def test_check_if_profile_with_no_skills_can_apply(self):

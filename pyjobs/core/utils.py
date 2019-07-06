@@ -53,9 +53,12 @@ def generate_thumbnail(job):
         draw.text(((1280 - w) / 2, offset), line, font=font_bold_cntr)
         offset += font_bold_cntr.getsize(line)[1]
 
-    w, _ = draw.textsize("Via PyJobs", font=font_med_cntr)
+    w, _ = draw.textsize("Via {}".format(settings.WEBSITE_NAME), font=font_med_cntr)
     draw.text(
-        ((1280 - w) / 2, 500), text="Via PyJobs", fill="white", font=font_med_cntr
+        ((1280 - w) / 2, 500),
+        text="Via {}".format(settings.WEBSITE_NAME),
+        fill="white",
+        font=font_med_cntr,
     )
 
     return im

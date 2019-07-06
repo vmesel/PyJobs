@@ -44,7 +44,7 @@ class JobAppliedToViewTest(TestCase):
 
     def test_if_there_are_no_applications(self):
         self.client.login(username="jacob", password="top_secret")
-        error_msg = "Você ainda não aplicou a nenhuma vaga via PyJobs!"
+        error_msg = "Você ainda não aplicou a nenhuma vaga via"
         response = self.client.get("/applied-to/")
         self.assertContains(response, error_msg)
 
