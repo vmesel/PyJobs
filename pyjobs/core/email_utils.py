@@ -1,3 +1,5 @@
+from django.conf import settings
+
 def empresa_cadastrou_vaga(empresa, vaga):
     return """
 Olá {empresa},
@@ -8,10 +10,11 @@ Agora que você criou a vaga {vaga}, nós lhe enviaremos os detalhes de quem se 
 Em breve iremos lhe enviar o link da sua vaga para divulgação!
 
 Abraços,
-Vinicius Mesel
-@vmesel
+{dono_do_site}
 """.format(
-        empresa=empresa, vaga=vaga
+        empresa=empresa,
+        vaga=vaga,
+        dono_do_site=settings.WEBSITE_OWNER_NAME
     )
 
 
@@ -22,10 +25,10 @@ Olá {empresa},
 Agora a vaga {vaga} foi avaliada por nossos colaboradores e foi publicada!
 
 Para acessar a sua vaga, entre no link:
-http://www.pyjobs.com.br/job/{pk}/
+{url_do_site}/job/{pk}/
 
 Caso você queira fechar essa vaga, utilize esse link secreto que só você tem:
-http://www.pyjobs.com.br{close_url}
+{url_do_site}{close_url}
 
 ATENÇÃO: este link fecha a vaga sem necessidade de confirmação ou senha! Caso haja algum problema,
 Por favor, nos contate!
@@ -39,6 +42,7 @@ Vinicius Mesel
         vaga=job.title,
         pk=job.pk,
         close_url=job.get_close_url(),
+        url_do_site=settings.WEBSITE_HOME_URL
     )
 
 
@@ -59,11 +63,10 @@ def contato_cadastrado_empresa(pessoa, vaga):
 
     Em breve, nós lhe contataremos com mais interessados!
 
-    Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+    Para acessar o {nome_do_site}, entre no link: {url_do_site}
 
     Abraços,
-    Vinicius Mesel
-    @vmesel
+    {dono_do_site}
     """.format(
         nome=pessoa.get_full_name(),
         vaga=vaga,
@@ -72,6 +75,9 @@ def contato_cadastrado_empresa(pessoa, vaga):
         portfolio=pessoa.profile.portfolio,
         github=pessoa.profile.github,
         linkedin=pessoa.profile.linkedin,
+        url_do_site=settings.WEBSITE_HOME_URL,
+        nome_do_site=settings.WEBSITE_NAME,
+        dono_do_site=settings.WEBSITE_OWNER_NAME
     )
 
 
@@ -86,19 +92,22 @@ Estamos lhe enviando este email para te avisar que a empresa responsável pela s
 
 Em breve, nós lhe contataremos com mais informações sobre a vaga!
 
-Para acessar o PyJobs, entre no link: http://www.pyjobs.com.br
+Para acessar o {nome_do_site}, entre no link: {url_do_site}
 
 Abraços,
-Vinicius Mesel
-@vmesel
+{dono_do_site}
 """.format(
-        nome=pessoa.get_full_name(), vaga=vaga
+        nome=pessoa.get_full_name(),
+        vaga=vaga,
+        url_do_site=settings.WEBSITE_HOME_URL,
+        nome_do_site=settings.WEBSITE_NAME,
+        dono_do_site=settings.WEBSITE_OWNER_NAME
     )
 
 
 def contact_email(name, email, subject, message):
     return """
-Olá PyJobs,
+Olá,
 
 A pessoa: {name} quer falar sobre {subject}.
 
