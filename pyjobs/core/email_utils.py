@@ -1,5 +1,6 @@
 from django.conf import settings
 
+
 def empresa_cadastrou_vaga(empresa, vaga):
     return """
 Olá {empresa},
@@ -12,9 +13,7 @@ Em breve iremos lhe enviar o link da sua vaga para divulgação!
 Abraços,
 {dono_do_site}
 """.format(
-        empresa=empresa,
-        vaga=vaga,
-        dono_do_site=settings.WEBSITE_OWNER_NAME
+        empresa=empresa, vaga=vaga, dono_do_site=settings.WEBSITE_OWNER_NAME
     )
 
 
@@ -42,7 +41,7 @@ Vinicius Mesel
         vaga=job.title,
         pk=job.pk,
         close_url=job.get_close_url(),
-        url_do_site=settings.WEBSITE_HOME_URL
+        url_do_site=settings.WEBSITE_HOME_URL,
     )
 
 
@@ -77,7 +76,7 @@ def contato_cadastrado_empresa(pessoa, vaga):
         linkedin=pessoa.profile.linkedin,
         url_do_site=settings.WEBSITE_HOME_URL,
         nome_do_site=settings.WEBSITE_NAME,
-        dono_do_site=settings.WEBSITE_OWNER_NAME
+        dono_do_site=settings.WEBSITE_OWNER_NAME,
     )
 
 
@@ -101,7 +100,7 @@ Abraços,
         vaga=vaga,
         url_do_site=settings.WEBSITE_HOME_URL,
         nome_do_site=settings.WEBSITE_NAME,
-        dono_do_site=settings.WEBSITE_OWNER_NAME
+        dono_do_site=settings.WEBSITE_OWNER_NAME,
     )
 
 

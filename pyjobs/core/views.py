@@ -234,13 +234,11 @@ def pythonista_applied_info(request):
 
 class JobsFeed(Feed):
     title = "{} - Sua central de vagas {}".format(
-        settings.WEBSITE_NAME,
-        settings.WEBSITE_WORKING_LANGUAGE
+        settings.WEBSITE_NAME, settings.WEBSITE_WORKING_LANGUAGE
     )
     link = "/feed/"
     description = "As últimas vagas {} destacadas no {}".format(
-        settings.WEBSITE_WORKING_LANGUAGE,
-        settings.WEBSITE_NAME
+        settings.WEBSITE_WORKING_LANGUAGE, settings.WEBSITE_NAME
     )
 
     def items(self):
@@ -261,13 +259,11 @@ class JobsFeed(Feed):
 
 class PremiumJobsFeed(Feed):
     title = "{} - Sua central de vagas {}".format(
-        settings.WEBSITE_NAME,
-        settings.WEBSITE_WORKING_LANGUAGE
+        settings.WEBSITE_NAME, settings.WEBSITE_WORKING_LANGUAGE
     )
     link = "/feed/"
     description = "As últimas vagas {} destacadas no {}".format(
-        settings.WEBSITE_WORKING_LANGUAGE,
-        settings.WEBSITE_NAME
+        settings.WEBSITE_WORKING_LANGUAGE, settings.WEBSITE_NAME
     )
 
     def items(self):

@@ -55,8 +55,10 @@ def generate_thumbnail(job):
 
     w, _ = draw.textsize("Via {}".format(settings.WEBSITE_NAME), font=font_med_cntr)
     draw.text(
-        ((1280 - w) / 2, 500), text="Via {}".format(settings.WEBSITE_NAME),
-        fill="white", font=font_med_cntr
+        ((1280 - w) / 2, 500),
+        text="Via {}".format(settings.WEBSITE_NAME),
+        fill="white",
+        font=font_med_cntr,
     )
 
     return im

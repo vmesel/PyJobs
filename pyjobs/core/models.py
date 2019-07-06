@@ -366,8 +366,11 @@ def new_job_was_created(sender, instance, created, **kwargs):
     # post to telegram
     message_base = "Nova oportunidade! {} - {} em {}\n {}/job/{}/"
     message_text = message_base.format(
-        instance.title, instance.company_name,
-        instance.workplace, settings.WEBSITE_HOME_URL, instance.pk
+        instance.title,
+        instance.company_name,
+        instance.workplace,
+        settings.WEBSITE_HOME_URL,
+        instance.pk,
     )
     post_telegram_channel(message_text)
 
