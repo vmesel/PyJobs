@@ -191,6 +191,12 @@ class Job(models.Model):
     premium_at = models.DateTimeField(
         "Data de mudança de Status", blank=True, null=True
     )
+    cellphone = models.CharField(
+        verbose_name="WhatsApp para contato",
+        max_length=16,
+        help_text="Deixe seu WhatsApp para contatarmos sobre nossos serviços",
+        null=True,
+    )
     skills = models.ManyToManyField("Skill")
     is_open = models.BooleanField("Vaga aberta", default=True)
 
