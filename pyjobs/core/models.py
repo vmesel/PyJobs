@@ -188,6 +188,9 @@ class Job(models.Model):
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    premium_at = models.DateTimeField(
+        "Data de mudança de Status", blank=True, null=True
+    )
     skills = models.ManyToManyField("Skill")
     is_open = models.BooleanField("Vaga aberta", default=True)
 
@@ -218,7 +221,7 @@ class Job(models.Model):
         return self.application_link if self.application_link != "" else False
 
     def get_premium_jobs():
-        return Job.objects.premium().created_in_the_last(30)[:7]
+        return Job.objects.premium().premium_in_the_last(30)[:7]
 
     def get_publicly_available_jobs(term=None):
         return Job.objects.not_premium().created_in_the_last(30).search(term)

@@ -24,6 +24,18 @@ class PublicQuerySet(models.QuerySet):
             created_at__lte=datetime.today() - timedelta(days=days),
         )
 
+    def premium_in_the_last(self, days):
+        return self.filter(
+            premium_at__gt=datetime.today() - timedelta(days=days),
+            premium_at__lte=datetime.today(),
+        )
+
+    def premium_days_ago(self, days):
+        return self.filter(
+            premium_at__gt=datetime.today() - timedelta(days=days + 1),
+            premium_at__lte=datetime.today() - timedelta(days=days),
+        )
+
     def search(self, term):
         if not term:
             return self
