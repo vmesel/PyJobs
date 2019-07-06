@@ -5,7 +5,7 @@
 <meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
 {% endblock %}
 {% block title %}
-{{job.title}} no PyJobs
+{{job.title}} no {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
 
@@ -28,7 +28,7 @@
                       <form action="." method="post">
                         {% csrf_token %}
                         {% if job.is_open %}
-                        <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo PyJobs</button>
+                        <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
                         {% else %}
                         <button class="btn btn-primary" disabled>Vaga já fechada pela empresa anunciante</button>
                         {% endif %}
