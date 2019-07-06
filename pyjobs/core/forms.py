@@ -20,6 +20,7 @@ class JobForm(ModelForm):
             "state",
             "application_link",
             "company_email",
+            "cellphone",
             "salary_range",
             "description",
             "requirements",
