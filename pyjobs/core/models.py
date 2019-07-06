@@ -391,5 +391,5 @@ def new_contact(sender, instance, created, **kwargs):
         "Contato PyJobs: {}".format(instance.subject),
         msg_email,
         "pyjobs@pyjobs.com.br",
-        ["viniciuscarqueijo@gmail.com"],
+        ["vinicius@pyjobs.com.br"],
     )
