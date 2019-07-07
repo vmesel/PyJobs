@@ -1,0 +1,16 @@
+Olá {{empresa}},
+
+Agora a vaga {{vaga}} foi avaliada por nossos colaboradores e foi publicada!
+
+Para acessar a sua vaga, entre no link:
+{{url_do_site}}/job/{{pk}}/
+
+Caso você queira fechar essa vaga, utilize esse link secreto que só você tem:
+{{url_do_site}}{{close_url}}
+
+ATENÇÃO: este link fecha a vaga sem necessidade de confirmação ou senha! Caso haja algum problema,
+Por favor, nos contate!
+
+
+Abraços,
+{{dono_do_site}}
