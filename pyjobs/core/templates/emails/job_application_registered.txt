@@ -2,8 +2,7 @@ Olá {{nome}},
 
 Recebemos seu interesse na oportunidade: {{vaga}}
 
-Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve,\
- eles entrarão em contato com você!
+Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve, eles entrarão em contato com você!
 
 Em breve, nós lhe contataremos com mais informações sobre a vaga!
 
