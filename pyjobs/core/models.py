@@ -389,17 +389,6 @@ def new_job_was_created(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Contact)
 def new_contact(sender, instance, created, **kwargs):
-    # TODO: To be deprecated
-    # msg_email = contact_email(
-    #     instance.name, instance.email, instance.subject, instance.message
-    # )
-    # send_mail(
-    #     "Contato {}: {}".format(settings.WEBSITE_NAME, instance.subject),
-    #     msg_email,
-    #     settings.WEBSITE_GENERAL_EMAIL,
-    #     [settings.WEBSITE_OWNER_EMAIL],
-    # )
-    import ipdb; ipdb.set_trace()
     email_context = {
         "mensagem": instance
     }
