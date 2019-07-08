@@ -350,18 +350,18 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                          <p>Olá {{empresa}},</p>
+                          <p>Olá {{vaga.company_name}},</p>
 
-                          <p>Agora a vaga {{vaga}} foi avaliada por nossos colaboradores e foi publicada!</p>
+                          <p>Agora a vaga {{vaga.title}} foi avaliada por nossos colaboradores e foi publicada!</p>
 
                           <p>Para acessar a sua vaga, entre no link:</p>
                           <p>
-                            <a href="{{url_do_site}}/job/{{pk}}/">{{url_do_site}}/job/{{pk}}/</a>
+                            <a href="{{url_do_site}}/job/{{pk}}/">{{url_do_site}}/job/{{vaga.pk}}/</a>
                           </p>
 
                           <p>Caso você queira fechar essa vaga, utilize esse link secreto que só você tem:</p>
                           <p>
-                            <a href="{{url_do_site}}{{close_url}}">{{url_do_site}}{{close_url}}</a>
+                            <a href="{{url_do_site}}{{vaga_close_url}}">{{url_do_site}}{{vaga_close_url}}</a>
                           </p>
 
                           <p>ATENÇÃO: este link fecha a vaga sem necessidade de confirmação ou senha! Caso haja algum problema,</p>
