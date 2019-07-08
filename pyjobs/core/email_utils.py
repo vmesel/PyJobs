@@ -132,6 +132,10 @@ def get_email_with_template(template_name, context_specific, subject, to_emails)
         "pessoa": context_specific.get("pessoa", None),
         "mensagem": context_specific.get("mensagem", None),
     }
+
+    if context["vaga"]:
+        context["vaga_close_url"] = context["vaga"].get_close_url()
+
     plain_text = get_template("emails/{}.txt".format(template_name))
     html_text = get_template("emails/html/{}.html".format(template_name))
 

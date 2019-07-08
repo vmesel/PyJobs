@@ -151,8 +151,10 @@ def contact(request):
         data = {"secret": settings.RECAPTCHA_SECRET_KEY, "response": recaptcha_response}
         r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
         result = r.json()
-        import ipdb; ipdb.set_trace()
-        if (form.is_valid() and result["success"]) or (settings.RECAPTCHA_SECRET_KEY == None):
+
+        if (form.is_valid() and result["success"]) or (
+            settings.RECAPTCHA_SECRET_KEY == None
+        ):
             form.save()
             context["message_first"] = "Mensagem enviada com sucesso"
             context["message_second"] = "Vá para a home do site!"
