@@ -22,6 +22,7 @@ from pyjobs.core.email_utils import (
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.utils import post_telegram_channel
+from pyjobs.core.email_utils import get_email_with_template
 
 
 class Messages(models.Model):
