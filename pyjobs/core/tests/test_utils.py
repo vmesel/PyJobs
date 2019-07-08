@@ -1,9 +1,11 @@
 from unittest.mock import patch
 
 from django.test import TestCase, override_settings
+from django.core.mail import EmailMultiAlternatives
 from telegram import TelegramError
 
 from pyjobs.core.utils import *
+from pyjobs.core.email_utils import *
 from pyjobs.core.models import Job
 
 
@@ -43,3 +45,19 @@ class TelegramPosterTest(TestCase):
         mocked_bot.return_value.send_message.assert_called_with(
             chat_id="my-channel", text=self.message
         )
+
+
+class HTMLEmailSenderTest(TestCase):
+    # TODO: Implement more tests on this function so it can be reliable
+    def setUp(self):
+        self.to_emails = ["localhost@localhost"]
+        self.subject = "Hey guys, just testing around here!"
+        self.template_name = "published_job"
+
+    def test_returned_object_has_defined_attributes(self):
+        msg = get_email_with_template(
+            self.template_name, {}, self.subject, self.to_emails
+        )
+
+        self.assertTrue(msg.subject == self.subject)
+        self.assertTrue(msg.to == self.to_emails)
