@@ -352,14 +352,14 @@
                       <td>
                           <p>Olá,
 
-                          <p>Você recebeu uma nova pessoa interessada em sua vaga: {{vaga}}
+                          <p>Você recebeu uma nova pessoa interessada em sua vaga: {{vaga.title}}
 
-                          <p>Nome do interessado(a): {{nome}}</p>
-                          <p>Email do interessado(a): {{email}}</p>
-                          <p>Telefone do interessado(a): {{telefone}}</p>
-                          <p>Linkedin do interessado(a): {{linkedin}}</p>
-                          <p>GitHub do interessado(a): {{github}}</p>
-                          <p>Portfolio do interessado(a): {{portfolio}}</p>
+                          <p>Nome do interessado(a): {{pessoa.user.first_name}}</p>
+                          <p>Email do interessado(a): {{pessoa.user.email}}</p>
+                          <p>Telefone do interessado(a): {{pessoa.telefone}}</p>
+                          <p>Linkedin do interessado(a): {{pessoa.linkedin}}</p>
+                          <p>GitHub do interessado(a): {{pessoa.github}}</p>
+                          <p>Portfolio do interessado(a): {{pessoa.portfolio}}</p>
 
                           <p>Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!</p>
 
