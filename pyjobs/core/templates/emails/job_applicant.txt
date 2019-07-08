@@ -1,13 +1,13 @@
 Olá,
 
-Você recebeu uma nova pessoa interessada em sua vaga: {{vaga}}
+Você recebeu uma nova pessoa interessada em sua vaga: {{vaga.title}}
 
-Nome do interessado(a): {{nome}}
-Email do interessado(a): {{email}}
-Telefone do interessado(a): {{telefone}}
-Linkedin do interessado(a): {{linkedin}}
-GitHub do interessado(a): {{github}}
-Portfolio do interessado(a): {{portfolio}}
+Nome do interessado(a): {{pessoa.nome}}
+Email do interessado(a): {{pessoa.email}}
+Telefone do interessado(a): {{pessoa.telefone}}
+Linkedin do interessado(a): {{pessoa.linkedin}}
+GitHub do interessado(a): {{pessoa.github}}
+Portfolio do interessado(a): {{pessoa.portfolio}}
 
 Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!
 

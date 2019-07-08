@@ -1,9 +1,9 @@
 Olá,
 
-A pessoa: {{name}} quer falar sobre {{subject}}.
+A pessoa: {{mensagem.name}} quer falar sobre {{mensagem.subject}}.
 
 A mensagem dela é:
 
-{{message}}
+{{mensagem.message}}
 
-Para mandar um email para ela, basta enviar para: {{email}}
+Para mandar um email para ela, basta enviar para: {{mensagem.email}}
