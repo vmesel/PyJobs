@@ -55,7 +55,8 @@ class JobResource(DjangoPaginatedResource):
         fields={
             field.name: field.name
             for field in Job._meta.fields
-            if field.name not in {"premium", "public", "ad_interested", "company_email"}
+            if field.name
+            not in {"premium", "public", "ad_interested", "company_email", "cellphone"}
         }
     )
 
