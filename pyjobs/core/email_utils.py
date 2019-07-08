@@ -137,6 +137,9 @@ def get_email_with_template(template_name, context_specific, subject, to_emails)
 
     text_content, html_content = plain_text.render(context), html_text.render(context)
 
-    return EmailMultiAlternatives(
+    msg = EmailMultiAlternatives(
         subject, text_content, settings.WEBSITE_GENERAL_EMAIL, to_emails
     )
+    msg.attach_alternative(html_content, "text/html")
+
+    return msg
