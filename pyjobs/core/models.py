@@ -337,18 +337,6 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
     )
     msg_email_company.send()
 
-    # msg_email_company = contato_cadastrado_empresa(
-    #     pessoa=instance.user, vaga=instance.job
-    # )
-
-
-    # send_mail(
-    #     "Você possui mais um candidato para a sua vaga",
-    #     msg_email_company,
-    #     settings.WEBSITE_GENERAL_EMAIL,
-    #     [instance.job.company_email],
-    # )
-
 
 def send_offer_email_template(job):
     message = Messages.objects.filter(message_type="offer").first()
