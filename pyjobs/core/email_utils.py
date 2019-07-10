@@ -1,4 +1,7 @@
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
 
 
 def empresa_cadastrou_vaga(empresa, vaga):
@@ -118,3 +121,29 @@ Para mandar um email para ela, basta enviar para: {email}
     """.format(
         name=name, email=email, subject=subject, message=message
     )
+
+
+def get_email_with_template(template_name, context_specific, subject, to_emails):
+    context = {
+        "dono_do_site": settings.WEBSITE_OWNER_NAME,
+        "nome_do_site": settings.WEBSITE_NAME,
+        "url_do_site": settings.WEBSITE_HOME_URL,
+        "vaga": context_specific.get("vaga", None),
+        "pessoa": context_specific.get("pessoa", None),
+        "mensagem": context_specific.get("mensagem", None),
+    }
+
+    if context["vaga"]:
+        context["vaga_close_url"] = context["vaga"].get_close_url()
+
+    plain_text = get_template("emails/{}.txt".format(template_name))
+    html_text = get_template("emails/html/{}.html".format(template_name))
+
+    text_content, html_content = plain_text.render(context), html_text.render(context)
+
+    msg = EmailMultiAlternatives(
+        subject, text_content, settings.WEBSITE_GENERAL_EMAIL, to_emails
+    )
+    msg.attach_alternative(html_content, "text/html")
+
+    return msg

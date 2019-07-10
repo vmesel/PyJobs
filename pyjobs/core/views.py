@@ -151,13 +151,16 @@ def contact(request):
         data = {"secret": settings.RECAPTCHA_SECRET_KEY, "response": recaptcha_response}
         r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
         result = r.json()
-        if form.is_valid() and result["success"]:
+
+        if (form.is_valid() and result["success"]) or (
+            settings.RECAPTCHA_SECRET_KEY == None
+        ):
             form.save()
-            context["message_first"] = ("Mensagem enviada com sucesso",)
+            context["message_first"] = "Mensagem enviada com sucesso"
             context["message_second"] = "Vá para a home do site!"
             return render(request, template_name="generic.html", context=context)
         else:
-            context["message_first"] = ("Falha na hora de mandar a mensagem",)
+            context["message_first"] = "Falha na hora de mandar a mensagem"
             context[
                 "message_second"
             ] = "Você preencheu algum campo da maneira errada, tente novamente!"

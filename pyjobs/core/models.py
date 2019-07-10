@@ -22,6 +22,7 @@ from pyjobs.core.email_utils import (
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.utils import post_telegram_channel
+from pyjobs.core.email_utils import get_email_with_template
 
 
 class Messages(models.Model):
@@ -313,25 +314,25 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=JobApplication)
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
-    msg_email_person = contato_cadastrado_pessoa(
-        pessoa=instance.user, vaga=instance.job
-    )
-    msg_email_company = contato_cadastrado_empresa(
-        pessoa=instance.user, vaga=instance.job
-    )
+    person_email_context = {"vaga": instance.job, "pessoa": instance.user.profile}
 
-    send_mail(
+    company_email_context = person_email_context
+
+    msg_email_person = get_email_with_template(
+        "job_application_registered",
+        person_email_context,
         "Parabéns! Você se inscreveu na vaga!",
-        msg_email_person,
-        settings.WEBSITE_GENERAL_EMAIL,
         [instance.user.email],
     )
-    send_mail(
+    msg_email_person.send()
+
+    msg_email_company = get_email_with_template(
+        "job_applicant",
+        company_email_context,
         "Você possui mais um candidato para a sua vaga",
-        msg_email_company,
-        settings.WEBSITE_GENERAL_EMAIL,
         [instance.job.company_email],
     )
+    msg_email_company.send()
 
 
 def send_offer_email_template(job):
@@ -374,13 +375,13 @@ def new_job_was_created(sender, instance, created, **kwargs):
     )
     post_telegram_channel(message_text)
 
-    # sent email do company
-    send_mail(
+    msg = get_email_with_template(
+        "published_job",
+        {"vaga": instance},
         "Sua oportunidade está disponível no {}".format(settings.WEBSITE_NAME),
-        vaga_publicada(instance),
-        settings.WEBSITE_GENERAL_EMAIL,
         [instance.company_email],
     )
+    msg.send()
     try:
         send_offer_email_template(instance)
     except:
@@ -389,12 +390,8 @@ def new_job_was_created(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Contact)
 def new_contact(sender, instance, created, **kwargs):
-    msg_email = contact_email(
-        instance.name, instance.email, instance.subject, instance.message
+    email_context = {"mensagem": instance}
+    msg = get_email_with_template(
+        "new_contact", email_context, instance.subject, [settings.WEBSITE_OWNER_EMAIL]
     )
-    send_mail(
-        "Contato {}: {}".format(settings.WEBSITE_NAME, instance.subject),
-        msg_email,
-        settings.WEBSITE_GENERAL_EMAIL,
-        [settings.WEBSITE_OWNER_EMAIL],
-    )
+    msg.send()

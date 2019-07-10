@@ -1,0 +1,12 @@
+Olá {{pessoa.user.first_name}},
+
+Recebemos seu interesse na oportunidade: {{vaga.title}}
+
+Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve, eles entrarão em contato com você!
+
+Em breve, nós lhe contataremos com mais informações sobre a vaga!
+
+Para acessar o {{nome_do_site}}, entre no link: {{url_do_site}}
+
+Abraços,
+{{dono_do_site}}
