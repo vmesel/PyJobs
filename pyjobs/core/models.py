@@ -314,10 +314,7 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=JobApplication)
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
-    person_email_context = {
-        "vaga": instance.job,
-        "pessoa": instance.user.profile
-    }
+    person_email_context = {"vaga": instance.job, "pessoa": instance.user.profile}
 
     company_email_context = person_email_context
 
@@ -325,7 +322,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         "job_application_registered",
         person_email_context,
         "Parabéns! Você se inscreveu na vaga!",
-        [instance.user.email]
+        [instance.user.email],
     )
     msg_email_person.send()
 
@@ -333,7 +330,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         "job_applicant",
         company_email_context,
         "Você possui mais um candidato para a sua vaga",
-        [instance.job.company_email]
+        [instance.job.company_email],
     )
     msg_email_company.send()
 
