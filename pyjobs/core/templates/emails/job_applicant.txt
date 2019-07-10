@@ -2,9 +2,9 @@ Olá,
 
 Você recebeu uma nova pessoa interessada em sua vaga: {{vaga.title}}
 
-Nome do interessado(a): {{pessoa.nome}}
-Email do interessado(a): {{pessoa.email}}
-Telefone do interessado(a): {{pessoa.telefone}}
+Nome do interessado(a): {{pessoa.user.first_name}} {{pessoa.user.last_name}}
+Email do interessado(a): {{pessoa.user.email}}
+Telefone do interessado(a): {{pessoa.cellphone}
 Linkedin do interessado(a): {{pessoa.linkedin}}
 GitHub do interessado(a): {{pessoa.github}}
 Portfolio do interessado(a): {{pessoa.portfolio}}
