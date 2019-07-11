@@ -9,6 +9,7 @@ from model_mommy import mommy
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.views import index
 
+
 class ThumbnailTestingViews(TestCase):
     def setUp(self):
         self.job = Job(
@@ -24,9 +25,7 @@ class ThumbnailTestingViews(TestCase):
         self.client = Client()
 
     def test_return_thumbnail_endpoint_status_code(self):
-        response = self.client.get("/thumb/{}/".format(
-            self.job.pk
-        ))
+        response = self.client.get("/thumb/{}/".format(self.job.pk))
         self.assertEqual(response.status_code, 200)
 
     def test_return_signup_page_status_code(self):
@@ -40,3 +39,7 @@ class ThumbnailTestingViews(TestCase):
     def test_return_feed_status_code(self):
         response = self.client.get("/feed/")
         self.assertEqual(response.status_code, 200)
+
+    def test_return_register_new_job_status_code(self):
+        response = self.client.get("/register/new/job/")
+        self.assertEqual(response.status_code, 302)
