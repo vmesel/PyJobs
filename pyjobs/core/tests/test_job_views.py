@@ -259,3 +259,16 @@ class PyJobsJobCloseView(TestCase):
         wrong_hash = right_hash[64:] + right_hash[:64]
         kwargs = {"pk": self.job.pk, "close_hash": wrong_hash}
         self._assert_close_link(kwargs, closed=False)
+
+
+class PyJobsNormalViews(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_if_services_page_returns_200(self):
+        response = self.client.get("/services/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_if_job_creation_page_returns_200(self):
+        response = self.client.get("/job/create/")
+        self.assertEqual(response.status_code, 200)
