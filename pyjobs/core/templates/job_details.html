@@ -28,7 +28,11 @@
                       <form action="." method="post">
                         {% csrf_token %}
                         {% if job.is_open %}
-                        <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
+                            {% if job.application_link %}
+                                <a href="{{job.application_link}}"><button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button></a>
+                            {%else%}
+                                <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
+                            {%endif%}
                         {% else %}
                         <button class="btn btn-primary" disabled>Vaga já fechada pela empresa anunciante</button>
                         {% endif %}
