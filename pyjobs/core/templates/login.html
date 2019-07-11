@@ -9,10 +9,14 @@
                     <h2 class="text-info">Se Logue</h2>
                 </div>
                 <form action="." method="post">
+                  <p>Utilize seu usuário cadastrado (não seu e-mail) para se logar.</p>
                   {% csrf_token %}
                   {% for hidden_field in form.hidden_fields %}
                     {{ hidden_field }}
                   {% endfor %}
+                  {% if form.errors %}
+                    <p>Seu usuário e senha estão incorretos.</p>
+                  {% endif %}
                   {% for field in form.visible_fields %}
                   <div class="form-group">
                     <div class="input-group">
@@ -21,16 +25,7 @@
                           {{ field.label_tag }}
                         </span>
                       </div>
-                      {% if field.errors %}
-                      {% render_field field class="form-control is-invalid" %}
-                      {% for error in field.errors %}
-                      <div class="invalid-feedback">
-                        {{ error }}
-                      </div>
-                      {% endfor %}
-                      {%else%}
                         {% render_field field class="form-control" %}
-                      {%endif%}
                       <div class="input-group-append">
                         {% if field.help_text %}
                           <small class="form-text text-muted">{{ field.help_text }}</small>
