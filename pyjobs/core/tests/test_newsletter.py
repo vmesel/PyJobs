@@ -35,4 +35,7 @@ class NewsletterTest(TestCase):
     @patch("pyjobs.core.newsletter.MailChimp")
     def test_if_called(self, patched_mc):
         sub = subscribe_user_to_chimp(self.profile)
-        self.assertEqual(patched_mc.call_args, call("AAA", "BBB"))
+        patched_mc.assert_called_once_with("AAA", "BBB")
+        patched_mc.return_value.lists.members.create.assert_called_once_with(
+            "CCC", {"status": "subscribed", "email_address": "v@m.com"}
+        )
