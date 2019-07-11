@@ -43,3 +43,30 @@ class ThumbnailTestingViews(TestCase):
     def test_return_register_new_job_status_code(self):
         response = self.client.get("/register/new/job/")
         self.assertEqual(response.status_code, 302)
+
+
+class TestingRestrictedViews(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="jacob", email="jacob@gmail.com", password="top_secret"
+        )
+
+        self.profile = Profile.objects.create(
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390",
+        )
+
+        self.client = Client()
+
+    def test_if_status_code_is_two_hundred_on_password_change(self):
+        self.client.login(username="jacob", password="top_secret")
+        response = self.client.get("/password/")
+        self.assertEqual(200, response.status_code)
+
+    def test_if_status_code_is_two_hundred_on(self):
+        self.client.login(username="jacob", password="top_secret")
+        response = self.client.get("/info/")
+        self.assertEqual(200, response.status_code)
