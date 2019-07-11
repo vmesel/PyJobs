@@ -25,18 +25,19 @@
                       {% if applied %}
                         <button class="btn btn-primary" type="button">Você já aplicou a esta vaga!</button>
                       {%else%}
-                      <form action="." method="post">
+
                         {% csrf_token %}
                         {% if job.is_open %}
                             {% if job.application_link %}
                                 <a href="{{job.application_link}}"><button class="btn btn-primary">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button></a>
                             {%else%}
+                            <form action="." method="post">
                                 <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
+                            </form>
                             {%endif%}
                         {% else %}
                         <button class="btn btn-primary" disabled>Vaga já fechada pela empresa anunciante</button>
                         {% endif %}
-                      </form>
                       {% endif %}
                     {%else%}
                         <a href="{% url 'pythonistas_signup' %}">
