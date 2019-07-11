@@ -6,7 +6,10 @@ from telegram import TelegramError
 
 from pyjobs.core.utils import *
 from pyjobs.core.email_utils import *
-from pyjobs.core.models import Job
+from model_mommy import mommy
+
+from pyjobs.core.models import Job, Profile, Skill
+from PIL import Image
 
 
 class TelegramPosterTest(TestCase):
@@ -61,3 +64,20 @@ class HTMLEmailSenderTest(TestCase):
 
         self.assertTrue(msg.subject == self.subject)
         self.assertTrue(msg.to == self.to_emails)
+
+
+class ThumbnailCreationTest(TestCase):
+    def setUp(self):
+        self.job = Job(
+            title="Vaga 2",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            public=True,
+        )
+        self.job.save()
+
+    def test_if_generated_object_is_valid(self):
+        generated_thumbnail = generate_thumbnail(self.job)
+        self.assertIsInstance(generated_thumbnail, Image.Image)
