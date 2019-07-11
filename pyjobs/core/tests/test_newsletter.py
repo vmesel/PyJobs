@@ -1,7 +1,7 @@
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from unittest.mock import patch
 
 from pyjobs.core.models import Job, Profile
@@ -29,7 +29,10 @@ class NewsletterTest(TestCase):
     def test_subscribe_to_newsletter(self):
         self.assertFalse(subscribe_user_to_chimp(self.profile))
 
-    # @patch("pyjobs.core.newsletter.MailChimp")
-    # def test_if_called(self, patched_mc):
-    #     sub = subscribe_user_to_chimp(self.profile)
-    #     self.assertTrue(patched_mc.called)
+    @override_settings(
+        MAILCHIMP_API_KEY="AAA", MAILCHIMP_USERNAME="BBB", MAILCHIMP_LIST_KEY="CCC"
+    )
+    @patch("pyjobs.core.newsletter.MailChimp")
+    def test_if_called(self, patched_mc):
+        sub = subscribe_user_to_chimp(self.profile)
+        self.assertEqual(patched_mc.call_args, call("AAA", "BBB"))
