@@ -4,3 +4,4 @@
       pyjobs/core/tests/*.py
       pyjobs/core/migrations/*.py
       pyjobs/wsgi.py
+      pyjobs/core/management/*
