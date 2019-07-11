@@ -12,28 +12,26 @@ class PublicQuerySet(models.QuerySet):
     def not_premium(self):
         return self.public().filter(premium=False)
 
-    def created_in_the_last(self, days):
+    def created_in_the_last(self, days, premium=False):
+        if premium:
+            return self.filter(
+                premium_at__gt=datetime.today() - timedelta(days=days),
+                premium_at__lte=datetime.today(),
+            )
         return self.filter(
             created_at__gt=datetime.today() - timedelta(days=days),
             created_at__lte=datetime.today(),
         )
 
-    def created_days_ago(self, days):
+    def created_days_ago(self, days, premium=False):
+        if premium:
+            return self.filter(
+                premium_at__gt=datetime.today() - timedelta(days=days + 1),
+                premium_at__lte=datetime.today() - timedelta(days=days),
+            )
         return self.filter(
             created_at__gt=datetime.today() - timedelta(days=days + 1),
             created_at__lte=datetime.today() - timedelta(days=days),
-        )
-
-    def premium_in_the_last(self, days):
-        return self.filter(
-            premium_at__gt=datetime.today() - timedelta(days=days),
-            premium_at__lte=datetime.today(),
-        )
-
-    def premium_days_ago(self, days):
-        return self.filter(
-            premium_at__gt=datetime.today() - timedelta(days=days + 1),
-            premium_at__lte=datetime.today() - timedelta(days=days),
         )
 
     def search(self, term):

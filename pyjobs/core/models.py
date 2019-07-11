@@ -229,7 +229,7 @@ class Job(models.Model):
         return self.application_link if self.application_link != "" else False
 
     def get_premium_jobs():
-        return Job.objects.premium().premium_in_the_last(30)[:7]
+        return Job.objects.premium().created_in_the_last(30, premium=True)[:7]
 
     def get_publicly_available_jobs(term=None):
         return Job.objects.not_premium().created_in_the_last(30).search(term)
