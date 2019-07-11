@@ -13,12 +13,6 @@ from raven.contrib.django.raven_compat.models import client
 
 
 from pyjobs.settings import SECRET_KEY
-from pyjobs.core.email_utils import (
-    contact_email,
-    contato_cadastrado_empresa,
-    contato_cadastrado_pessoa,
-    vaga_publicada,
-)
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from pyjobs.core.utils import post_telegram_channel
