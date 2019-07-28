@@ -76,7 +76,17 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"> <h1> <a class="navbar-brand logo" href="/">{{WEBSITE_NAME}}</a></h1><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container">
+            <h1>
+                <a class="navbar-brand" href="/">
+                    {% if WEBSITE_NAME == "PyJobs" %}
+                        <img src="{% static 'assets/img/logo-PyJobs.svg' %}" style="height:50px;width:100px;" class="logo">
+                    {%else%}
+                        {{WEBSITE_NAME}}
+                    {%endif%}
+                </a>
+            </h1>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
