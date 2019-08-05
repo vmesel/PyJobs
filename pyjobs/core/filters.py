@@ -7,7 +7,7 @@ class JobFilter(django_filters.FilterSet):
     salary_range = django_filters.ChoiceFilter(choices=SALARY_RANGES[:-1])
     job_level = django_filters.ChoiceFilter(choices=JOB_LEVELS[:-1])
     title = django_filters.CharFilter(
-        field_name="title", lookup_expr="contains", label="Título da Vaga"
+        field_name="title", lookup_expr="icontains", label="Título da Vaga"
     )
 
     class Meta:
