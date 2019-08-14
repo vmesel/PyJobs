@@ -8,6 +8,7 @@ from pyjobs.core.models import (
     Messages,
     Profile,
     Skill,
+    MailingList,
     send_offer_email_template,
     send_feedback_collection_email,
 )
@@ -31,6 +32,10 @@ def add_subscriber(modeladmin, request, queryset):
 
 class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ("user", "job", "created_at")
+
+
+class MailingListsAdmin(admin.ModelAdmin):
+    list_display = ("email", "name", "slug")
 
 
 class JobAdmin(admin.ModelAdmin):
@@ -57,3 +62,4 @@ admin.site.register(JobApplication, JobApplicationAdmin)
 admin.site.register(Contact)
 admin.site.register(Messages)
 admin.site.register(Skill)
+admin.site.register(MailingList, MailingListsAdmin)
