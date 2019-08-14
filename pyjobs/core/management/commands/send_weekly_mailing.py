@@ -28,14 +28,6 @@ def check_today_is_the_right_day():
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if not check_today_is_the_right_day():
-            print("Today is not the right day!")
-            return
-
-        import ipdb
-
-        ipdb.set_trace()
-
         emails_mailing_lists = [mailing.email for mailing in MailingList.objects.all()]
 
         if len(emails_mailing_lists) == 0:
