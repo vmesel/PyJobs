@@ -301,6 +301,12 @@ class Skill(models.Model):
         return self.name
 
 
+class MailingList(models.Model):
+    email = models.EmailField("Email", default="", blank=False)
+    name = models.CharField("Nome", max_length=100, default="", blank=False)
+    slug = models.CharField("Slug", max_length=100, default="", blank=False)
+
+
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
     subscribe_user_to_chimp(instance)
