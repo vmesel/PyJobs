@@ -38,7 +38,8 @@ class Command(BaseCommand):
             format_owner_email(email) for email in emails_mailing_lists
         ]
 
-        to_emails = emails_mailing_replies + emails_mailing_lists
+        to_emails = emails_mailing_replies
+        from_emails = emails_mailing_lists
 
         jobs = list(Job.get_premium_jobs())
 
@@ -67,11 +68,13 @@ class Command(BaseCommand):
             html_text.render(context),
         )
 
-        msg = EmailMultiAlternatives(
-            subject, text_content, settings.WEBSITE_GENERAL_EMAIL, to_emails
-        )
-        msg.attach_alternative(html_content, "text/html")
+        for email_tup in zip(to_emails, from_emails):
 
-        msg.send()
+            msg = EmailMultiAlternatives(
+                subject, text_content, email_tup[1], email_tup[0]
+            )
+            msg.attach_alternative(html_content, "text/html")
+
+            msg.send()
 
         print("Message sent!")
