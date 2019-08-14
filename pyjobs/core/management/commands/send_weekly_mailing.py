@@ -69,9 +69,8 @@ class Command(BaseCommand):
         )
 
         for email_tup in zip(to_emails, from_emails):
-
             msg = EmailMultiAlternatives(
-                subject, text_content, email_tup[1], email_tup[0]
+                subject, text_content, email_tup[1], [email_tup[0]]
             )
             msg.attach_alternative(html_content, "text/html")
 
