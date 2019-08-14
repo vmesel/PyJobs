@@ -1,0 +1,8 @@
+Seja bem vindo a mais um resumo semanal de vagas do PyJobs, confira abaixo as vagas:
+
+{% for job in jobs %}
+    - {{job.title}} - {{job.company_name}} em {{job.workplace}} disponível em: {{url_do_site}}/job/{{job.pk}}
+{% endfor %}
+
+Abraços,
+{{dono_do_site}}
