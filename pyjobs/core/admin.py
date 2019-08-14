@@ -43,6 +43,8 @@ class JobAdmin(admin.ModelAdmin):
         "created_at",
     )
     actions = [send_email_offer, send_feedback_collection]
+    search_fields = ["title", "company_name"]
+    list_per_page = 100
 
 
 class ProfileAdmin(admin.ModelAdmin):
