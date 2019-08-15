@@ -52,9 +52,8 @@ class Command(BaseCommand):
             return
 
         plain_text = get_template("emails/weekly_summary.txt")
-        html_text = get_template("emails/html/weekly_summary.html")
 
-        subject = "PyJobs - Resumo Semanal"
+        subject = "[PyJobs] Vagas Python desta semana"
 
         context = {
             "dono_do_site": settings.WEBSITE_OWNER_NAME,
