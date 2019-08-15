@@ -63,16 +63,12 @@ class Command(BaseCommand):
             "jobs": jobs,
         }
 
-        text_content, html_content = (
-            plain_text.render(context),
-            html_text.render(context),
-        )
+        text_content = plain_text.render(context)
 
         for email_tup in zip(to_emails, from_emails):
             msg = EmailMultiAlternatives(
                 subject, text_content, email_tup[0], [email_tup[1]]
             )
-            msg.attach_alternative(html_content, "text/html")
 
             msg.send()
 
