@@ -14,7 +14,7 @@ from raven.contrib.django.raven_compat.models import client
 
 from pyjobs.settings import SECRET_KEY
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
-from pyjobs.core.newsletter import subscribe_user_to_chimp
+from pyjobs.core.newsletter import subscribe_user_to_mailer
 from pyjobs.core.utils import post_telegram_channel
 from pyjobs.core.email_utils import get_email_with_template
 
@@ -309,7 +309,7 @@ class MailingList(models.Model):
 
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
-    subscribe_user_to_chimp(instance)
+    subscribe_user_to_mailer(instance)
 
 
 @receiver(post_save, sender=JobApplication)
