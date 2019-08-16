@@ -1,5 +1,6 @@
 from django.conf import settings
 import requests
+import json
 from mailchimp3 import MailChimp
 
 
@@ -7,7 +8,7 @@ def subscribe_user_to_mailer(profile):
     if not settings.MAILERLITE_API_KEY:
         return
 
-    content = {"email": profile.user.email}
+    content = json.dumps({"email": profile.user.email})
 
     headers = {
         "content-type": "application/json",
