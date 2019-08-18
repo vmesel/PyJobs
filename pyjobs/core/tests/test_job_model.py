@@ -123,9 +123,9 @@ class JobTest_Application(TestCase):
 
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
 
         self.user = User.objects.create_user(
@@ -168,9 +168,9 @@ class JobTest_04(TestCase):
 
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
 
         mommy.make("core.Skill", _quantity=7, _fill_optional=True)
@@ -198,9 +198,9 @@ class JobTest_04(TestCase):
         self.profile.skills = Skill.objects.all()[5:]
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 0.0)
@@ -210,9 +210,9 @@ class JobTest_04(TestCase):
         self.profile.skills = Skill.objects.all()
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 100.0)

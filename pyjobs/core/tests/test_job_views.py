@@ -81,11 +81,11 @@ class PyJobsJobApplication(TestCase):
     def setUp(self, _mocked_post_telegram_channel):
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
-        
+
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",

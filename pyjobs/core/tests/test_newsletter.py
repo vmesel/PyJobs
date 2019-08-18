@@ -14,9 +14,9 @@ class NewsletterTest(TestCase):
     def setUp(self):
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
         self.user = User.objects.create_user(
             username="v@m.com",

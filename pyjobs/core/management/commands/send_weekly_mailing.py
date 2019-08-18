@@ -30,7 +30,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not check_today_is_the_right_day():
             print("Today is not the right day!")
-            return 
+            return
 
         emails_mailing_lists = [mailing.email for mailing in MailingList.objects.all()]
 
@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
         plain_text = get_template("emails/weekly_summary.txt")
 
-        subject = "[PyJobs] Vagas Python desta semana"
+        subject = "[Vagas][PyJobs] Vagas Python da semana passada"
 
         context = {
             "dono_do_site": settings.WEBSITE_OWNER_NAME,

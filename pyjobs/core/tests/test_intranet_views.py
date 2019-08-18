@@ -26,9 +26,9 @@ class JobAppliedToViewTest(TestCase):
 
         responses.add(
             responses.POST,
-            'https://api.mailerlite.com/api/v2/subscribers',
-            json={'status': 'Success'},
-            status=200
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
 
         mommy.make("core.Skill", _quantity=7, _fill_optional=True)
