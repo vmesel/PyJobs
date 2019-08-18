@@ -5,12 +5,13 @@ from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve
 from model_mommy import mommy
-
+import responses
 from pyjobs.core.models import Job, Profile, Skill, JobApplication
 from pyjobs.core.views import index
 
 
 class JobAppliedToViewTest(TestCase):
+    @responses.activate
     @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
@@ -21,6 +22,13 @@ class JobAppliedToViewTest(TestCase):
             description="Job bem maneiro",
             premium=True,
             public=True,
+        )
+
+        responses.add(
+            responses.POST,
+            'https://api.mailerlite.com/api/v2/subscribers',
+            json={'status': 'Success'},
+            status=200
         )
 
         mommy.make("core.Skill", _quantity=7, _fill_optional=True)

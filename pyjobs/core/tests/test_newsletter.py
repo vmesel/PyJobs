@@ -3,14 +3,21 @@ from unittest.mock import patch, call
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from unittest.mock import patch
-
+import responses
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.newsletter import subscribe_user_to_chimp
 from django.conf import settings
 
 
 class NewsletterTest(TestCase):
+    @responses.activate
     def setUp(self):
+        responses.add(
+            responses.POST,
+            'https://api.mailerlite.com/api/v2/subscribers',
+            json={'status': 'Success'},
+            status=200
+        )
         self.user = User.objects.create_user(
             username="v@m.com",
             email="v@m.com",

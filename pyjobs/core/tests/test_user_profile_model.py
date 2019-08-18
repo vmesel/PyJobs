@@ -2,12 +2,20 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.test import TestCase
-
+import responses
 from pyjobs.core.models import Profile
 
 
 class ProfileTest(TestCase):
+    @responses.activate
     def setUp(self):
+        responses.add(
+            responses.POST,
+            'https://api.mailerlite.com/api/v2/subscribers',
+            json={'status': 'Success'},
+            status=200
+        )
+
         self.user = User.objects.create_user(
             username="v@m.com",
             email="v@m.com",

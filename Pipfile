@@ -11,6 +11,7 @@ ipython = "*"
 isort = "*"
 model-mommy = "*"
 nose = "*"
+responses = "*"
 
 [packages]
 dj-database-url = "*"

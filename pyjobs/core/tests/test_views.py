@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve, reverse
 from model_mommy import mommy
-
+import responses
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.views import index
 
@@ -46,7 +46,15 @@ class ThumbnailTestingViews(TestCase):
 
 
 class TestingRestrictedViews(TestCase):
+    @responses.activate
     def setUp(self):
+        responses.add(
+            responses.POST,
+            'https://api.mailerlite.com/api/v2/subscribers',
+            json={'status': 'Success'},
+            status=200
+        )
+
         self.user = User.objects.create_user(
             username="jacob", email="jacob@gmail.com", password="top_secret"
         )
