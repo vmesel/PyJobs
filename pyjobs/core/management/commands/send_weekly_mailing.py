@@ -21,13 +21,17 @@ def format_owner_email(email):
 
 
 def check_today_is_the_right_day():
-    if datetime.today().weekday() == 0:
+    if datetime.today().weekday() == 2:
         return True
     return False
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        if not check_today_is_the_right_day():
+            print("Today is not the right day!")
+            return 
+
         emails_mailing_lists = [mailing.email for mailing in MailingList.objects.all()]
 
         if len(emails_mailing_lists) == 0:
