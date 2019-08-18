@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from hashlib import sha512
 from unittest.mock import patch
-
+import responses
 from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
@@ -108,6 +108,7 @@ class JobTest_03(TestCase):
 
 
 class JobTest_Application(TestCase):
+    @responses.activate
     @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
@@ -119,6 +120,14 @@ class JobTest_Application(TestCase):
             premium=True,
             public=True,
         )
+
+        responses.add(
+            responses.POST,
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
+        )
+
         self.user = User.objects.create_user(
             username="jacob", email="jacob@gmail.com", password="top_secret"
         )
@@ -144,6 +153,7 @@ class JobTest_Application(TestCase):
 
 
 class JobTest_04(TestCase):
+    @responses.activate
     @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
@@ -154,6 +164,13 @@ class JobTest_04(TestCase):
             description="Job bem maneiro",
             premium=True,
             public=True,
+        )
+
+        responses.add(
+            responses.POST,
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
         )
 
         mommy.make("core.Skill", _quantity=7, _fill_optional=True)
@@ -176,13 +193,27 @@ class JobTest_04(TestCase):
     def test_user_has_no_skills(self):
         self.assertFalse(self.profile.profile_skill_grade(self.job.pk))
 
+    @responses.activate
     def test_user_0_graded(self):
         self.profile.skills = Skill.objects.all()[5:]
+        responses.add(
+            responses.POST,
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
+        )
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 0.0)
 
+    @responses.activate
     def test_user_100_graded(self):
         self.profile.skills = Skill.objects.all()
+        responses.add(
+            responses.POST,
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
+        )
         self.profile.save()
         self.assertEqual(self.profile.profile_skill_grade(self.job.pk), 100.0)
 

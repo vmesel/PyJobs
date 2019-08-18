@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve, reverse
 from model_mommy import mommy
-
+import responses
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.views import index
 
@@ -76,8 +76,16 @@ class JobDetailsViewTest(TestCase):
 
 
 class PyJobsJobApplication(TestCase):
+    @responses.activate
     @patch("pyjobs.core.models.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
+        responses.add(
+            responses.POST,
+            "https://api.mailerlite.com/api/v2/subscribers",
+            json={"status": "Success"},
+            status=200,
+        )
+
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",

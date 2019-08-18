@@ -14,7 +14,7 @@ from raven.contrib.django.raven_compat.models import client
 
 from pyjobs.settings import SECRET_KEY
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
-from pyjobs.core.newsletter import subscribe_user_to_chimp
+from pyjobs.core.newsletter import subscribe_user_to_mailer
 from pyjobs.core.utils import post_telegram_channel
 from pyjobs.core.email_utils import get_email_with_template
 
@@ -301,9 +301,15 @@ class Skill(models.Model):
         return self.name
 
 
+class MailingList(models.Model):
+    email = models.EmailField("Email", default="", blank=False)
+    name = models.CharField("Nome", max_length=100, default="", blank=False)
+    slug = models.CharField("Slug", max_length=100, default="", blank=False)
+
+
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
-    subscribe_user_to_chimp(instance)
+    subscribe_user_to_mailer(instance)
 
 
 @receiver(post_save, sender=JobApplication)
