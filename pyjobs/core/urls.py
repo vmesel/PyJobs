@@ -38,6 +38,7 @@ urlpatterns = [
     url(r"^thumb/(?P<pk>\d+)/$", thumbnail_view, name="thumbnail_view"),
     url(r"^job/(?P<pk>\d+)/rec/$", get_job_related_users, name="get_job_related_users"),
     url(r"^job/create/$", job_creation, name="job_creation"),
+    url(r"^lp/landing01/$", fb_ads_landing, name="fb_ads_landing"),
     url(r"^robots.txt$", robots_view, name="robots"),
     url(
         r"^sitemap\.xml$",

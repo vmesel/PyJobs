@@ -224,6 +224,14 @@ def pythonista_change_info(request):
     return render(request, template, context)
 
 
+def fb_ads_landing(request):
+    """
+    View to retrieve all user applications to job.
+    """
+    template = "landing.html"
+    return render(request, template)
+
+
 @login_required
 def pythonista_applied_info(request):
     """
