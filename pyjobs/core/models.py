@@ -195,6 +195,8 @@ class Job(models.Model):
     )
     skills = models.ManyToManyField("Skill")
     is_open = models.BooleanField("Vaga aberta", default=True)
+    is_challenging = models.BooleanField("Enviar Chall", default=False)
+    challenge = models.TextField("Challenge", blank=True, null=True)
 
     # Filtering parts of the model
 
@@ -274,6 +276,10 @@ class JobApplication(models.Model):
     user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
     job = models.ForeignKey(Job, default="", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    email_sent = models.BooleanField(default=False)
+    email_sent_at = models.DateTimeField(blank=True, null=True)
+    challenge_response_link = models.URLField(default="", blank=True, null=True)
+    challenge_response_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         unique_together = ("user", "job")
