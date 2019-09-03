@@ -17,6 +17,7 @@ from pyjobs.core.newsletter import subscribe_user_to_mailer
 def update_created_at(modeladmin, request, queryset):
     for i in queryset:
         i.created_at = datetime.now()
+        i.save()
 
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:
@@ -50,7 +51,7 @@ class JobAdmin(admin.ModelAdmin):
         "premium",
         "created_at",
     )
-    actions = [send_email_offer, send_feedback_collection]
+    actions = [send_email_offer, send_feedback_collection, update_created_at]
     search_fields = ["title", "company_name"]
     list_per_page = 100
 
