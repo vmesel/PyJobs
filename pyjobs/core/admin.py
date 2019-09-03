@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.mail import send_mail
-
+from datetime import datetime
 from pyjobs.core.models import (
     Contact,
     Job,
@@ -14,6 +14,9 @@ from pyjobs.core.models import (
 )
 from pyjobs.core.newsletter import subscribe_user_to_mailer
 
+def update_created_at(modeladmin, request, queryset):
+    for i in queryset:
+        i.created_at = datetime.now()
 
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:
