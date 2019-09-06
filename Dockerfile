@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM python:3.7-slim
 ENV PYTHONUNBUFFERED 1
 ENV SECRET_KEY here-comes-a-secret-key  # merely a mock to allow collectstatic
 

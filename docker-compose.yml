@@ -14,7 +14,7 @@ services:
       - .env
 
   db:
-    image: postgres:9.5.6-alpine
+    image: postgres:12-alpine
     restart: always
     ports:
       - '5432:5432'
