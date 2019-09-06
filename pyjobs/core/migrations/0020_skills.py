@@ -25,7 +25,10 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(default="", max_length=100, verbose_name="Skill"),
+                    models.CharField(
+                                     default="",
+                                     max_length=100,
+                                     verbose_name="Skill"),
                 ),
             ],
         )
