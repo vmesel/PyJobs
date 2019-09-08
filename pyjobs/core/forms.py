@@ -54,10 +54,8 @@ class JobApplicationForm(ModelForm):
     def save(self, commit=True):
         instance = super(JobApplicationForm, self).save(commit=False)
         if commit:
-            import ipdb; ipdb.set_trace()
             instance.challenge_response_at = datetime.now()
             instance.save()
-
 
 
 class RegisterForm(UserCreationForm):

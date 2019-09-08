@@ -14,10 +14,12 @@ from pyjobs.core.models import (
 )
 from pyjobs.core.newsletter import subscribe_user_to_mailer
 
+
 def update_created_at(modeladmin, request, queryset):
     for i in queryset:
         i.created_at = datetime.now()
         i.save()
+
 
 def send_email_offer(modeladmin, request, queryset):
     for j in queryset:

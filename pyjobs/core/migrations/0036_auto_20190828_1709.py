@@ -7,14 +7,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0035_auto_20190828_1707'),
-    ]
+    dependencies = [("core", "0035_auto_20190828_1707")]
 
     operations = [
         migrations.AlterField(
-            model_name='jobapplication',
-            name='challenge_response_at',
-            field=models.DateTimeField(blank=True, default='', null=True),
-        ),
+            model_name="jobapplication",
+            name="challenge_response_at",
+            field=models.DateTimeField(blank=True, default="", null=True),
+        )
     ]
