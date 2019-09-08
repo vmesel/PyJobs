@@ -40,8 +40,8 @@ urlpatterns = [
     url(r"^job/(?P<pk>\d+)/app/$", get_job_applications, name="get_job_applications"),
     url(
         r"^job/(?P<pk>\d+)/challenge_submit/$",
-        job_application_challenge_submition,
-        name="job_application_challenge_submition",
+        job_application_challenge_submission,
+        name="job_application_challenge_submission",
     ),
     url(r"^job/create/$", job_creation, name="job_creation"),
     url(r"^lp/landing01/$", fb_ads_landing, name="fb_ads_landing"),

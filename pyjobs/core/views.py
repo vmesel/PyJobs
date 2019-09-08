@@ -307,7 +307,7 @@ def jooble_feed(request):
 
 
 @login_required
-def job_application_challenge_submition(request, pk):
+def job_application_challenge_submission(request, pk):
     user_applied = JobApplication.objects.filter(
         job__pk=pk, user__pk=request.user.pk
     ).first()

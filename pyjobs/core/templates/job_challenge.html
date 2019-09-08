@@ -25,7 +25,7 @@
                 </div>
                 <div class="block-content">
                     <center>
-                        <form action="{% url 'job_application_challenge_submition' job.pk %}" method="post">
+                        <form action="{% url 'job_application_challenge_submission' job.pk %}" method="post">
                             {% csrf_token %}
                             {{form.as_p}}
                             <input type="submit" name="" value="Enviar resposta!">
