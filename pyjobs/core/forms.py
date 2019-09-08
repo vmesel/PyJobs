@@ -3,9 +3,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from datetime import datetime
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from pyjobs.core.models import Contact, Job, Profile, Skill
+from pyjobs.core.models import Contact, Job, Profile, Skill, JobApplication
 
 
 class JobForm(ModelForm):
@@ -43,6 +44,20 @@ class ContactForm(ModelForm):
     class Meta:
         model = Contact
         fields = ["name", "subject", "email", "message"]
+
+
+class JobApplicationForm(ModelForm):
+    class Meta:
+        model = JobApplication
+        fields = ["challenge_response_link"]
+
+    def save(self, commit=True):
+        instance = super(JobApplicationForm, self).save(commit=False)
+        if commit:
+            import ipdb; ipdb.set_trace()
+            instance.challenge_response_at = datetime.now()
+            instance.save()
+
 
 
 class RegisterForm(UserCreationForm):
