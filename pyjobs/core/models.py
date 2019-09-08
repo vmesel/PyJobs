@@ -278,7 +278,7 @@ class JobApplication(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     email_sent = models.BooleanField(default=False)
     email_sent_at = models.DateTimeField(blank=True, null=True)
-    challenge_response_link = models.URLField(default="", blank=True, null=True)
+    challenge_response_link = models.URLField("Link de resposta ao desafio", default="", blank=True, null=True)
     challenge_response_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
