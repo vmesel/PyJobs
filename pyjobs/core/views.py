@@ -12,7 +12,13 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
+from pyjobs.core.forms import (
+    ContactForm,
+    EditProfileForm,
+    JobForm,
+    RegisterForm,
+    JobApplicationForm,
+)
 from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
@@ -300,6 +306,34 @@ def jooble_feed(request):
     )
 
 
+@login_required
+def job_application_challenge_submition(request, pk):
+    user_applied = JobApplication.objects.filter(
+        job__pk=pk, user__pk=request.user.pk
+    ).first()
+
+    if not user_applied or not user_applied.job.is_challenging:
+        return redirect("/job/{}/".format(pk))
+
+    form = JobApplicationForm(instance=user_applied)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+
+    elif not form.is_valid() and request.method == "POST":
+        # print(form.errors)
+        # print(form.is_valid())
+        # returns error message
+        return redirect("/")
+
+
+    return render(
+        request,
+        template_name="job_challenge.html",
+        context={"job": user_applied.job, "form": form},
+    )
+
+
 @staff_member_required
 def get_job_applications(request, pk):
     users_grades = [
@@ -315,7 +349,7 @@ def get_job_applications(request, pk):
             "email_sent_at",
             "email_sent",
             "challenge_response_at",
-            "challenge_response_link"
+            "challenge_response_link",
         )
     ]
 
@@ -332,7 +366,7 @@ def get_job_applications(request, pk):
             job_applicant.email_sent_at,
             job_applicant.email_sent,
             job_applicant.challenge_response_at,
-            job_applicant.challenge_response_link
+            job_applicant.challenge_response_link,
         )
         for job_applicant in JobApplication.objects.filter(job__pk=pk)
     ]
@@ -345,7 +379,6 @@ def get_job_applications(request, pk):
     writer.writerows(users_grades)
 
     return response
-
 
 
 @staff_member_required
