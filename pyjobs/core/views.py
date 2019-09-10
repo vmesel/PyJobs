@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from datetime import datetime
 
 from pyjobs.core.forms import (
     ContactForm,
@@ -287,7 +288,7 @@ class PremiumJobsFeed(Feed):
         return Job.get_premium_jobs()
 
     def item_title(self, item):
-        return item.title
+        return "{} em {}".format(item.title, item.workplace)
 
     def item_description(self, item):
         return item.get_excerpt()
@@ -296,7 +297,7 @@ class PremiumJobsFeed(Feed):
         return reverse("job_view", args=[item.pk])
 
     def item_pubdate(self, item):
-        return item.created_at
+        return datetime.now()
 
 
 def jooble_feed(request):
@@ -325,7 +326,6 @@ def job_application_challenge_submission(request, pk):
         # print(form.is_valid())
         # returns error message
         return redirect("/")
-
 
     return render(
         request,
