@@ -23,7 +23,13 @@
                 <div class="block-content">
                     {% if logged_in %}
                       {% if applied %}
-                        <button class="btn btn-primary" type="button">Você já aplicou a esta vaga!</button>
+                        {% if job.is_challenging %}
+                            <a href="{% url 'job_application_challenge_submission' job.pk %}">
+                                <button class="btn btn-primary" type="button">Clique aqui e preencha o desafio técnico!</button>
+                            </a>
+                        {% else %}
+                            <button class="btn btn-primary" type="button">Você já aplicou a esta vaga!</button>
+                        {% endif %}
                       {%else%}
                         {% if job.is_open %}
                             {% if job.application_link %}
