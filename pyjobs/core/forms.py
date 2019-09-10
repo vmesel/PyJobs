@@ -52,10 +52,9 @@ class JobApplicationForm(ModelForm):
         fields = ["challenge_response_link"]
 
     def save(self, commit=True):
-        instance = super(JobApplicationForm, self).save(commit=False)
         if commit:
-            instance.challenge_response_at = datetime.now()
-            instance.save()
+            self.instance.challenge_response_at = datetime.now()
+            self.instance.save()
 
 
 class RegisterForm(UserCreationForm):
