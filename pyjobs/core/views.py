@@ -316,16 +316,10 @@ def job_application_challenge_submission(request, pk):
     if not user_applied or not user_applied.job.is_challenging:
         return redirect("/job/{}/".format(pk))
 
-    form = JobApplicationForm(instance=user_applied)
+    form = JobApplicationForm(request.POST or None, instance=user_applied)
 
     if request.method == "POST" and form.is_valid():
-        form.save()
-
-    elif not form.is_valid() and request.method == "POST":
-        # print(form.errors)
-        # print(form.is_valid())
-        # returns error message
-        return redirect("/")
+        form.save()        
 
     return render(
         request,
