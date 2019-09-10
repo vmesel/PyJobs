@@ -322,6 +322,9 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=JobApplication)
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
+    if not created:
+        return
+
     person_email_context = {
         "vaga": instance.job,
         "pessoa": instance.user.profile,
