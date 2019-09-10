@@ -322,14 +322,27 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=JobApplication)
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
-    person_email_context = {"vaga": instance.job, "pessoa": instance.user.profile}
+    person_email_context = {
+        "vaga": instance.job,
+        "pessoa": instance.user.profile,
+        "mensagem": instance,
+    }
 
     company_email_context = person_email_context
 
+    template_person = "job_application_registered"
+    person_email_subject = "Parabéns! Você se inscreveu na vaga!"
+
+    if instance.job.is_challenging:
+        template_person = "job_interest_challenge"
+        person_email_subject = "Teste Técnico da empresa: {}!".format(
+            instance.job.company_name
+        )
+
     msg_email_person = get_email_with_template(
-        "job_application_registered",
+        template_person,
         person_email_context,
-        "Parabéns! Você se inscreveu na vaga!",
+        person_email_subject,
         [instance.user.email],
     )
     msg_email_person.send()
