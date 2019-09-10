@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from hashlib import sha512
 
 from django.conf import settings
@@ -338,6 +338,8 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         person_email_subject = "Teste Técnico da empresa: {}!".format(
             instance.job.company_name
         )
+        instance.email_sent = True
+        instance.email_sent_at = datetime.now()
 
     msg_email_person = get_email_with_template(
         template_person,
