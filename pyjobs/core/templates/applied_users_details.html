@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{%block ogimage%}
+{% endblock %}
+{% block title %}
+{{job.title}} no {{WEBSITE_NAME}}
+{% endblock %}
+{%block main%}
+
+    <main class="page faq-page">
+
+        <section class="clean-block clean-faq dark">
+
+            <div class="container">
+
+                <div class="block-heading">
+                    <h1 class="text-info">{{job.title}}</h1>
+                    <p>Postada: {{job.created_at|naturalday}}</p>
+                </div>
+
+                <div class="block-content">
+                    <table class="table table-hover table-responsive table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>{{ headers.first_name }}</th>
+                                    <th>{{ headers.last_name }}</th>
+                                    <th>{{ headers.github }}</th>
+                                    <th>{{ headers.cellphone }}</th>
+                                    <th>{{ headers.linkedin }}</th>
+                                    <th>{{ headers.email_sent }}</th>
+                                    <th>{{ headers.email_sent_at }}</th>
+                                    <th>{{ headers.challenge_responded }}</th>
+                                    <th>{{ headers.challenge_response_link }}</th>
+                                    <th>{{ headers.challenge_response_at }}</th>
+                                </tr>
+                            </thead>
+                    
+                            <tbody>
+                                {% for r in rows %}
+                                <tr>
+                                    <td>{{ r.first_name }}</td>
+                                    <td>{{ r.last_name }}</td>
+                                    <td>{{ r.github }}</td>
+                                    <td>{{ r.cellphone }}</td>
+                                    <td>{{ r.linkedin }}</td>
+                                    <td>{{ r.email_sent }}</td>
+                                    <td>{{ r.email_sent_at }}</td>
+                                    <td>{{ r.challenge_responded }}</td>
+                                    <td>{{ r.challenge_response_link }}</td>
+                                    <td>{{ r.challenge_response_at }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    <style media="screen">
+        @media only screen and (max-width: 600px) {
+
+            #application-status{
+                width: 100%;
+            }
+        }
+    </style>
+{%endblock%}
