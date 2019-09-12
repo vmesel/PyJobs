@@ -329,6 +329,35 @@ def job_application_challenge_submission(request, pk):
 
 
 @staff_member_required
+def applied_users_details(request, pk):
+    rows = [
+        {
+            "first_name": job_applicant.user.first_name,
+            "last_name": job_applicant.user.last_name,
+            "github": job_applicant.user.profile.github,
+            "cellphone": job_applicant.user.profile.cellphone,
+            "linkedin": job_applicant.user.profile.linkedin,
+            "email_sent": "Sim" if job_applicant.email_sent else "Não",
+            "email_sent_at": job_applicant.email_sent_at,
+            "challenge_responded": "Sim"
+            if job_applicant.challenge_response_link
+            else "Não",
+            "challenge_response_link": job_applicant.challenge_response_link,
+            "challenge_response_at": job_applicant.challenge_response_at,
+        }
+        for job_applicant in JobApplication.objects.filter(job__pk=pk)
+    ]
+
+    job_info = Job.objects.filter(pk=pk).first()
+
+    return render(
+        request,
+        template_name="applied_users_details.html",
+        context={"rows": rows, "job": job_info},
+    )
+
+
+@staff_member_required
 def get_job_applications(request, pk):
     users_grades = [
         (
