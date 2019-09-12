@@ -345,9 +345,7 @@ def applied_users_details(request, pk):
             "linkedin": job_applicant.user.profile.linkedin,
             "email_sent": "Sim" if job_applicant.email_sent else "Não",
             "email_sent_at": job_applicant.email_sent_at,
-            "challenge_responded": "Sim"
-            if job_applicant.challenge_response_link
-            else "Não",
+            "challenge_responded": "Sim" if job_applicant.challenge_response_link else "Não",
             "challenge_response_link": job_applicant.challenge_response_link,
             "challenge_response_at": job_applicant.challenge_response_at,
         }
