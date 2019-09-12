@@ -336,22 +336,6 @@ def job_application_challenge_submission(request, pk):
 
 @staff_member_required
 def applied_users_details(request, pk):
-    def bool_to_string(flag):
-        return "Sim" if flag else "Não"
-
-    headers = {
-            "first_name": "Nome",
-            "last_name": "Sobrenome",
-            "github": "GitHub",
-            "cellphone": "Telefone",
-            "linkedin": "LinkedIn",
-            "email_sent": "Email Enviado",
-            "email_sent_at": "Enviado Em",
-            "challenge_responded": "Desafio Respondido",
-            "challenge_response_link": "Link da Resposta",
-            "challenge_response_at": "Respondido Em",
-    }
-
     rows = [
         {
             "first_name": job_applicant.user.first_name,
@@ -359,21 +343,23 @@ def applied_users_details(request, pk):
             "github": job_applicant.user.profile.github,
             "cellphone": job_applicant.user.profile.cellphone,
             "linkedin": job_applicant.user.profile.linkedin,
-            "email_sent": bool_to_string(job_applicant.email_sent),
+            "email_sent": "Sim" if job_applicant.email_sent else "Não",
             "email_sent_at": job_applicant.email_sent_at,
-            "challenge_responded": bool_to_string(bool(job_applicant.challenge_response_link) and bool(job_applicant.challenge_response_at)),
+            "challenge_responded": "Sim"
+            if job_applicant.challenge_response_link
+            else "Não",
             "challenge_response_link": job_applicant.challenge_response_link,
             "challenge_response_at": job_applicant.challenge_response_at,
         }
         for job_applicant in JobApplication.objects.filter(job__pk=pk)
     ]
 
-    jobinfo = Job.objects.filter(pk=pk).first()
+    job_info = Job.objects.filter(pk=pk).first()
 
     return render(
         request,
         template_name="applied_users_details.html",
-        context={"headers": headers, "rows": rows, "job": jobinfo,},
+        context={"rows": rows, "job": job_info},
     )
 
 

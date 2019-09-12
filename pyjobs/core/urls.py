@@ -36,7 +36,11 @@ urlpatterns = [
     url(r"^applied-to/$", pythonista_applied_info, name="applied_to_info"),
     url(r"^jooble/$", jooble_feed, name="jooble_feed"),
     url(r"^thumb/(?P<pk>\d+)/$", thumbnail_view, name="thumbnail_view"),
-    url(r"^job/(?P<pk>\d+)/details/$", applied_users_details, name="applied_users_details"),
+    url(
+        r"^job/(?P<pk>\d+)/details/$",
+        applied_users_details,
+        name="applied_users_details",
+    ),
     url(r"^job/(?P<pk>\d+)/rec/$", get_job_related_users, name="get_job_related_users"),
     url(r"^job/(?P<pk>\d+)/app/$", get_job_applications, name="get_job_applications"),
     url(
