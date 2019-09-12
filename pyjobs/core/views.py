@@ -319,7 +319,7 @@ def job_application_challenge_submission(request, pk):
     form = JobApplicationForm(request.POST or None, instance=user_applied)
 
     if request.method == "POST" and form.is_valid():
-        form.save()        
+        form.save()
 
     return render(
         request,
