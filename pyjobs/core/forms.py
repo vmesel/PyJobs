@@ -26,6 +26,7 @@ class JobForm(ModelForm):
             "description",
             "requirements",
             "skills",
+            "challenge_interested",
             "ad_interested",
         ]
         widgets = {"skills": Select2MultipleWidget}
