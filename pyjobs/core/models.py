@@ -183,6 +183,7 @@ class Job(models.Model):
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
+    challenge_interested = models.BooleanField("Desafio*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     premium_at = models.DateTimeField(
         "Data de mudança de Status", blank=True, null=True
@@ -348,7 +349,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         template_person,
         person_email_context,
         person_email_subject,
-        [instance.user.email],
+        [instance.user.email, settings.WEBSITE_OWNER_EMAIL],
     )
     msg_email_person.send()
 
