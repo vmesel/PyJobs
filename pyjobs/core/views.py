@@ -30,7 +30,7 @@ def index(request):
 
     user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)
 
-    paginator = Paginator(user_filtered_query_set.qs, 7)
+    paginator = Paginator(user_filtered_query_set.qs, 10)
 
     try:
         page_number = int(request.GET.get("page", 1))
@@ -330,30 +330,13 @@ def job_application_challenge_submission(request, pk):
 
 @staff_member_required
 def applied_users_details(request, pk):
-    rows = [
-        {
-            "first_name": job_applicant.user.first_name,
-            "last_name": job_applicant.user.last_name,
-            "github": job_applicant.user.profile.github,
-            "cellphone": job_applicant.user.profile.cellphone,
-            "linkedin": job_applicant.user.profile.linkedin,
-            "email_sent": "Sim" if job_applicant.email_sent else "Não",
-            "email_sent_at": job_applicant.email_sent_at,
-            "challenge_responded": "Sim"
-            if job_applicant.challenge_response_link
-            else "Não",
-            "challenge_response_link": job_applicant.challenge_response_link,
-            "challenge_response_at": job_applicant.challenge_response_at,
-        }
-        for job_applicant in JobApplication.objects.filter(job__pk=pk)
-    ]
 
     job_info = Job.objects.filter(pk=pk).first()
 
     return render(
         request,
         template_name="applied_users_details.html",
-        context={"rows": rows, "job": job_info},
+        context={"rows": JobApplication.objects.filter(job__pk=pk), "job": job_info},
     )
 
 
