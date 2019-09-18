@@ -336,6 +336,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
 
     template_person = "job_application_registered"
     person_email_subject = "Parabéns! Você se inscreveu na vaga!"
+    person_to_send_to = [instance.user.email]
 
     if instance.job.is_challenging:
         template_person = "job_interest_challenge"
@@ -344,12 +345,11 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         )
         instance.email_sent = True
         instance.email_sent_at = datetime.now()
+        person_to_send_to.append(settings.WEBSITE_OWNER_EMAIL)
+        person_to_send_to.append(instance.job.company_email)
 
     msg_email_person = get_email_with_template(
-        template_person,
-        person_email_context,
-        person_email_subject,
-        [instance.user.email, settings.WEBSITE_OWNER_EMAIL],
+        template_person, person_email_context, person_email_subject, person_to_send_to
     )
     msg_email_person.send()
 

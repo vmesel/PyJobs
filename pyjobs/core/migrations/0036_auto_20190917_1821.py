@@ -7,29 +7,32 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0035_auto_20190828_1707'),
-    ]
+    dependencies = [("core", "0035_auto_20190828_1707")]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='challenge_interested',
-            field=models.BooleanField(default=False, verbose_name='Desafio*'),
+            model_name="job",
+            name="challenge_interested",
+            field=models.BooleanField(default=False, verbose_name="Desafio*"),
         ),
         migrations.AddField(
-            model_name='jobapplication',
-            name='email_sent_at',
+            model_name="jobapplication",
+            name="email_sent_at",
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='jobapplication',
-            name='challenge_response_at',
+            model_name="jobapplication",
+            name="challenge_response_at",
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='jobapplication',
-            name='challenge_response_link',
-            field=models.URLField(blank=True, default='', null=True, verbose_name='Link de resposta ao desafio'),
+            model_name="jobapplication",
+            name="challenge_response_link",
+            field=models.URLField(
+                blank=True,
+                default="",
+                null=True,
+                verbose_name="Link de resposta ao desafio",
+            ),
         ),
     ]

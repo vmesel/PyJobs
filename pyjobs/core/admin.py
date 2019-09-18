@@ -69,13 +69,7 @@ def send_challenge_to_old_applicants(modeladmin, request, queryset):
 
 
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = (
-        "user",
-        "job",
-        "created_at",
-        "email_sent",
-        "challenge_response_at"
-    )
+    list_display = ("user", "job", "created_at", "email_sent", "challenge_response_at")
 
 
 class MailingListsAdmin(admin.ModelAdmin):
@@ -88,6 +82,7 @@ class JobAdmin(admin.ModelAdmin):
         "company_name",
         "ad_interested",
         "challenge_interested",
+        "is_challenging",
         "public",
         "premium",
         "created_at",
