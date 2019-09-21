@@ -20,6 +20,9 @@
                 </div>
 
                 <div class="block-content">
+                  <p>
+                      Para baixar estes dados em CSV, <a href="{% url 'get_job_applications' job.pk %}">clique aqui</a>!
+                  </p>
                     <table class="table table-hover table-responsive table-bordered">
                             <thead>
                                 <tr>
@@ -50,6 +53,11 @@
                                         </center>
                                     </td>
                                     <td>{{ r.email_sent_at }}</td>
+                                    <td>
+                                      <center>
+                                          <input type="checkbox" name="" value="{%if r.challenge_response_link%} true {% else %} false {%endif%}" disabled>
+                                      </center>
+                                      </td>
                                     <td>{{ r.challenge_response_link }}</td>
                                     <td>{{ r.challenge_response_at }}</td>
                                 </tr>

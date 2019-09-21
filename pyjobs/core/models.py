@@ -422,3 +422,16 @@ def new_contact(sender, instance, created, **kwargs):
         "new_contact", email_context, instance.subject, [settings.WEBSITE_OWNER_EMAIL]
     )
     msg.send()
+
+
+@receiver(post_save, sender=JobApplication)
+def new_job_challenge_answered(sender, instance, created, **kwargs):
+    job_is_ok = (instance.job.is_challenging and instance.job.premium)
+    subject = "Novo teste a ser avaliado: {}".format(instance.job.title)
+    email_context = {"vaga": instance.job, "mensagem": instance}
+
+    if not created and job_is_ok:
+        msg = get_email_with_template(
+            "new_answer_to_check", email_context, subject, [settings.WEBSITE_OWNER_EMAIL]
+        )
+        msg.send()
