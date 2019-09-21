@@ -345,6 +345,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         )
         instance.email_sent = True
         instance.email_sent_at = datetime.now()
+        instance.save()
         person_to_send_to.append(settings.WEBSITE_OWNER_EMAIL)
         person_to_send_to.append(instance.job.company_email)
 
