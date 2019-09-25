@@ -53,6 +53,10 @@ class JobApplicationSignalTest(TestCase):
         self.job_application.save()
 
         self.assertTrue(mocked.called)
+        self.assertEqual(
+            "{} applied to {}".format(self.user, self.job),
+            self.job_application.__str__(),
+        )
 
 
 class ContactSignalTest(TestCase):
