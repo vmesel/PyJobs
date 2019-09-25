@@ -11,8 +11,15 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from datetime import datetime
 
-from pyjobs.core.forms import ContactForm, EditProfileForm, JobForm, RegisterForm
+from pyjobs.core.forms import (
+    ContactForm,
+    EditProfileForm,
+    JobForm,
+    RegisterForm,
+    JobApplicationForm,
+)
 from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
@@ -23,7 +30,7 @@ def index(request):
 
     user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)
 
-    paginator = Paginator(user_filtered_query_set.qs, 7)
+    paginator = Paginator(user_filtered_query_set.qs, 10)
 
     try:
         page_number = int(request.GET.get("page", 1))
@@ -281,7 +288,7 @@ class PremiumJobsFeed(Feed):
         return Job.get_premium_jobs()
 
     def item_title(self, item):
-        return item.title
+        return "{} em {}".format(item.title, item.workplace)
 
     def item_description(self, item):
         return item.get_excerpt()
@@ -290,7 +297,7 @@ class PremiumJobsFeed(Feed):
         return reverse("job_view", args=[item.pk])
 
     def item_pubdate(self, item):
-        return item.created_at
+        return datetime.now()
 
 
 def jooble_feed(request):
@@ -298,6 +305,86 @@ def jooble_feed(request):
     return render(
         request, "jooble.xml", context={"jobs": jobs}, content_type="text/xml"
     )
+
+
+@login_required
+def job_application_challenge_submission(request, pk):
+    user_applied = JobApplication.objects.filter(
+        job__pk=pk, user__pk=request.user.pk
+    ).first()
+
+    if not user_applied or not user_applied.job.is_challenging:
+        return redirect("/job/{}/".format(pk))
+
+    form = JobApplicationForm(request.POST or None, instance=user_applied)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+
+    return render(
+        request,
+        template_name="job_challenge.html",
+        context={"job": user_applied.job, "form": form},
+    )
+
+
+@staff_member_required
+def applied_users_details(request, pk):
+
+    job_info = Job.objects.filter(pk=pk).first()
+
+    return render(
+        request,
+        template_name="applied_users_details.html",
+        context={"rows": JobApplication.objects.filter(job__pk=pk), "job": job_info},
+    )
+
+
+@staff_member_required
+def get_job_applications(request, pk):
+    users_grades = [
+        (
+            "job_pk",
+            "grade",
+            "first_name",
+            "last_name",
+            "email",
+            "github",
+            "linkedin",
+            "cellphone",
+            "email_sent_at",
+            "email_sent",
+            "challenge_response_at",
+            "challenge_response_link",
+        )
+    ]
+
+    users_grades += [
+        (
+            pk,
+            job_applicant.user.profile.profile_skill_grade(pk),
+            job_applicant.user.first_name,
+            job_applicant.user.last_name,
+            job_applicant.user.email,
+            job_applicant.user.profile.github,
+            job_applicant.user.profile.linkedin,
+            job_applicant.user.profile.cellphone,
+            job_applicant.email_sent_at,
+            job_applicant.email_sent,
+            job_applicant.challenge_response_at,
+            job_applicant.challenge_response_link,
+        )
+        for job_applicant in JobApplication.objects.filter(job__pk=pk)
+    ]
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="job_{}_users.csv"'.format(
+        pk
+    )
+    writer = csv.writer(response)
+    writer.writerows(users_grades)
+
+    return response
 
 
 @staff_member_required

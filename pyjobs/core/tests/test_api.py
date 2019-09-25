@@ -1,9 +1,11 @@
 from django.test import Client, TestCase
+from unittest.mock import patch
 from pyjobs.core.models import Job
 
 
 class ApiRequestTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         self.client = Client()
         self.job = Job(
             title="Vaga 1",

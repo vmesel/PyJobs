@@ -11,7 +11,8 @@ from pyjobs.core.views import index
 
 
 class ThumbnailTestingViews(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -47,7 +48,8 @@ class ThumbnailTestingViews(TestCase):
 
 class TestingRestrictedViews(TestCase):
     @responses.activate
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         responses.add(
             responses.POST,
             "https://api.mailerlite.com/api/v2/subscribers",

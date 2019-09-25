@@ -67,7 +67,8 @@ class HTMLEmailSenderTest(TestCase):
 
 
 class ThumbnailCreationTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 2",
             workplace="Sao Paulo",

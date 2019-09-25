@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from hashlib import sha512
 
 from django.conf import settings
@@ -183,6 +183,7 @@ class Job(models.Model):
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
+    challenge_interested = models.BooleanField("Desafio*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     premium_at = models.DateTimeField(
         "Data de mudança de Status", blank=True, null=True
@@ -195,6 +196,8 @@ class Job(models.Model):
     )
     skills = models.ManyToManyField("Skill")
     is_open = models.BooleanField("Vaga aberta", default=True)
+    is_challenging = models.BooleanField("Enviar Chall", default=False)
+    challenge = models.TextField("Challenge", blank=True, null=True)
 
     # Filtering parts of the model
 
@@ -274,6 +277,12 @@ class JobApplication(models.Model):
     user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
     job = models.ForeignKey(Job, default="", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    email_sent = models.BooleanField(default=False)
+    email_sent_at = models.DateTimeField(blank=True, null=True)
+    challenge_response_link = models.URLField(
+        "Link de resposta ao desafio", default="", blank=True, null=True
+    )
+    challenge_response_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         unique_together = ("user", "job")
@@ -314,15 +323,34 @@ def add_user_to_mailchimp(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=JobApplication)
 def send_email_notifing_job_application(sender, instance, created, **kwargs):
-    person_email_context = {"vaga": instance.job, "pessoa": instance.user.profile}
+    if not created:
+        return
+
+    person_email_context = {
+        "vaga": instance.job,
+        "pessoa": instance.user.profile,
+        "mensagem": instance,
+    }
 
     company_email_context = person_email_context
 
+    template_person = "job_application_registered"
+    person_email_subject = "Parabéns! Você se inscreveu na vaga!"
+    person_to_send_to = [instance.user.email]
+
+    if instance.job.is_challenging:
+        template_person = "job_interest_challenge"
+        person_email_subject = "Teste Técnico da empresa: {}!".format(
+            instance.job.company_name
+        )
+        instance.email_sent = True
+        instance.email_sent_at = datetime.now()
+        instance.save()
+        person_to_send_to.append(settings.WEBSITE_OWNER_EMAIL)
+        person_to_send_to.append(instance.job.company_email)
+
     msg_email_person = get_email_with_template(
-        "job_application_registered",
-        person_email_context,
-        "Parabéns! Você se inscreveu na vaga!",
-        [instance.user.email],
+        template_person, person_email_context, person_email_subject, person_to_send_to
     )
     msg_email_person.send()
 
@@ -395,3 +423,22 @@ def new_contact(sender, instance, created, **kwargs):
         "new_contact", email_context, instance.subject, [settings.WEBSITE_OWNER_EMAIL]
     )
     msg.send()
+
+
+@receiver(post_save, sender=JobApplication)
+def new_job_challenge_answered(sender, instance, created, **kwargs):
+    subject = "Novo teste a ser avaliado: {}".format(instance.job.title)
+    email_context = {"vaga": instance.job, "mensagem": instance}
+
+    if (
+        not created
+        and instance.job.is_challenging
+        and instance.challenge_response_link != None
+    ):
+        msg = get_email_with_template(
+            "new_answer_to_check",
+            email_context,
+            subject,
+            [settings.WEBSITE_OWNER_EMAIL],
+        )
+        msg.send()

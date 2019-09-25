@@ -30,7 +30,7 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
                           {{ hidden_field }}
                         {% endfor %}
                         {% for field in new_job_form.visible_fields %}
-                            {% if field.html_name != "ad_interested" and field.html_name != "skills" and field.html_name != "remote" %}
+                            {% if field.html_name != "ad_interested" and field.html_name != "skills" and field.html_name != "remote" and field.html_name != "challenge_interested" %}
                             <div class="form-group">
                               <div class="input-group">
                                 <div class="input-group-prepend">
@@ -56,6 +56,9 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
                                   {% render_field field %}
                             {%elif field.html_name == "remote"%}
                                 <p>{{field}} Essa vaga permite trabalho remoto</p>
+                            {%elif field.html_name == "challenge_interested"%}
+                            <hr>
+                                <p>{{field}} Eu quero aplicar testes técnicos através da ferramenta automatizada do {{WEBSITE_NAME}}. [$]</p>
                             {%else%}
                             <hr>
                                 <p>{{field}} Eu desejo ter acesso aos serviços do {{WEBSITE_NAME}} e ao clube de profissionais exclusivos.</p>
