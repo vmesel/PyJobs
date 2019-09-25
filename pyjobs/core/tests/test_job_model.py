@@ -6,8 +6,9 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 from model_mommy import mommy
+from model_mommy.recipe import Recipe
 
-from pyjobs.core.models import Job, Profile, Skill
+from pyjobs.core.models import Job, Profile, Skill, JobError
 
 
 class JobTest_01(TestCase):
@@ -242,3 +243,44 @@ class JobTest_05(TestCase):
     def test_if_job_is_listed_in_get_jobs_to_get_feedback(self):
         jobs_to_feedback = self.job.get_jobs_to_get_feedback()
         self.assertTrue(self.job in jobs_to_feedback)
+
+
+class JobTest_06(TestCase):
+    @patch("pyjobs.core.models.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job(
+            title="Vaga 3",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+            public=True,
+        )
+
+    def test_if_job_is_not_created_and_close_hash_is_unavailable(self):
+        jobs = Job.objects.all()
+        self.assertFalse(self.job in jobs)
+
+        self.assertRaisesMessage(
+            JobError, "Unsaved Job models have no close hash", self.job.close_hash
+        )
+
+    def test_if_job_is_not_created_and_close_url_is_unavailable(self):
+        jobs = Job.objects.all()
+        self.assertFalse(self.job in jobs)
+
+        self.assertRaisesMessage(
+            JobError, "Unsaved Job models have no close URL", self.job.get_close_url
+        )
+
+
+class JobSkillsTest(TestCase):
+    def setUp(self):
+        self.skill = Recipe(Skill).make()
+
+    def test_if_str_rep_is_ok(self):
+        self.assertEqual(self.skill.__str__(), self.skill.name)
+
+    def test_if_repr_rep_is_ok(self):
+        self.assertEqual(self.skill.__repr__(), self.skill.name)

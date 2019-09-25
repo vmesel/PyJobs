@@ -40,3 +40,9 @@ class ProfileTest(TestCase):
 
     def test_created_at(self):
         self.assertIsInstance(self.profile.created_at, datetime)
+
+    def test_repr_of_the_profile(self):
+        self.assertEqual(
+            self.profile.__repr__(),
+            "{} {}".format(self.user.first_name, self.user.last_name),
+        )
