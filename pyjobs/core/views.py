@@ -327,7 +327,7 @@ def job_application_challenge_submission(request, pk):
             "message_second": "Recebemos seu teste, aguarde nosso retorno!",
             "message_explaining": "Recebemos seu teste na data: {}".format(
                 str(user_applied.challenge_response_at.date())
-            )
+            ),
         }
         return render(request, template_name="generic.html", context=context)
 

@@ -13,7 +13,7 @@ class PyJobsTypesJSONEncoder(MoreTypesJSONEncoder):
     def default(self, data):
         if isinstance(data, datetime):
             return data.strftime(self.DATETIME_FORMAT)
-        return super(PyJobsTypesJSONEncoder, self).default(data) # pragma: no cover
+        return super(PyJobsTypesJSONEncoder, self).default(data)  # pragma: no cover
 
 
 class PyJobsSerializer(JSONSerializer):
