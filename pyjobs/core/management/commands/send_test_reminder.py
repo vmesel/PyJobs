@@ -44,6 +44,6 @@ class Command(BaseCommand):
                     template_person,
                     person_email_context,
                     person_email_subject,
-                    job_app.user.email,
+                    (job_app.user.email,),
                 )
                 msg_email_person.send()
