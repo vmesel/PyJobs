@@ -283,6 +283,7 @@ class JobApplication(models.Model):
         "Link de resposta ao desafio", default="", blank=True, null=True
     )
     challenge_response_at = models.DateTimeField(blank=True, null=True)
+    challenge_resent = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("user", "job")

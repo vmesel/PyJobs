@@ -321,13 +321,11 @@ def job_application_challenge_submission(request, pk):
     if request.method == "POST" and form.is_valid():
         form.save()
 
-    if user_applied.challenge_response_link is not None and not "":
+    if user_applied.challenge_response_at is not None:
         context = {
             "message_first": "Seu teste já foi enviado!",
             "message_second": "Recebemos seu teste, aguarde nosso retorno!",
-            "message_explaining": "Recebemos seu teste na data: {}".format(
-                str(user_applied.challenge_response_at.date())
-            ),
+            "message_explaining": "Recebemos seu teste e vamos avaliar!",
         }
         return render(request, template_name="generic.html", context=context)
 
