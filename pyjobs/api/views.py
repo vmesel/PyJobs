@@ -4,7 +4,8 @@ from restless.exceptions import BadRequest
 from restless.preparers import FieldsPreparer
 
 from pyjobs.api.serializers import PyJobsSerializer
-from pyjobs.core.models import Job
+from pyjobs.core.models import Job, JobApplication
+from pyjobs.api.models import ApiKey
 
 
 class DjangoPaginatedResource(DjangoResource):
@@ -65,3 +66,23 @@ class JobResource(DjangoPaginatedResource):
 
     def detail(self, pk):
         return Job.objects.get(id=pk)
+
+
+class JobApplicationResource(DjangoResource):
+    page_size = 20
+    serializer = PyJobsSerializer()
+    preparer = FieldsPreparer(
+        fields={field.name: field.name for field in JobApplication._meta.fields}
+    )
+
+    def list(self):
+        job_to_lookout = Job.objects.get(id=int(self.request.GET.get("id")))
+        qs = JobApplication.objects.filter(job=job_to_lookout)
+        return qs
+
+    def is_authenticated(self):
+        try:
+            key = ApiKey.objects.get(api_key=self.request.GET.get("api_key"))
+            return True
+        except ApiKey.DoesNotExist:
+            return False
