@@ -2,6 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load widget_tweaks %}
+{% load core_tags %}
 {%block title%} {{WEBSITE_NAME}} - A Central de Jobs {{WEBSITE_WORKING_LANGUAGE}}
 {%endblock%}
 {%block main%}
@@ -132,7 +133,7 @@
                     <ul class="pagination">
                       {% for page in pages %}
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'index' %}?page={{page}}{% if 'search' in request.GET %}&search={{ request.GET.search }}{% endif %}">{{ page }}</a>
+                            <a class="page-link" href="{% url 'index' %}?{% merge_query_params page=page %}">{{ page }}</a>
                         </li>
                       {% endfor %}
                     </ul>
