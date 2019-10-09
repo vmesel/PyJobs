@@ -46,7 +46,17 @@ class TestJobResourceDetail(TestCase):
         fields = (
             field.name
             for field in Job._meta.fields
-            if field.name not in {"premium", "public", "ad_interested", "company_email"}
+            if field.name
+            in {
+                "id",
+                "title",
+                "workplace",
+                "company_name",
+                "description",
+                "requirements",
+                "created_at",
+                "remote",
+            }
         )
         for field in fields:
             if field == "created_at":  # format datetime as string

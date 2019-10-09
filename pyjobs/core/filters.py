@@ -12,4 +12,4 @@ class JobFilter(django_filters.FilterSet):
 
     class Meta:
         model = Job
-        fields = ["description", "requirements"]
+        fields = ["requirements", "remote"]
