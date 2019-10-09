@@ -9,16 +9,25 @@ from django.contrib.auth.models import User
 
 
 class PyJobsTypesJSONEncoder(MoreTypesJSONEncoder):
-    """Overrides Restless's JSON encoder for datetime using custom format"""
+    """Overrides Restless's JSON encoder for custom format"""
 
     DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
     def default(self, data):
         if isinstance(data, datetime):
             return data.strftime(self.DATETIME_FORMAT)
-        elif isinstance(data, User) or isinstance(data, Job):  # pragma: no cover
-            return data.__str__()  # pragma: no cover
-        return super(PyJobsTypesJSONEncoder, self).default(data)  # pragma: no cover
+        elif isinstance(data, User):
+            return {
+                "github": data.profile.github,
+                "linkedin": data.profile.linkedin,
+                "portfolio": data.profile.portfolio,
+                "cellphone": data.profile.cellphone,
+                "full_name": data.get_full_name(),
+                "email": data.email,
+            }
+        elif isinstance(data, Job):
+            return data.__str__()
+        return super(PyJobsTypesJSONEncoder, self).default(data)
 
 
 class PyJobsSerializer(JSONSerializer):
