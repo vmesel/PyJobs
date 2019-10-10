@@ -4,9 +4,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from datetime import datetime
-from django_select2.forms import Select2MultipleWidget, Select2Widget
+from django_select2.forms import (
+    Select2MultipleWidget,
+    Select2Widget,
+)
 
-from pyjobs.core.models import Contact, Job, Profile, Skill, JobApplication
+from pyjobs.core.models import (
+    Contact,
+    Job,
+    Profile,
+    Skill,
+    JobApplication,
+)
 
 
 class JobForm(ModelForm):
@@ -34,10 +43,16 @@ class JobForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(JobForm, self).__init__(*args, **kwargs)
         for key, field in self.fields.items():
-            field.widget.attrs.update({"placeholder": field.label})
+            field.widget.attrs.update(
+                {"placeholder": field.label}
+            )
 
         for key, field in self.fields.items():
-            if key in ["state", "salary_range", "job_level"]:
+            if key in [
+                "state",
+                "salary_range",
+                "job_level",
+            ]:
                 field.choices = field.choices[:-1]
 
 
@@ -54,7 +69,9 @@ class JobApplicationForm(ModelForm):
 
     def save(self, commit=True):
         if commit:
-            self.instance.challenge_response_at = datetime.now()
+            self.instance.challenge_response_at = (
+                datetime.now()
+            )
             self.instance.save()
 
 
@@ -70,9 +87,7 @@ class RegisterForm(UserCreationForm):
     linkedin = forms.URLField(
         label="Linkedin (opcional)",
         widget=forms.TextInput(
-            attrs={
-                "placeholder": "Link do seu Linkedin"
-            }
+            attrs={"placeholder": "Link do seu Linkedin"}
         ),
         required=False,
     )
@@ -80,9 +95,7 @@ class RegisterForm(UserCreationForm):
     portfolio = forms.URLField(
         label="Portfolio (opcional)",
         widget=forms.TextInput(
-            attrs={
-                "placeholder": "Link do seu portfolio"
-            }
+            attrs={"placeholder": "Link do seu portfolio"}
         ),
         required=False,
     )
@@ -98,12 +111,19 @@ class RegisterForm(UserCreationForm):
     )
 
     skills_ = forms.ModelMultipleChoiceField(
-        label="Skills", queryset=Skill.objects.all(), widget=Select2MultipleWidget
+        label="Skills",
+        queryset=Skill.objects.all(),
+        widget=Select2MultipleWidget,
     )
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "username")
+        fields = (
+            "first_name",
+            "last_name",
+            "email",
+            "username",
+        )
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
@@ -112,7 +132,9 @@ class RegisterForm(UserCreationForm):
             self.fields[fieldname].help_text = None
 
     def save(self, commit=True):
-        instance = super(RegisterForm, self).save(commit=False)
+        instance = super(RegisterForm, self).save(
+            commit=False
+        )
         if commit:
             instance.save()
 
@@ -124,7 +146,8 @@ class RegisterForm(UserCreationForm):
                 cellphone=self.cleaned_data["cellphone"],
             )
             authenticate(
-                username=instance.username, password=self.cleaned_data.get("password1")
+                username=instance.username,
+                password=self.cleaned_data.get("password1"),
             )
             profile.save()
             profile.skills = self.cleaned_data["skills_"]
@@ -135,5 +158,11 @@ class RegisterForm(UserCreationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ("github", "linkedin", "portfolio", "cellphone", "skills")
+        fields = (
+            "github",
+            "linkedin",
+            "portfolio",
+            "cellphone",
+            "skills",
+        )
         widgets = {"skills": Select2MultipleWidget}
