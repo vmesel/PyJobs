@@ -60,25 +60,28 @@ class JobApplicationForm(ModelForm):
 
 class RegisterForm(UserCreationForm):
     github = forms.URLField(
+        label="Github (opcional)",
         widget=forms.TextInput(
-            attrs={"placeholder": "Preencha com o link do seu GitHub (não obrigatório)"}
+            attrs={"placeholder": "Link do seu GitHub"}
         ),
         required=False,
     )
 
     linkedin = forms.URLField(
+        label="Linkedin (opcional)",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Preencha com o link do seu Linkedin (não obrigatório)"
+                "placeholder": "Link do seu Linkedin"
             }
         ),
         required=False,
     )
 
     portfolio = forms.URLField(
+        label="Portfolio (opcional)",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Preencha com o link do seu portfolio (não obrigatório)"
+                "placeholder": "Link do seu portfolio"
             }
         ),
         required=False,
@@ -86,7 +89,11 @@ class RegisterForm(UserCreationForm):
 
     cellphone = forms.CharField(
         label="Celular",
-        widget=forms.TextInput(attrs={"placeholder": "Preencha com o seu telefone"}),
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Preencha com o seu telefone"
+            }
+        ),
         required=True,
     )
 
