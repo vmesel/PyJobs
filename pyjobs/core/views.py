@@ -364,6 +364,9 @@ def get_job_applications(request, pk):
             "email_sent",
             "challenge_response_at",
             "challenge_response_link",
+            "output",
+            "comment",
+            "output_sent",
         )
     ]
 
@@ -381,6 +384,9 @@ def get_job_applications(request, pk):
             job_applicant.email_sent,
             job_applicant.challenge_response_at,
             job_applicant.challenge_response_link,
+            job_applicant.output,
+            job_applicant.comment,
+            job_applicant.output_sent,
         )
         for job_applicant in JobApplication.objects.filter(job__pk=pk)
     ]

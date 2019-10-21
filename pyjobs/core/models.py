@@ -288,6 +288,9 @@ class JobApplication(models.Model):
     )
     challenge_response_at = models.DateTimeField(blank=True, null=True)
     challenge_resent = models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
+    output = models.TextField(blank=True, null=True)
+    output_sent = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("user", "job")
@@ -428,22 +431,3 @@ def new_contact(sender, instance, created, **kwargs):
         "new_contact", email_context, instance.subject, [settings.WEBSITE_OWNER_EMAIL]
     )
     msg.send()
-
-
-@receiver(post_save, sender=JobApplication)
-def new_job_challenge_answered(sender, instance, created, **kwargs):
-    subject = "Novo teste a ser avaliado: {}".format(instance.job.title)
-    email_context = {"vaga": instance.job, "mensagem": instance}
-
-    if (
-        not created
-        and instance.job.is_challenging
-        and instance.challenge_response_link != None
-    ):
-        msg = get_email_with_template(
-            "new_answer_to_check",
-            email_context,
-            subject,
-            [settings.WEBSITE_OWNER_EMAIL],
-        )
-        msg.send()
