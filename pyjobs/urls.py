@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from pyjobs.core.views import handler_404
 
 urlpatterns = [
     url(r"^admin_v2/", admin.site.urls),
@@ -45,3 +46,4 @@ urlpatterns = [
         name="password_reset_complete",
     ),
 ]
+handler404 = handler_404
