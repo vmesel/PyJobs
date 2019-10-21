@@ -448,3 +448,6 @@ def thumbnail_view(request, pk):
     response = HttpResponse(content_type="image/png")
     im.save(response, "PNG")
     return response
+
+def handler_404(request):
+    return redirect('/')
