@@ -288,6 +288,9 @@ class JobApplication(models.Model):
     )
     challenge_response_at = models.DateTimeField(blank=True, null=True)
     challenge_resent = models.BooleanField(default=False)
+    comment = models.TextField(blank=True, null=True)
+    output = models.TextField(blank=True, null=True)
+    output_sent = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("user", "job")

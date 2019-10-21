@@ -28,14 +28,16 @@
                                 <tr>
                                     <th>Nome</th>
                                     <th>Sobrenome</th>
+                                    <th>Email</th>
                                     <th>GitHub</th>
                                     <th>Telefone</th>
                                     <th>LinkedIn</th>
-                                    <th>Email Enviado</th>
                                     <th>Enviado Em</th>
-                                    <th>Desafio Respondido</th>
                                     <th>Link da Resposta</th>
                                     <th>Respondido Em</th>
+                                    <th>Output</th>
+                                    <th>Comentário</th>
+                                    <th>Editar</th>
                                 </tr>
                             </thead>
 
@@ -44,22 +46,16 @@
                                 <tr>
                                     <td>{{ r.user.first_name }}</td>
                                     <td>{{ r.user.last_name }}</td>
+                                    <td>{{ r.user.email }}</td>
                                     <td>{{ r.user.profile.github }}</td>
                                     <td>{{ r.user.profile.cellphone }}</td>
                                     <td>{{ r.user.profile.linkedin }}</td>
-                                    <td>
-                                        <center>
-                                            <input type="checkbox" name="" value="{{ r.email_sent }}" disabled>
-                                        </center>
-                                    </td>
                                     <td>{{ r.email_sent_at }}</td>
-                                    <td>
-                                      <center>
-                                          <input type="checkbox" name="" value="{%if r.challenge_response_link%} true {% else %} false {%endif%}" disabled>
-                                      </center>
-                                      </td>
                                     <td>{{ r.challenge_response_link }}</td>
                                     <td>{{ r.challenge_response_at }}</td>
+                                    <td>{{ r.output }}</td>
+                                    <td>{{ r.comment }}</td>
+                                    <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">Adicionar</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
