@@ -16,6 +16,11 @@
             <div class="container">
 
                 <div class="block-heading">
+                    {% if job.is_challenging and applied %}
+                    <div class="alert alert-success" role="alert">
+                      Não se esqueça de responder ao desafio técnico clicando no botão abaixo!
+                    </div>
+                    {%endif%}
                     <h1 class="text-info">{{job.title}}</h1>
                     <p>Postada: {{job.created_at|naturalday}}</p>
                 </div>
