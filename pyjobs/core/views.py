@@ -449,5 +449,6 @@ def thumbnail_view(request, pk):
     im.save(response, "PNG")
     return response
 
+
 def handler_404(request):
-    return redirect('/')
+    return redirect("/")
