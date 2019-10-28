@@ -60,27 +60,20 @@ class JobApplicationForm(ModelForm):
 
 class RegisterForm(UserCreationForm):
     github = forms.URLField(
-        widget=forms.TextInput(
-            attrs={"placeholder": "Preencha com o link do seu GitHub (não obrigatório)"}
-        ),
+        label="Github (opcional)",
+        widget=forms.TextInput(attrs={"placeholder": "Link do seu GitHub"}),
         required=False,
     )
 
     linkedin = forms.URLField(
-        widget=forms.TextInput(
-            attrs={
-                "placeholder": "Preencha com o link do seu Linkedin (não obrigatório)"
-            }
-        ),
+        label="Linkedin (opcional)",
+        widget=forms.TextInput(attrs={"placeholder": "Link do seu Linkedin"}),
         required=False,
     )
 
     portfolio = forms.URLField(
-        widget=forms.TextInput(
-            attrs={
-                "placeholder": "Preencha com o link do seu portfolio (não obrigatório)"
-            }
-        ),
+        label="Portfolio (opcional)",
+        widget=forms.TextInput(attrs={"placeholder": "Link do seu portfolio"}),
         required=False,
     )
 
