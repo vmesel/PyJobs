@@ -186,6 +186,7 @@ class Job(models.Model):
     )
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
+    receive_emails = models.BooleanField("Enviar emails?", default=True)
     ad_interested = models.BooleanField("Impulsionar*", default=False)
     challenge_interested = models.BooleanField("Desafio*", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -354,21 +355,20 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         instance.email_sent = True
         instance.email_sent_at = datetime.now()
         instance.save()
-        person_to_send_to.append(settings.WEBSITE_OWNER_EMAIL)
-        person_to_send_to.append(instance.job.company_email)
 
     msg_email_person = get_email_with_template(
         template_person, person_email_context, person_email_subject, person_to_send_to
     )
     msg_email_person.send()
 
-    msg_email_company = get_email_with_template(
-        "job_applicant",
-        company_email_context,
-        "Você possui mais um candidato para a sua vaga",
-        [instance.job.company_email],
-    )
-    msg_email_company.send()
+    if instance.job.receive_emails:
+        msg_email_company = get_email_with_template(
+            "job_applicant",
+            company_email_context,
+            "Você possui mais um candidato para a sua vaga",
+            [instance.job.company_email],
+        )
+        msg_email_company.send()
 
 
 def send_offer_email_template(job):
