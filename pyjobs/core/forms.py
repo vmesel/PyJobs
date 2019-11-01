@@ -6,8 +6,8 @@ from django.forms import ModelForm
 from datetime import datetime
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from pyjobs.core.models import Contact, Job, Profile, Skill, JobApplication
-
+from pyjobs.core.models import Job, Profile, Skill, JobApplication
+from pyjobs.marketing.models import Contact
 
 class JobForm(ModelForm):
     class Meta:

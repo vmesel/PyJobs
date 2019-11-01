@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 
 from pyjobs.core.models import Job
-from pyjobs.core.utils import post_telegram_channel
+from pyjobs.marketing.utils import post_telegram_channel
 
 
 def format_job(job):
