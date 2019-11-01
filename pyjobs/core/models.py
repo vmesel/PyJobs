@@ -1,94 +1,14 @@
 from datetime import timedelta, datetime
 from hashlib import sha512
 
-from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
-from raven.contrib.django.raven_compat.models import client
 
 
-from pyjobs.settings import SECRET_KEY
+from pyjobs.settings import SECRET_KEY, STATE_CHOICES, SALARY_RANGES, JOB_LEVELS
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
-from pyjobs.core.newsletter import subscribe_user_to_mailer
-from pyjobs.core.utils import post_telegram_channel
-from pyjobs.core.email_utils import get_email_with_template
-from pyjobs.marketing.models import MailingList, Contact
-
-class Messages(models.Model):
-    message_title = models.CharField(
-        "Título da Mensagem", max_length=100, default="", blank=False
-    )
-
-    message_type = models.CharField(
-        "Ticker usado no backend para ID da msg",
-        default="offer",
-        max_length=200,
-        blank=False,
-    )
-
-    message_content = models.TextField("Texto do E-mail", default="")
-
-    class Meta:
-        verbose_name = "Mensagem"
-        verbose_name_plural = "Mensagens"
-
-
-STATE_CHOICES = [
-    (0, "Acre"),
-    (1, "Alagoas"),
-    (2, "Amapá"),
-    (3, "Amazonas"),
-    (4, "Bahia"),
-    (5, "Ceará"),
-    (6, "Distrito Federal"),
-    (7, "Espírito Santo"),
-    (8, "Goiás"),
-    (9, "Maranhão"),
-    (10, "Mato Grosso"),
-    (11, "Mato Grosso do Sul"),
-    (12, "Minas Gerais"),
-    (13, "Pará"),
-    (14, "Paraíba"),
-    (15, "Paraná"),
-    (16, "Pernambuco"),
-    (17, "Piauí"),
-    (18, "Rio de Janeiro"),
-    (19, "Rio Grande do Norte"),
-    (20, "Rio Grande do Sul"),
-    (21, "Rondônia"),
-    (22, "Roraima"),
-    (23, "Santa Catarina"),
-    (24, "São Paulo"),
-    (25, "Sergipe"),
-    (26, "Tocantins"),
-    (27, "Indeterminado"),
-]
-
-SALARY_RANGES = [
-    (1, "R$ 0,00 a R$ 1.000,00"),
-    (2, "R$ 1.000,01 a R$ 3.000,00"),
-    (3, "R$ 3.000,01 a R$ 6.000,00"),
-    (4, "R$ 6.000,01 a R$ 10.000,00"),
-    (5, "R$ 10.000,01 a R$ 13.000,00"),
-    (6, "R$ 13.000,01 a R$ 16.000,00"),
-    (7, "R$ 16.000,01 a R$ 19.000,00"),
-    (8, "R$ 19.000,01 a R$ 21.000,00"),
-    (9, "R$ 21.000,01 ou mais"),
-    (10, "A combinar"),
-]
-
-JOB_LEVELS = [
-    (1, "Estágio"),
-    (2, "Junior"),
-    (3, "Pleno"),
-    (4, "Sênior"),
-    (5, "Indeterminado"),
-]
 
 
 class Profile(models.Model):
@@ -204,11 +124,6 @@ class Job(models.Model):
     is_challenging = models.BooleanField("Enviar Chall", default=False)
     challenge = models.TextField("Challenge", blank=True, null=True)
 
-    # Filtering parts of the model
-
-    ## This will allow users to filter on the homepage for jobs that respect their
-    ## values, necessities or expectations
-
     state = models.IntegerField("Estado", choices=STATE_CHOICES, default=27)
     salary_range = models.IntegerField(
         "Faixa Salarial", choices=SALARY_RANGES, default=6
@@ -310,111 +225,3 @@ class Skill(models.Model):
 
     def __repr__(self):
         return self.name
-
-
-@receiver(post_save, sender=Profile)
-def add_user_to_mailchimp(sender, instance, created, **kwargs):
-    subscribe_user_to_mailer(instance)
-
-
-@receiver(post_save, sender=JobApplication)
-def send_email_notifing_job_application(sender, instance, created, **kwargs):
-    if not created:
-        return
-
-    person_email_context = {
-        "vaga": instance.job,
-        "pessoa": instance.user.profile,
-        "mensagem": instance,
-    }
-
-    company_email_context = person_email_context
-
-    template_person = "job_application_registered"
-    person_email_subject = "Parabéns! Você se inscreveu na vaga!"
-    person_to_send_to = [instance.user.email]
-
-    if instance.job.is_challenging:
-        template_person = "job_interest_challenge"
-        person_email_subject = "Teste Técnico da empresa: {}!".format(
-            instance.job.company_name
-        )
-        instance.email_sent = True
-        instance.email_sent_at = datetime.now()
-        instance.save()
-
-    msg_email_person = get_email_with_template(
-        template_person, person_email_context, person_email_subject, person_to_send_to
-    )
-    msg_email_person.send()
-
-    if instance.job.receive_emails:
-        msg_email_company = get_email_with_template(
-            "job_applicant",
-            company_email_context,
-            "Você possui mais um candidato para a sua vaga",
-            [instance.job.company_email],
-        )
-        msg_email_company.send()
-
-
-def send_offer_email_template(job):
-    message = Messages.objects.filter(message_type="offer").first()
-    message_text = message.message_content.format(company=job.company_name)
-    message_title = message.message_title.format(title=job.title)
-    send_mail(
-        message_title,
-        message_text,
-        settings.WEBSITE_OWNER_EMAIL,
-        [job.company_email, "viniciuscarqueijo@gmail.com"],
-    )
-
-
-def send_feedback_collection_email(job):
-    message = Messages.objects.filter(message_type="feedback")[0]
-    message_text = message.message_content.format(company=job.company_name)
-    message_title = message.message_title.format(title=job.title)
-    send_mail(
-        message_title,
-        message_text,
-        settings.WEBSITE_OWNER_EMAIL,
-        [job.company_email, settings.WEBSITE_OWNER_EMAIL],
-    )
-
-
-@receiver(post_save, sender=Job)
-def new_job_was_created(sender, instance, created, **kwargs):
-    if not created:
-        return
-
-    # post to telegram
-    message_base = "Nova oportunidade! {} - {} em {}\n {}/job/{}/"
-    message_text = message_base.format(
-        instance.title,
-        instance.company_name,
-        instance.workplace,
-        settings.WEBSITE_HOME_URL,
-        instance.pk,
-    )
-    post_telegram_channel(message_text)
-
-    msg = get_email_with_template(
-        "published_job",
-        {"vaga": instance},
-        "Sua oportunidade está disponível no {}".format(settings.WEBSITE_NAME),
-        [instance.company_email],
-    )
-    msg.send()
-    try:
-        send_offer_email_template(instance)
-    except:
-        client.captureException()
-
-
-@receiver(post_save, sender=Contact)
-def new_contact(sender, instance, created, **kwargs):
-    email_context = {"mensagem": instance}
-    msg = get_email_with_template(
-        "new_contact", email_context, instance.subject, [settings.WEBSITE_OWNER_EMAIL]
-    )
-    msg.send()
