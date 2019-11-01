@@ -11,7 +11,7 @@ from pyjobs.core.views import index
 
 
 class ThumbnailTestingViews(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -48,7 +48,7 @@ class ThumbnailTestingViews(TestCase):
 
 class TestingRestrictedViews(TestCase):
     @responses.activate
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         responses.add(
             responses.POST,

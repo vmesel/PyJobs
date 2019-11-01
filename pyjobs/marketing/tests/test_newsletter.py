@@ -5,7 +5,7 @@ from django.test import TestCase, override_settings
 from unittest.mock import patch
 import responses
 from pyjobs.core.models import Job, Profile
-from pyjobs.core.newsletter import subscribe_user_to_chimp
+from pyjobs.marketing.newsletter import subscribe_user_to_chimp
 from django.conf import settings
 
 
@@ -39,7 +39,7 @@ class NewsletterTest(TestCase):
     @override_settings(
         MAILCHIMP_API_KEY="AAA", MAILCHIMP_USERNAME="BBB", MAILCHIMP_LIST_KEY="CCC"
     )
-    @patch("pyjobs.core.newsletter.MailChimp")
+    @patch("pyjobs.marketing.newsletter.MailChimp")
     def test_if_called(self, patched_mc):
         sub = subscribe_user_to_chimp(self.profile)
         patched_mc.assert_called_once_with("AAA", "BBB")

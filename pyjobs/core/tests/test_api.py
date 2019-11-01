@@ -4,7 +4,7 @@ from pyjobs.core.models import Job
 
 
 class ApiRequestTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.client = Client()
         self.job = Job(

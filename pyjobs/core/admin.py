@@ -2,18 +2,17 @@ from django.contrib import admin
 from django.core.mail import send_mail
 from datetime import datetime
 from pyjobs.core.models import (
-    Contact,
     Job,
     JobApplication,
-    Messages,
     Profile,
     Skill,
-    MailingList,
+)
+from pyjobs.marketing.triggers import (
     send_offer_email_template,
     send_feedback_collection_email,
 )
 from datetime import datetime
-from pyjobs.core.newsletter import subscribe_user_to_mailer
+from pyjobs.marketing.newsletter import subscribe_user_to_mailer
 from pyjobs.core.email_utils import get_email_with_template
 
 
@@ -72,10 +71,6 @@ class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ("user", "job", "created_at", "email_sent", "challenge_response_at")
 
 
-class MailingListsAdmin(admin.ModelAdmin):
-    list_display = ("email", "name", "slug")
-
-
 class JobAdmin(admin.ModelAdmin):
     list_display = (
         "title",
@@ -105,7 +100,4 @@ class ProfileAdmin(admin.ModelAdmin):
 admin.site.register(Job, JobAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(JobApplication, JobApplicationAdmin)
-admin.site.register(Contact)
-admin.site.register(Messages)
 admin.site.register(Skill)
-admin.site.register(MailingList, MailingListsAdmin)
