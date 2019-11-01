@@ -9,36 +9,66 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('core', '0044_auto_20191101_0019')
-    ]
+    dependencies = [("core", "0044_auto_20191101_0019")]
 
     state_operations = [
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(default='', max_length=100, verbose_name='Nome')),
-                ('subject', models.CharField(default='', max_length=100, verbose_name='Assunto')),
-                ('email', models.EmailField(default='', max_length=254, verbose_name='Email')),
-                ('message', models.TextField(default='', verbose_name='Mensagem')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(default="", max_length=100, verbose_name="Nome"),
+                ),
+                (
+                    "subject",
+                    models.CharField(
+                        default="", max_length=100, verbose_name="Assunto"
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(default="", max_length=254, verbose_name="Email"),
+                ),
+                ("message", models.TextField(default="", verbose_name="Mensagem")),
             ],
-            options={
-                'db_table': 'marketing_contact',
-            },
+            options={"db_table": "marketing_contact",},
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='MailingList',
+            name="MailingList",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(default='', max_length=254, verbose_name='Email')),
-                ('name', models.CharField(default='', max_length=100, verbose_name='Nome')),
-                ('slug', models.CharField(default='', max_length=100, verbose_name='Slug')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(default="", max_length=254, verbose_name="Email"),
+                ),
+                (
+                    "name",
+                    models.CharField(default="", max_length=100, verbose_name="Nome"),
+                ),
+                (
+                    "slug",
+                    models.CharField(default="", max_length=100, verbose_name="Slug"),
+                ),
             ],
-            options={
-                'db_table': 'marketing_mailinglist',
-            },
+            options={"db_table": "marketing_mailinglist",},
             bases=(models.Model,),
         ),
     ]

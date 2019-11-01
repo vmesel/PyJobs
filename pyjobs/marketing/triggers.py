@@ -60,6 +60,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         )
         msg_email_company.send()
 
+
 def send_offer_email_template(job):
     message = Messages.objects.filter(message_type="offer").first()
     message_text = message.message_content.format(company=job.company_name)
@@ -82,6 +83,7 @@ def send_feedback_collection_email(job):
         settings.WEBSITE_OWNER_EMAIL,
         [job.company_email, settings.WEBSITE_OWNER_EMAIL],
     )
+
 
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):

@@ -12,7 +12,10 @@ from pyjobs.core.models import (
     Profile,
     JobApplication,
 )
-from pyjobs.marketing.triggers import send_feedback_collection_email, send_offer_email_template
+from pyjobs.marketing.triggers import (
+    send_feedback_collection_email,
+    send_offer_email_template,
+)
 from django.db.models.signals import post_save
 
 
@@ -42,7 +45,9 @@ class JobApplicationSignalTest(TestCase):
         )
 
     def test_job_application_triggered_email(self):
-        with patch("pyjobs.marketing.triggers.send_email_notifing_job_application") as mocked:
+        with patch(
+            "pyjobs.marketing.triggers.send_email_notifing_job_application"
+        ) as mocked:
             post_save.connect(mocked, sender=JobApplication)
 
         self.job_application = JobApplication(user=self.user, job=self.job)

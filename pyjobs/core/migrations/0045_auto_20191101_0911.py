@@ -8,20 +8,17 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0044_auto_20191101_0019'),
+        ("core", "0044_auto_20191101_0019"),
     ]
 
     database_operations = [
-        migrations.AlterModelTable('Messages', 'marketing_messages'),
+        migrations.AlterModelTable("Messages", "marketing_messages"),
     ]
 
-    state_operations = [
-        migrations.DeleteModel('Messages')
-    ]
+    state_operations = [migrations.DeleteModel("Messages")]
 
     operations = [
         migrations.SeparateDatabaseAndState(
-            database_operations=database_operations,
-            state_operations=state_operations
+            database_operations=database_operations, state_operations=state_operations
         )
     ]

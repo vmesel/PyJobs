@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from pyjobs.core.email_utils import get_email_with_template
 
+
 class MailingList(models.Model):
     email = models.EmailField("Email", default="", blank=False)
     name = models.CharField("Nome", max_length=100, default="", blank=False)

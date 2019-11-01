@@ -37,7 +37,9 @@ class TestJobApplicationResourceListWithInvalidAPIKey(TestCase):
         self.api_key = mommy.make(ApiKey)
         url = resolve_url("api:jobapplication_list")
         self.response = self.client.get(
-            "{}?id={}&api_key={}".format(url, self.job.pk, self.api_key.api_key + "test")
+            "{}?id={}&api_key={}".format(
+                url, self.job.pk, self.api_key.api_key + "test"
+            )
         )
         self.response.text = self.response.content.decode("utf-8")
         self.response.json = loads(self.response.text)

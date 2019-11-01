@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0041_jobapplication_output_sent'),
+        ("core", "0041_jobapplication_output_sent"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='receive_emails',
-            field=models.BooleanField(default=True, verbose_name='Enviar emails?'),
+            model_name="job",
+            name="receive_emails",
+            field=models.BooleanField(default=True, verbose_name="Enviar emails?"),
         ),
     ]

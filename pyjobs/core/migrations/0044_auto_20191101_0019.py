@@ -8,22 +8,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0043_auto_20191029_1916'),
+        ("core", "0043_auto_20191029_1916"),
     ]
 
     database_operations = [
-        migrations.AlterModelTable('MailingList', 'marketing_mailinglist'),
-        migrations.AlterModelTable('Contact', 'marketing_contact')
+        migrations.AlterModelTable("MailingList", "marketing_mailinglist"),
+        migrations.AlterModelTable("Contact", "marketing_contact"),
     ]
 
     state_operations = [
-        migrations.DeleteModel('MailingList'),
-        migrations.DeleteModel('Contact')
+        migrations.DeleteModel("MailingList"),
+        migrations.DeleteModel("Contact"),
     ]
 
     operations = [
         migrations.SeparateDatabaseAndState(
-            database_operations=database_operations,
-            state_operations=state_operations
+            database_operations=database_operations, state_operations=state_operations
         )
     ]

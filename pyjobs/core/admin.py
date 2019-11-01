@@ -7,7 +7,10 @@ from pyjobs.core.models import (
     Profile,
     Skill,
 )
-from pyjobs.marketing.triggers import send_offer_email_template, send_feedback_collection_email
+from pyjobs.marketing.triggers import (
+    send_offer_email_template,
+    send_feedback_collection_email,
+)
 from datetime import datetime
 from pyjobs.marketing.newsletter import subscribe_user_to_mailer
 from pyjobs.core.email_utils import get_email_with_template
