@@ -17,7 +17,7 @@ from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from pyjobs.core.newsletter import subscribe_user_to_mailer
 from pyjobs.core.utils import post_telegram_channel
 from pyjobs.core.email_utils import get_email_with_template
-
+from pyjobs.marketing.models import MailingList, Contact
 
 class Messages(models.Model):
     message_title = models.CharField(
@@ -302,13 +302,6 @@ class JobApplication(models.Model):
         return "{} applied to {}".format(self.user, self.job)
 
 
-class Contact(models.Model):
-    name = models.CharField("Nome", max_length=100, default="", blank=False)
-    subject = models.CharField("Assunto", max_length=100, default="", blank=False)
-    email = models.EmailField("Email", default="", blank=False)
-    message = models.TextField("Mensagem", default="", blank=False)
-
-
 class Skill(models.Model):
     name = models.CharField("Skill", max_length=100, default="", blank=False)
 
@@ -317,12 +310,6 @@ class Skill(models.Model):
 
     def __repr__(self):
         return self.name
-
-
-class MailingList(models.Model):
-    email = models.EmailField("Email", default="", blank=False)
-    name = models.CharField("Nome", max_length=100, default="", blank=False)
-    slug = models.CharField("Slug", max_length=100, default="", blank=False)
 
 
 @receiver(post_save, sender=Profile)

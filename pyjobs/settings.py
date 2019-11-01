@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "pyjobs.core",
     "pyjobs.api",
+    "pyjobs.marketing",
     "widget_tweaks",
     "django.contrib.sitemaps",
     "raven.contrib.django.raven_compat",
