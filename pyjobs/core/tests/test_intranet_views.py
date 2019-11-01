@@ -12,7 +12,7 @@ from pyjobs.core.views import index
 
 class JobAppliedToViewTest(TestCase):
     @responses.activate
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",

@@ -11,7 +11,7 @@ from pyjobs.core.views import index
 
 
 class HomeJobsViewsTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -39,7 +39,7 @@ class HomeJobsViewsTest(TestCase):
 
 
 class JobDetailsViewTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -77,7 +77,7 @@ class JobDetailsViewTest(TestCase):
 
 class PyJobsJobApplication(TestCase):
     @responses.activate
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         responses.add(
             responses.POST,
@@ -145,7 +145,7 @@ class PyJobsContact(TestCase):
 
 
 class PyJobsMultipleJobsPagesTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=14)
         self.client = Client()
@@ -168,7 +168,7 @@ class PyJobsMultipleJobsPagesTest(TestCase):
 
 
 class PyJobsSummaryPageTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
@@ -186,7 +186,7 @@ class PyJobsSummaryPageTest(TestCase):
 
 
 class PyJobsFeedTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
@@ -204,7 +204,7 @@ class PyJobsFeedTest(TestCase):
 
 
 class PyJobsPremiumFeedTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1, premium=True)
         self.client = Client()
@@ -231,7 +231,7 @@ class PyJobsRobotsTXTTest(TestCase):
 
 
 class PyJobsJobCloseView(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",

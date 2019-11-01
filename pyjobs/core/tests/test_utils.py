@@ -5,6 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from telegram import TelegramError
 
 from pyjobs.core.utils import *
+from pyjobs.marketing.utils import *
 from pyjobs.core.email_utils import *
 from model_mommy import mommy
 
@@ -18,7 +19,7 @@ class TelegramPosterTest(TestCase):
 
     @override_settings(TELEGRAM_TOKEN="my-token")
     @override_settings(TELEGRAM_CHATID="my-channel")
-    @patch("pyjobs.core.utils.Bot")
+    @patch("pyjobs.marketing.utils.Bot")
     def test_post_message_to_telegram_successfully(self, mocked_bot):
         result, message = post_telegram_channel(self.message)
         self.assertTrue(result)
@@ -30,7 +31,7 @@ class TelegramPosterTest(TestCase):
 
     @override_settings(TELEGRAM_TOKEN=None)
     @override_settings(TELEGRAM_CHATID=None)
-    @patch("pyjobs.core.utils.Bot")
+    @patch("pyjobs.marketing.utils.Bot")
     def test_post_no_auth_telegram_channel(self, mocked_bot):
         result, message = post_telegram_channel(self.message)
         self.assertFalse(result)
@@ -38,7 +39,7 @@ class TelegramPosterTest(TestCase):
 
     @override_settings(TELEGRAM_TOKEN="my-token")
     @override_settings(TELEGRAM_CHATID="my-channel")
-    @patch("pyjobs.core.utils.Bot")
+    @patch("pyjobs.marketing.utils.Bot")
     def test_post_wrong_auth_telegram_channel(self, mocked_bot):
         mocked_bot.return_value.send_message.side_effect = TelegramError("error")
         result, message = post_telegram_channel(self.message)
@@ -67,7 +68,7 @@ class HTMLEmailSenderTest(TestCase):
 
 
 class ThumbnailCreationTest(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 2",

@@ -12,12 +12,12 @@ PER_PAGE = JobResource.page_size
 
 
 class TestJobResourceList(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
-        self.jobs = mommy.make(Job, _quantity=PER_PAGE + 1, public=True)
+        self.jobs = mommy.make(Job, _quantity=PER_PAGE * 3, public=True)
         mommy.make(Job, public=False)
-        url = resolve_url("api:job_list")
-        self.response = self.client.get(url)
+        self.url = resolve_url("api:job_list")
+        self.response = self.client.get(self.url)
         self.response.text = self.response.content.decode("utf-8")
         self.response.json = loads(self.response.text)
 
@@ -26,12 +26,33 @@ class TestJobResourceList(TestCase):
 
     def test_pagination(self):
         self.assertEqual(self.response.json["meta"]["limit"], PER_PAGE)
-        self.assertEqual(self.response.json["meta"]["total_count"], PER_PAGE + 2)
+        self.assertEqual(self.response.json["meta"]["total_count"], PER_PAGE * 3 + 1)
         self.assertTrue(self.response.json["meta"]["next"])
+
+    def test_if_holds_errors(self):
+        self.response = self.client.get(self.url + "?page=1000")
+        self.response.text = self.response.content.decode("utf-8")
+        self.response.json = loads(self.response.text)
+        self.assertEqual(400, self.response.status_code)
+        self.assertTrue(self.response.json["error"])
+        self.assertEqual(self.response.json["error"], "Invalid page number")
+
+
+class TestJobResourceListIfEmpty(TestCase):
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.url = resolve_url("api:job_list")
+        self.response = self.client.get(self.url)
+        self.response.text = self.response.content.decode("utf-8")
+        self.response.json = loads(self.response.text)
+
+    def test_response_status_code(self):
+        self.assertEqual(200, self.response.status_code)
+        self.assertEqual([], self.response.json["objects"])
 
 
 class TestJobResourceDetail(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = mommy.make(Job, _fill_optional=True, public=True)
         url = resolve_url("api:job_detail", pk=self.job.pk)

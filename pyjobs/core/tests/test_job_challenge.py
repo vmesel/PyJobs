@@ -13,7 +13,7 @@ import datetime
 
 class TestingRestrictedViews(TestCase):
     @responses.activate
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = mommy.make(
             "core.Job", is_challenging=True, challenge="Ola mundo dos testes"

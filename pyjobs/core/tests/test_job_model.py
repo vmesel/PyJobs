@@ -12,7 +12,7 @@ from pyjobs.core.models import Job, Profile, Skill, JobError
 
 
 class JobTest_01(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
@@ -60,7 +60,7 @@ class JobTest_01(TestCase):
 
 
 class JobTest_02(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 2",
@@ -83,7 +83,7 @@ class JobTest_02(TestCase):
 
 
 class JobTest_03(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
@@ -110,7 +110,7 @@ class JobTest_03(TestCase):
 
 class JobTest_Application(TestCase):
     @responses.activate
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
@@ -155,7 +155,7 @@ class JobTest_Application(TestCase):
 
 class JobTest_04(TestCase):
     @responses.activate
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
@@ -220,7 +220,7 @@ class JobTest_04(TestCase):
 
 
 class JobTest_05(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
@@ -246,7 +246,7 @@ class JobTest_05(TestCase):
 
 
 class JobTest_06(TestCase):
-    @patch("pyjobs.core.models.post_telegram_channel")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
