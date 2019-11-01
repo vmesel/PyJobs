@@ -284,3 +284,27 @@ class JobSkillsTest(TestCase):
 
     def test_if_repr_rep_is_ok(self):
         self.assertEqual(self.skill.__repr__(), self.skill.name)
+
+
+class JobManagerTest(TestCase):
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job(
+            title="Vaga 1",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+        )
+        self.job.created_at = datetime.now() - timedelta(14)
+        self.job.premium_at = datetime.now() - timedelta(14)
+        self.job.save()
+
+    def test_if_job_in_premium_manager(self):
+        qs = Job.objects.premium().created_in_the_last(30, premium=True)
+        qs_term = Job.objects.search(term="Vaga 1")
+
+        self.assertIn(self.job, qs)
+        self.assertIn(self.job, qs_term)

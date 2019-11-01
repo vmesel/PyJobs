@@ -171,7 +171,7 @@ class Job(models.Model):
         return "/job/{}".format(self.pk)
 
     def get_jobs_to_get_feedback(self):
-        return Job.objects.created_days_ago(14)
+        return Job.objects.created_in_the_last(15)
 
     def get_expiration_date(self):
         return self.created_at + timedelta(days=30)

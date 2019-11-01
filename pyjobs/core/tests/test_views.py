@@ -46,6 +46,27 @@ class ThumbnailTestingViews(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
+class SitemapTestingView(TestCase):
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job(
+            title="Vaga 1",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            application_link="http://www.xpto.com.br/apply",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            requirements="Job bem maneiro",
+        )
+        self.job.save()
+        self.client = Client()
+
+    def test_if_status_code_is_two_hundred_on(self):
+        response = self.client.get("/sitemap.xml")
+        self.assertEqual(200, response.status_code)
+        self.assertIn("lastmod", response.content.decode("utf-8"))
+
+
 class TestingRestrictedViews(TestCase):
     @responses.activate
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
