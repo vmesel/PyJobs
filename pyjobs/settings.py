@@ -178,3 +178,55 @@ WEBSITE_OWNER_NAME = config("WEBSITE_OWNER_NAME", default=None)
 USER_SUBSTANTIVE = config("USER_SUBSTANTIVE", default=None)
 WEBSITE_HOME_URL = config("WEBSITE_HOME_URL", default=None)
 MAILERLITE_API_KEY = config("MAILERLITE_API_KEY", default=None)
+
+STATE_CHOICES = [
+    (0, "Acre"),
+    (1, "Alagoas"),
+    (2, "Amapá"),
+    (3, "Amazonas"),
+    (4, "Bahia"),
+    (5, "Ceará"),
+    (6, "Distrito Federal"),
+    (7, "Espírito Santo"),
+    (8, "Goiás"),
+    (9, "Maranhão"),
+    (10, "Mato Grosso"),
+    (11, "Mato Grosso do Sul"),
+    (12, "Minas Gerais"),
+    (13, "Pará"),
+    (14, "Paraíba"),
+    (15, "Paraná"),
+    (16, "Pernambuco"),
+    (17, "Piauí"),
+    (18, "Rio de Janeiro"),
+    (19, "Rio Grande do Norte"),
+    (20, "Rio Grande do Sul"),
+    (21, "Rondônia"),
+    (22, "Roraima"),
+    (23, "Santa Catarina"),
+    (24, "São Paulo"),
+    (25, "Sergipe"),
+    (26, "Tocantins"),
+    (27, "Indeterminado"),
+]
+
+SALARY_RANGES = [
+    (1, "R$ 0,00 a R$ 1.000,00"),
+    (2, "R$ 1.000,01 a R$ 3.000,00"),
+    (3, "R$ 3.000,01 a R$ 6.000,00"),
+    (4, "R$ 6.000,01 a R$ 10.000,00"),
+    (5, "R$ 10.000,01 a R$ 13.000,00"),
+    (6, "R$ 13.000,01 a R$ 16.000,00"),
+    (7, "R$ 16.000,01 a R$ 19.000,00"),
+    (8, "R$ 19.000,01 a R$ 21.000,00"),
+    (9, "R$ 21.000,01 ou mais"),
+    (10, "A combinar"),
+]
+
+JOB_LEVELS = [
+    (1, "Estágio"),
+    (2, "Junior"),
+    (3, "Pleno"),
+    (4, "Sênior"),
+    (5, "Indeterminado"),
+]
