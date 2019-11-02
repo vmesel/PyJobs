@@ -7,7 +7,8 @@ from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context
 
-from pyjobs.core.models import Job, MailingList
+from pyjobs.core.models import Job
+from pyjobs.marketing.models import MailingList
 from pyjobs.marketing.utils import post_telegram_channel
 from django.conf import settings
 

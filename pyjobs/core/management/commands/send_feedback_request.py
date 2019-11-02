@@ -4,7 +4,8 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 
-from pyjobs.core.models import Job, send_feedback_collection_email
+from pyjobs.core.models import Job
+from pyjobs.marketing.triggers import send_feedback_collection_email
 
 
 class Command(BaseCommand):
