@@ -10,9 +10,9 @@ from pyjobs.marketing.triggers import send_feedback_collection_email
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        jobs = Job.get_jobs_to_get_feedback()
+        jobs = Job().get_jobs_to_get_feedback()
 
         for job in jobs:
             send_feedback_collection_email(job)
 
-        print("Message sent!")
+        return "True"

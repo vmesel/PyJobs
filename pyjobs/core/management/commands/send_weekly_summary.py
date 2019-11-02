@@ -31,8 +31,7 @@ def check_today_is_the_right_day():
 class Command(BaseCommand):
     def handle(self, *args, **options):
         if not check_today_is_the_right_day():
-            print("Today is not the right day!")
-            return
+            return "False"
 
         jobs = list(Job.get_premium_jobs())
 
@@ -44,4 +43,4 @@ class Command(BaseCommand):
 
         post_telegram_channel(format_message_text(formated_jobs))
 
-        print("Message sent!")
+        return "True"

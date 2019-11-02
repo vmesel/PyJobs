@@ -12,6 +12,7 @@ isort = "*"
 model-mommy = "*"
 nose = "*"
 responses = "*"
+freezegun = "*"
 
 [packages]
 dj-database-url = "*"

@@ -5,7 +5,10 @@ from django.test import TestCase, override_settings
 from unittest.mock import patch
 import responses
 from pyjobs.core.models import Job, Profile
-from pyjobs.marketing.newsletter import subscribe_user_to_chimp, subscribe_user_to_mailer
+from pyjobs.marketing.newsletter import (
+    subscribe_user_to_chimp,
+    subscribe_user_to_mailer,
+)
 from django.conf import settings
 
 
@@ -47,21 +50,19 @@ class NewsletterTest(TestCase):
             "CCC", {"status": "subscribed", "email_address": "v@m.com"}
         )
 
-    @patch('pyjobs.marketing.newsletter.MailChimp')
-    def test_subscribe_failed(self, _mocked_post):
-        _mocked_post.side_effect = Exception("Exception")
+    @patch("pyjobs.marketing.newsletter.MailChimp")
+    @override_settings(
+        MAILCHIMP_API_KEY="AAA", MAILCHIMP_USERNAME="BBB", MAILCHIMP_LIST_KEY="CCC"
+    )
+    def test_subscribe_failed(self, _mocked_mc):
+        _mocked_mc.side_effect = Exception("Exception")
         out = subscribe_user_to_chimp(self.profile)
         self.assertFalse(out)
+
 
 class NewsletterMailerliteTest(TestCase):
     @responses.activate
     def setUp(self):
-        responses.add(
-            responses.POST,
-            "https://api.mailerlite.com/api/v2/subscribers",
-            json={"status": "Success"},
-            status=200,
-        )
         self.user = User.objects.create_user(
             username="v@m.com",
             email="v@m.com",
@@ -76,21 +77,16 @@ class NewsletterMailerliteTest(TestCase):
             portfolio="http://www.aaa.com.br",
         )
         self.profile.save()
+        self.headers = {
+            "content-type": "application/json",
+            "x-mailerlite-apikey": "AAA",
+        }
 
-    @override_settings(
-        MAILERLITE_API_KEY="AAA"
-    )
-    @patch('pyjobs.marketing.newsletter.requests.post')
+    @override_settings(MAILERLITE_API_KEY="AAA")
+    @patch("pyjobs.marketing.newsletter.requests.post")
+    @responses.activate
     def test_subscribe_user_to_mailer(self, _mocked_post):
+        _mocked_post.return_value = Exception()
+        _mocked_post.side_effect = Exception()
         out = subscribe_user_to_mailer(self.profile)
-        _mocked_post.assert_called_once()
-        self.assertTrue(out)
-
-    @patch('pyjobs.marketing.newsletter.requests.post')
-    @patch('pyjobs.marketing.newsletter.json.dumps')
-    def test_subscribe_user_to_mailer(self, _mocked_post, _mocked_json_dumps):
-        _mocked_post.side_effect = Exception("Exception")
-        out = subscribe_user_to_mailer(self.profile)
-        _mocked_json_dumps.assert_called_once()
-        # _mocked_post.assert_called_once()
         self.assertFalse(out)

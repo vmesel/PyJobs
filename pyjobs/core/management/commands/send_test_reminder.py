@@ -16,17 +16,20 @@ from datetime import timedelta
 class Command(BaseCommand):
     def handle(self, *args, **options):
         job_qs = Job.objects.filter(is_challenging=True)
+
+        if len(job_qs) == 0:
+            return "False"
+
         for job in job_qs:
             job_applications = JobApplication.objects.filter(
                 job=job,
                 challenge_response_at=None,
-                email_sent_at__gte=datetime.now() - timedelta(days=4),
+                email_sent_at__gte=datetime.now() - timedelta(days=5),
                 email_sent_at__lte=datetime.now() + timedelta(days=3),
                 challenge_resent=False,
             )
 
             for job_app in job_applications:
-                print(job_app)
                 person_email_context = {
                     "vaga": job,
                     "pessoa": job_app.user.profile,
@@ -47,3 +50,5 @@ class Command(BaseCommand):
                     (job_app.user.email,),
                 )
                 msg_email_person.send()
+
+        return "True"
