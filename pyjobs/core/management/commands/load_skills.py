@@ -434,7 +434,6 @@ class Command(BaseCommand):
         qs_skills = Skill.objects.all()
         skills = self._get_skills()
         for skill in skills:
-            try:
-                skill_obj = Skill.objects.create(name=skill.strip())
-            except IntegrityError as e:
-                print("Skill '{}' already exists in the database".format(skill))
+            skill_obj = Skill.objects.create(name=skill.strip())
+
+        return "True"

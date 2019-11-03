@@ -5,7 +5,10 @@ from django.test import TestCase, override_settings
 from unittest.mock import patch
 import responses
 from pyjobs.core.models import Job, Profile
-from pyjobs.marketing.newsletter import subscribe_user_to_chimp
+from pyjobs.marketing.newsletter import (
+    subscribe_user_to_chimp,
+    subscribe_user_to_mailer,
+)
 from django.conf import settings
 
 
@@ -46,3 +49,44 @@ class NewsletterTest(TestCase):
         patched_mc.return_value.lists.members.create.assert_called_once_with(
             "CCC", {"status": "subscribed", "email_address": "v@m.com"}
         )
+
+    @patch("pyjobs.marketing.newsletter.MailChimp")
+    @override_settings(
+        MAILCHIMP_API_KEY="AAA", MAILCHIMP_USERNAME="BBB", MAILCHIMP_LIST_KEY="CCC"
+    )
+    def test_subscribe_failed(self, _mocked_mc):
+        _mocked_mc.side_effect = Exception("Exception")
+        out = subscribe_user_to_chimp(self.profile)
+        self.assertFalse(out)
+
+
+class NewsletterMailerliteTest(TestCase):
+    @responses.activate
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="v@m.com",
+            email="v@m.com",
+            password="top_secret",
+            first_name="Vinicius",
+            last_name="Mesel",
+        )
+        self.profile = Profile(
+            user=self.user,
+            github="http://www.aaa.com.br",
+            linkedin="http://www.aaa.com.br",
+            portfolio="http://www.aaa.com.br",
+        )
+        self.profile.save()
+        self.headers = {
+            "content-type": "application/json",
+            "x-mailerlite-apikey": "AAA",
+        }
+
+    @override_settings(MAILERLITE_API_KEY="AAA")
+    @patch("pyjobs.marketing.newsletter.requests.post")
+    @responses.activate
+    def test_subscribe_user_to_mailer(self, _mocked_post):
+        _mocked_post.return_value = Exception()
+        _mocked_post.side_effect = Exception()
+        out = subscribe_user_to_mailer(self.profile)
+        self.assertFalse(out)

@@ -23,17 +23,6 @@ class PublicQuerySet(models.QuerySet):
             created_at__lte=datetime.today(),
         )
 
-    def created_days_ago(self, days, premium=False):
-        if premium:
-            return self.filter(
-                premium_at__gt=datetime.today() - timedelta(days=days + 1),
-                premium_at__lte=datetime.today() - timedelta(days=days),
-            )
-        return self.filter(
-            created_at__gt=datetime.today() - timedelta(days=days + 1),
-            created_at__lte=datetime.today() - timedelta(days=days),
-        )
-
     def search(self, term):
         if not term:
             return self

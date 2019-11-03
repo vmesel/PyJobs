@@ -5,6 +5,7 @@ from mailchimp3 import MailChimp
 
 
 def subscribe_user_to_mailer(profile):
+    status = True
     if not settings.MAILERLITE_API_KEY:
         return
 
@@ -15,28 +16,33 @@ def subscribe_user_to_mailer(profile):
         "x-mailerlite-apikey": settings.MAILERLITE_API_KEY,
     }
 
-    url = "https://api.mailerlite.com/api/v2/subscribers"
-
     try:
-        req = requests.post(url, data=content, headers=headers)
+        req = requests.post(
+            "https://api.mailerlite.com/api/v2/subscribers",
+            data=content,
+            headers=headers,
+        )
     except:  # TODO specify which errors can be raised at this point
-        pass
+        status = False
+    return status
 
 
 def subscribe_user_to_chimp(profile):
+    status = True
     configs = (
         settings.MAILCHIMP_API_KEY,
         settings.MAILCHIMP_USERNAME,
         settings.MAILCHIMP_LIST_KEY,
     )
     if not all(configs):
-        return
+        return False
 
-    client = MailChimp(settings.MAILCHIMP_API_KEY, settings.MAILCHIMP_USERNAME)
     try:
+        client = MailChimp(settings.MAILCHIMP_API_KEY, settings.MAILCHIMP_USERNAME)
         client.lists.members.create(
             settings.MAILCHIMP_LIST_KEY,
             {"status": "subscribed", "email_address": profile.user.email},
         )
     except:  # TODO specify which errors can be raised at this point
-        pass
+        status = False
+    return status

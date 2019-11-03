@@ -2,10 +2,12 @@ from unittest.mock import patch
 
 from django.contrib.auth.models import User
 from django.http import HttpRequest
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 from django.urls import resolve, reverse
 from model_mommy import mommy
 import responses
+import json
+from datetime import datetime
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.views import index
 
@@ -143,6 +145,26 @@ class PyJobsContact(TestCase):
         response = self.client.get("/contact/").content.decode("utf-8")
         self.assertTrue("Contato" in response)
 
+    @override_settings(RECAPTCHA_SECRET_KEY="my-secret")
+    def test_check_if_is_validating_the_form(self):
+        response = self.client.post("/contact/", follow=True)
+        content = response.content.decode("utf-8")
+        self.assertTrue("Falha na hora de mandar a mensagem" in content)
+
+    @override_settings(RECAPTCHA_SECRET_KEY=None)
+    @patch("pyjobs.core.views.ContactForm")
+    @responses.activate
+    def test_check_if_when_recaptcha_is_none_message_is_sent(self, _mocked_form_save):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"success": "Success"},
+            status=200,
+        )
+        response = self.client.post("/contact/", follow=True)
+        content = response.content.decode("utf-8")
+        self.assertTrue("Mensagem enviada com sucesso" in content)
+
 
 class PyJobsMultipleJobsPagesTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
@@ -206,15 +228,24 @@ class PyJobsFeedTest(TestCase):
 class PyJobsPremiumFeedTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
-        mommy.make("core.Job", _quantity=1, premium=True)
+        mommy.make(
+            "core.Job",
+            _quantity=1,
+            premium=True,
+            premium_at=datetime.now(),
+            title="Ola",
+            company_name="test",
+            workplace="test",
+        )
         self.client = Client()
 
-    def test_if_premium_feed_returns_right_status_code(self):
-        response = self.client.get("/feed/premium/")
+    def test_if_feed_returns_right_status_code(self):
+        response = self.client.get("/feed/")
         self.assertEqual(response.status_code, 200)
 
-    def test_if_premium_job_data_is_in_feed(self):
+    def test_if_job_data_is_in_feed(self):
         response = self.client.get("/feed/premium/")
+        content = response.content.decode("utf-8")
         first_job = Job.objects.all().first()
         self.assertContains(response, first_job.title)
         self.assertContains(response, first_job.company_name)
@@ -280,3 +311,58 @@ class PyJobsNormalViews(TestCase):
     def test_if_job_creation_page_returns_200(self):
         response = self.client.get("/job/create/")
         self.assertEqual(response.status_code, 200)
+
+
+class PyJobsRegisterNewJob(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    @override_settings(RECAPTCHA_SECRET_KEY=None)
+    def test_if_job_register_page_returns_200(self):
+        response = self.client.post("/register/new/job/", follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(RECAPTCHA_SECRET_KEY=None)
+    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(self):
+        response = self.client.post("/register/new/job/", follow=True)
+        content = response.content.decode("utf-8")
+        self.assertTrue("Falha na hora de criar o job" in content)
+
+    @override_settings(RECAPTCHA_SECRET_KEY=None)
+    @patch("pyjobs.core.views.JobForm")
+    def test_if_job_register_page_returns_success_if_form_is_filled_wrong(
+        self, _mocked_job_form
+    ):
+        response = self.client.post("/register/new/job/", follow=True)
+        content = response.content.decode("utf-8")
+        self.assertTrue("Acabamos de mandar um e-mail para vocês" in content)
+
+    @override_settings(RECAPTCHA_SECRET_KEY="AAA")
+    @patch("pyjobs.core.views.JobForm")
+    @responses.activate
+    def test_if_job_register_page_returns_success_with_recaptcha(
+        self, _mocked_job_form
+    ):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"success": "Success"},
+            status=200,
+        )
+        response = self.client.post("/register/new/job/", follow=True)
+        content = response.content.decode("utf-8")
+        self.assertTrue("Acabamos de mandar um e-mail para vocês" in content)
+
+    @override_settings(RECAPTCHA_SECRET_KEY="AAA")
+    @patch("pyjobs.core.views.JobForm")
+    @responses.activate
+    def test_if_job_register_page_returns_false_with_recaptcha(self, _mocked_job_form):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"failed": "yes"},
+            status=200,
+        )
+        response = self.client.post("/register/new/job/", follow=True)
+        content = response.content.decode("utf-8")
+        self.assertTrue("Preencha corretamente o captcha" in content)

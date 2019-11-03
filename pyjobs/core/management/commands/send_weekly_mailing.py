@@ -7,7 +7,8 @@ from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context
 
-from pyjobs.core.models import Job, MailingList
+from pyjobs.core.models import Job
+from pyjobs.marketing.models import MailingList
 from pyjobs.marketing.utils import post_telegram_channel
 from django.conf import settings
 
@@ -29,14 +30,12 @@ def check_today_is_the_right_day():
 class Command(BaseCommand):
     def handle(self, *args, **options):
         if not check_today_is_the_right_day():
-            print("Today is not the right day!")
-            return
+            return "False"
 
         emails_mailing_lists = [mailing.email for mailing in MailingList.objects.all()]
 
         if len(emails_mailing_lists) == 0:
-            print("There are no mailing lists!")
-            return
+            return "False"
 
         emails_mailing_replies = [
             format_owner_email(email) for email in emails_mailing_lists
@@ -53,7 +52,7 @@ class Command(BaseCommand):
 
         if len(jobs) == 0:
             print("There are no jobs on the platform!")
-            return
+            return "False"
 
         plain_text = get_template("emails/weekly_summary.txt")
 
@@ -75,4 +74,4 @@ class Command(BaseCommand):
 
             msg.send()
 
-        print("Message sent!")
+        return "True"

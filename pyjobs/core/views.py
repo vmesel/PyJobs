@@ -114,7 +114,7 @@ def register_new_job(request):
         )
 
         result = recaptcha_response.json()
-        if not result["success"]:
+        if "success" not in result:
             return render(
                 request,
                 template_name="generic.html",

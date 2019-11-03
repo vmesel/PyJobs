@@ -2,6 +2,7 @@
   source = pyjobs
   omit =
       pyjobs/core/tests/*.py
+      pyjobs/marketing/tests/*.py
       pyjobs/core/migrations/*.py
+      pyjobs/marketing/migrations/*.py
       pyjobs/wsgi.py
-      pyjobs/core/management/*
