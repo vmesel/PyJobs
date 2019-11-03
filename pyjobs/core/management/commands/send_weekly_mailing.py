@@ -51,7 +51,6 @@ class Command(BaseCommand):
         jobs += list(Job.get_feed_jobs())[:missing_jobs]
 
         if len(jobs) == 0:
-            print("There are no jobs on the platform!")
             return "False"
 
         plain_text = get_template("emails/weekly_summary.txt")

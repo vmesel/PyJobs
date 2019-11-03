@@ -45,7 +45,7 @@
     <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description"
-    content="Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país." />
+    content="{% if description %}{{description}}{%else%}Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.{%endif%}" />
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
