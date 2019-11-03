@@ -399,6 +399,8 @@ class PyJobsJobChallenge(TestCase):
         self.client.login(username="jacob", password="top_secret")
 
     def test_if_job_that_is_not_challenging_redirects_to_job_page(self):
-        response = self.client.get('/job/{}/challenge_submit/'.format(self.job.pk), follow=True)
+        response = self.client.get(
+            "/job/{}/challenge_submit/".format(self.job.pk), follow=True
+        )
         url = response.redirect_chain[0][0]
-        self.assertEqual(url, '/job/{}/'.format(self.job.pk))
+        self.assertEqual(url, "/job/{}/".format(self.job.pk))

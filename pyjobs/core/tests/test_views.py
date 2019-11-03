@@ -126,25 +126,25 @@ class TestingRestrictedViews(TestCase):
     def test_if_change_password_form_is_on_page_and_validating(self):
         self.client.login(username="jacob", password="top_secret")
         response = self.client.post("/password/")
-        content = response.content.decode('utf-8')
-        self.assertIn('Por favor, corrija os erros abaixo', content)
+        content = response.content.decode("utf-8")
+        self.assertIn("Por favor, corrija os erros abaixo", content)
 
-    @patch('pyjobs.core.views.PasswordChangeForm')
+    @patch("pyjobs.core.views.PasswordChangeForm")
     def test_if_change_password_form_is_on_page_and_pass_changed(self, _mocked_form):
         self.client.login(username="jacob", password="top_secret")
         response = self.client.post("/password/")
-        content = response.content.decode('utf-8')
-        self.assertIn('Sua senha foi alterada com sucesso!', content)
+        content = response.content.decode("utf-8")
+        self.assertIn("Sua senha foi alterada com sucesso!", content)
 
     def test_if_change_info_form_is_on_page_and_validating(self):
         self.client.login(username="jacob", password="top_secret")
         response = self.client.post("/info/")
-        content = response.content.decode('utf-8')
-        self.assertIn('Por favor, corrija os erros abaixo', content)
+        content = response.content.decode("utf-8")
+        self.assertIn("Por favor, corrija os erros abaixo", content)
 
-    @patch('pyjobs.core.views.EditProfileForm')
+    @patch("pyjobs.core.views.EditProfileForm")
     def test_if_change_info_form_is_on_page_and_info_changed(self, _mocked_form):
         self.client.login(username="jacob", password="top_secret")
         response = self.client.post("/info/")
-        content = response.content.decode('utf-8')
-        self.assertIn('Suas informações foram atualizadas com sucesso!', content)
+        content = response.content.decode("utf-8")
+        self.assertIn("Suas informações foram atualizadas com sucesso!", content)
