@@ -8,8 +8,9 @@ from model_mommy import mommy
 import responses
 import json
 from datetime import datetime
-from pyjobs.core.models import Job, Profile
+from pyjobs.core.models import Job, Profile, JobApplication
 from pyjobs.core.views import index
+from pyjobs.core.forms import JobApplicationForm
 
 
 class HomeJobsViewsTest(TestCase):
@@ -366,3 +367,38 @@ class PyJobsRegisterNewJob(TestCase):
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
         self.assertTrue("Preencha corretamente o captcha" in content)
+
+
+class PyJobsJobChallenge(TestCase):
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job.objects.create(
+            title="Vaga 3",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+            public=True,
+        )
+
+        self.user = User.objects.create_user(
+            username="jacob", email="jacob@gmail.com", password="top_secret"
+        )
+
+        self.profile = Profile.objects.create(
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390",
+        )
+
+        self.client = Client()
+
+        self.client.login(username="jacob", password="top_secret")
+
+    def test_if_job_that_is_not_challenging_redirects_to_job_page(self):
+        response = self.client.get('/job/{}/challenge_submit/'.format(self.job.pk), follow=True)
+        url = response.redirect_chain[0][0]
+        self.assertEqual(url, '/job/{}/'.format(self.job.pk))

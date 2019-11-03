@@ -208,7 +208,7 @@ def pythonista_change_password(request):
             return render(request, template_name, context)
         else:
             context["form"] = PasswordChangeForm(request.user, request.POST)
-            messages.error(request, "Por favor, corrija os erros abaixo.")
+            context["message"] = "Por favor, corrija os erros abaixo."
     return render(request, "pythonistas-area-password-change.html", context)
 
 
@@ -444,7 +444,6 @@ def thumbnail_view(request, pk):
     job = Job.objects.filter(pk=pk).first()
     im = generate_thumbnail(job=job)
 
-    # serialize to HTTP response
     response = HttpResponse(content_type="image/png")
     im.save(response, "PNG")
     return response
