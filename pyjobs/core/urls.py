@@ -41,7 +41,6 @@ urlpatterns = [
         applied_users_details,
         name="applied_users_details",
     ),
-    url(r"^job/(?P<pk>\d+)/rec/$", get_job_related_users, name="get_job_related_users"),
     url(r"^job/(?P<pk>\d+)/app/$", get_job_applications, name="get_job_applications"),
     url(
         r"^job/(?P<pk>\d+)/challenge_submit/$",

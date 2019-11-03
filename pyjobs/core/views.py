@@ -70,6 +70,7 @@ def job_view(request, pk):
         "job": get_object_or_404(Job, pk=pk),
         "logged_in": False,
         "title": get_object_or_404(Job, pk=pk).title,
+        "description": get_object_or_404(Job, pk=pk).description,
     }
 
     if request.method == "POST":
@@ -208,7 +209,7 @@ def pythonista_change_password(request):
             return render(request, template_name, context)
         else:
             context["form"] = PasswordChangeForm(request.user, request.POST)
-            messages.error(request, "Por favor, corrija os erros abaixo.")
+            context["message"] = "Por favor, corrija os erros abaixo."
     return render(request, "pythonistas-area-password-change.html", context)
 
 
@@ -401,50 +402,10 @@ def get_job_applications(request, pk):
     return response
 
 
-@staff_member_required
-def get_job_related_users(request, pk):
-    users_grades = [
-        (
-            "job_pk",
-            "grade",
-            "first_name",
-            "last_name",
-            "email",
-            "github",
-            "linkedin",
-            "cellphone",
-        )
-    ]
-
-    users_grades += [
-        (
-            pk,
-            profile.profile_skill_grade(pk),
-            profile.user.first_name,
-            profile.user.last_name,
-            profile.user.email,
-            profile.github,
-            profile.linkedin,
-            profile.cellphone,
-        )
-        for profile in Profile.objects.all()
-    ]
-
-    response = HttpResponse(content_type="text/csv")
-    response["Content-Disposition"] = 'attachment; filename="job_{}_users.csv"'.format(
-        pk
-    )
-    writer = csv.writer(response)
-    writer.writerows(users_grades)
-
-    return response
-
-
 def thumbnail_view(request, pk):
     job = Job.objects.filter(pk=pk).first()
     im = generate_thumbnail(job=job)
 
-    # serialize to HTTP response
     response = HttpResponse(content_type="image/png")
     im.save(response, "PNG")
     return response

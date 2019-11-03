@@ -8,8 +8,11 @@ from model_mommy import mommy
 import responses
 import json
 from datetime import datetime
-from pyjobs.core.models import Job, Profile
+from pyjobs.core.models import Job, Profile, JobApplication
 from pyjobs.core.views import index
+from pyjobs.core.forms import JobApplicationForm
+import csv
+import io
 
 
 class HomeJobsViewsTest(TestCase):
@@ -366,3 +369,115 @@ class PyJobsRegisterNewJob(TestCase):
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
         self.assertTrue("Preencha corretamente o captcha" in content)
+
+
+class PyJobsJobChallenge(TestCase):
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def setUp(self, _mocked_post_telegram_channel):
+        self.job = Job.objects.create(
+            title="Vaga 3",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+            public=True,
+        )
+
+        self.user = User.objects.create_user(
+            username="jacob", email="jacob@gmail.com", password="top_secret"
+        )
+
+        self.profile = Profile.objects.create(
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390",
+        )
+
+        self.client = Client()
+
+        self.client.login(username="jacob", password="top_secret")
+
+    def test_if_job_that_is_not_challenging_redirects_to_job_page(self):
+        response = self.client.get(
+            "/job/{}/challenge_submit/".format(self.job.pk), follow=True
+        )
+        url = response.redirect_chain[0][0]
+        self.assertEqual(url, "/job/{}/".format(self.job.pk))
+
+    @patch("pyjobs.core.views.JobApplicationForm")
+    def test_if_user_applies(self, _mocked_form):
+        self.client.login(username="jacob", password="top_secret")
+        self.job.is_challenging = True
+        self.job.save()
+        self.job.refresh_from_db()
+        self.job_application = JobApplication.objects.create(
+            job=self.job, user=self.user
+        )
+        self.job_application.refresh_from_db()
+        mock_form = _mocked_form.return_value
+        mock_form.is_valid.return_value = True
+
+        response = self.client.post(
+            "/job/{}/challenge_submit/".format(self.job.pk),
+            data={"challenge_response_link": "http://www.google.com"},
+            content_type="application/x-www-form-urlencoded",
+            follow=True,
+        )
+        mock_form.save.assert_called()
+
+
+class AppliedUsersDetailsTest(TestCase):
+    def setUp(self):
+        self.job = Job.objects.create(
+            title="Vaga 3",
+            workplace="Sao Paulo",
+            company_name="XPTO",
+            company_email="vm@xpto.com",
+            description="Job bem maneiro",
+            premium=True,
+            public=True,
+        )
+
+        self.user = User.objects.create_user(
+            username="jacob",
+            first_name="jacob",
+            last_name="bocaj",
+            email="jacob@gmail.com",
+            password="top_secret",
+            is_staff=True,
+        )
+
+        self.profile = Profile.objects.create(
+            user=self.user,
+            github="http://www.github.com/foobar",
+            linkedin="http://www.linkedin.com/in/foobar",
+            portfolio="http://www.foobar.com/",
+            cellphone="11981435390",
+        )
+
+        self.job_application = JobApplication.objects.create(
+            user=self.user, job=self.job
+        )
+
+        self.client = Client()
+
+        self.client.login(username="jacob", password="top_secret")
+
+    def test_if_job_application_is_in_page(self):
+        response = self.client.get("/job/{}/details/".format(self.job.pk))
+        content = response.content.decode("utf-8")
+        self.assertIn(self.user.first_name, content)
+        self.assertIn(self.user.last_name, content)
+        self.assertIn(self.profile.github, content)
+
+    def test_if_get_job_applications_page_works(self):
+        response = self.client.get("/job/{}/app/".format(self.job.pk))
+        content = response.content.decode("utf-8")
+        csv_reader = csv.reader(io.StringIO(content))
+        body = list(csv_reader)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.user.first_name, body[1])
