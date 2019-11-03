@@ -5,7 +5,9 @@ from django.test import TestCase
 from django.utils.six import StringIO
 from pyjobs.core.management.commands.run_routines import Command as run_routines
 from pyjobs.core.management.commands.send_weekly_summary import *
-from pyjobs.core.management.commands.send_weekly_mailing import check_today_is_the_right_day as check_mailing_date
+from pyjobs.core.management.commands.send_weekly_mailing import (
+    check_today_is_the_right_day as check_mailing_date,
+)
 from model_mommy import mommy
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
@@ -45,8 +47,8 @@ class SendTestReminderTest(TestCase):
             job=self.job,
             user=self.profile.user,
             email_sent_at=datetime.now() - timedelta(days=4),
-            challenge_resent = False,
-            challenge_response_at = None
+            challenge_resent=False,
+            challenge_response_at=None,
         )
 
     def test_no_job_applying_tests(self):
@@ -79,12 +81,14 @@ class SendWeeklySummaryTest(TestCase):
             " - {} na {} em: {} - http://www.pyjobs.com.br/job/{}".format(
                 self.job.title, self.job.company_name, self.job.workplace, self.job.pk
             ),
-            format_job(self.job)
+            format_job(self.job),
         )
 
     def test_formatting_whole_message(self):
         self.jobs = [format_job(self.job)]
-        summary_list = ["Olá, seja bem vindo a mais um resumo semanal de vagas do PyJobs:\n"] + self.jobs
+        summary_list = [
+            "Olá, seja bem vindo a mais um resumo semanal de vagas do PyJobs:\n"
+        ] + self.jobs
         summary_text = "\n".join(summary_list)
         self.assertEqual(summary_text, format_message_text(self.jobs))
 

@@ -15,7 +15,9 @@ class FeedbackRequestTest(TestCase):
     def setUp(self):
         self.out = StringIO()
         sys.stdout = self.out
-        self.job = mommy.make(Job, created_at = datetime.now() - timedelta(14), premium=True)
+        self.job = mommy.make(
+            Job, created_at=datetime.now() - timedelta(14), premium=True
+        )
         mommy.make(Messages, message_type="feedback")
         self.job.premium_at = datetime.now() - timedelta(14)
         self.job.save()

@@ -435,5 +435,5 @@ class Command(BaseCommand):
         skills = self._get_skills()
         for skill in skills:
             skill_obj = Skill.objects.create(name=skill.strip())
-            
+
         return "True"
