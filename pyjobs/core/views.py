@@ -69,9 +69,10 @@ def job_view(request, pk):
     context = {
         "job": get_object_or_404(Job, pk=pk),
         "logged_in": False,
-        "title": get_object_or_404(Job, pk=pk).title,
-        "description": get_object_or_404(Job, pk=pk).description,
     }
+
+    context["title"] = context["job"].title
+    context["description"] = context["job"].description
 
     if request.method == "POST":
         context["job"].apply(request.user)  # aplica o usuario
