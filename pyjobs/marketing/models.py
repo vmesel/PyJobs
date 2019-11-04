@@ -2,7 +2,9 @@ from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
 from django.db.models.signals import post_save
+from django.contrib.auth.models import User
 from pyjobs.core.email_utils import get_email_with_template
+from pyjobs.core.models import Job
 
 
 class MailingList(models.Model):
@@ -45,10 +47,36 @@ class Messages(models.Model):
         verbose_name_plural = "Mensagens"
 
 
+class Share(models.Model):
+    user_sharing = models.ForeignKey(User)
+
+    user_receiving_email = models.EmailField(
+        "E-mail para enviarmos a indicação", null=False, blank=False
+    )
+
+    job = models.ForeignKey(Job)
+
+    class Meta:
+        verbose_name = "Indicação"
+        verbose_name_plural = "Indicações"
+
+
 @receiver(post_save, sender=Contact)
 def new_contact(sender, instance, created, **kwargs):
     email_context = {"mensagem": instance}
     msg = get_email_with_template(
         "new_contact", email_context, instance.subject, [settings.WEBSITE_OWNER_EMAIL]
+    )
+    msg.send()
+
+
+@receiver(post_save, sender=Share)
+def share_to_new_buddy(sender, instance, created, **kwargs):
+    email_context = {"pessoa": instance.user_sharing, "vaga": instance.job}
+    msg = get_email_with_template(
+        "job_sharing",
+        email_context,
+        "Indicacao de vaga",
+        [instance.user_receiving_email],
     )
     msg.send()
