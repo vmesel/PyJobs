@@ -1,0 +1,9 @@
+Olá,
+
+A pessoa: {{pessoa.name}} lhe indicou para a vaga: {{job.title}}
+
+Caso você queira saber mais, entre em: {{url_do_site}}job/{{job.pk}}
+
+Abraços,
+{{dono_do_site}}
+{{url_do_site}}

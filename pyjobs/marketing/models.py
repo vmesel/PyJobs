@@ -72,9 +72,9 @@ def new_contact(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Share)
 def share_to_new_buddy(sender, instance, created, **kwargs):
-    email_context = {}
+    email_context = {"pessoa": instance.user_sharing, "vaga": instance.job}
     msg = get_email_with_template(
-        "new_contact",
+        "job_sharing",
         email_context,
         "Indicacao de vaga",
         [instance.user_receiving_email],
