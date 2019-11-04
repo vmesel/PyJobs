@@ -96,7 +96,9 @@
                         <h4 class="question">Descrição da vaga</h4>
                         <div class="answer">
                           <p>
-                            {{job.description|linebreaks}}
+                            {% autoescape off %}
+                              {{job.description|linebreaksbr}}
+                            {% endautoescape %}
                           </p>
                         </div>
                     </div>
@@ -104,7 +106,9 @@
                         <h4 class="question">Requisitos</h4>
                         <div class="answer">
                           <p>
-                            {{job.requirements|linebreaks}}
+                            {% autoescape off %}
+                                {{job.requirements|linebreaksbr}}
+                            {% endautoescape %}
                           </p>
                         </div>
                     </div>
