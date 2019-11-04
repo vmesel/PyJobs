@@ -17,12 +17,14 @@ def sharing_job_view(request, pk):
     context["description"] = context["job"].description
     context["form"] = SharingForm(request.POST or None)
 
+    is_valid_before = context["form"].is_valid()
+
     if request.method == "POST" and context["form"].is_valid():
         context["form"].save(user_sharing=request.user, job=context["job"])
         context["shared"] = True
         context["form"] = SharingForm(None)
 
-    if request.method == "POST" and not context["form"].is_valid():
+    if request.method == "POST" and not is_valid_before:
         context["invalid_email"] = True
         context["form"] = SharingForm(None)
 

@@ -1,8 +1,8 @@
 Olá,
 
-A pessoa: {{pessoa.name}} lhe indicou para a vaga: {{job.title}}
+A pessoa: {{pessoa.name}} lhe indicou para a vaga: {{vaga.title}}
 
-Caso você queira saber mais, entre em: {{url_do_site}}job/{{job.pk}}
+Caso você queira saber mais, entre em: {{url_do_site}}job/{{vaga.pk}}
 
 Abraços,
 {{dono_do_site}}
