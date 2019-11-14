@@ -4,13 +4,14 @@ from model_mommy.mommy import make
 from pyjobs.marketing.models import CustomerQuote
 from django.test import Client
 
+
 class QuotesModelTesting(TestCase):
     def setUp(self):
         self.quote = CustomerQuote(
-            customer_name = "teste",
-            company_name = "teste",
-            avatar_name = "teste",
-            customer_quote = "teste"
+            customer_name="teste",
+            company_name="teste",
+            avatar_name="teste",
+            customer_quote="teste",
         )
         self.quote.save()
 
