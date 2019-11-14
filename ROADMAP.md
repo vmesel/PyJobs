@@ -14,3 +14,5 @@ que podemos mexer e melhorar no sistema! xD
  - [ ] Exterminar erros de code-smell que estão [aqui no CodeClimate](https://codeclimate.com/github/vmesel/PyJobs)
  - [ ] Arrumar lógicas da view de contato para remover a validação do RECAPTCHA da view e colocar no form
  - [ ] Adicionar campo de tipo de contratação (CLT, PJ, Freela, CLT ou PJ, A discutir)
+ - [ ] Atualizar Dockerfile para Python 3.8
+ - [ ] Atualizar Pipfile para Python 3.8
