@@ -44,14 +44,6 @@ class FeedbackRequestTest(TestCase):
         call_command("send_weekly_mailing", stdout=out)
         self.assertEqual("False\n", out.getvalue())
 
-    @freeze_time("2019-10-30")
-    @override_settings(WEBSITE_OWNER_EMAIL="v@m.com")
-    def test_called_command_with_right_date(self):
-        out = StringIO()
-        sys.stdout = out
-        call_command("send_weekly_mailing", stdout=out)
-        self.assertEqual("True\n", out.getvalue())
-
 
 class FeedbackRequestWithNoMailingListTest(TestCase):
     def setUp(self):

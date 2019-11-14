@@ -61,6 +61,16 @@ class Share(models.Model):
         verbose_name_plural = "Indicações"
 
 
+class CustomerQuote(models.Model):
+    customer_name = models.CharField("Nome do cliente", max_length=500)
+
+    company_name = models.CharField("Nome da empresa", max_length=500)
+
+    avatar_name = models.CharField("Nome da imagem estatica do avatar", max_length=500)
+
+    customer_quote = models.TextField("Texto do depoimento")
+
+
 @receiver(post_save, sender=Contact)
 def new_contact(sender, instance, created, **kwargs):
     email_context = {"mensagem": instance}
