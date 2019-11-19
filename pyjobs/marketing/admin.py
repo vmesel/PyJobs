@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Messages, MailingList, Share
+from .models import Contact, Messages, MailingList, Share, CustomerQuote
 
 
 class MailingListsAdmin(admin.ModelAdmin):
