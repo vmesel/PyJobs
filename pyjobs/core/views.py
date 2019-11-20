@@ -98,43 +98,21 @@ def register_new_job(request):
         return redirect("/")
 
     new_job = JobForm(request.POST)
-    if not new_job.is_valid():
-        return render(
-            request,
-            template_name="generic.html",
-            context={
-                "message_first": "Falha na hora de criar o job",
-                "message_second": "Você preencheu algum campo da maneira errada, tente novamente!",
-            },
-        )
+    g_recaptcha_response = request.POST.get("g-recaptcha-response")
+    context = {}
 
-    if settings.RECAPTCHA_SECRET_KEY:
-        recaptcha_value = request.POST.get("g-recaptcha-response")
-        data = {"secret": settings.RECAPTCHA_SECRET_KEY, "response": recaptcha_value}
-        recaptcha_response = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify", data=data
-        )
+    context["message_first"] = "Falha na hora de criar o job"
+    context["message_second"] = "Algum campo não foi preenchido corretamente!"
 
-        result = recaptcha_response.json()
-        if "success" not in result:
-            return render(
-                request,
-                template_name="generic.html",
-                context={
-                    "message_first": "Preencha corretamente o captcha",
-                    "message_second": "Você não completou a validação do captcha!",
-                },
-            )
+    if new_job.is_valid(g_recaptcha_response):
+        context["message_first"] = "Acabamos de mandar um e-mail para vocês!"
+        context[
+            "message_second"
+        ] = "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
 
-    new_job.save()
-    return render(
-        request,
-        template_name="generic.html",
-        context={
-            "message_first": "Acabamos de mandar um e-mail para vocês!",
-            "message_second": "Cheque o e-mail de vocês para saber como alavancar essa vaga!",
-        },
-    )
+        new_job.save()
+
+    return render(request, template_name="generic.html", context=context)
 
 
 def close_job(request, pk, close_hash):
