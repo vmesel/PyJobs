@@ -13,7 +13,10 @@ from pyjobs.core.models import Job, Profile, Skill, JobApplication
 from pyjobs.marketing.models import Contact
 
 
-class JobForm(ModelForm):
+class CustomModelForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomModelForm, self).__init__(*args, **kwargs)
+
     def is_valid(self, g_recaptcha_response):
         if not settings.RECAPTCHA_SECRET_KEY:
             return super().is_valid()
@@ -31,6 +34,8 @@ class JobForm(ModelForm):
 
         return ("success" in result) and super().is_valid()
 
+
+class JobForm(CustomModelForm):
     class Meta:
         model = Job
         fields = [
