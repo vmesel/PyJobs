@@ -67,7 +67,7 @@ class JobForm(CustomModelForm):
                 field.choices = field.choices[:-1]
 
 
-class ContactForm(ModelForm):
+class ContactForm(CustomModelForm):
     class Meta:
         model = Contact
         fields = ["name", "subject", "email", "message"]
