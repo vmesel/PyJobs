@@ -130,30 +130,22 @@ def close_job(request, pk, close_hash):
 
 
 def contact(request):
-    context = {}
+    context = {"form": ContactForm(request.POST or None)}
+
+    context["message_first"] = "Falha na hora de mandar a mensagem"
+    context[
+        "message_second"
+    ] = "Você preencheu algum campo da maneira errada, tente novamente!"
+
+    recaptcha_response = request.POST.get("g-recaptcha-response")
+
+    if request.method == "POST" and context["form"].is_valid(recaptcha_response):
+        context["form"].save()
+        context["message_first"] = "Mensagem enviada com sucesso"
+        context["message_second"] = "Vá para a home do site!"
 
     if request.method == "POST":
-        form = ContactForm(request.POST or None)
-        recaptcha_response = request.POST.get("g-recaptcha-response")
-        data = {"secret": settings.RECAPTCHA_SECRET_KEY, "response": recaptcha_response}
-        r = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
-        result = r.json()
-
-        if (form.is_valid() and result["success"]) or (
-            settings.RECAPTCHA_SECRET_KEY == None
-        ):
-            form.save()
-            context["message_first"] = "Mensagem enviada com sucesso"
-            context["message_second"] = "Vá para a home do site!"
-            return render(request, template_name="generic.html", context=context)
-        else:
-            context["message_first"] = "Falha na hora de mandar a mensagem"
-            context[
-                "message_second"
-            ] = "Você preencheu algum campo da maneira errada, tente novamente!"
-            return render(request, template_name="generic.html", context=context)
-
-    context["form"] = ContactForm
+        return render(request, template_name="generic.html", context=context)
 
     return render(request, "contact-us.html", context)
 
