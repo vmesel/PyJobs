@@ -333,7 +333,7 @@ class PyJobsRegisterNewJob(TestCase):
 
     @responses.activate
     @override_settings(RECAPTCHA_SECRET_KEY=None)
-    def test_if_job_register_page_returns_success_if_form_is_filled_wrong(self):
+    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(self):
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
         self.assertTrue("Falha na hora de criar o job" in content)

@@ -28,7 +28,6 @@ class CustomModelForm(ModelForm):
         recaptcha_response = requests.post(
             "https://www.google.com/recaptcha/api/siteverify", data=data
         )
-        print(recaptcha_response)
 
         result = recaptcha_response.json()
 
