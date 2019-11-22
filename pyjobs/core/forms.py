@@ -1,7 +1,10 @@
+import requests
+
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.forms import ModelForm
 from datetime import datetime
 from django_select2.forms import Select2MultipleWidget, Select2Widget
@@ -10,7 +13,28 @@ from pyjobs.core.models import Job, Profile, Skill, JobApplication
 from pyjobs.marketing.models import Contact
 
 
-class JobForm(ModelForm):
+class CustomModelForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomModelForm, self).__init__(*args, **kwargs)
+
+    def is_valid(self, g_recaptcha_response):
+        if not settings.RECAPTCHA_SECRET_KEY:
+            return super().is_valid()
+
+        data = {
+            "secret": settings.RECAPTCHA_SECRET_KEY,
+            "response": g_recaptcha_response,
+        }
+        recaptcha_response = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify", data=data
+        )
+
+        result = recaptcha_response.json()
+
+        return ("success" in result) and super().is_valid()
+
+
+class JobForm(CustomModelForm):
     class Meta:
         model = Job
         fields = [
@@ -42,7 +66,7 @@ class JobForm(ModelForm):
                 field.choices = field.choices[:-1]
 
 
-class ContactForm(ModelForm):
+class ContactForm(CustomModelForm):
     class Meta:
         model = Contact
         fields = ["name", "subject", "email", "message"]

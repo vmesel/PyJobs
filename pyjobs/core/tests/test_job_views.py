@@ -331,21 +331,17 @@ class PyJobsRegisterNewJob(TestCase):
         content = response.content.decode("utf-8")
         self.assertTrue("Falha na hora de criar o job" in content)
 
+    @responses.activate
     @override_settings(RECAPTCHA_SECRET_KEY=None)
-    @patch("pyjobs.core.views.JobForm")
-    def test_if_job_register_page_returns_success_if_form_is_filled_wrong(
-        self, _mocked_job_form
-    ):
+    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(self):
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
-        self.assertTrue("Acabamos de mandar um e-mail para vocês" in content)
+        self.assertTrue("Falha na hora de criar o job" in content)
 
+    @responses.activate
     @override_settings(RECAPTCHA_SECRET_KEY="AAA")
     @patch("pyjobs.core.views.JobForm")
-    @responses.activate
-    def test_if_job_register_page_returns_success_with_recaptcha(
-        self, _mocked_job_form
-    ):
+    def test_if_job_register_page_returns_success_with_recaptcha(self, _mocked_form):
         responses.add(
             responses.POST,
             "https://www.google.com/recaptcha/api/siteverify",
@@ -357,9 +353,8 @@ class PyJobsRegisterNewJob(TestCase):
         self.assertTrue("Acabamos de mandar um e-mail para vocês" in content)
 
     @override_settings(RECAPTCHA_SECRET_KEY="AAA")
-    @patch("pyjobs.core.views.JobForm")
     @responses.activate
-    def test_if_job_register_page_returns_false_with_recaptcha(self, _mocked_job_form):
+    def test_if_job_register_page_returns_false_with_recaptcha(self):
         responses.add(
             responses.POST,
             "https://www.google.com/recaptcha/api/siteverify",
@@ -368,7 +363,7 @@ class PyJobsRegisterNewJob(TestCase):
         )
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
-        self.assertTrue("Preencha corretamente o captcha" in content)
+        self.assertTrue("Falha na hora de criar o job" in content)
 
 
 class PyJobsJobChallenge(TestCase):
