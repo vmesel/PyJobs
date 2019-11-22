@@ -12,6 +12,8 @@ from django_select2.forms import Select2MultipleWidget, Select2Widget
 from pyjobs.core.models import Job, Profile, Skill, JobApplication
 from pyjobs.marketing.models import Contact
 
+from pyjobs.settings import WEBSITE_NAME
+
 
 class CustomModelForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -59,11 +61,25 @@ class JobForm(CustomModelForm):
     def __init__(self, *args, **kwargs):
         super(JobForm, self).__init__(*args, **kwargs)
         for key, field in self.fields.items():
-            field.widget.attrs.update({"placeholder": field.label})
+            field.widget.attrs.update({"placeholder": field.help_text})
 
-        for key, field in self.fields.items():
+            field.help_text = None
+
             if key in ["state", "salary_range", "job_level"]:
                 field.choices = field.choices[:-1]
+            elif key == "skills":
+                field.label = "Skills - coloque as skills para facilitar a busca por seu candidato \
+                de sucesso"
+            elif key == "remote":
+                field.label = " Essa vaga permite trabalho remoto"
+            elif key == "challenge_interested":
+                field.label = "Eu quero aplicar testes técnicos através da ferramenta automatizada do %s. [$]" \
+                              % WEBSITE_NAME
+            elif key == "ad_interested":
+                field.label = "Eu desejo ter acesso aos serviços do %s e ao clube de profissionais exclusivos." \
+                              % WEBSITE_NAME
+
+            print(key, field)
 
 
 class ContactForm(CustomModelForm):

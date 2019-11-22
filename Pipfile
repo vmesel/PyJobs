@@ -42,6 +42,7 @@ sendgrid-django = "*"
 tqdm = "*"
 whitenoise = "*"
 pillow = "*"
+django-crispy-forms = "*"
 
 [requires]
 python_version = "3.7.4"
