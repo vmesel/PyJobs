@@ -47,8 +47,8 @@ urlpatterns = [
         job_application_challenge_submission,
         name="job_application_challenge_submission",
     ),
-    #url(r"^job/create/$", job_creation, name="job_creation"),
-    url(r"^job/create/$", JobCreation.as_view(), name='job_creation'),
+    # url(r"^job/create/$", job_creation, name="job_creation"),
+    url(r"^job/create/$", JobCreation.as_view(), name="job_creation"),
     url(r"^lp/landing01/$", fb_ads_landing, name="fb_ads_landing"),
     url(r"^robots.txt$", robots_view, name="robots"),
     url(

@@ -57,16 +57,17 @@ def services_view(request):
     return render(request, template_name="services.html")
 
 
-#def job_creation(request):
+# def job_creation(request):
 #    context_dict = {"new_job_form": JobForm}
 #    return render(request, template_name="job_registration.html", context=context_dict)
 
 
 class JobCreation(CreateView):
     form_class = JobForm
-    template_name = 'job_registration.html'
+    template_name = "job_registration.html"
     context_dict = {"new_job_form": JobForm}
-    success_url = '/'
+    success_url = "/"
+
 
 def robots_view(request):
     return render(request, template_name="robots.txt")

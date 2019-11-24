@@ -73,11 +73,15 @@ class JobForm(CustomModelForm):
             elif key == "remote":
                 field.label = " Essa vaga permite trabalho remoto"
             elif key == "challenge_interested":
-                field.label = "Eu quero aplicar testes técnicos através da ferramenta automatizada do %s. [$]" \
-                              % WEBSITE_NAME
+                field.label = (
+                    "Eu quero aplicar testes técnicos através da ferramenta automatizada do %s. [$]"
+                    % WEBSITE_NAME
+                )
             elif key == "ad_interested":
-                field.label = "Eu desejo ter acesso aos serviços do %s e ao clube de profissionais exclusivos." \
-                              % WEBSITE_NAME
+                field.label = (
+                    "Eu desejo ter acesso aos serviços do %s e ao clube de profissionais exclusivos."
+                    % WEBSITE_NAME
+                )
 
             print(key, field)
 
