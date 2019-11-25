@@ -48,13 +48,13 @@ class Messages(models.Model):
 
 
 class Share(models.Model):
-    user_sharing = models.ForeignKey(User)
+    user_sharing = models.ForeignKey(User, on_delete=models.PROTECT)
 
     user_receiving_email = models.EmailField(
         "E-mail para enviarmos a indicação", null=False, blank=False
     )
 
-    job = models.ForeignKey(Job)
+    job = models.ForeignKey(Job, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = "Indicação"
