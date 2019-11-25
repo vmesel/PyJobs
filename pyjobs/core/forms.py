@@ -138,7 +138,7 @@ class RegisterForm(UserCreationForm):
                 username=instance.username, password=self.cleaned_data.get("password1")
             )
             profile.save()
-            profile.skills = self.cleaned_data["skills_"]
+            profile.skills.set(self.cleaned_data["skills_"])
             profile.save()
         return instance
 

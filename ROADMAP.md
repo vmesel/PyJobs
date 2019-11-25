@@ -6,7 +6,6 @@ que podemos mexer e melhorar no sistema! xD
 ## Previsão de coisas a serem feitas
 
  - [ ] Troca de front-end para poder permitir melhor UX e UI
- - [ ] Atualização do Django para o Django 2.X
  - [ ] Melhorar responsividade do portal para podermos permitir aos usuários melhor atualização de formulários
   - [ ] Form de criação de vaga
   - [ ] Form de atualização de dados do usuário
