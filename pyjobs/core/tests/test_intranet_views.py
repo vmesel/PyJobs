@@ -33,7 +33,7 @@ class JobAppliedToViewTest(TestCase):
 
         mommy.make("core.Skill", _quantity=7, _fill_optional=True)
 
-        self.job.skills = Skill.objects.all()[:5]
+        self.job.skills.set(Skill.objects.all()[:5])
         self.job.save()
 
         self.user = User.objects.create_user(

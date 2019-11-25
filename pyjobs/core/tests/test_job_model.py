@@ -176,7 +176,7 @@ class JobTest_04(TestCase):
 
         mommy.make("core.Skill", _quantity=7, _fill_optional=True)
 
-        self.job.skills = Skill.objects.all()[:5]
+        self.job.skills.set(Skill.objects.all()[:5])
         self.job.save()
 
         self.user = User.objects.create_user(
@@ -196,7 +196,7 @@ class JobTest_04(TestCase):
 
     @responses.activate
     def test_user_0_graded(self):
-        self.profile.skills = Skill.objects.all()[5:]
+        self.profile.skills.set(Skill.objects.all()[5:])
         responses.add(
             responses.POST,
             "https://api.mailerlite.com/api/v2/subscribers",
@@ -208,7 +208,7 @@ class JobTest_04(TestCase):
 
     @responses.activate
     def test_user_100_graded(self):
-        self.profile.skills = Skill.objects.all()
+        self.profile.skills.set(Skill.objects.all())
         responses.add(
             responses.POST,
             "https://api.mailerlite.com/api/v2/subscribers",
@@ -234,7 +234,7 @@ class JobTest_05(TestCase):
 
         mommy.make("core.Skill", _quantity=1, _fill_optional=True)
 
-        self.job.skills = Skill.objects.all()
+        self.job.skills.set(Skill.objects.all())
         self.job.save()
 
         self.job.created_at += -timedelta(14)
