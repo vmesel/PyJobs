@@ -78,7 +78,7 @@ def job_view(request, pk):
         context["job"].apply(request.user)  # aplica o usuario
         return redirect("/job/{}/".format(context["job"].pk))
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         context["applied"] = JobApplication.objects.filter(
             user=request.user, job=context["job"]
         ).exists()
