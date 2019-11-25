@@ -382,5 +382,5 @@ def thumbnail_view(request, pk):
     return response
 
 
-def handler_404(request):
+def handler_404(request, exception):
     return redirect("/")
