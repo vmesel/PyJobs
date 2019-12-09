@@ -20,19 +20,39 @@ Conheça nossos parceiros
                     {% for partner in partners %}
                     <div class="faq-item">
                         <div class="answer">
+                            <img src="{{partner.logo_url}}" alt="" height="100" width="100">
                         </div>
+                        <div class="answer">
+                            <h2>{{partner.company_name}}</h2>
+                        </div>
+                        <div class="answer">
+                            {%for skill in partner.skills.all%}
+                                <span class="badge badge-pill badge-primary">{{skill}}</span>
+                            {%endfor%}
+                        </div>
+                        <div class="answer">
+                            {{partner.description}}
+                        </div>
+                        <div class="answer">
+                            <a href="{{partner.company_address}}">
+                                <input type="button" value="Conheça a empresa" class="btn btn-success">
+                            </a>
+                        </div>
+                        <div class="answer">
+                            {% if partner.related_jobs.all %}
+                            <h4>Vagas</h4>
+                                {%for job in partner.related_jobs.all%}
+                                    <a href="{% url 'job_view' job.pk %}">
+                                        <span class="badge badge-pill badge-primary">{{job.title}}</span>
+                                    </a>
+                                {%endfor%}
+                            {% endif %}
+                        </div>
+                        <hr>
                     </div>
                     {% endfor %}
                 </div>
             </div>
         </section>
     </main>
-    <style media="screen">
-        @media only screen and (max-width: 600px) {
-
-            #application-status{
-                width: 100%;
-            }
-        }
-    </style>
 {%endblock%}

@@ -10,3 +10,9 @@ class Partner(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     description = models.TextField("Descrição da empresa", blank=True)
     related_jobs = models.ManyToManyField(Job, blank=True)
+
+    def __str__(self):
+        return self.company_name
+
+    class Meta:
+        verbose_name = "Parceiro"
