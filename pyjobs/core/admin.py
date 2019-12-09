@@ -89,6 +89,7 @@ class JobAdmin(admin.ModelAdmin):
         update_created_at,
         send_challenge_to_old_applicants,
     ]
+    filter_horizontal = ("skills",)
     search_fields = ["title", "company_name"]
     list_per_page = 100
 

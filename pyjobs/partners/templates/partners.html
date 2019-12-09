@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+Conheça nossos parceiros
+{% endblock %}
+{%block main%}
+
+    <main class="page faq-page">
+
+        <section class="clean-block clean-faq dark">
+
+            <div class="container">
+
+                <div class="block-heading">
+                    <h1 class="text-info">Nossos parceiros</h1>
+                </div>
+
+                <div class="block-content">
+                    {% for partner in partners %}
+                    <div class="faq-item">
+                        <div class="answer">
+                            <img src="{{partner.logo_url}}" alt="" height="100" width="100">
+                        </div>
+                        <div class="answer">
+                            <h2>{{partner.company_name}}</h2>
+                        </div>
+                        <div class="answer">
+                            {%for skill in partner.skills.all%}
+                                <span class="badge badge-pill badge-primary">{{skill}}</span>
+                            {%endfor%}
+                        </div>
+                        <div class="answer">
+                            {{partner.description}}
+                        </div>
+                        <div class="answer">
+                            <a href="{{partner.company_address}}">
+                                <input type="button" value="Conheça a empresa" class="btn btn-success">
+                            </a>
+                        </div>
+                        <div class="answer">
+                            {% if partner.related_jobs.all %}
+                            <h4>Vagas</h4>
+                                {%for job in partner.related_jobs.all%}
+                                    <a href="{% url 'job_view' job.pk %}">
+                                        <span class="badge badge-pill badge-primary">{{job.title}}</span>
+                                    </a>
+                                {%endfor%}
+                            {% endif %}
+                        </div>
+                        <hr>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+{%endblock%}
