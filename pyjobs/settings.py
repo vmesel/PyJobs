@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "pyjobs.core",
     "pyjobs.api",
+    "pyjobs.partners",
     "pyjobs.marketing",
     "widget_tweaks",
     "django.contrib.sitemaps",

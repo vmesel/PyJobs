@@ -24,6 +24,7 @@ urlpatterns = [
     url("api/", include("pyjobs.api.urls", namespace="api")),
     url(r"", include("pyjobs.core.urls")),
     url(r"", include("pyjobs.marketing.urls")),
+    url(r"", include("pyjobs.partners.urls")),
     url(
         r"^login/$",
         auth_views.LoginView.as_view(template_name="login.html"),
