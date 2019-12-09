@@ -32,7 +32,9 @@ class JobTest_01(TestCase):
         self.assertIsInstance(self.job.created_at, datetime)
 
     def test_job_str(self):
-        self.assertEqual(str(self.job), "Vaga 1")
+        self.assertEqual(
+            str(self.job), f"{self.job.title} - {self.job.company_name} - {self.job.pk}"
+        )
 
     def test_job_application_link(self):
         self.assertEqual(

@@ -35,7 +35,7 @@ class HomeJobsViewsTest(TestCase):
         self.assertEqual(self.home_page.func, index)
 
     def test_job_in_home(self):
-        job_title = str(self.job)
+        job_title = self.job.title
         self.assertTrue(job_title in self.home_page_html)
 
     def test_job_url_is_in_home(self):

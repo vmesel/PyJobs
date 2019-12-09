@@ -140,7 +140,7 @@ class Job(models.Model):
         indexes = [models.Index(fields=["created_at"])]
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.company_name} - {self.pk}"
 
     def get_application_link(self):
         return self.application_link if self.application_link != "" else False
