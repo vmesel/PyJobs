@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+Conheça nossos parceiros
+{% endblock %}
+{%block main%}
+
+    <main class="page faq-page">
+
+        <section class="clean-block clean-faq dark">
+
+            <div class="container">
+
+                <div class="block-heading">
+                    <h1 class="text-info">Nossos parceiros</h1>
+                </div>
+
+                <div class="block-content">
+                    {% for partner in partners %}
+                    <div class="faq-item">
+                        <div class="answer">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+    <style media="screen">
+        @media only screen and (max-width: 600px) {
+
+            #application-status{
+                width: 100%;
+            }
+        }
+    </style>
+{%endblock%}
