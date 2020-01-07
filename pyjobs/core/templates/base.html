@@ -1,28 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
-    <style media="screen">
-    .btn-chamada {
-        background-color: #ffe01b;
-        color: #000;
-        border: 0px solid #000;
-    }
-
-    .btn-destacada {
-        height: 75px;
-        width: 100%;
-        margin-top: 25px;
-        background-color: #ffe01b;
-        color: #000;
-        border: 0px solid #000;
-    }
-
-    #id_skills{
-        width: 100%;
-    }
-    </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -44,30 +23,11 @@
     <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
     <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:description"
-    content="{% if description %}{{description}}{%else%}Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.{%endif%}" />
-    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="{% static 'assets/fonts/simple-line-icons.min.css' %}">
+    <meta property="og:description" content="{% if description %}{{description}}{%else%}Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.{%endif%}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <script src="https://kit.fontawesome.com/8347312236.js" crossorigin="anonymous"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '355041588645833');
-  fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=355041588645833&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Facebook Pixel Code -->
 </head>
 
 <body>
@@ -75,62 +35,94 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2VF6PC"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light justify-content-between shadow-sm">
         <div class="container">
-            <h1>
-                <a class="navbar-brand" href="/">
-                    {% if WEBSITE_NAME == "PyJobs" %}
-                        <img src="{% static 'assets/img/logo-PyJobs.svg' %}" style="height:50px;width:100px;" class="logo">
-                    {%else%}
-                        {{WEBSITE_NAME}}
-                    {%endif%}
-                </a>
-            </h1>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse"
-                id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'index' %}#oportunidades">VAGAS</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'job_creation' %}">CADASTRE UMA VAGA</a></li>
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'contact' %}">CONTATO</a></li> -->
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'services' %}">NOSSOS SERVI&Ccedil;OS</a></li>
+            <a class="navbar-brand">
+                {% if WEBSITE_NAME == "PyJobs" %}
+                    <a class="nav-link" href="/" style="margin: 0; padding: 0;">
+                        <img src="{% static 'assets/img/logo-PyJobs.svg' %}" style="height:50px">
+                    </a>
+                {%else%}
+                    <h1>{{WEBSITE_NAME}}</h1>
+                {%endif%}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto" style="margin-right: 10px;">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/jobs/">Vagas</a>
+                  </li>
+                  <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'services' %}">Nossos serviços</a>
+                  </li>
+                  <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'pythonistas_signup' %}">Cadastre-se</a>
+                  </li>
+                    <li class="nav-item active dropdown ">
                     {% if user.is_authenticated %}
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'pythonistas_area' %}">ÁREA DO {{USER_SUBSTANTIVE}}</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'logout' %}">LOGOUT</a></li>
+                        <a class="nav-link dropdown-toggle" href="{% url 'pythonistas_area' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {% else %}
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'pythonistas_signup' %}">SE CADASTRE</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'login' %}">SE LOGUE</a></li>
-                    {% endif %}
-                </ul>
+                        <a class="nav-link dropdown-toggle" href="{% url 'login' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {%endif%}
+                    Área do Pythonista
+                  </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                        {% if user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        <a class="dropdown-item" href="{% url 'pythonistas_area' %}">Meu painel</a>
+                        {%endif%}
+                      </div>
+                    </li>
+              </ul>
+              <div class="form-inline my-2 my-lg-0">
+                  <a href="{% url 'job_creation' %}">
+                      <button class="botao">Cadastre uma vaga</button>
+                  </a>
+              </div>
             </div>
         </div>
-    </nav>
+      </nav>
     {%block main%}
     {%endblock main%}
-    <footer class="page-footer dark">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <h5>{{WEBSITE_NAME}}</h5>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="#oportunidades">Oportunidades {{WEBSITE_WORKING_LANGUAGE}}</a></li>
-                        <li><a href="partners/">Parceiros</a></li>
-                        <li><a id="link-modal-cadastro-footer" href="/job/create/">Cadastre uma vaga</a></li>
-                    </ul>
-                </div>
+    <footer>
+        <!-- TODO: Fazer hamburgui -->
+        <div class="container py-5">
+          <div class="row">
+            <div class="col-12 col-md my-auto">
+                <img src="{% static 'assets/simbolo-pyjobs.png' %}" alt="" width="100">
             </div>
-        </div>
-        <div class="footer-copyright">
-            <p>© 2019 {{WEBSITE_NAME}} - Um portal <a href="http://recrutadev.com.br">RecrutaDev</a></p>
+            <div class="col-6 col-md">
+              <h5>HOME</h5>
+            </div>
+            <div class="col-6 col-md">
+              <h5>VAGAS</h5>
+              <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="/jobs/">Ver Vagas</a></li>
+                <li><a class="text-muted" href="/jobs/">Destaques</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>CADASTRE-SE</h5>
+              <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="{% url 'job_creation' %}">Cadastre uma vaga</a></li>
+                <li><a class="text-muted" href="{% url 'pythonistas_signup' %}">Cadastre-se</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
     </footer>
-
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     {% if not user.is_authenticated %}
         {% include 'modal_donate.html'%}
         <script>

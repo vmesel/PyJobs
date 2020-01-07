@@ -6,141 +6,176 @@
 {%block title%} {{WEBSITE_NAME}} - A Central de Jobs {{WEBSITE_WORKING_LANGUAGE}}
 {%endblock%}
 {%block main%}
-    <main class="page landing-page">
-        <section class="clean-block clean-hero" style="background-image:url(&quot;http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg&quot;);color:rgba(9, 162, 255, 0.90);">
-            <div class="text">
-                <h2>Procurando o melhor desenvolvedor {{WEBSITE_WORKING_LANGUAGE}} para sua empresa?</h2>
-                <p>Cadastre agora uma vaga e tenha acesso aos melhores profissionais do Brasil!</p>
-                <a href="{% url 'job_creation' %}">
-                    <button class="btn btn-lg btn-chamada" type="button">Cadastre uma vaga AGORA!</button>
-                </a>
-              </div>
-        </section>
-        <section class="clean-block clean-info dark" style="padding-bottom:25px;">
+    <header>
             <div class="container">
-                <div class="block-heading" style="margin-top:-40px;">
-                    <h2 class="text-info">Depoimentos</h2>
-                    <hr>
-                </div>
                 <div class="row">
-                  <div class="col-md-3" style="text-align:center;">
-                      <img src="{%static 'assets/img/avatars/retake.jpg'%}" alt="" width="125" height="150">
-                  </div>
-                  <div class="col-md-9" style="text-align:center;">
-                        <h3>O {{WEBSITE_NAME}} &eacute; um recurso inestim&aacute;vel para o nosso recrutamento. Sempre encontramos os melhores talentos aqui.</h3>
-                        <p><b>Rommel Andriotti - Retake</b></p>
-                  </div>
+                    <div class="col-lg-6 call-to-action">
+                        <h2 class="call-to-action-text-h2">
+                            Encontre aqui as melhores vagas e profissionais Python
+                        </h2>
+                        <p class="call-to-action-text-p">
+                            PyJobs é o maior site de profissionais Python do Brasil. Nós já contamos com mais de 15 mil profissionais altamente qualificados e mais de 2 anos de experiência em programadores Python.
+                        </p>
+                        <a href="{% url 'job_creation' %}">
+                            <input type="button" value="Quero Cadastrar Uma Vaga" class="botao">
+                        </a>
+                        <p class="call-to-action-pos-botao">
+                            ou veja as <a href="#cards">vagas listadas abaixo</a>
+                        </p>
+                    </div>
+                    <div class="col-lg-6 call-to-action-img mx-auto text-center">
+                        <img src="{% static 'assets/imagem-header.png' %}" alt="" class="img-header">
+                    </div>
                 </div>
             </div>
-        </section>
-        <section class="clean-block features">
-            <div class="container">
-                <div id="oportunidades" class="block-heading">
-                    <h2 class="text-info">Conheça as melhores oportunidades {{WEBSITE_WORKING_LANGUAGE}}</h2>
-                    <p>Todas as oportunidades listadas no {{WEBSITE_NAME}} passaram por um processo de curadoria para garantir a melhor qualidade o possível ao desenvolvedor</p>
-                </div>
-                <div class="row justify-content-center" style="margin-top:10px;">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title" style="color:#777;">Tenha sua vaga destacada aqui!</h4>
-                                <h6 class="text-muted card-subtitle mb-2">Saiba como ter a sua vaga no topo e tenha sua empresa em destaque</h6>
-                                <p class="card-text"  style="color:#777;">Encontre os melhores profissionais {{WEBSITE_WORKING_LANGUAGE}} e tenha mais destaque na comunidade com a vaga destacada. Ela lhe proporcionará maior visibilidade e maior chance de contratação!</p>
-                            </div>
+    </header>
+    <section class="filtro filtro-shadow p-3 mb-1 bg-white rounded">
+        <div class="container">
+            <div class="row">
+                <h2 class="">PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL</h2>
+            </div>
+            <form class="" method="get">
+                <div class="row" style="margin-top:10px;">
+                {% for field in filter.form.visible_fields %}
+                    <div class="col-md-4 filtro-form-item-select">
+                        <label>{{field.label_tag}}<br/>
+                        </label>
+                        {% if field.html_name != "requirements" and field.html_name != "title" %}
+                        <div class="select-form-filtro">
+                        {% endif %}
+                            {%render_field field %}
+                        {% if field.html_name != "requirements" and field.html_name != "title" %}
                         </div>
-                    </div>
-                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'contact' %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Entre em contato</button></a></div>
-                </div>
-                {% if premium_available_jobs %}
-                {% for job in premium_available_jobs %}
-                <div class="row justify-content-center" style="margin-top:10px;">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                              <a href="/job/{{job.pk}}">
-                                <h4 class="card-title" style="font-weight: bold;">[Destaque] {{job.title}}</h4>
-                              </a>
-                                <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
-                                <h6 class="text-muted card-subtitle mb-2">Postada: {{job.created_at|naturalday}}</h6>
-                                <hr/>
-                                {%for skill in job.skills.all%}
-                                    <span class="badge badge-pill badge-primary">{{skill}}</span>
-                                {%endfor%}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'job_view' job.pk %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;background-color:#ffe01b;color:#000;border: 0px solid #000;">Se Inscreva AGORA!</button></a></div>
-                </div>
-                {%endfor%}
-                {% endif %}
-                <div></div>
-                <br>
-                <hr>
-                <div class="row justify-content-center" style="margin-top:10px;">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title" style="color:#777;">
-                                    <i class="icon-magnifier icons"></i>&nbsp;&nbsp;Pesquisar vagas:
-                                </h4>
-                                <p class="card-text"  style="color:#777;">
-                                    Use a pesquisa para procurar vagas na cidade que deseja, com o título, descrição ou requisitos.
-                                    Ex: São Paulo, Data Scientist
-                                </p>
-                                    <form class="" method="get">
-                                        <div class="row justify-content-center" style="margin-top:10px;">
-
-                                        {% for field in filter.form.visible_fields %}
-                                            <div class="form-group col-sm-4 col-md-4">
-                                                {{field.label_tag}}
-                                                {%render_field field class="form-control"%}
-                                            </div>
-                                        {% endfor %}
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-search"></span> Filtrar
-                                      </button>
-                                    </form>
-
-                            </div>
-                        </div>
-                        {% if publicly_available_jobs|length <= 0 %}
-                            <strong>Nenhuma vaga encontrada...</strong>
                         {% endif %}
                     </div>
+                     {% if forloop.counter|divisibleby:3 %}
+                     </div>
+                     <div class="row" style="margin-top:10px;">
+                     {% endif %}
+                {% endfor %}
                 </div>
-                {% for job in publicly_available_jobs %}
-                <div class="row justify-content-center" style="margin-top:10px;">
-                    <div class="col">
-                        <div class="card">
+                <div class="row" style="margin-top:20px; margin-bottom:10px;">
+                    <div class="col-md-12">
+                        <input type="button" name="" value="BUSCAR" class="botao">
+                    </div>
+                </div>
+            </form>
+            </div>
+        </section>
+        <section class="info-cards-section">
+            <div class="container">
+                <div class="row">
+                    <h2>Nossas vagas</h2>
+                </div>
+                <div class="row">
+                    <p>Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se você é uma empresa e quer encontrar os melhores profissionais Python e ter sua vaga destacada na comunidade, entre em <a href="{% url 'contact' %}">contato conosco</a> e encontre aqui o profissional ideal para seu time!</p>
+                </div>
+            </div>
+        </section>
+        <!-- COLOCAR COL-LG-4 PARA TAMANHO DOS CARDS -->
+        <section class="cards" id="cards">
+            <div class="container-fluid">
+                <div class="row">
+                    {% for job in publicly_available_jobs %}
+                    <div class="col-md-4 card-col">
+                        <div class="card shadow">
                             <div class="card-body">
-                              <a href="/job/{{job.pk}}">
-                                <h4 class="card-title">{{job.title}}</h4>
-                              </a>
-                                <h6 class="text-muted card-subtitle mb-2">Localização: {{job.workplace}}</h6>
-                                <h6 class="text-muted card-subtitle mb-2">Postada: {{job.created_at|naturalday}}</h6>
-                                <hr/>
-                                {%for skill in job.skills.all%}
-                                    <span class="badge badge-pill badge-primary">{{skill}}</span>
-                                {%endfor%}
+                                <h3 class="card-title">{{ job.title|truncatechars:22 }}</h3>
+                                <p class="card-text">
+                                    <ul>
+                                        <li><b>Empresa:</b> {{job.company_name}}</li>
+                                        <li><b>Faixa salarial:</b> {{job.get_salary_range_display}}</li>
+                                        <li><b>Estado:</b> {{job.get_state_display}}</li>
+                                        <li><b>Local da vaga:</b> {{job.workplace}}</li>
+                                        <li><b>Nível:</b> {{job.get_job_level_display}}</li>
+                                        <li><b>Aceita Remoto:</b> {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
+                                        <li><b>Postada em:</b> {{job.created_at|naturalday}}</li>
+                                    </ul>
+                                </p>
+                                <div class="tags">
+                                    {% for skill in job.skills.all %}
+                                        {% if forloop.counter <= 4 %}
+                                            <span class="badge badge-secondary custom-badge">{{skill.name}}</span>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                                <a href="/job/{{job.pk}}">
+                                    <input type="button" class="botao" value="VER VAGA">
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col col-md-3 d-none d-md-block"><a href="{% url 'job_view' job.pk %}"><button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Mais Detalhes</button></a></div>
+                    {% if forloop.counter|divisibleby:3 %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                <nav style="margin-top:10px;">
-                    <ul class="pagination">
-                      {% for page in pages %}
-                        <li class="page-item">
-                            <a class="page-link" href="{% url 'index' %}?{% merge_query_params page=page %}">{{ page }}</a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                </nav>
+                <div class="row navegacao-vagas">
+                    <div class="col-lg-12">
+                        <a href="#">
+                            <input type="button" name="" value="VER VAGAS" class="botao">
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
-    </main>
+        <section class="vagas-curadas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3>Conheça as melhores oportunidades Python</h3>
+                        <p>Todas as oportunidades listadas no PyJobs passaram por um processo de curadoria para garantir a melhor qualidade possível das vagas. Nossa parceria com as empresas é feita de maneira transparente e visando melhores oportunidades e condições aos desenvolvedores.</p>
+                        <!-- AJUSTAR PARA DESKTOP FICAR ALINHADO A ESQUERDA EM 100% DO TEXTO, IGUAL AO SKETCH -->
+                        <a href="/jobs/">
+                            <input type="button" value="QUERO VER AS VAGAS" class="botao">
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{% static 'assets/joinha.png' %}" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="depoimentos-h3">
+            <div class="container">
+                <div class="row">
+                    <h3>Depoimentos</h3>
+                </div>
+            </div>
+        </section>
+        <section class="depoimentos">
+                <div class="row depoimento-conteudo">
+                    <div class="container">
+                        <h4>Retake</h4>
+                        <p>“O PyJobs é um recurso inestimável para o nosso recrutamento. Sempre encontramos os melhores talentos aqui.”</p>
+                    </div>
+                </div>
+                <div class="row depoimento-conteudo depoimento-assinatura">
+                    <div class="container" style="display: flex; width: auto;margin-bottom:20px;">
+                        <div class="col-5">
+                            <img src="{% static 'assets/rommel.png' %}" alt="" height="50" style="float:right;">
+                        </div>
+                        <div class="col-7">
+                            Rommel Andriotti - Inquest
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="call-to-action-anuncie h-200">
+            <div class="row">
+                    <div class="col-lg-6 my-auto">
+                        <h3>Anuncie sua vaga aqui</h3>
+                    </div>
+                    <div class="col-lg-6 my-auto">
+                        <a href="{% url 'job_creation' %}">
+                            <input type="button" name="" value="CADASTRAR AGORA!">
+                        </a>
+                    </div>
+                </div>
+        </section>
   {%endblock main%}
   {% block extra_scripts%}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

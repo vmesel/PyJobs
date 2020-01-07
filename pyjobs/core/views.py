@@ -26,26 +26,12 @@ from pyjobs.core.utils import generate_thumbnail
 
 
 def index(request):
-    publicly_available_jobs = Job.get_publicly_available_jobs()
+    publicly_available_jobs = Job.get_index_display_jobs()
 
     user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)
 
-    paginator = Paginator(user_filtered_query_set.qs, 10)
-
-    try:
-        page_number = int(request.GET.get("page", 1))
-    except ValueError:
-        return redirect("/")
-
-    if page_number > paginator.num_pages:
-        return redirect("/")
-
-    public_jobs_to_display = paginator.page(page_number)
-
     context_dict = {
-        "publicly_available_jobs": public_jobs_to_display,
-        "premium_available_jobs": Job.get_premium_jobs(),
-        "pages": paginator.page_range,
+        "publicly_available_jobs": publicly_available_jobs,
         "filter": user_filtered_query_set,
     }
 
