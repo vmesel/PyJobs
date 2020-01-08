@@ -165,7 +165,7 @@ input[type=email]{
     width: 100%;
 }
 
-.filtro-form-item-select input[type=text]{
+.filtro-form-item-select input[type=text], filtro-form-item-select form input[type=text]{
     width: 100%;
 }
 

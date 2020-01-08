@@ -34,7 +34,7 @@
             <div class="row">
                 <h2 class="">PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL</h2>
             </div>
-            <form class="" method="get">
+            <form method="get" action="{% url 'jobs' %}">
                 <div class="row" style="margin-top:10px;">
                 {% for field in filter.form.visible_fields %}
                     <div class="col-md-4 filtro-form-item-select">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="row" style="margin-top:20px; margin-bottom:10px;">
                     <div class="col-md-12">
-                        <input type="button" name="" value="BUSCAR" class="botao">
+                        <input type="submit" name="" value="BUSCAR" class="botao">
                     </div>
                 </div>
             </form>

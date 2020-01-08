@@ -19,6 +19,7 @@ class PyJobsSitemap(Sitemap):
 
 urlpatterns = [
     url(r"^$", index, name="index"),
+    url(r"^jobs/$", jobs, name="jobs"),
     url(r"^job/(?P<pk>\d+)/$", job_view, name="job_view"),
     url(
         r"^job/close/(?P<pk>\d+)/(?P<close_hash>[\da-f]{128})/$",
@@ -34,7 +35,6 @@ urlpatterns = [
     url(r"^password/$", pythonista_change_password, name="change_password"),
     url(r"^info/$", pythonista_change_info, name="change_info"),
     url(r"^applied-to/$", pythonista_applied_info, name="applied_to_info"),
-    url(r"^jooble/$", jooble_feed, name="jooble_feed"),
     url(r"^thumb/(?P<pk>\d+)/$", thumbnail_view, name="thumbnail_view"),
     url(
         r"^job/(?P<pk>\d+)/details/$",

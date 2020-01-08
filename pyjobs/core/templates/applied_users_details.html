@@ -7,69 +7,53 @@
 {{job.title}} no {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
+<section class="clean-block clean-faq dark">
 
-    <main class="page faq-page">
+    <div class="container" style="min-height: 100vh;">
+            <br>
+            <br>
+            <center><h1>{{job.title}}</h1></center>
+            <center><p>Postada: {{job.created_at|naturalday}}</p></center>
+            <p>
+                Para baixar estes dados em CSV, <a href="{% url 'get_job_applications' job.pk %}">clique aqui</a>!
+            </p>
+            <table class="table table-hover table-responsive table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>Email</th>
+                            <th>GitHub</th>
+                            <th>Telefone</th>
+                            <th>LinkedIn</th>
+                            <th>Enviado Em</th>
+                            <th>Link da Resposta</th>
+                            <th>Respondido Em</th>
+                            <th>Output</th>
+                            <th>Comentário</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
 
-        <section class="clean-block clean-faq dark">
-
-            <div class="container">
-
-                <div class="block-heading">
-                    <h1 class="text-info">{{job.title}}</h1>
-                    <p>Postada: {{job.created_at|naturalday}}</p>
+                    <tbody>
+                        {% for r in rows %}
+                        <tr>
+                            <td>{{ r.user.first_name }}</td>
+                            <td>{{ r.user.last_name }}</td>
+                            <td>{{ r.user.email }}</td>
+                            <td>{{ r.user.profile.github }}</td>
+                            <td>{{ r.user.profile.cellphone }}</td>
+                            <td>{{ r.user.profile.linkedin }}</td>
+                            <td>{{ r.email_sent_at }}</td>
+                            <td>{{ r.challenge_response_link }}</td>
+                            <td>{{ r.challenge_response_at }}</td>
+                            <td>{{ r.output }}</td>
+                            <td>{{ r.comment }}</td>
+                            <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">Adicionar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 </div>
-
-                <div class="block-content">
-                  <p>
-                      Para baixar estes dados em CSV, <a href="{% url 'get_job_applications' job.pk %}">clique aqui</a>!
-                  </p>
-                    <table class="table table-hover table-responsive table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Sobrenome</th>
-                                    <th>Email</th>
-                                    <th>GitHub</th>
-                                    <th>Telefone</th>
-                                    <th>LinkedIn</th>
-                                    <th>Enviado Em</th>
-                                    <th>Link da Resposta</th>
-                                    <th>Respondido Em</th>
-                                    <th>Output</th>
-                                    <th>Comentário</th>
-                                    <th>Editar</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {% for r in rows %}
-                                <tr>
-                                    <td>{{ r.user.first_name }}</td>
-                                    <td>{{ r.user.last_name }}</td>
-                                    <td>{{ r.user.email }}</td>
-                                    <td>{{ r.user.profile.github }}</td>
-                                    <td>{{ r.user.profile.cellphone }}</td>
-                                    <td>{{ r.user.profile.linkedin }}</td>
-                                    <td>{{ r.email_sent_at }}</td>
-                                    <td>{{ r.challenge_response_link }}</td>
-                                    <td>{{ r.challenge_response_at }}</td>
-                                    <td>{{ r.output }}</td>
-                                    <td>{{ r.comment }}</td>
-                                    <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">Adicionar</a></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                </div>
-            </div>
         </section>
-    </main>
-    <style media="screen">
-        @media only screen and (max-width: 600px) {
-
-            #application-status{
-                width: 100%;
-            }
-        }
-    </style>
 {%endblock%}

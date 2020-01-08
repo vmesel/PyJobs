@@ -9,122 +9,119 @@
 {% endblock %}
 {%block main%}
 
-    <main class="page faq-page">
-
-        <section class="clean-block clean-faq dark">
-
-            <div class="container">
-
-                <div class="block-heading">
-                    {% if job.is_challenging and applied %}
-                    <div class="alert alert-success" role="alert">
-                      Não se esqueça de responder ao desafio técnico clicando no botão abaixo!
-                    </div>
-                    {%endif%}
-                    <h1 class="text-info">{{job.title}}</h1>
-                    <p>Postada: {{job.created_at|naturalday}}</p>
-                </div>
-
-                <div class="block-content">
-                    {% if logged_in %}
-                      {% if applied %}
-                        {% if job.is_challenging %}
-                            <a href="{% url 'job_application_challenge_submission' job.pk %}">
-                                <button class="btn btn-primary" type="button">Clique aqui e preencha o desafio técnico!</button>
-                            </a>
-                        {% else %}
-                            <button class="btn btn-primary" type="button">Você já aplicou a esta vaga!</button>
-                        {% endif %}
-                      {%else%}
-                        {% if job.is_open %}
-                            {% if job.application_link %}
-                                <a href="{{job.application_link}}" class="btn btn-primary">Candidate-se para esta vaga pelo link</a>
-                            {%else%}
-                            <form action="." method="post">
-                                {% csrf_token %}
-                                <button class="btn btn-primary" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
-                            </form>
-                            {%endif%}
-                        {% else %}
-                        <button class="btn btn-primary" disabled>Vaga já fechada pela empresa anunciante</button>
-                        {% endif %}
-                      {% endif %}
-                    {%else%}
-                        <a href="{% url 'login' %}">
-                            <button class="btn btn-primary" type="button" id="application-status">Se logue e aplique a vaga!</button>
-                        </a>
-                    {% endif %}
-
-
-                    <div class="faq-item">
-                        <div class="answer">
-                            <a href="{% url 'sharing_job_view' job.pk %}">
-                                <input type="button" name="" value="Indique {{USER_SUBSTANTIVE}}s!" class="btn btn-success">
-                            </a>
-                        </div>
-                        <div class="answer">
-                            <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-                                <a class="a2a_button_facebook"></a>
-                                <a class="a2a_button_twitter"></a>
-                                <a class="a2a_button_email"></a>
-                                <a class="a2a_button_linkedin"></a>
-                                <a class="a2a_button_whatsapp"></a>
-                                <a class="a2a_button_telegram"></a>
-                            </div>
-                            <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        </div>
-
-                    </div>
-                    <div class="faq-item">
-                        <div class="answer">
-                            {%for skill in job.skills.all%}
-                                <span class="badge badge-pill badge-primary">{{skill}}</span>
-                            {%endfor%}
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <h4 class="question">Atributos da vaga:</h4>
-                        <div class="answer">
-                            <p>
-                                <ul>
-                                    <li>Empresa: {{job.company_name}}</li>
-                                    <li>Faixa salarial: {{job.get_salary_range_display}}</li>
-                                    <li>Estado: {{job.get_state_display}}</li>
-                                    <li>Local da vaga: {{job.workplace}}</li>
-                                    <li>Nível: {{job.get_job_level_display}}</li>
-                                    <li>Aceita Remoto?: {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
-                                </ul>
-                            </p>
-                        </div>
-                        <h4 class="question">Descrição da vaga</h4>
-                        <div class="answer">
-                          <p>
-                            {% autoescape off %}
-                              {{job.description|linebreaksbr}}
-                            {% endautoescape %}
-                          </p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <h4 class="question">Requisitos</h4>
-                        <div class="answer">
-                          <p>
-                            {% autoescape off %}
-                                {{job.requirements|linebreaksbr}}
-                            {% endautoescape %}
-                          </p>
-                        </div>
-                    </div>
-                </div>
+<section class="breadcrumb-nav-vagas">
+    <div class="container-fluid">
+        <div class="row row-breadcrumb-grande">
+            <div class="col-lg-3 indicador-esquerdo">
+                <a href="#">Vaga Anterior</a>
             </div>
-        </section>
-    </main>
-    <style media="screen">
-        @media only screen and (max-width: 600px) {
+            <div class="col-lg-6 indicador-central">
+                <a href="#">Ver vagas</a>
+            </div>
+            <div class="col-lg-3 indicador-direito">
+                <a href="#">Vaga Posterior</a>
+            </div>
+        </div>
+        <div class="row row-breadcrumb-pequeno">
+            <div class="col-6 col-sm-6">
+                <a href="#">Ver vagas</a>
+            </div>
+            <div class="col-3 col-sm-3 indicador-direito-sinal">
+                <a href="#"><</a>
+            </div>
+            <div class="col-3 col-sm-3 indicador-esquerdo-sinal">
+                <a href="#">></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% if job.is_challenging and applied %}
+<div class="alert alert-success" role="alert">
+  Não se esqueça de responder ao desafio técnico clicando no botão abaixo!
+</div>
+{%endif%}
+<section class="detalhes-vaga">
+    <div class="container">
+        <h2>{{job.title}}</h2>
+        <h4>Vaga Postada: <span>{{job.created_at|naturalday}}</span></h4>
 
-            #application-status{
-                width: 100%;
-            }
-        }
-    </style>
+        <div class="row">
+            <div class="col-lg-4 botoes-detalhes">
+                {% if logged_in %}
+                  {% if applied %}
+                    {% if job.is_challenging %}
+                        <a href="{% url 'job_application_challenge_submission' job.pk %}">
+                            <button class="botao" type="button">Clique aqui e preencha o desafio técnico!</button>
+                        </a>
+                    {% else %}
+                        <button class="botao" type="button">Você já aplicou a esta vaga!</button>
+                    {% endif %}
+                  {%else%}
+                    {% if job.is_open %}
+                        {% if job.application_link %}
+                            <a href="{{job.application_link}}" class="botao">Candidate-se para esta vaga pelo link</a>
+                        {%else%}
+                        <form action="." method="post">
+                            {% csrf_token %}
+                            <button class="botao" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
+                        </form>
+                        {%endif%}
+                    {% else %}
+                    <button class="botao" disabled>Vaga já fechada pela empresa anunciante</button>
+                    {% endif %}
+                  {% endif %}
+                {%else%}
+                    <a href="{% url 'login' %}">
+                        <button class="botao" type="button" id="application-status">Se logue e aplique a vaga!</button>
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 botoes-detalhes">
+                <a href="{% url 'sharing_job_view' job.pk %}">
+                    <input type="button" value="Indique {{USER_SUBSTANTIVE}}s!" class="botao" style="background-color: #0069D9!important;font-size:12px;">
+                </a>
+            </div>
+            <div class="col-lg-4 botoes-redes-sociais">
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_whatsapp"></a>
+                    <a class="a2a_button_telegram"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+        </div>
+        <div class="row badges-detalhes">
+            <div class="col-md-12" style="margin-top: 30px">
+                {% for skill in job.skills.all %}
+                    <span class="badge badge-secondary custom-badge">{{skill.name}}</span>
+                {% endfor skill %}
+            </div>
+        </div>
+        <div class="row" style="margin-top:40px;">
+            <ul>
+                <li>Empresa: {{job.company_name}}</li>
+                <li>Faixa salarial: {{job.get_salary_range_display}}</li>
+                <li>Estado: {{job.get_state_display}}</li>
+                <li>Local da vaga: {{job.workplace}}</li>
+                <li>Nível: {{job.get_job_level_display}}</li>
+                <li>Aceita Remoto?: {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
+            </ul>
+        </div>
+        <div class="row" style="margin-top:40px; padding: 20px;">
+                <h3>Descrição da vaga</h3>
+                {% autoescape off %}
+                    {{job.description|linebreaksbr}}
+                {% endautoescape %}
+        </div>
+        <div class="row" style="margin-top:40px; padding: 20px;">
+                <h3>Requisitos</h3>
+                {% autoescape off %}
+                    {{job.requirements|linebreaksbr}}
+                {% endautoescape %}
+        </div>
+    </div>
+</section>
 {%endblock%}

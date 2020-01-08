@@ -38,6 +38,33 @@ def index(request):
     return render(request, template_name="index.html", context=context_dict)
 
 
+def jobs(request):
+    publicly_available_jobs = Job.get_publicly_available_jobs()
+
+    user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)
+
+    paginator = Paginator(user_filtered_query_set.qs, 10)
+
+    try:
+        page_number = int(request.GET.get("page", 1))
+    except ValueError:
+        return redirect("/")
+
+    if page_number > paginator.num_pages:
+        return redirect("/")
+
+    public_jobs_to_display = paginator.page(page_number)
+
+    context_dict = {
+        "publicly_available_jobs": public_jobs_to_display,
+        "premium_available_jobs": Job.get_premium_jobs(),
+        "pages": paginator.page_range,
+        "filter": user_filtered_query_set,
+    }
+
+    return render(request, template_name="jobs.html", context=context_dict)
+
+
 def services_view(request):
     return render(request, template_name="services.html")
 
@@ -256,14 +283,6 @@ class PremiumJobsFeed(Feed):
 
     def item_pubdate(self, item):
         return datetime.now()
-
-
-def jooble_feed(request):
-    jobs = Job.objects.all()
-    return render(
-        request, "jooble.xml", context={"jobs": jobs}, content_type="text/xml"
-    )
-
 
 @login_required
 def job_application_challenge_submission(request, pk):

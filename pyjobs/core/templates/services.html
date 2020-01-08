@@ -4,53 +4,41 @@
 Conhe&ccedil;a os servi&ccedil;os do {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
-    <main class="page faq-page">
-        <section class="clean-block clean-faq dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h1 class="text-info">Conheça nossos serviços</h1>
-                    <center>
-                      <a href="/contact/">
-                        <button class="btn btn-primary" type="submit" style="font-size:14px;">Solicite uma cotação</button>
-                      </a>
-                    </center>
-                </div>
-                <div class="block-content">
-                    <div class="faq-item">
-                        <h4 class="question">Sobre o PyJobs</h4>
-                        <div class="answer">
-                          <p>
-                            O {{WEBSITE_NAME}} é o maior site de profissionais {{WEBSITE_WORKING_LANGUAGE}} do Brasil. Nós já contamos com mais de 1000 profissionais altamente qualificados e mais de 2 anos de experiência em programadores {{WEBSITE_WORKING_LANGUAGE}}.
-                          </p>
-                          <p>
-                            Atualmente, atuamos muito próximos a comunidade {{WEBSITE_WORKING_LANGUAGE}} para poder melhor atender as empresas e os {{USER_SUBSTANTIVE}}s. Buscamos sempre otimizar o nosso processo de seleção de profissionais.
-                          </p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <h4 class="question">Serviços</h4>
-                        <div class="answer">
-                          <p>
-                            <ul>
-                              <li><b>Talent Contact Acquisition:</b> Neste serviço, nós buscamos oferecer a melhor experiência a empresa em busca de seus talentos. Nossa rede de candidatos (dentro de cursos, comunidades e eventos) é muito grande, e com isso, ajudamos a empresa a ganhar visibilidade desta vaga na comunidade</li>
-                              <br>
-                              <li><b>Otimização de vaga:</b> Para empresas que os RHs não têm pessoas técnicas, sempre é interessante ter alguém próximo para auxiliar no levantamento de requisitos da vaga e na montagem do perfil do profissional. Com este serviço, pretendemos otimizar ao máximo o perfil da vaga para poder encontrar a pessoa certa para a empresa.</li>
-                              <br>
-                              <li><b>Consultoria de RH:</b> Para empresas que não são necessariamente do meio de TI, nós ajudamos a cuidar do processo de seleção do profissional, desde o primeiro <i>profiling</i> da vaga até a contratação do funcionário.</li>
-
-                            </ul>
-                          </p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                      <center>
-                        <a href="/contact/">
-                          <button class="btn btn-primary" type="submit" style="font-size:24px;">Solicite uma cotação</button>
-                        </a>
-                      </center>
-                    </div>
-                </div>
+<section>
+    <div class="container">
+        <br>
+        <center><h1>Conheça nossos serviços</h1></center>
+        <br>
+            <center>
+              <a href="/contact/">
+                <button class="botao btn btn-primary" type="submit" style="font-size:14px;">Solicite uma cotação</button>
+              </a>
+            </center>
+            <br>
+            <br>
+            <div class="row">
+                <h4>Sobre o PyJobs</h4>
+                <p>
+                  O {{WEBSITE_NAME}} é o maior site de profissionais {{WEBSITE_WORKING_LANGUAGE}} do Brasil. Nós já contamos com mais de 1000 profissionais altamente qualificados e mais de 2 anos de experiência em programadores {{WEBSITE_WORKING_LANGUAGE}}.
+                </p>
+                <p>
+                  Atualmente, atuamos muito próximos a comunidade {{WEBSITE_WORKING_LANGUAGE}} para poder melhor atender as empresas e os {{USER_SUBSTANTIVE}}s. Buscamos sempre otimizar o nosso processo de seleção de profissionais.
+                </p>
             </div>
-        </section>
-    </main>
+            <div class="row">
+                <h4>Serviços</h4>
+                  <p>
+                    <ul>
+                      <li><b>Talent Contact Acquisition:</b> Neste serviço, nós buscamos oferecer a melhor experiência a empresa em busca de seus talentos. Nossa rede de candidatos (dentro de cursos, comunidades e eventos) é muito grande, e com isso, ajudamos a empresa a ganhar visibilidade desta vaga na comunidade</li>
+                      <br>
+                      <li><b>Otimização de vaga:</b> Para empresas que os RHs não têm pessoas técnicas, sempre é interessante ter alguém próximo para auxiliar no levantamento de requisitos da vaga e na montagem do perfil do profissional. Com este serviço, pretendemos otimizar ao máximo o perfil da vaga para poder encontrar a pessoa certa para a empresa.</li>
+                      <br>
+                      <li><b>Consultoria de RH:</b> Para empresas que não são necessariamente do meio de TI, nós ajudamos a cuidar do processo de seleção do profissional, desde o primeiro <i>profiling</i> da vaga até a contratação do funcionário.</li>
+
+                    </ul>
+                  </p>
+        </div>
+    </div>
+</section>
+
 {%endblock%}
