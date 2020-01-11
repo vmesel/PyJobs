@@ -5,81 +5,154 @@
 Cadastre uma vaga - {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
-    <main class="page faq-page">
-        <section class="clean-block clean-faq dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h1 class="text-info">Cadastre a sua vaga!</h1>
+<section class="cadastro-de-vaga">
+    <div class="container container-cadastro-vaga">
+        <div class="row row-titulo">
+            <div class="col-md-12">
+                <h2>Cadastre sua vaga e encontre o profissional ideal.</h2>
+                <span>Complete as informações abaixo com riqueza de detalhes, isso ajudará os profissionais a se candidatarem ao perfil ideal para a vaga.</span>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <form action="{% url 'register_new_job' %}" method="post">
+        {% csrf_token %}
+        <div class="container container-cadastro-vaga">
+            <div class="row row-titulo-etapa" style="margin-bottom: 15px;">
+                <h4>INFORMAÇÕES B&Aacute;SICAS DA VAGA</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    {{new_job_form.title}}
+                    <span>{{new_job_form.title.errors}}</span>
                 </div>
-                <div class="block-content">
-                    <div class="faq-item">
-                        <h4 class="question">Sobre o {{WEBSITE_NAME}}</h4>
-                        <div class="answer">
-                          <p>
-                            O {{WEBSITE_NAME}} é o maior site de profissionais {{WEBSITE_WORKING_LANGUAGE}} do Brasil. Nós já contamos com mais de 15 mil profissionais altamente qualificados e mais de 2 anos de experiência em programadores {{WEBSITE_WORKING_LANGUAGE}}.
-                          </p>
-                          <p>
-                            Preencha o formulário abaixo para o cadastro da vaga!
-                          </p>
-                        </div>
+                <div class="col-md-4 filtro-form-item-select">
+                    <div class="select-form-filtro" style="margin-top:5px;">
+                        {{new_job_form.job_level}}
+                        {{new_job_form.job_level.errors}}
                     </div>
-                    <div class="faq-item">
-                        <form class="" action="{% url 'register_new_job' %}" method="post">
-                        {% csrf_token %}
-                        {% for hidden_field in form.hidden_fields %}
-                          {{ hidden_field }}
-                        {% endfor %}
-                        {% for field in new_job_form.visible_fields %}
-                            {% if field.html_name != "ad_interested" and field.html_name != "skills" and field.html_name != "remote" and field.html_name != "challenge_interested" %}
-                            <div class="form-group">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text">
-                                    {{ field.label_tag }}
-                                  </span>
-                                </div>
-                                {% if field.errors %}
-                                {% render_field field class="form-control is-invalid" %}
-                                {% for error in field.errors %}
-                                <div class="invalid-feedback">
-                                  {{ error }}
-                                </div>
-                                {% endfor %}
-                                {%else%}
-                                  {% render_field field class="form-control" placeholder=field.help_text %}
-                                {%endif%}
-                              </div>
-                            </div>
-                            {%elif field.html_name == "skills"%}
-                                    <h4>Skills:</h4>
-                                    <p>Coloque as skills para facilitar a busca por seu candidato de sucesso</p>
-                                  {% render_field field %}
-                            {%elif field.html_name == "remote"%}
-                                <p>{{field}} Essa vaga permite trabalho remoto</p>
-                            {%elif field.html_name == "challenge_interested"%}
-                            <hr>
-                                <p>{{field}} Eu quero aplicar testes técnicos através da ferramenta automatizada do {{WEBSITE_NAME}}. [$]</p>
-                            {%else%}
-                            <hr>
-                                <p>{{field}} Eu desejo ter acesso aos serviços do {{WEBSITE_NAME}} e ao clube de profissionais exclusivos.</p>
-                            {% endif %}
-
-                        {% endfor %}
-                        <div class="g-recaptcha" data-sitekey="6Lerz1cUAAAAAK9xC1q1Hbqpfbtb75ck26IZVRPf"></div>
-                        </div>
-                        <div class="modal-footer">
-                        <button class="btn btn-light" type="button" data-dismiss="modal">Cancelar</button>
-                        <button class="btn btn-primary" type="submit">Postar vaga</button>
-                        </div>
-                        </form>
-                    </div>
-
                 </div>
             </div>
-        </section>
-    </main>
+            <div class="row">
+                    <div class="col-md-12">
+                        {{new_job_form.company_name}}
+                        {{new_job_form.company_name.errors}}
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr style="margin-top:40px;">
+                </div>
+            </div>
+            <div class="row row-titulo-etapa">
+                    <h4>LOCALIZA&Ccedil;&Atilde;O</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6 filtro-form-item-select">
+                    <div class="select-form-filtro">
+                        {{new_job_form.state}}
+                        {{new_job_form.state.errors}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {% render_field new_job_form.workplace style="margin-top: -2px;"%}
+                    {{new_job_form.workplace.errors}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                    {{new_job_form.remote}}
+                    <span>Vaga permite trabalho remoto</span>
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row row-titulo-etapa">
+                <h4>REMUNERA&Ccedil;&Atilde;O</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12 filtro-form-item-select">
+                    <div class="select-form-filtro">
+                        {{new_job_form.salary_range}}
+                        {{new_job_form.salary_range.errors}}
+                    </div>
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row row-titulo-etapa">
+                <h4>REQUISITOS</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12 filtro-form-item-select">
+                    {% render_field new_job_form.requirements class="textarea-dados"%}
+                    {{new_job_form.requirements.errors}}
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row row-titulo-etapa">
+                <h4>DESCRI&Ccedil;&Atilde;O</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12 filtro-form-item-select">
+                    {% render_field new_job_form.description class="textarea-dados"%}
+                    {{new_job_form.description.errors}}
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row row-titulo-etapa">
+                <h4>SKILLS</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12 filtro-form-item-select">
+                    {% render_field new_job_form.skills style="width:100%;" class="inputtext-model"%}
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row row-titulo-etapa" style="margin-bottom: 15px;">
+                <h4>DADOS PARA CONTATO</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {% render_field new_job_form.cellphone %}
+                    {{ new_job_form.cellphone.errors }}
+                </div>
+                <div class="col-md-6">
+                    {% render_field new_job_form.company_email %}
+                    {{ new_job_form.company_email.errors }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% render_field new_job_form.application_link style="margin-top:5px; width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow:         inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
+                    {{ new_job_form.application_link.errors }}
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row row-titulo-etapa">
+                <h4>DÊ UM BOOST EM SUA VAGA! (Extras)</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% render_field new_job_form.challenge_interested %}
+                    <span>Eu quero aplicar testes técnicos através da ferramenta automatizada do PyJobs.</span>
+                </div>
+            </div>
+            <div class="row" style="margin-top:15px;">
+                <div class="col-md-12">
+                    {% render_field new_job_form.ad_interested %}
+                    <span>Eu desejo ter acesso aos serviços do PyJobs e ao clube de profissionais exclusivos.</span>
+                </div>
+            </div>
+            <hr style="margin-top:40px;">
+            <div class="row" style="padding-bottom: 20px;">
+                <input type="submit" name="" value="CADASTRE MINHA VAGA, PYJOBS!" class="botao">
+            </div>
+        </div>
+    </form>
 {%endblock%}
 {% block extra_scripts%}
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
   $('#id_skills').select2();

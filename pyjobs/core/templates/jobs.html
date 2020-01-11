@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% load core_tags %}
+{%block title%} {{WEBSITE_NAME}} - A Central de Jobs {{WEBSITE_WORKING_LANGUAGE}}
+{%endblock%}
+{%block main%}
+<form method="get">
+<section class="filtro filtro-shadow-inverse p-3 mb-1 bg-white rounded" style="margin-top:0px!important;">
+    <div class="container">
+        <div class="row" style="margin-top:10px;">
+            {% for field in filter.form.visible_fields %}
+                {% if field.html_name == "job_level" or field.html_name == "title" %}
+                <div class="col-md-6 filtro-form-item-select">
+                    {{field.label_tag}}
+                    {% if field.html_name == "job_level" %}
+                    <div class="select-form-filtro">
+                    {% endif %}
+                    {% render_field field %}
+                    {% if field.html_name == "job_level" %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row" style="margin-top:20px; margin-bottom:10px;">
+            <div class="col-md-12">
+                <input type="submit" name="" value="BUSCAR" class="botao">
+            </div>
+        </div>
+    </div>
+</section>
+</form>
+<section class="listagem-vagas-em-destaque">
+    <div class="container">
+        {% for job in premium_available_jobs %}
+        <div class="vaga vaga-destacada">
+            <div class="row row-vaga">
+                <div class="col-md-8" style="padding-right: 0px;">
+                    <div class="container">
+                        <div class="row classe-da-vaga">
+                            <p>VAGA DESTACADA</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 m-0">
+                                <h2 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h2>
+                                <div class="dados-da-vaga">
+                                    <p>Empresa: {{job.company_name}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 m-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>N&iacute;vel<br/>
+                                        {{job.get_job_level_display}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Local<br/>
+                                        {{job.workplace|truncatechars:15}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
+                    <a href="{% url 'job_view' job.pk %}">
+                        <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% if premium_available_jobs %}
+<section>
+    <div class="container">
+        <hr>
+    </div>
+</section>
+{%endif%}
+<section class="listagem-vagas">
+
+    <div class="container">
+        {% if publicly_available_jobs|length <= 0 %}
+            <h2>Nenhuma vaga encontrada...</h2>
+        {% endif %}
+        {% for job in publicly_available_jobs %}
+        <div class="vaga">
+            <div class="row row-vaga">
+                <div class="col-md-8" style="padding-right: 0px;">
+                    <div class="container">
+                        <div class="row classe-da-vaga">
+                            <p>VAGA</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 m-0">
+                                <h2 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h2>
+                                <div class="dados-da-vaga">
+                                    <p>Empresa: {{job.company_name|truncatechars:15}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 m-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>N&iacute;vel<br/>
+                                        {{job.get_job_level_display}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Local<br/>
+                                        {{job.workplace|truncatechars:15}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
+                    <a href="{% url 'job_view' job.pk %}">
+                        <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<section class="secao-breadcrumb">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <nav aria-label="Navegação">
+              <ul class="pagination">
+                  {% for page in pages %}
+                    <li class="page-item"><a class="page-link" href="{% url 'jobs' %}?{% merge_query_params page=page %}">{{ page }}</a></li>
+                  {% endfor %}
+              </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+{%endblock main%}

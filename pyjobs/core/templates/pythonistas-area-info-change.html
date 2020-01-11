@@ -1,61 +1,48 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load widget_tweaks %}
+{% load static %}
+{% block title %}
+Atualize seus dados - {{WEBSITE_NAME}}
+{% endblock %}
 {%block main%}
-    <main class="page contact-us-page">
-        <section class="clean-block clean-form dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">Área do {{USER_SUBSTANTIVE}}</h2>
+<section style="padding: 30px;">
+    <div class="container">
+        <h2 class="text-info">Área do {{USER_SUBSTANTIVE}}</h2>
+
+        <form action="." method="post">
+            <p>{{ message }}</p>
+            {% csrf_token %}
+            {% for hidden_field in form.hidden_fields %}
+              {{ hidden_field }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+            <div class="row">
+                <label for="">
+                {{ field.label_tag }}
+                </label>
+                {% render_field field style="width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
+                {% for error in field.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
                 </div>
-                <form action="." method="post">
-                  <p>{{ message }}</p>
-                  {% csrf_token %}
-                  {% for hidden_field in form.hidden_fields %}
-                    {{ hidden_field }}
-                  {% endfor %}
-                  {% for field in form.visible_fields %}
-                  {% if field.html_name != "skills" %}
-                  <div class="form-group" style="margin-top:5px">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          {{ field.label_tag }}
-                        </span>
-                      </div>
-                      {% if field.errors %}
-                      {% render_field field class="form-control is-invalid" %}
-                      {% for error in field.errors %}
-                      <div class="invalid-feedback">
-                        {{ error }}
-                      </div>
-                      {% endfor %}
-                      {%else%}
-                        {% render_field field class="form-control" %}
-                      {%endif%}
-                      <div class="input-group-append">
-                        {% if field.help_text %}
-                          <small class="form-text text-muted">{{ field.help_text|safe }}</small>
-                        {% endif %}
-                    </div>
-                  </div>
-                  {%else%}
-                  <div class="form-group">
-                      <br>
-                      <label for="exampleInputEmail1">Skills</label>
-                      <small class="form-text text-muted">Preencha com as skills que você se encontra apto a executar ou que possua conhecimento</small>
-                      <br>
-                      {% render_field field  %}
-                    </div>
-                  {%endif%}
-                  {%endfor%}
-                    <div class="form-group">
-                      <button class="btn btn-primary btn-block" type="submit">Atualize suas informações</button>
-                    </div>
-                </form>
+                {% endfor %}
+                {% if field.help_text %}
+                  <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                {% endif %}
             </div>
-        </section>
-    </main>
+            {% endfor %}
+            <div class="form-group">
+              <button class="botao" type="submit" style="margin-top: 20px;">ENVIAR</button>
+            </div>
+        </form>
+        </form>
+
+
+
+
+
+    </div>
+</section>
 {%endblock%}
 {% block extra_scripts%}
 <script src="{% static 'assets/js/jquery.min.js' %}"></script>

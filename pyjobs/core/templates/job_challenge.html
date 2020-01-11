@@ -7,40 +7,20 @@
 {{job.title}} no {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
+<section class="detalhes-vaga">
+    <div class="container">
+        <center><h1 class="text-info">Challenge: {{job.title}}</h1></center>
 
-    <main class="page faq-page">
+        <h2>Desafio:</h2>
+        {{job.challenge | safe | linebreaks}}
+        <center>
+            <form action="{% url 'job_application_challenge_submission' job.pk %}" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" name="" value="Enviar resposta!">
+            </form>
+        </center>
+    </div>
+</section>
 
-        <section class="clean-block clean-faq dark">
-
-            <div class="container">
-
-                <div class="block-heading">
-                    <h1 class="text-info">Challenge: {{job.title}}</h1>
-                </div>
-
-                <div class="block-content">
-                    <h2>Desafio:</h2>
-                    <br/>
-                    {{job.challenge | safe | linebreaks}}
-                </div>
-                <div class="block-content">
-                    <center>
-                        <form action="{% url 'job_application_challenge_submission' job.pk %}" method="post">
-                            {% csrf_token %}
-                            {{form.as_p}}
-                            <input type="submit" name="" value="Enviar resposta!">
-                        </form>
-                    </center>
-                </div>
-            </div>
-        </section>
-    </main>
-    <style media="screen">
-        @media only screen and (max-width: 600px) {
-
-            #application-status{
-                width: 100%;
-            }
-        }
-    </style>
 {%endblock%}

@@ -8,11 +8,8 @@
 {{job.title}} no {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
-
-    <main class="page faq-page">
-
-        <section class="clean-block clean-faq dark">
-
+<section class="detalhes-vaga">
+    <div class="container" style="min-height:100vh;">
             <div class="container">
 
                 <div class="block-heading">
@@ -26,24 +23,21 @@
                       Email inválido! Tente novamente!
                     </div>
                     {%endif%}
-                    <h1 class="text-info">{{job.title}}</h1>
-                    <p>Postada: {{job.created_at|naturalday}}</p>
+                    <center><h1 class="text-info">{{job.title}}</h1></center>
+                    <center><p>Postada: {{job.created_at|naturalday}}</p></center>
                 </div>
 
-                <div class="block-content">
-                    <div class="faq-item">
-                        <h2 class="question">Compartilhe essa vaga:</h2>
+                        <h2 class="question">
+                            Compartilhe essa vaga:
+                        </h2>
                         <form action="." method="post">
                             <div class="answer">
                                 {%csrf_token%}
                                 {{form.as_p}}
-                                <input type="submit" name="" value="Indicar!">
+                                <input type="submit" name="" value="Indicar!" class="botao">
                             </div>
                         </form>
-                    </div>
 
-                </div>
-            </div>
-        </section>
-    </main>
+    </div>
+</section>
 {%endblock%}

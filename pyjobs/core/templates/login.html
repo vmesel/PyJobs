@@ -2,46 +2,53 @@
 {% load static %}
 {% load widget_tweaks %}
 {%block main%}
-    <main class="page contact-us-page">
-        <section class="clean-block clean-form dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">Se Logue</h2>
-                </div>
-                <form action="." method="post">
-                  <p>Utilize seu usuário cadastrado (não seu e-mail) para se logar.</p>
-                  {% csrf_token %}
-                  {% for hidden_field in form.hidden_fields %}
-                    {{ hidden_field }}
-                  {% endfor %}
-                  {% if form.errors %}
-                    <p>Seu usuário e senha estão incorretos.</p>
-                  {% endif %}
-                  {% for field in form.visible_fields %}
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          {{ field.label_tag }}
-                        </span>
-                      </div>
-                        {% render_field field class="form-control" %}
-                      <div class="input-group-append">
-                        {% if field.help_text %}
-                          <small class="form-text text-muted">{{ field.help_text }}</small>
-                        {% endif %}
-                      </div>
-                    </div>
-                  </div>
-                  {%endfor%}
-                    <div class="form-group">
-                      <button class="btn btn-primary btn-block" type="submit">Entrar</button>
-                      <br>
-                      <a href="{%url 'password_reset'%}">Reset de Senha</a>
-                    </div>
 
-                </form>
+<style media="screen">
+    input{
+        width: 100%;
+    }
+    input[type=password]{
+        height: 44px;
+        border-radius: 10px;
+        border: 1px solid rgba(170, 170, 170, 0.3);
+        overflow: hidden;
+        padding: 10px;
+        -moz-box-shadow:    inset 0 0 5px #aaa;
+        -webkit-box-shadow: inset 0 0 5px #aaa;
+        box-shadow:         inset 0 0 5px #aaa;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+</style>
+<section class="listagem-vagas-em-destaque" style="min-height:70vh;">
+    <div class="container">
+        <h2>Login</h2>
+        <form action="." method="post">
+          <p>Utilize seu usuário cadastrado (não seu e-mail) para se logar.</p>
+          {% csrf_token %}
+          {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+          {% endfor %}
+          {% if form.errors %}
+            <p>Seu usuário e senha estão incorretos.</p>
+          {% endif %}
+          {% for field in form.visible_fields %}
+          <div class="form-group">
+                <label for=""></label>
+                  {{ field.label_tag }}
+                {% render_field field %}
+              <div class="input-group-append">
+                {% if field.help_text %}
+                  <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+              </div>
+          </div>
+          {%endfor%}
+            <div class="form-group">
+              <button class="botao" type="submit">Entrar</button>
             </div>
-        </section>
-    </main>
+        </form>
+          <a href="{%url 'password_reset'%}">Reset de Senha</a>
+    </div>
+</section>
 {%endblock%}

@@ -2,26 +2,23 @@
 {% load static %}
 {% load widget_tweaks %}
 {%block main%}
-    <main class="page contact-us-page">
-        <section class="clean-block clean-form dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">Área do {{USER_SUBSTANTIVE}}</h2>
-                    <h4 class="text-info">Atualize seu cadastro!</h4>
-                </div>
-                <a href="{% url 'change_info' %}">
-                  <button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Atualizar seu Perfil</button>
-                </a>
-                <a href="{% url 'change_password' %}">
-                  <button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Atualizar sua senha</button>
-                </a>
-                <a href="{% url 'applied_to_info' %}">
-                  <button class="btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Veja os jobs que você aplicou</button>
-                </a>
-                <a href="/">
-                  <button class="btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Visualizar Vagas</button>
-                </a>
-            </div>
-        </section>
-    </main>
+<section class="detalhes-vaga">
+    <div class="container">
+        <h2>Área do {{USER_SUBSTANTIVE}}</h2>
+        <h4>Atualize seu cadastro!</h4>
+        <a href="{% url 'change_info' %}">
+          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Atualizar seu Perfil</button>
+        </a>
+        <a href="{% url 'change_password' %}">
+          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Atualizar sua senha</button>
+        </a>
+        <a href="{% url 'applied_to_info' %}">
+          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Veja os jobs que você aplicou</button>
+        </a>
+        <a href="/">
+          <button class="botao btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Visualizar Vagas</button>
+        </a>
+    </div>
+</section>
+
 {%endblock%}

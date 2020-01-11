@@ -1,33 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {%block main%}
-<style media="screen">
-body{
-  background-color: #f6f6f6;
-}
-main{
-  padding-top: 100px;
-}
-footer{
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width:100%;
-}
-</style>
-    <main class="page faq-page">
-        <section class="clean-block clean-faq dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h1 class="text-info">{{message_first}}</h2>
-                      {% if message_second %}
-                      <h2>{{message_second}}</h2>
-                      {% endif %}
-                      {% if message_explaining %}
-                      <p>{{message_explaining}}</p>
-                      {%endif%}
-                </div>
-            </div>
-        </section>
-    </main>
+<section class="detalhes-vaga">
+    <div class="container" style="min-height:100vh;">
+        <h2>{{message_first}}</h2>
+        {% if message_second %}
+            <h2>{{message_second}}</h2>
+        {% endif %}
+        {% if message_explaining %}
+            <p>{{message_explaining}}</p>
+      {%endif%}
+      <a href="/">
+          <input type="button" name="" value="IR PARA HOME" class="botao">
+      </a>
+    </div>
+</section>
 {%endblock%}

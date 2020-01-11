@@ -2,44 +2,68 @@
 {% load static %}
 {% load widget_tweaks %}
 {%block main%}
-    <main class="page contact-us-page">
-        <section class="clean-block clean-form dark">
-            <div class="container">
-                <div class="block-heading">
-                    <h2 class="text-info">Área do {{USER_SUBSTANTIVE}}</h2>
-                </div>
-                <div class="bg-white rounded box-shadow" style="padding: 1rem !important;">
-                    {%if applications %}
-                    <h4 class="border-bottom border-gray pb-2 mb-0">Vagas que você aplicou via {{WEBSITE_NAME}}:</h4>
-                    <p>Aqui aparecem apenas as vagas que você se inscreveu via botão do PyJobs!</p>
-                    {%else%}
-                    <h4 class="border-bottom border-gray pb-2 mb-0">Você ainda não aplicou a nenhuma vaga via {{WEBSITE_NAME}}!</h4>
-                    {%endif%}
-                    {% for application in applications %}
-                        <div class="card-deck mb-1 text-center">
-                            <div class="card mb-12 box-shadow">
-                              <div class="card-header">
-                                <h4 class="my-0 font-weight-normal">{{application.job.title}}</h4>
-                              </div>
-                              <div class="card-body">
-                                <a href="{% url 'job_view' application.job.pk %}" style="text-decoration:none;">
-                                <button type="button" class="btn btn-lg btn-block btn-outline-primary">
-                                    Ver vaga
-                                </button>
+<section class="detalhes-vaga">
+    <div class="container">
+        <h2>Área do {{USER_SUBSTANTIVE}}</h2>
+            <div class="bg-white rounded box-shadow" style="padding: 1rem !important;">
+            {%if applications %}
+            <h4 class="border-bottom border-gray pb-2 mb-0">Vagas que você aplicou via {{WEBSITE_NAME}}:</h4>
+            <br><p>Aqui aparecem apenas as vagas que você se inscreveu via botão do PyJobs!</p>
+            {%else%}
+            <h4 class="border-bottom border-gray pb-2 mb-0">Você ainda não aplicou a nenhuma vaga via {{WEBSITE_NAME}}!</h4>
+            {%endif%}
+
+
+            <section class="listagem-vagas">
+                <div class="container">
+                    {% if applications|length <= 0 %}
+                        <h2>Nenhuma aplica&ccedil;&atilde;o encontrada...</h2>
+                    {% endif %}
+                    {% for job_application in applications %}
+                    <div class="vaga">
+                        <div class="row row-vaga">
+                            <div class="col-md-8" style="padding-right: 0px;">
+                                <div class="container">
+                                    <div class="row classe-da-vaga">
+                                        <p>VAGA</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 m-0">
+                                            <h2>{{ job_application.job.title|truncatechars:15 }}</h2>
+                                            <div class="dados-da-vaga">
+                                                <p>Empresa: {{job_application.job.company_name|truncatechars:15}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 m-0">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <p>N&iacute;vel<br/>
+                                                    {{job_application.job.get_job_level_display}}</p>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p>Local<br/>
+                                                    {{job_application.job.workplace|truncatechars:15}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
+                                <a href="{% url 'job_view' job_application.job.pk %}">
+                                    <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
                                 </a>
-                              </div>
                             </div>
                         </div>
-                    {%endfor%}
+                    </div>
+                    {% endfor %}
                 </div>
-            </div>
-        </section>
+            </section>
+
+        </div>
+    </div>
+</section>
     </main>
 {%endblock%}
 {%block extrascripts%}
-<style media="screen">
-    #h6-applied {
-        border-bottom: 1px solid #e5e5e5;
-    }
-</style>
 {%endblock%}
