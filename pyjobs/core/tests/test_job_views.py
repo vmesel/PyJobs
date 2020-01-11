@@ -9,7 +9,7 @@ import responses
 import json
 from datetime import datetime
 from pyjobs.core.models import Job, Profile, JobApplication
-from pyjobs.core.views import index
+from pyjobs.core.views import index, jobs
 from pyjobs.core.forms import JobApplicationForm
 import csv
 import io
@@ -27,20 +27,22 @@ class HomeJobsViewsTest(TestCase):
             description="Job bem maneiro",
         )
         self.job.save()
+        self.jobs_page = resolve("/jobs/")
         self.home_page = resolve("/")
         self.request = HttpRequest()
         self.home_page_html = index(self.request).content.decode("utf-8")
+        self.jobs_page_html = jobs(self.request).content.decode("utf-8")
 
     def test_job_is_in_websites_home(self):
         self.assertEqual(self.home_page.func, index)
 
     def test_job_in_home(self):
         job_title = self.job.title
-        self.assertTrue(job_title in self.home_page_html)
+        self.assertTrue(job_title in self.jobs_page_html)
 
     def test_job_url_is_in_home(self):
         job_url = "/job/{}/".format(str(self.job.pk))
-        self.assertTrue(job_url in self.home_page_html)
+        self.assertTrue(job_url in self.jobs_page_html)
 
 
 class JobDetailsViewTest(TestCase):
@@ -176,19 +178,19 @@ class PyJobsMultipleJobsPagesTest(TestCase):
         self.client = Client()
 
     def test_first_page(self):
-        response = self.client.get("/?page=1")
+        response = self.client.get("/jobs/?page=1")
         self.assertTrue(response.status_code == 200)
 
     def test_second_page(self):
-        response = self.client.get("/?page=2")
+        response = self.client.get("/jobs/?page=2")
         self.assertTrue(response.status_code == 200)
 
     def test_third_page_redirection(self):
-        response = self.client.get("/?page=3")
+        response = self.client.get("/jobs/?page=3")
         self.assertRedirects(response, "/", status_code=302, target_status_code=200)
 
     def test_string_in_page_redirection(self):
-        response = self.client.get("/?page=ola")
+        response = self.client.get("/jobs/?page=ola")
         self.assertRedirects(response, "/", status_code=302, target_status_code=200)
 
 

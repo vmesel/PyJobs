@@ -284,6 +284,7 @@ class PremiumJobsFeed(Feed):
     def item_pubdate(self, item):
         return datetime.now()
 
+
 @login_required
 def job_application_challenge_submission(request, pk):
     user_applied = JobApplication.objects.filter(

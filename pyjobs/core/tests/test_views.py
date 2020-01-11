@@ -33,10 +33,6 @@ class ThumbnailTestingViews(TestCase):
         response = self.client.get("/pythonistas/signup/")
         self.assertEqual(response.status_code, 200)
 
-    def test_return_jooble_feed_status_code(self):
-        response = self.client.get("/jooble/")
-        self.assertEqual(response.status_code, 200)
-
     def test_return_feed_status_code(self):
         response = self.client.get("/feed/")
         self.assertEqual(response.status_code, 200)
