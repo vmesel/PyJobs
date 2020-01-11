@@ -2,7 +2,7 @@
 {% load static %}
 {%block main%}
 <section class="detalhes-vaga">
-    <div class="container">
+    <div class="container" style="min-height:100vh;">
         <h2>{{message_first}}</h2>
         {% if message_second %}
             <h2>{{message_second}}</h2>
@@ -10,6 +10,9 @@
         {% if message_explaining %}
             <p>{{message_explaining}}</p>
       {%endif%}
+      <a href="/">
+          <input type="button" name="" value="IR PARA HOME" class="botao">
+      </a>
     </div>
 </section>
 {%endblock%}

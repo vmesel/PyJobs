@@ -148,7 +148,7 @@ body header{
     background: none;
 }
 
-input[type=text], input[type=email]{
+input[type=text], input[type=email], input[type=password], .inputtext-model{
     height: 44px;
     border-radius: 10px;
     border: 1px solid rgba(170, 170, 170, 0.3);
