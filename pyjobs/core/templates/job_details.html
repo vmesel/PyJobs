@@ -59,7 +59,9 @@
                   {%else%}
                     {% if job.is_open %}
                         {% if job.application_link %}
-                            <a href="{{job.application_link}}" class="botao">Candidate-se para esta vaga pelo link</a>
+                            <a href="{{job.application_link}}">
+                                <button class="botao" type="button">Candidate-se para esta vaga pelo link</button>
+                            </a>
                         {%else%}
                         <form action="." method="post">
                             {% csrf_token %}
