@@ -82,6 +82,8 @@ def job_view(request, pk):
     context = {
         "job": get_object_or_404(Job, pk=pk),
         "logged_in": False,
+        "next_job_pk": int(pk) + 1,
+        "previous_job_pk": int(pk) - 1,
     }
 
     context["title"] = context["job"].title

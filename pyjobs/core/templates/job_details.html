@@ -13,24 +13,24 @@
     <div class="container-fluid">
         <div class="row row-breadcrumb-grande">
             <div class="col-lg-3 indicador-esquerdo">
-                <a href="#">Vaga Anterior</a>
+                <a href="/job/{{previous_job_pk}}/">Vaga Anterior</a>
             </div>
             <div class="col-lg-6 indicador-central">
-                <a href="#">Ver vagas</a>
+                <a href="{% url 'jobs' %}">Ver vagas</a>
             </div>
             <div class="col-lg-3 indicador-direito">
-                <a href="#">Vaga Posterior</a>
+                <a href="/job/{{next_job_pk}}/">Vaga Posterior</a>
             </div>
         </div>
         <div class="row row-breadcrumb-pequeno">
             <div class="col-6 col-sm-6">
-                <a href="#">Ver vagas</a>
+                <a href="{% url 'jobs' %}">Ver vagas</a>
             </div>
             <div class="col-3 col-sm-3 indicador-direito-sinal">
-                <a href="#"><</a>
+                <a href="/job/{{previous_job_pk}}/"><</a>
             </div>
             <div class="col-3 col-sm-3 indicador-esquerdo-sinal">
-                <a href="#">></a>
+                <a href="/job/{{next_job_pk}}/">></a>
             </div>
         </div>
     </div>
@@ -59,7 +59,9 @@
                   {%else%}
                     {% if job.is_open %}
                         {% if job.application_link %}
-                            <a href="{{job.application_link}}" class="botao">Candidate-se para esta vaga pelo link</a>
+                            <a href="{{job.application_link}}">
+                                <button class="botao" type="button">Candidate-se para esta vaga pelo link</button>
+                            </a>
                         {%else%}
                         <form action="." method="post">
                             {% csrf_token %}
@@ -112,12 +114,14 @@
         </div>
         <div class="row" style="margin-top:40px; padding: 20px;">
                 <h3>Descrição da vaga</h3>
+                <br>
                 {% autoescape off %}
                     {{job.description|linebreaksbr}}
                 {% endautoescape %}
         </div>
         <div class="row" style="margin-top:40px; padding: 20px;">
                 <h3>Requisitos</h3>
+                <br>
                 {% autoescape off %}
                     {{job.requirements|linebreaksbr}}
                 {% endautoescape %}
