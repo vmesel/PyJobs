@@ -149,7 +149,7 @@ class Job(models.Model):
         return Job.objects.premium().created_in_the_last(30, premium=True)[:7]
 
     def get_index_display_jobs():
-        return Job.objects.created_in_the_last(30)[:9]
+        return Job.objects.public().created_in_the_last(30)[:9]
 
     def get_publicly_available_jobs(term=None):
         return Job.objects.not_premium().created_in_the_last(30).search(term)
