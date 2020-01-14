@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0045_auto_20191101_0911'),
+        ("core", "0045_auto_20191101_0911"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='on_mailing_list',
-            field=models.BooleanField(default=False, verbose_name='Está na mailing list'),
+            model_name="profile",
+            name="on_mailing_list",
+            field=models.BooleanField(
+                default=False, verbose_name="Está na mailing list"
+            ),
         ),
     ]

@@ -113,8 +113,7 @@ class RegisterForm(UserCreationForm):
     )
 
     on_mailing_list = forms.BooleanField(
-        label="Ao clicar, você aceita estar em nosso mailing list",
-        required=False
+        label="Ao clicar, você aceita estar em nosso mailing list", required=False
     )
 
     class Meta:
