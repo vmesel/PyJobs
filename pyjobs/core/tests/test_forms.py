@@ -4,6 +4,7 @@ from datetime import timedelta
 
 from pyjobs.core.forms import *
 from pyjobs.core.models import Skill, Profile
+from unittest.mock import patch
 from django.contrib.auth.models import User
 
 
@@ -74,7 +75,8 @@ class RegisterFormTest(TestCase):
         form = RegisterForm(data={})
         self.assertFalse(form.is_valid())
 
-    def test_valid_form(self):
+    @patch("pyjobs.marketing.triggers.subscribe_user_to_mailer")
+    def test_valid_form(self, _mocked_subscription):
         data = {
             "github": "http://www.google.com",
             "linkedin": "http://www.google.com",
@@ -86,6 +88,7 @@ class RegisterFormTest(TestCase):
             "email": "v@m.com",
             "password1": "#T3st3123!",
             "username": "test_user",
+            "on_mailing_list": True,
         }
         data["password2"] = data["password1"]
         form = RegisterForm(data=data)
@@ -94,3 +97,28 @@ class RegisterFormTest(TestCase):
         self.user = User.objects.all().first()
         self.profile = Profile.objects.filter(user=self.user).first()
         self.assertTrue(self.profile.github == data["github"])
+        self.assertTrue(_mocked_subscription.called)
+
+    @patch("pyjobs.marketing.triggers.subscribe_user_to_mailer")
+    def test_valid_form_but_without_mailer(self, _mocked_subscription):
+        data = {
+            "github": "http://www.google.com",
+            "linkedin": "http://www.google.com",
+            "portfolio": "http://www.google.com",
+            "cellphone": "11981435390",
+            "skills_": self.skills,
+            "first_name": "Vvv",
+            "last_name": "Mmm",
+            "email": "v@m.com",
+            "password1": "#T3st3123!",
+            "username": "test_user",
+            "on_mailing_list": False,
+        }
+        data["password2"] = data["password1"]
+        form = RegisterForm(data=data)
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.user = User.objects.all().first()
+        self.profile = Profile.objects.filter(user=self.user).first()
+        self.assertTrue(self.profile.github == data["github"])
+        self.assertFalse(_mocked_subscription.called)

@@ -17,7 +17,8 @@ from pyjobs.core.email_utils import get_email_with_template
 
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
-    subscribe_user_to_mailer(instance)
+    if instance.on_mailing_list:
+        subscribe_user_to_mailer(instance)
 
 
 @receiver(post_save, sender=JobApplication)

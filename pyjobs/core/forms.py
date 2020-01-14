@@ -112,6 +112,10 @@ class RegisterForm(UserCreationForm):
         label="Skills", queryset=Skill.objects.all(), widget=Select2MultipleWidget
     )
 
+    on_mailing_list = forms.BooleanField(
+        label="Ao clicar, você aceita estar em nosso mailing list", required=False
+    )
+
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "username")
@@ -133,6 +137,7 @@ class RegisterForm(UserCreationForm):
                 linkedin=self.cleaned_data["linkedin"],
                 portfolio=self.cleaned_data["portfolio"],
                 cellphone=self.cleaned_data["cellphone"],
+                on_mailing_list=self.cleaned_data["on_mailing_list"],
             )
             authenticate(
                 username=instance.username, password=self.cleaned_data.get("password1")
