@@ -7,7 +7,7 @@ from django.db import models
 from django.urls import reverse
 
 
-from pyjobs.settings import SECRET_KEY, STATE_CHOICES, SALARY_RANGES, JOB_LEVELS
+from pyjobs.settings import SECRET_KEY, STATE_CHOICES, SALARY_RANGES, JOB_LEVELS, CONTRACT
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 
 
@@ -126,10 +126,13 @@ class Job(models.Model):
 
     state = models.IntegerField("Estado", choices=STATE_CHOICES, default=27)
     salary_range = models.IntegerField(
-        "Faixa Salarial", choices=SALARY_RANGES, default=6
+        "Faixa Salarial", choices=SALARY_RANGES, default=1
     )
     job_level = models.IntegerField(
-        "Nível do Profissional", choices=JOB_LEVELS, default=5
+        "Nível do Profissional", choices=JOB_LEVELS, default=1
+    )
+    contract_form = models.IntegerField(
+        "Forma de contratação", choices=CONTRACT, default=1
     )
     remote = models.BooleanField("Esta vaga é remota?", default=False)
 

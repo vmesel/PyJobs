@@ -110,6 +110,7 @@
                 <li>Local da vaga: {{job.workplace}}</li>
                 <li>Nível: {{job.get_job_level_display}}</li>
                 <li>Aceita Remoto?: {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
+                <li>Tipo de contrata&ccedil;&atilde;o: {{job.get_contract_form_display}}</li>
             </ul>
         </div>
         <div class="row" style="margin-top:40px; padding: 20px;">
