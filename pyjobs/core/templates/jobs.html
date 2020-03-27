@@ -9,28 +9,36 @@
 <form method="get">
 <section class="filtro filtro-shadow-inverse p-3 mb-1 bg-white rounded" style="margin-top:0px!important;">
     <div class="container">
-        <div class="row" style="margin-top:10px;">
+        <div class="row">
+            <h2 class="">PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL</h2>
+        </div>
+        <form method="get" action="{% url 'jobs' %}">
+            <div class="row" style="margin-top:10px;">
             {% for field in filter.form.visible_fields %}
-                {% if field.html_name == "job_level" or field.html_name == "title" %}
-                <div class="col-md-6 filtro-form-item-select">
-                    {{field.label_tag}}
-                    {% if field.html_name == "job_level" %}
+                <div class="col-md-4 filtro-form-item-select">
+                    <label>{{field.label_tag}}<br/>
+                    </label>
+                    {% if field.html_name != "requirements" and field.html_name != "title" %}
                     <div class="select-form-filtro">
                     {% endif %}
-                    {% render_field field %}
-                    {% if field.html_name == "job_level" %}
+                        {%render_field field %}
+                    {% if field.html_name != "requirements" and field.html_name != "title" %}
                     </div>
                     {% endif %}
                 </div>
-                {% endif %}
+                 {% if forloop.counter|divisibleby:3 %}
+                 </div>
+                 <div class="row" style="margin-top:10px;">
+                 {% endif %}
             {% endfor %}
-        </div>
-        <div class="row" style="margin-top:20px; margin-bottom:10px;">
-            <div class="col-md-12">
-                <input type="submit" name="" value="BUSCAR" class="botao">
             </div>
+            <div class="row" style="margin-top:20px; margin-bottom:10px;">
+                <div class="col-md-12">
+                    <input type="submit" name="" value="BUSCAR" class="botao">
+                </div>
+            </div>
+        </form>
         </div>
-    </div>
 </section>
 </form>
 <section class="listagem-vagas-em-destaque">
@@ -85,7 +93,7 @@
 <section class="listagem-vagas">
 
     <div class="container">
-        {% if publicly_available_jobs|length <= 0 %}
+        {% if publicly_available_jobs|length <= 0 and premium_available_jobs|length <= 0 %}
             <h2>Nenhuma vaga encontrada...</h2>
         {% endif %}
         {% for job in publicly_available_jobs %}
