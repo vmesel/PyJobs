@@ -40,10 +40,15 @@ def index(request):
 
 def jobs(request):
     publicly_available_jobs = Job.get_publicly_available_jobs()
+    publicly_available_premium_jobs = Job.get_premium_jobs()
 
     user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)
+    premium_filtered_query_set = JobFilter(
+        request.GET, queryset=publicly_available_premium_jobs
+    )
 
     paginator = Paginator(user_filtered_query_set.qs, 10)
+    premium_paginator = Paginator(premium_filtered_query_set.qs, 10)
 
     try:
         page_number = int(request.GET.get("page", 1))
@@ -54,10 +59,11 @@ def jobs(request):
         return redirect("/")
 
     public_jobs_to_display = paginator.page(page_number)
+    premium_jobs_to_display = premium_paginator.page(1)
 
     context_dict = {
         "publicly_available_jobs": public_jobs_to_display,
-        "premium_available_jobs": Job.get_premium_jobs(),
+        "premium_available_jobs": premium_jobs_to_display,
         "pages": paginator.page_range,
         "filter": user_filtered_query_set,
     }
