@@ -174,7 +174,7 @@ class PyJobsContact(TestCase):
 class PyJobsMultipleJobsPagesTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
     def setUp(self, _mocked_post_telegram_channel):
-        mommy.make("core.Job", _quantity=14)
+        mommy.make("core.Job", _quantity=20)
         self.client = Client()
 
     def test_first_page(self):
