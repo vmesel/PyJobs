@@ -231,3 +231,10 @@ JOB_LEVELS = [
     (4, "Sênior"),
     (5, "Indeterminado"),
 ]
+
+CONTRACT = [
+    (1, "A combinar"),
+    (2, "CLT"),
+    (3, "PJ"),
+    (4, "Estágio"),
+]
