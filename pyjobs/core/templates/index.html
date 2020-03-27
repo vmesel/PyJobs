@@ -85,11 +85,9 @@
                                     <ul>
                                         <li><b>Empresa:</b> {{job.company_name}}</li>
                                         <li><b>Faixa salarial:</b> {{job.get_salary_range_display}}</li>
-                                        <li><b>Estado:</b> {{job.get_state_display}}</li>
-                                        <li><b>Local da vaga:</b> {{job.workplace}}</li>
+                                        <li><b>Local da vaga:</b> {{job.workplace}} - {{job.get_state_display}}</li>
                                         <li><b>Nível:</b> {{job.get_job_level_display}}</li>
                                         <li><b>Aceita Remoto:</b> {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
-                                        <li><b>Postada em:</b> {{job.created_at|naturalday}}</li>
                                     </ul>
                                 </p>
                                 <div class="tags">
