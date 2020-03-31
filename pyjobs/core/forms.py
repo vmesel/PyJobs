@@ -129,6 +129,7 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         instance = super(RegisterForm, self).save(commit=False)
+        
         if commit:
             instance.save()
 
