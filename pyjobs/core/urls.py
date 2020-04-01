@@ -56,7 +56,7 @@ urlpatterns = [
         {"sitemaps": {"jobs": PyJobsSitemap()}},
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    url(r"^select2/", include("django_select2.urls")),
+    url(r'^select2/', include('django_select2.urls')),
     url(r"^feed/$", JobsFeed()),
     url(r"^feed/premium/$", PremiumJobsFeed()),
 ]

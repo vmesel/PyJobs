@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "pyjobs.partners",
     "pyjobs.marketing",
     "widget_tweaks",
+    "django_select2",
     "django.contrib.sitemaps",
     "raven.contrib.django.raven_compat",
 ]

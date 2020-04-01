@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "858685089a77235279e028d695f2bc6642746a2538183e84bacd3efef3dce2f7"
+            "sha256": "8c0371d2b3bba8f2134a0393a51e1eb1a62c39f200ba0a253957e106b1ba8e2d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -106,11 +106,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:662a1ff78792e3fd77f16f71b1f31149489434de4b62a74895bd5d6534e635a5",
-                "sha256:687c37153486cf26c3fdcbdd177ef16de38dc3463f094b5f9c9955d91f277b14"
+                "sha256:1226168be1b1c7efd0e66ee79b0e0b58b2caa7ed87717909cd8a57bb13a7079a",
+                "sha256:9a4635813e2d498a3c01b10c701fe4a515d76dd290aaa792ccb65ca4ccb6b038"
             ],
             "index": "pypi",
-            "version": "==2.2.9"
+            "version": "==2.2.10"
         },
         "django-appconf": {
             "hashes": [
@@ -177,11 +177,11 @@
         },
         "django-select2": {
             "hashes": [
-                "sha256:7e5a3da54332cb94174a91e0a03177ce44c152049b0876424ba81fc805dbb89f",
-                "sha256:f93b5b626e5c0e8ced24e1e31027eb4850649216e4132cdc3f3880c0bed241c9"
+                "sha256:1482be84449c254ec944c4da0a236b00ec57445304377b783850fd95b269d1ad",
+                "sha256:b4cd3e8c42bdbdc582c38c03a23bc115a90c2f86563282329d37c567d8c34c36"
             ],
             "index": "pypi",
-            "version": "==6.3.1"
+            "version": "==7.2.3"
         },
         "django-widget-tweaks": {
             "hashes": [
@@ -539,11 +539,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:662a1ff78792e3fd77f16f71b1f31149489434de4b62a74895bd5d6534e635a5",
-                "sha256:687c37153486cf26c3fdcbdd177ef16de38dc3463f094b5f9c9955d91f277b14"
+                "sha256:1226168be1b1c7efd0e66ee79b0e0b58b2caa7ed87717909cd8a57bb13a7079a",
+                "sha256:9a4635813e2d498a3c01b10c701fe4a515d76dd290aaa792ccb65ca4ccb6b038"
             ],
             "index": "pypi",
-            "version": "==2.2.9"
+            "version": "==2.2.10"
         },
         "freezegun": {
             "hashes": [
