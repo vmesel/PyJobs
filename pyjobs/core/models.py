@@ -7,7 +7,13 @@ from django.db import models
 from django.urls import reverse
 
 
-from pyjobs.settings import SECRET_KEY, STATE_CHOICES, SALARY_RANGES, JOB_LEVELS, CONTRACT
+from pyjobs.settings import (
+    SECRET_KEY,
+    STATE_CHOICES,
+    SALARY_RANGES,
+    JOB_LEVELS,
+    CONTRACT,
+)
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 
 

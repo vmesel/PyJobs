@@ -6,23 +6,52 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0046_profile_on_mailing_list'),
+        ("core", "0046_profile_on_mailing_list"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='job',
-            name='contract_form',
-            field=models.IntegerField(choices=[(1, 'Estágio'), (2, 'CLT'), (3, 'PJ'), (4, 'A combinar')], default=1, verbose_name='Forma de contratação'),
+            model_name="job",
+            name="contract_form",
+            field=models.IntegerField(
+                choices=[(1, "Estágio"), (2, "CLT"), (3, "PJ"), (4, "A combinar")],
+                default=1,
+                verbose_name="Forma de contratação",
+            ),
         ),
         migrations.AlterField(
-            model_name='job',
-            name='job_level',
-            field=models.IntegerField(choices=[(1, 'Estágio'), (2, 'Junior'), (3, 'Pleno'), (4, 'Sênior'), (5, 'Indeterminado')], default=1, verbose_name='Nível do Profissional'),
+            model_name="job",
+            name="job_level",
+            field=models.IntegerField(
+                choices=[
+                    (1, "Estágio"),
+                    (2, "Junior"),
+                    (3, "Pleno"),
+                    (4, "Sênior"),
+                    (5, "Indeterminado"),
+                ],
+                default=1,
+                verbose_name="Nível do Profissional",
+            ),
         ),
         migrations.AlterField(
-            model_name='job',
-            name='salary_range',
-            field=models.IntegerField(choices=[(1, 'R$ 0,00 a R$ 1.000,00'), (2, 'R$ 1.000,01 a R$ 3.000,00'), (3, 'R$ 3.000,01 a R$ 6.000,00'), (4, 'R$ 6.000,01 a R$ 10.000,00'), (5, 'R$ 10.000,01 a R$ 13.000,00'), (6, 'R$ 13.000,01 a R$ 16.000,00'), (7, 'R$ 16.000,01 a R$ 19.000,00'), (8, 'R$ 19.000,01 a R$ 21.000,00'), (9, 'R$ 21.000,01 ou mais'), (10, 'A combinar')], default=1, verbose_name='Faixa Salarial'),
+            model_name="job",
+            name="salary_range",
+            field=models.IntegerField(
+                choices=[
+                    (1, "R$ 0,00 a R$ 1.000,00"),
+                    (2, "R$ 1.000,01 a R$ 3.000,00"),
+                    (3, "R$ 3.000,01 a R$ 6.000,00"),
+                    (4, "R$ 6.000,01 a R$ 10.000,00"),
+                    (5, "R$ 10.000,01 a R$ 13.000,00"),
+                    (6, "R$ 13.000,01 a R$ 16.000,00"),
+                    (7, "R$ 16.000,01 a R$ 19.000,00"),
+                    (8, "R$ 19.000,01 a R$ 21.000,00"),
+                    (9, "R$ 21.000,01 ou mais"),
+                    (10, "A combinar"),
+                ],
+                default=1,
+                verbose_name="Faixa Salarial",
+            ),
         ),
     ]
