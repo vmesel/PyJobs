@@ -37,6 +37,8 @@ def index(request):
 
     return render(request, template_name="index.html", context=context_dict)
 
+def privacy(request):
+    return render(request, template_name="privacy_policy.html", context={})
 
 def jobs(request):
     publicly_available_jobs = Job.get_publicly_available_jobs()
