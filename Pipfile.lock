@@ -128,14 +128,6 @@
             "index": "pypi",
             "version": "==12.0.3"
         },
-        "django-cities": {
-            "hashes": [
-                "sha256:1fc2a4406e5a81a5ce92590eb076b1823a437ecba15cd291fb8972fdd40b77c7",
-                "sha256:4cdb0f661ff43dc5ae542869f7fa8e7551cb8e1d0a0721efdb9d8c08dd7460ab"
-            ],
-            "index": "pypi",
-            "version": "==0.6"
-        },
         "django-extensions": {
             "hashes": [
                 "sha256:2f81b618ba4d1b0e58603e25012e5c74f88a4b706e0022a3b21f24f0322a6ce6",
