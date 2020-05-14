@@ -95,7 +95,7 @@ def job_view(request, pk):
         "next_job_pk": int(pk) + 1,
         "previous_job_pk": int(pk) - 1,
     }
-    if context["job"].get_salary_range_display != "Indeterminado":
+    if context["job"].get_salary_range_display != "A combinar":
         salaries = (
             str(context["job"].get_salary_range_display())
             .replace(".", "")
