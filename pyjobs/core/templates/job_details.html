@@ -3,6 +3,9 @@
 {% load humanize %}
 {%block ogimage%}
 <meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
+<meta property="og:title" content="{{job.title}} em {{job.company_name}} | {{WEBSITE_NAME}}" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:description" content="{{job.description}}}" />
 {% endblock %}
 {% block title %}
 {{job.title}} no {{WEBSITE_NAME}}
