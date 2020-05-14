@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from pyjobs.core.forms import (
     ContactForm,
@@ -95,6 +95,17 @@ def job_view(request, pk):
         "next_job_pk": int(pk) + 1,
         "previous_job_pk": int(pk) - 1,
     }
+    if context["job"].get_salary_range_display != "Indeterminado":
+        salaries = (
+            str(context["job"].get_salary_range_display())
+            .replace(".", "")
+            .replace(",", ".")
+            .replace("R$", "")
+            .split(" a ")
+        )
+        context["salary"] = (salaries[0], salaries[1])
+
+    context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 
     context["title"] = context["job"].title
     context["description"] = context["job"].description

@@ -1,17 +1,29 @@
 from django.conf.urls import include, url
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
+from django.urls import reverse
 
 from pyjobs.core.models import Job
 from pyjobs.core.views import *
 
 
 class PyJobsSitemap(Sitemap):
-    changefreq = "always"
+    priority = 1.0
+    changefreq = "weekly"
+
+    def items(self):
+        return ["index", "privacy", "services", "job_creation"]
+
+    def location(self, item):
+        return reverse(item)
+
+
+class PyJobsJobsSitemap(Sitemap):
+    changefreq = "daily"
     priority = 0.5
 
     def items(self):
-        return Job.get_publicly_available_jobs()
+        return Job.objects.all()
 
     def lastmod(self, obj):
         return obj.created_at
@@ -54,7 +66,7 @@ urlpatterns = [
     url(
         r"^sitemap\.xml$",
         sitemap,
-        {"sitemaps": {"jobs": PyJobsSitemap()}},
+        {"sitemaps": {"jobs": PyJobsJobsSitemap(), "site": PyJobsSitemap()}},
         name="django.contrib.sitemaps.views.sitemap",
     ),
     url(r"^select2/", include("django_select2.urls")),
