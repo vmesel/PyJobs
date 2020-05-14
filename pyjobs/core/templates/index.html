@@ -3,8 +3,17 @@
 {% load humanize %}
 {% load widget_tweaks %}
 {% load core_tags %}
-{%block title%} {{WEBSITE_NAME}} - A Central de Jobs {{WEBSITE_WORKING_LANGUAGE}}
-{%endblock%}
+{%block metas%}
+<meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
+<meta property="og:title" content="Encontre uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}" />
+<meta property="og:locale" content="pt_BR" />
+<meta content="Encontre uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}." property="og:description"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="Encontre uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}." name="description"/>
+<title>Encontre sua vaga {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}</title>
+<meta content="Encontre uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}." name="twitter:description"/>
+<meta property="og:site_name" content="{{WEBSITE_NAME}}" />
+{% endblock %}
 {%block main%}
     <header>
             <div class="container">

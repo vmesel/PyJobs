@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{%block ogimage%}
+{%block metas%}
 <meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
 <meta property="og:title" content="{{job.title}} em {{job.company_name}} | {{WEBSITE_NAME}}" />
 <meta property="og:locale" content="pt_BR" />
-<meta property="og:description" content="{{job.description}}}" />
+<meta property="og:description" content="{{job.description|truncatechars:240}}}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="{{job.description|truncatechars:240}}}" name="description"/>
+<meta name="description" content="{{job.description|truncatechars:240}}}"/>
+<title>{{job.title}} no {{WEBSITE_NAME}}</title>
+<meta name="twitter:description" content="{{job.description|truncatechars:250}}}"/>
+<meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
-{% block title %}
-{{job.title}} no {{WEBSITE_NAME}}
-{% endblock %}
+
 {%block main%}
 
 <section class="breadcrumb-nav-vagas">
