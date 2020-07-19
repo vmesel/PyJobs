@@ -16,7 +16,7 @@ freezegun = "*"
 
 [packages]
 dj-database-url = "*"
-Django = "==2.2.10"
+Django = "==2.2.13"
 django-appconf = "*"
 django-bootstrap3 = "*"
 django-extensions = "*"
