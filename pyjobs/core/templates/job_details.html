@@ -73,7 +73,7 @@
                     {% endif %}
                   {% endif %}
                 {%else%}
-                    <a href="{% url 'login' %}">
+                    <a href="{% url 'login' %}?next={{ job.get_absolute_url }}">
                         <button class="botao" type="button" id="application-status">Se logue e aplique a vaga!</button>
                     </a>
                 {% endif %}
