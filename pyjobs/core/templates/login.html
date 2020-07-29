@@ -26,6 +26,7 @@
         <form action="." method="post">
           <p>Utilize seu usuário cadastrado (não seu e-mail) para se logar.</p>
           {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next }}">
           {% for hidden_field in form.hidden_fields %}
             {{ hidden_field }}
           {% endfor %}
