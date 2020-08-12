@@ -56,6 +56,7 @@ class JobDetailsViewTest(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
             requirements="Job bem maneiro",
+            salary_range=10,
         )
         self.job.save()
         self.client = Client()
@@ -80,6 +81,10 @@ class JobDetailsViewTest(TestCase):
 
     def test_job_requirements_in_view(self):
         self.assertTrue(self.job.requirements in self.job_view_html)
+
+    def test_job_status_code_is_200(self):
+        status_code = self.client.get(f"/job/{self.job.pk}/").status_code
+        self.assertEqual(status_code, 200)
 
 
 class PyJobsJobApplication(TestCase):

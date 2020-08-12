@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from pyjobs.core.forms import (
     ContactForm,
@@ -75,6 +75,71 @@ def jobs(request):
     return render(request, template_name="jobs.html", context=context_dict)
 
 
+def job_state_view(request, state):
+    states = {
+        "acre": (0, "Acre"),
+        "alagoas": (1, "Alagoas"),
+        "amapa": (2, "Amapá"),
+        "amazonas": (3, "Amazonas"),
+        "bahia": (4, "Bahia"),
+        "ceara": (5, "Ceará"),
+        "distrito-federal": (6, "Distrito Federal"),
+        "espirito-santo": (7, "Espírito Santo"),
+        "goias": (8, "Goiás"),
+        "maranhao": (9, "Maranhão"),
+        "mato-grosso": (10, "Mato Grosso"),
+        "mato-grosso-do-sul": (11, "Mato Grosso do Sul"),
+        "minas-gerais": (12, "Minas Gerais"),
+        "para": (13, "Pará"),
+        "paraiba": (14, "Paraíba"),
+        "parana": (15, "Paraná"),
+        "pernambuco": (16, "Pernambuco"),
+        "piaui": (17, "Piauí"),
+        "rio-de-janeiro": (18, "Rio de Janeiro"),
+        "rio-grande-do-norte": (19, "Rio Grande do Norte"),
+        "rio-grande-do-sul": (20, "Rio Grande do Sul"),
+        "rondonia": (21, "Rondônia"),
+        "roraima": (22, "Roraima"),
+        "santa-catarina": (23, "Santa Catarina"),
+        "sao-paulo": (24, "São Paulo"),
+        "sergipe": (25, "Sergipe"),
+        "tocantins": (26, "Tocantins"),
+    }
+
+    if state not in states.keys():
+        return redirect("/")
+
+    publicly_available_jobs = Job.get_publicly_available_jobs().filter(
+        state=states[state][0]
+    )
+    publicly_available_premium_jobs = Job.get_premium_jobs().filter(
+        state=states[state][0]
+    )
+
+    paginator = Paginator(publicly_available_jobs, 10)
+    premium_paginator = Paginator(publicly_available_premium_jobs, 10)
+
+    try:
+        page_number = int(request.GET.get("page", 1))
+    except ValueError:
+        return redirect("/")
+
+    if page_number > paginator.num_pages:
+        return redirect("/")
+
+    public_jobs_to_display = paginator.page(page_number)
+    premium_jobs_to_display = premium_paginator.page(1)
+
+    context_dict = {
+        "publicly_available_jobs": public_jobs_to_display,
+        "premium_available_jobs": premium_jobs_to_display,
+        "pages": paginator.page_range,
+        "state": states[state][1],
+    }
+
+    return render(request, template_name="jobs_by_location.html", context=context_dict)
+
+
 def services_view(request):
     return render(request, template_name="services.html")
 
@@ -95,6 +160,17 @@ def job_view(request, pk):
         "next_job_pk": int(pk) + 1,
         "previous_job_pk": int(pk) - 1,
     }
+    if context["job"].salary_range != 10:
+        salaries = (
+            str(context["job"].get_salary_range_display())
+            .replace(".", "")
+            .replace(",", ".")
+            .replace("R$", "")
+            .split(" a ")
+        )
+        context["salary"] = (salaries[0], salaries[1])
+
+    context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 
     context["title"] = context["job"].title
     context["description"] = context["job"].description

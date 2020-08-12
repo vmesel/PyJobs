@@ -28,19 +28,20 @@
     /></noscript>
     <!-- End Facebook Pixel Code -->
     <meta charset="utf-8">
+    {% block metas %}
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor." name="description"/>
     <meta name="description" content="Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.">
-    <title>{% if title %}{%block title%}{%endblock%}{%else%}{{WEBSITE_NAME}} - Sua central de vagas {{WEBSITE_WORKING_LANGUAGE}}{%endif%}</title>
+    <title>{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}</title>
     <meta name="keywords" content="empregos, vagas, buscar vagas, vagas de emprego, vagas de programador {{WEBSITE_WORKING_LANGUAGE}}, emprego de programador {{WEBSITE_WORKING_LANGUAGE}}, empregos {{WEBSITE_WORKING_LANGUAGE}}, vagas {{WEBSITE_WORKING_LANGUAGE}}, buscar vagas {{WEBSITE_WORKING_LANGUAGE}}, vagas de emprego {{WEBSITE_WORKING_LANGUAGE}}">
     <meta name="twitter:description" content="Busque agora vagas de emprego de dev {{WEBSITE_WORKING_LANGUAGE}}. {{WEBSITE_NAME}}, a gente trabalha pelo seu trabalho.">
-    {% block ogimage %}
     <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
-    {% endblock ogimage%}
     <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
     <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description" content="{% if description %}{{description}}{%else%}Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.{%endif%}" />
+    {% endblock metas%}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <script src="https://kit.fontawesome.com/8347312236.js" crossorigin="anonymous"></script>

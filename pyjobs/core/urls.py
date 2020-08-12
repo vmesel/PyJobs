@@ -1,17 +1,68 @@
 from django.conf.urls import include, url
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
+from django.urls import reverse
 
 from pyjobs.core.models import Job
 from pyjobs.core.views import *
 
 
+class PyJobsLocationBasedSitemap(Sitemap):
+    priority = 1.0
+    changefreq = "weekly"
+
+    def items(self):
+        return [
+            "acre",
+            "alagoas",
+            "amapa",
+            "amazonas",
+            "bahia",
+            "ceara",
+            "distrito-federal",
+            "espirito-santo",
+            "goias",
+            "maranhao",
+            "mato-grosso",
+            "mato-grosso-do-sul",
+            "minas-gerais",
+            "para",
+            "paraiba",
+            "parana",
+            "pernambuco",
+            "piaui",
+            "rio-de-janeiro",
+            "rio-grande-do-norte",
+            "rio-grande-do-sul",
+            "rondonia",
+            "roraima",
+            "santa-catarina",
+            "sao-paulo",
+            "sergipe",
+            "tocantins",
+        ]
+
+    def location(self, item):
+        return reverse("job_state_view", args=[item])
+
+
 class PyJobsSitemap(Sitemap):
-    changefreq = "always"
+    priority = 1.0
+    changefreq = "weekly"
+
+    def items(self):
+        return ["index", "privacy", "services", "job_creation"]
+
+    def location(self, item):
+        return reverse(item)
+
+
+class PyJobsJobsSitemap(Sitemap):
+    changefreq = "daily"
     priority = 0.5
 
     def items(self):
-        return Job.get_publicly_available_jobs()
+        return Job.objects.all()
 
     def lastmod(self, obj):
         return obj.created_at
@@ -22,6 +73,9 @@ urlpatterns = [
     url(r"^jobs/$", jobs, name="jobs"),
     url(r"^privacy/$", privacy, name="privacy"),
     url(r"^job/(?P<pk>\d+)/$", job_view, name="job_view"),
+    url(
+        r"^jobs/location/(?P<state>[-\w\W\d]+)/$", job_state_view, name="job_state_view"
+    ),
     url(
         r"^job/close/(?P<pk>\d+)/(?P<close_hash>[\da-f]{128})/$",
         close_job,
@@ -54,7 +108,13 @@ urlpatterns = [
     url(
         r"^sitemap\.xml$",
         sitemap,
-        {"sitemaps": {"jobs": PyJobsSitemap()}},
+        {
+            "sitemaps": {
+                "jobs": PyJobsJobsSitemap(),
+                "site": PyJobsSitemap(),
+                "location": PyJobsLocationBasedSitemap(),
+            }
+        },
         name="django.contrib.sitemaps.views.sitemap",
     ),
     url(r"^select2/", include("django_select2.urls")),

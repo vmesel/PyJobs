@@ -5,14 +5,14 @@
 {% load core_tags %}
 {%block metas%}
 <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
-<meta property="og:title" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}" />
+<meta property="og:title" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} em {{state}} no {{WEBSITE_NAME}}" />
 <meta property="og:locale" content="pt_BR" />
-<meta property="og:description" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você pode alcançar a vaga de {{WEBSITE_WORKING_LANGUAGE}} que você tanto deseja." />
+<meta property="og:description" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} em {{state}} no {{WEBSITE_NAME}}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você pode alcançar a vaga de {{WEBSITE_WORKING_LANGUAGE}} que você tanto deseja." name="description"/>
-<meta name="description" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você pode alcançar a vaga de {{WEBSITE_WORKING_LANGUAGE}} que você tanto deseja."/>
-<title>Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}</title>
-<meta name="twitter:description" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você pode alcançar a vaga de {{WEBSITE_WORKING_LANGUAGE}} que você tanto deseja."/>
+<meta content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} em {{state}} no {{WEBSITE_NAME}}" name="description"/>
+<meta name="description" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} em {{state}} no {{WEBSITE_NAME}}"/>
+<title>Vagas de {{WEBSITE_WORKING_LANGUAGE}} em {{state}} no {{WEBSITE_NAME}}</title>
+<meta name="twitter:description" content="Todos os jobs de {{WEBSITE_WORKING_LANGUAGE}} em {{state}} no {{WEBSITE_NAME}}"/>
 <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
 {%block main%}
@@ -20,34 +20,15 @@
 <section class="filtro filtro-shadow-inverse p-3 mb-1 bg-white rounded" style="margin-top:0px!important;">
     <div class="container">
         <div class="row">
-            <h2 class="">PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL</h2>
+            <h2 style="font-size:30px;">As vagas disponíveis em: {{state}}</h2>
         </div>
-        <form method="get" action="{% url 'jobs' %}">
-            <div class="row" style="margin-top:10px;">
-            {% for field in filter.form.visible_fields %}
-                <div class="col-md-4 filtro-form-item-select">
-                    <label>{{field.label_tag}}<br/>
-                    </label>
-                    {% if field.html_name != "requirements" and field.html_name != "title" %}
-                    <div class="select-form-filtro">
-                    {% endif %}
-                        {%render_field field %}
-                    {% if field.html_name != "requirements" and field.html_name != "title" %}
-                    </div>
-                    {% endif %}
-                </div>
-                 {% if forloop.counter|divisibleby:3 %}
-                 </div>
-                 <div class="row" style="margin-top:10px;">
-                 {% endif %}
-            {% endfor %}
-            </div>
             <div class="row" style="margin-top:20px; margin-bottom:10px;">
                 <div class="col-md-12">
-                    <input type="submit" name="" value="BUSCAR" class="botao">
+                    <a href="{% url 'jobs' %}">
+                        <input type="button" name="" value="BUSCAR MAIS VAGAS" class="botao">
+                    </a>
                 </div>
             </div>
-        </form>
         </div>
 </section>
 </form>

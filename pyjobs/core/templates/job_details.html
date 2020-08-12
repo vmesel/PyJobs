@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{%block ogimage%}
+{%block metas%}
 <meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
+<meta property="og:title" content="{{job.title}} em {{job.company_name}} | {{WEBSITE_NAME}}" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:description" content="{{job.description|truncatechars:240}}}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="{{job.description|truncatechars:240}}}" name="description"/>
+<meta name="description" content="{{job.description|truncatechars:240}}}"/>
+<title>{{job.title}} no {{WEBSITE_NAME}}</title>
+<meta name="twitter:description" content="{{job.description|truncatechars:250}}}"/>
+<meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
-{% block title %}
-{{job.title}} no {{WEBSITE_NAME}}
-{% endblock %}
+
 {%block main%}
 
 <section class="breadcrumb-nav-vagas">
@@ -133,4 +140,45 @@
         </div>
     </div>
 </section>
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org/",
+        "@type" : "JobPosting",
+        "title" : "{{job.title}}",
+        "description" : "<h3>Descrição:</h3>{{job.description}}<br/><br/>"<h3>Requisitos:{{job.requirements}}</h3>",
+        "identifier": {
+          "@type": "PropertyValue",
+          "name": "{{job.company_name}}",
+          "value": "{{job.id}}"
+        },
+      
+        "datePosted" : "{{job.created_at|date:"Y-m-d"}},
+        "validThrough" : "{{valid_thru|date:"Y-m-d"}}",
+          "employmentType" : ["FULL_TIME"],
+        "hiringOrganization" : {
+          "@type" : "Organization",
+          "name" : "{{job.company_name}}",
+        },
+        "jobLocation" : {
+          "@type" : "Place",
+          "address" : {
+            "@type" : "PostalAddress",
+            "addressRegion" : "{{job.get_state_display}}",
+            "addressCountry": "BR"
+          }
+        }
+        {% if job.get_salary_range_display != "A combinar" %}
+        "baseSalary": {
+            "@type": "MonetaryAmount",
+            "currency": "BRL",
+            "value": {
+              "@type": "QuantitativeValue",
+              "minValue": {{salary.0}},
+              "maxValue": {{salary.1}},
+              "unitText": "MONTH"
+            }
+          }
+          {% endif %}
+      }
+</script>
 {%endblock%}
