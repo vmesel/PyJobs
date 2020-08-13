@@ -49,8 +49,11 @@
 {%endif%}
 <section class="detalhes-vaga">
     <div class="container">
+        <div class="top-breadcrumb-nav">
+            <a href="/">Home</a> > <a href="{% url 'jobs' %}">Vagas</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
+        </div>
         <h2>{{job.title}}</h2>
-        <h4>Vaga Postada: <span>{{job.created_at|naturalday}}</span></h4>
+        <h3 style="font-size:18px;">Vaga Postada: <span>{{job.created_at|naturalday}}</span></h3>
 
         <div class="row">
             <div class="col-lg-4 botoes-detalhes">

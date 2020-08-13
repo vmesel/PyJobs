@@ -16,6 +16,7 @@ def get_email_with_template(template_name, context_specific, subject, to_emails)
 
     if context["vaga"]:
         context["vaga_close_url"] = context["vaga"].get_close_url()
+        context["vaga_listing_url"] = context["vaga"].get_listing_url()
 
     plain_text = get_template("emails/{}.txt".format(template_name))
     html_text = get_template("emails/html/{}.html".format(template_name))

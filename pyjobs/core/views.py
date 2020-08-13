@@ -230,6 +230,26 @@ def close_job(request, pk, close_hash):
     return render(request, template_name="generic.html", context=context)
 
 
+def applied_users_details(request, pk):
+    job_info = Job.objects.filter(pk=pk).first()
+
+    job_hash = request.GET.get("job_hash")
+    job_hash = job_hash == job_info.listing_hash()
+
+    if request.user.is_staff or job_hash:
+        return render(
+            request,
+            template_name="applied_users_details.html",
+            context={
+                "rows": JobApplication.objects.filter(job__pk=pk),
+                "job": job_info,
+                "is_staff": request.user.is_staff,
+            },
+        )
+
+    return redirect("/")
+
+
 def contact(request):
     context = {"form": ContactForm(request.POST or None)}
 
@@ -399,18 +419,6 @@ def job_application_challenge_submission(request, pk):
         request,
         template_name="job_challenge.html",
         context={"job": user_applied.job, "form": form},
-    )
-
-
-@staff_member_required
-def applied_users_details(request, pk):
-
-    job_info = Job.objects.filter(pk=pk).first()
-
-    return render(
-        request,
-        template_name="applied_users_details.html",
-        context={"rows": JobApplication.objects.filter(job__pk=pk), "job": job_info},
     )
 
 

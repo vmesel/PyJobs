@@ -82,7 +82,9 @@ class JobAdmin(admin.ModelAdmin):
         "premium",
         "created_at",
         "is_open",
+        "consultancy",
     )
+    readonly_fields = ("get_job_hash",)
     actions = [
         send_email_offer,
         send_feedback_collection,
@@ -92,6 +94,9 @@ class JobAdmin(admin.ModelAdmin):
     filter_horizontal = ("skills",)
     search_fields = ["title", "company_name"]
     list_per_page = 100
+
+    def get_job_hash(self, job):
+        return job.listing_hash()
 
 
 class ProfileAdmin(admin.ModelAdmin):

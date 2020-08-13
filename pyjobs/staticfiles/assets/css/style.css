@@ -488,7 +488,7 @@ footer h5{
     line-height: 12px;
 }
 
-.vaga h2{
+.vaga h3{
     text-transform: uppercase;
     font-size: 25px;
     line-height: 30px;
@@ -652,6 +652,12 @@ input[type=checkbox]:checked{
     font-weight: 500;
     line-height: 19px;
     text-align: center;
+}
+
+.top-breadcrumb-nav a{
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 @media (min-width: 1000px){
