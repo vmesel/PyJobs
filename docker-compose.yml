@@ -12,6 +12,10 @@ services:
       - db
     env_file:
       - .env
+    environment:
+      DATABASE_URL: postgres://pyjobs:pyjobs@db:5432/pyjobs
+      DEBUG: "True"
+
 
   db:
     image: postgres:9.5.6-alpine
