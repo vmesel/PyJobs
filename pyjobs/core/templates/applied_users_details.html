@@ -28,6 +28,7 @@
                             <th>GitHub</th>
                             <th>Telefone</th>
                             <th>LinkedIn</th>
+                            <th>Mandar feedback</th>
                             {% if job.consultancy or is_staff %}
                             <th>Enviado Em</th>
                             <th>Link da Resposta</th>
@@ -50,6 +51,7 @@
                             <td>{% if r.user.profile.github is not None %}<a href="{{ r.user.profile.github }}">{{ r.user.profile.github }}</a>{% endif %}</td>
                             <td>{% if r.user.profile.cellphone is not None %}{{ r.user.profile.cellphone }}{% endif %}</td>
                             <td>{% if r.user.profile.linkedin is not None %}<a href="{{ r.user.profile.linkedin }}">{{ r.user.profile.linkedin }}</a>{% endif %}</td>
+                            <td><a href="{% url 'job_application_feedback' r.pk %}">Feedback</a></td>
                             {% if job.consultancy or is_staff %}
                             <td>{% if r.email_sent_at is not None %}{{ r.email_sent_at }}{% else %}{% endif %}</td>
                             <td>{% if r.challenge_response_link is not None %}<a href="{{ r.challenge_response_link }}">{{ r.challenge_response_link }}</a>{% else %}{% endif %}</td>

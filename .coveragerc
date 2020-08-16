@@ -6,3 +6,6 @@
       pyjobs/core/migrations/*.py
       pyjobs/marketing/migrations/*.py
       pyjobs/wsgi.py
+      pyjobs/partners/apps.py
+      pyjobs/partners/test/*.py
+      pyjobs/partners/migrations/*.py

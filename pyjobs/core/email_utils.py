@@ -12,6 +12,7 @@ def get_email_with_template(template_name, context_specific, subject, to_emails)
         "vaga": context_specific.get("vaga", None),
         "pessoa": context_specific.get("pessoa", None),
         "mensagem": context_specific.get("mensagem", None),
+        "job_application": context_specific.get("job_application", None),
     }
 
     if context["vaga"]:

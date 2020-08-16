@@ -19,6 +19,7 @@ from pyjobs.core.forms import (
     JobForm,
     RegisterForm,
     JobApplicationForm,
+    JobApplicationFeedbackForm,
 )
 from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
@@ -489,3 +490,17 @@ def thumbnail_view(request, pk):
 
 def handler_404(request, exception):
     return redirect("/")
+
+
+def job_application_feedback(request, pk):
+    job_application = get_object_or_404(JobApplication, pk=pk)
+    feedback_form = JobApplicationFeedbackForm(
+        request.POST or None, instance=job_application
+    )
+
+    context = {"job_application": job_application, "feedback_form": feedback_form}
+
+    if request.method == "POST" and feedback_form.is_valid():
+        feedback_form.save()
+
+    return render(request, "job_application_feedback.html", context)

@@ -3,7 +3,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
 
@@ -113,3 +113,26 @@ def new_job_was_created(sender, instance, created, **kwargs):
         send_offer_email_template(instance)
     except:
         client.captureException()
+
+
+@receiver(pre_save, sender=JobApplication)
+def feedback_was_created(sender, instance, **kwargs):
+    if not instance.id:
+        return
+
+    original_application = JobApplication.objects.get(id=instance.id)
+
+    if original_application.company_feedback != instance.company_feedback:
+        msg = get_email_with_template(
+            "job_application_feedback",
+            {
+                "pessoa": instance.user,
+                "vaga": instance.job,
+                "job_application": instance,
+            },
+            "Você recebeu um feedback da vaga {} na empresa {}".format(
+                instance.job.title, instance.job.company_name
+            ),
+            [instance.user.email],
+        )
+        msg.send()

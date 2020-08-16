@@ -11,8 +11,7 @@ install:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
   - pip install -U pip
-  - pip install -U pipenv
-  - pipenv install --dev --system --deploy
+  - pip install -r requirements-dev.txt
 before_script:
   - python manage.py migrate
   - python manage.py collectstatic --no-input

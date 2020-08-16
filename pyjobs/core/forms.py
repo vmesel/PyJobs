@@ -155,3 +155,9 @@ class EditProfileForm(forms.ModelForm):
         model = Profile
         fields = ("github", "linkedin", "portfolio", "cellphone", "skills")
         widgets = {"skills": Select2MultipleWidget}
+
+
+class JobApplicationFeedbackForm(ModelForm):
+    class Meta:
+        model = JobApplication
+        fields = ["company_feedback", "company_feedback_type"]

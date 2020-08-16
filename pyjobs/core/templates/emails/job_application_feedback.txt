@@ -1,0 +1,13 @@
+Olá {{pessoa.first_name}},
+
+Aqui vai o seu feedback para a vaga '{{vaga.title}}' na {{vaga.company_name}}
+
+
+{{job_application.company_feedback}}
+
+
+E o seu status no processo seletivo é: {{job_application.feedback_type}}
+
+
+Abraços,
+{{dono_do_site}}

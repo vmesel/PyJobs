@@ -13,6 +13,7 @@ from pyjobs.settings import (
     SALARY_RANGES,
     JOB_LEVELS,
     CONTRACT,
+    FEEDBACK_TYPE,
 )
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 
@@ -235,6 +236,10 @@ class JobApplication(models.Model):
     comment = models.TextField(blank=True, null=True)
     output = models.TextField(blank=True, null=True)
     output_sent = models.BooleanField(default=False)
+    company_feedback = models.CharField(blank=True, null=True, max_length=3000)
+    company_feedback_type = models.IntegerField(
+        "Tipo de feedback", choices=FEEDBACK_TYPE, default=5
+    )
 
     class Meta:
         unique_together = ("user", "job")
@@ -243,6 +248,9 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return "{} applied to {}".format(self.user, self.job)
+
+    def feedback_type(self):
+        return FEEDBACK_TYPE[self.company_feedback_type - 1][1]
 
 
 class Skill(models.Model):
