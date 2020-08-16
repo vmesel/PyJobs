@@ -168,7 +168,10 @@ def job_view(request, pk):
             .replace("R$", "")
             .split(" a ")
         )
-        context["salary"] = (salaries[0], salaries[1])
+        if len(salaries) == 2:
+            context["salary"] = (salaries[0], salaries[1])
+        else:
+            context["salary"] = (salaries[0].replace(" ou mais", ""), "30000.00")
 
     context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 
