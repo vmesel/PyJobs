@@ -483,3 +483,27 @@ class AppliedUsersDetailsTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.user.first_name, body[1])
+
+    def test_if_get_job_applications_feedback_page_works(self):
+        response = self.client.get(
+            "/job/application/{}/".format(self.job_application.pk)
+        )
+        content = response.content.decode("utf-8")
+        self.assertTrue(response.status_code == 200)
+
+    def test_if_get_job_applications_feedback_sends_feedback(self):
+        response = self.client.post(
+            "/job/application/{}/".format(self.job_application.pk),
+            data={"company_feedback": "Teste", "company_feedback_type": 1,},
+        )
+        content = response.content.decode("utf-8")
+        self.assertIn("Feedback enviado para:", content)
+
+
+class JobApplicationDetailsWithoutLoginTest:
+    def setUp(self):
+        self.client = Client()
+
+    def test_if_application_details_are_not_available_for_wrong_users(self):
+        response = self.client.get("/job/{}/details".format(self.job.pk))
+        self.assertEqual(response.status_code, 301)

@@ -42,6 +42,8 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description" content="{% if description %}{{description}}{%else%}Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.{%endif%}" />
     {% endblock metas%}
+    {% block metas_seo %}
+    {% endblock metas_seo %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}">
@@ -60,6 +62,7 @@
                 {% if WEBSITE_NAME == "PyJobs" %}
                     <a class="nav-link" href="/" style="margin: 0; padding: 0;">
                         <img src="{% static 'assets/img/logo-PyJobs.svg' %}" style="height:50px">
+                        <h1 style="display:none;">{{WEBSITE_NAME}}</h1>
                     </a>
                 {%else%}
                     <h1>{{WEBSITE_NAME}}</h1>
@@ -119,12 +122,20 @@
             </div>
             <div class="col-6 col-md">
               <h5>HOME</h5>
+              <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="{% url 'login' %}">Login</a></li>
+                <li><a class="text-muted" href="{% url 'services' %}">Nossos serviços</a></li>
+                <li><a class="text-muted" href="{% url 'pythonistas_signup' %}">Cadastre-se</a></li>
+                <li><a class="text-muted" href="{% url 'privacy' %}">Pol&iacute;tica de privacidade</a></li>
+              </ul>
             </div>
             <div class="col-6 col-md">
               <h5>VAGAS</h5>
               <ul class="list-unstyled text-small">
                 <li><a class="text-muted" href="/jobs/">Ver Vagas</a></li>
-                <li><a class="text-muted" href="/jobs/">Destaques</a></li>
+                <li><a class="text-muted" href="/jobs/location/sao-paulo/">Vagas Python em São Paulo</a></li>
+                <li><a class="text-muted" href="/jobs/location/rio-de-janeiro/">Vagas Python em Rio de Janeiro</a></li>
+                <li><a class="text-muted" href="/jobs/location/espirito-santo/">Vagas Python em Espirito Santo</a></li>
               </ul>
             </div>
             <div class="col-6 col-md">

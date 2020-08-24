@@ -13,6 +13,7 @@ from pyjobs.settings import (
     SALARY_RANGES,
     JOB_LEVELS,
     CONTRACT,
+    FEEDBACK_TYPE,
 )
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 
@@ -141,6 +142,7 @@ class Job(models.Model):
         "Forma de contratação", choices=CONTRACT, default=1
     )
     remote = models.BooleanField("Esta vaga é remota?", default=False)
+    consultancy = models.BooleanField("Consultoria?", default=False)
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
@@ -197,12 +199,27 @@ class Job(models.Model):
         obj = sha512(value.encode("utf-8"))
         return obj.hexdigest()
 
+    def listing_hash(self, salt=None):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no listing hash")
+
+        salt = salt or SECRET_KEY
+        value = "::".join(("listing", salt, str(self.pk), str(self.created_at)))
+        obj = sha512(value.encode("utf-8"))
+        return obj.hexdigest()
+
     def get_close_url(self):
         if not all((self.pk, self.created_at)):
             raise JobError("Unsaved Job models have no close URL")
 
         kwargs = {"pk": self.pk, "close_hash": self.close_hash()}
         return reverse("close_job", kwargs=kwargs)
+
+    def get_listing_url(self):
+        if not all((self.pk, self.created_at)):
+            raise JobError("Unsaved Job models have no listing URL")
+
+        return "/job/{}/details/?job_hash={}".format(self.pk, self.listing_hash())
 
 
 class JobApplication(models.Model):
@@ -219,6 +236,10 @@ class JobApplication(models.Model):
     comment = models.TextField(blank=True, null=True)
     output = models.TextField(blank=True, null=True)
     output_sent = models.BooleanField(default=False)
+    company_feedback = models.CharField(blank=True, null=True, max_length=3000)
+    company_feedback_type = models.IntegerField(
+        "Tipo de feedback", choices=FEEDBACK_TYPE, default=5
+    )
 
     class Meta:
         unique_together = ("user", "job")
@@ -227,6 +248,9 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return "{} applied to {}".format(self.user, self.job)
+
+    def feedback_type(self):
+        return FEEDBACK_TYPE[self.company_feedback_type - 1][1]
 
 
 class Skill(models.Model):

@@ -350,33 +350,19 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                          <p>Olá {{vaga.company_name}},</p>
+                        <p>Olá {{pessoa.first_name}},</p>
 
-                          <p>Agora a vaga {{vaga.title}} foi avaliada por nossos colaboradores e foi publicada!</p>
-
-                          <p>Para acessar a sua vaga, entre no link:</p>
-                          <p>
-                            <a href="{{url_do_site}}/job/{{vaga.pk}}/">{{url_do_site}}/job/{{vaga.pk}}/</a>
-                          </p>
-
-                          <p>
-                            Para acompanhar as inscrições na sua vaga, caso você não tenha posto um link no cadastro de sua vaga:
-                          </p>
-                          <p>
-                            <a href="{{url_do_site}}{{vaga_listing_url}}">{{url_do_site}}{{vaga_listing_url}}</a>
-                          </p>
-
-                          <p>Caso você queira fechar essa vaga, utilize esse link secreto que só você tem:</p>
-                          <p>
-                            <a href="{{url_do_site}}{{vaga_close_url}}">{{url_do_site}}{{vaga_close_url}}</a>
-                          </p>
-
-                          <p>ATENÇÃO: este link fecha a vaga sem necessidade de confirmação ou senha! Caso haja algum problema,</p>
-                          <p>Por favor, nos contate!</p>
-
-
-                          <p>Abraços,</p>
-                          <p>{{dono_do_site}}</p>
+                        <p>Aqui vai o seu feedback para a vaga '{{vaga.title}}' na {{vaga.company_name}}</p>
+                        
+                        
+                        <p>{{job_application.company_feedback}}</p>
+                        
+                        
+                        <p>E o seu status no processo seletivo é: {{job_application.feedback_type}}</p>
+                        
+                        
+                        <p>Abraços,</p>
+                        <p>{{dono_do_site}}</p>
                       </td>
                     </tr>
                   </table>

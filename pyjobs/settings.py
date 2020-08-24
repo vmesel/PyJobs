@@ -242,3 +242,5 @@ CONTRACT = [
     (3, "PJ"),
     (4, "Estágio"),
 ]
+
+FEEDBACK_TYPE = [(1, "Sem feedback"), (2, "Aprovado"), (3, "Reprovado")]

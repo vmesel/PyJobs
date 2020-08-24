@@ -19,6 +19,7 @@ from pyjobs.core.forms import (
     JobForm,
     RegisterForm,
     JobApplicationForm,
+    JobApplicationFeedbackForm,
 )
 from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
@@ -168,7 +169,10 @@ def job_view(request, pk):
             .replace("R$", "")
             .split(" a ")
         )
-        context["salary"] = (salaries[0], salaries[1])
+        if len(salaries) == 2:
+            context["salary"] = (salaries[0], salaries[1])
+        else:
+            context["salary"] = (salaries[0].replace(" ou mais", ""), "30000.00")
 
     context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 
@@ -228,6 +232,26 @@ def close_job(request, pk, close_hash):
     job.is_open = False
     job.save()
     return render(request, template_name="generic.html", context=context)
+
+
+def applied_users_details(request, pk):
+    job_info = Job.objects.filter(pk=pk).first()
+
+    job_hash = request.GET.get("job_hash")
+    job_hash = job_hash == job_info.listing_hash()
+
+    if request.user.is_staff or job_hash:
+        return render(
+            request,
+            template_name="applied_users_details.html",
+            context={
+                "rows": JobApplication.objects.filter(job__pk=pk),
+                "job": job_info,
+                "is_staff": request.user.is_staff,
+            },
+        )
+
+    return redirect("/")
 
 
 def contact(request):
@@ -403,18 +427,6 @@ def job_application_challenge_submission(request, pk):
 
 
 @staff_member_required
-def applied_users_details(request, pk):
-
-    job_info = Job.objects.filter(pk=pk).first()
-
-    return render(
-        request,
-        template_name="applied_users_details.html",
-        context={"rows": JobApplication.objects.filter(job__pk=pk), "job": job_info},
-    )
-
-
-@staff_member_required
 def get_job_applications(request, pk):
     users_grades = [
         (
@@ -478,3 +490,17 @@ def thumbnail_view(request, pk):
 
 def handler_404(request, exception):
     return redirect("/")
+
+
+def job_application_feedback(request, pk):
+    job_application = get_object_or_404(JobApplication, pk=pk)
+    feedback_form = JobApplicationFeedbackForm(
+        request.POST or None, instance=job_application
+    )
+
+    context = {"job_application": job_application, "feedback_form": feedback_form}
+
+    if request.method == "POST" and feedback_form.is_valid():
+        feedback_form.save()
+
+    return render(request, "job_application_feedback.html", context)

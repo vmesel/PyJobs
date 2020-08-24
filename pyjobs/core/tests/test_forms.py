@@ -122,3 +122,37 @@ class RegisterFormTest(TestCase):
         self.profile = Profile.objects.filter(user=self.user).first()
         self.assertTrue(self.profile.github == data["github"])
         self.assertFalse(_mocked_subscription.called)
+
+
+class JobApplicationFeedbackFormTest(TestCase):
+    def setUp(self):
+        self.job = mommy.make(
+            Job, _fill_optional=True, public=True, is_challenging=False
+        )
+        self.profile = mommy.make(Profile, _fill_optional=True)
+
+        self.job_application = JobApplication.objects.create(
+            job=self.job,
+            user=self.profile.user,
+            email_sent_at=datetime.now() - timedelta(days=4),
+            challenge_resent=False,
+            challenge_response_at=None,
+        )
+
+    def test_form_without_feedback(self):
+        self.assertTrue(self.job_application.company_feedback is None)
+
+    def test_saving_with_content(self):
+        data = {
+            "company_feedback": "Teste",
+            "company_feedback_type": 1,
+        }
+        form = JobApplicationFeedbackForm(instance=self.job_application, data=data)
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.assertTrue(
+            self.job_application.company_feedback == data["company_feedback"]
+        )
+        self.assertTrue(
+            self.job_application.company_feedback_type == data["company_feedback_type"]
+        )

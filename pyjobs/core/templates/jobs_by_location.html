@@ -44,7 +44,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 m-0">
-                                <h2 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h2>
+                                <h3 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
                                 <div class="dados-da-vaga">
                                     <p>Empresa: {{job.company_name}}</p>
                                 </div>
@@ -85,7 +85,7 @@
 
     <div class="container">
         {% if publicly_available_jobs|length <= 0 and premium_available_jobs|length <= 0 %}
-            <h2>Nenhuma vaga encontrada...</h2>
+            <h3>Nenhuma vaga encontrada...</h3>
         {% endif %}
         {% for job in publicly_available_jobs %}
         <div class="vaga">
@@ -97,7 +97,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 m-0">
-                                <h2 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h2>
+                                <h3 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
                                 <div class="dados-da-vaga">
                                     <p>Empresa: {{job.company_name|truncatechars:15}}</p>
                                 </div>

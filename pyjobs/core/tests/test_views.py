@@ -144,3 +144,23 @@ class TestingRestrictedViews(TestCase):
         response = self.client.post("/info/")
         content = response.content.decode("utf-8")
         self.assertIn("Suas informações foram atualizadas com sucesso!", content)
+
+    def test_catch_privacy_info(self):
+        response = self.client.get("/privacy/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_grab_jobs_from_certain_location(self):
+        response = self.client.get("/jobs/location/sao-paulo/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_grab_jobs_from_wrong_location(self):
+        response = self.client.get("/jobs/location/sao-paulozzz/")
+        self.assertEqual(response.status_code, 302)
+
+    def test_grab_jobs_from_location_with_wrong_page(self):
+        response = self.client.get("/jobs/location/sao-paulo/?page=Zzz")
+        self.assertEqual(response.status_code, 302)
+
+    def test_grab_jobs_from_location_with_greater_than_page_number(self):
+        response = self.client.get("/jobs/location/sao-paulo/?page=30000")
+        self.assertEqual(response.status_code, 302)

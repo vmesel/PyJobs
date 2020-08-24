@@ -104,6 +104,11 @@ urlpatterns = [
     ),
     url(r"^job/create/$", job_creation, name="job_creation"),
     url(r"^lp/landing01/$", fb_ads_landing, name="fb_ads_landing"),
+    url(
+        r"^job/application/(?P<pk>\d+)/$",
+        job_application_feedback,
+        name="job_application_feedback",
+    ),
     url(r"^robots.txt$", robots_view, name="robots"),
     url(
         r"^sitemap\.xml$",
