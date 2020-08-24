@@ -30,6 +30,9 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
+# E-mail
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="pyjobs@pyjobs.com.br")
+
 # Application definition
 
 INSTALLED_APPS = [
