@@ -488,6 +488,14 @@ def thumbnail_view(request, pk):
     return response
 
 
+def job_listing_view(request, pk):
+    if not request.user.is_staff:
+        return redirect("/")
+    
+    job = Job.objects.filter(pk=pk).first()
+    return HttpResponse(job.get_listing_url())
+
+
 def handler_404(request, exception):
     return redirect("/")
 
