@@ -84,6 +84,7 @@ class JobAdmin(admin.ModelAdmin):
         "is_open",
         "consultancy",
     )
+    readonly_fields = ("get_job_hash",)
     actions = [
         send_email_offer,
         send_feedback_collection,

@@ -201,7 +201,7 @@ class Job(models.Model):
 
     def listing_hash(self, salt=None):
         if not all((self.pk, self.created_at)):
-            raise JobError("Unsaved Job models have no listing hash")
+            return "Unsaved Job models have no listing URL"
 
         salt = salt or SECRET_KEY
         value = "::".join(("listing", salt, str(self.pk), str(self.created_at)))
@@ -217,7 +217,7 @@ class Job(models.Model):
 
     def get_listing_url(self):
         if not all((self.pk, self.created_at)):
-            raise JobError("Unsaved Job models have no listing URL")
+            return "Unsaved Job models have no listing URL"
 
         return "/job/{}/details/?job_hash={}".format(self.pk, self.listing_hash())
 
