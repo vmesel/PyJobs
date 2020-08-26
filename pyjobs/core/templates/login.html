@@ -37,7 +37,11 @@
           <div class="form-group">
                 <label for=""></label>
                   {{ field.label_tag }}
-                {% render_field field %}
+                  {% if form.errors %}
+                    {% render_field field style="border: 1px solid rgba(255, 0, 0, 0.7);" %}
+                  {% else %}
+                    {% render_field field %}
+                  {% endif %}
               <div class="input-group-append">
                 {% if field.help_text %}
                   <small class="form-text text-muted">{{ field.help_text }}</small>
