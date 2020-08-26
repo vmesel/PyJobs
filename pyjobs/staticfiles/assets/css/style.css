@@ -660,6 +660,13 @@ input[type=checkbox]:checked{
     text-decoration: underline;
 }
 
+.invalid-feedback-pj {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545 !important;
+}
+
 @media (min-width: 1000px){
     .modal img{
         width: 300px;

@@ -24,14 +24,18 @@
             <div class="row">
                 <div class="col-md-12">
                     {% if field.html_name != "skills_" and field.html_name != "on_mailing_list" %}
-                        {% render_field field style="margin-top:5px; width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
+                    {% if field.errors %}
+                      {% render_field field style="margin-top:5px; width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(255, 0, 0, 0.7) !important; overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
+                    {% else %}
+                      {% render_field field style="margin-top:5px; width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
+                    {% endif %}
                     {% elif field.html_name == "skills_" %}
                         {% render_field field id="id_skills" style="margin-top:5px; width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
                     {% elif field.html_name == "on_mailing_list" %}
                         {% render_field field style="margin-top:5px; border-radius: 5px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow: inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%} Você aceita estar em nossa newsletter? 
                     {% endif %}
                     {% for error in field.errors %}
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback-pj">
                       {{ error }}
                     </div>
                     {% endfor %}
