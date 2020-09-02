@@ -160,7 +160,7 @@
           "employmentType" : ["FULL_TIME"],
         "hiringOrganization" : {
           "@type" : "Organization",
-          "name" : "{{job.company_name}}",
+          "name" : "{{job.company_name}}"
         },
         "jobLocation" : {
           "@type" : "Place",
@@ -171,6 +171,7 @@
           }
         }
         {% if job.get_salary_range_display != "A combinar" %}
+        ,
         "baseSalary": {
             "@type": "MonetaryAmount",
             "currency": "BRL",
