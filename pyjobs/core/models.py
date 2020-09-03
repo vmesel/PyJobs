@@ -44,6 +44,9 @@ class Profile(models.Model):
         help_text="Descreva um pouco sobre você para as empresas poderem te conhecer melhor!",
     )
     on_mailing_list = models.BooleanField("Está na mailing list", default=False)
+    agree_privacy_policy = models.BooleanField(
+        "Aceitou políticas de privacidade", default=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skill")
 
