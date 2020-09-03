@@ -117,6 +117,10 @@ class RegisterForm(UserCreationForm):
         label="Ao clicar, você aceita estar em nosso mailing list", required=False
     )
 
+    agree_privacy_policy = forms.BooleanField(
+        label="Ao clicar, você aceita nossa política de privacidade", required=True
+    )
+
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "username")
@@ -140,6 +144,7 @@ class RegisterForm(UserCreationForm):
                 portfolio=self.cleaned_data["portfolio"],
                 cellphone=self.cleaned_data["cellphone"],
                 on_mailing_list=self.cleaned_data["on_mailing_list"],
+                agree_privacy_policy=self.cleaned_data["agree_privacy_policy"],
             )
             authenticate(
                 username=instance.username, password=self.cleaned_data.get("password1")
@@ -151,10 +156,26 @@ class RegisterForm(UserCreationForm):
 
 
 class EditProfileForm(forms.ModelForm):
+    email = forms.EmailField(
+        label="Seu e-mail",
+        widget=forms.TextInput(attrs={"placeholder": "seu-email@atualizado.com"}),
+        required=False,
+    )
+
     class Meta:
         model = Profile
         fields = ("github", "linkedin", "portfolio", "cellphone", "skills")
         widgets = {"skills": Select2MultipleWidget}
+
+    def save(self, commit=True):
+        if commit:
+            user = self.instance.user
+            user.email = self.cleaned_data["email"]
+            user.save()
+
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields["email"].initial = self.instance.user.email
 
 
 class JobApplicationFeedbackForm(ModelForm):

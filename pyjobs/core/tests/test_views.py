@@ -164,3 +164,7 @@ class TestingRestrictedViews(TestCase):
     def test_grab_jobs_from_location_with_greater_than_page_number(self):
         response = self.client.get("/jobs/location/sao-paulo/?page=30000")
         self.assertEqual(response.status_code, 302)
+
+    def test_catch_partners_info(self):
+        response = self.client.get("/partners/")
+        self.assertEqual(response.status_code, 200)

@@ -28,6 +28,7 @@ class RegisterFormTest(TestCase):
                 "portfolio": "http://www.google.com",
                 "cellphone": "(11)987485552",
                 "skills_": skills,
+                "agree_privacy_policy": True,
             }
         )
 
@@ -89,6 +90,7 @@ class RegisterFormTest(TestCase):
             "password1": "#T3st3123!",
             "username": "test_user",
             "on_mailing_list": True,
+            "agree_privacy_policy": True,
         }
         data["password2"] = data["password1"]
         form = RegisterForm(data=data)
@@ -113,6 +115,7 @@ class RegisterFormTest(TestCase):
             "password1": "#T3st3123!",
             "username": "test_user",
             "on_mailing_list": False,
+            "agree_privacy_policy": True,
         }
         data["password2"] = data["password1"]
         form = RegisterForm(data=data)
@@ -156,3 +159,26 @@ class JobApplicationFeedbackFormTest(TestCase):
         self.assertTrue(
             self.job_application.company_feedback_type == data["company_feedback_type"]
         )
+
+
+class EditProfileFormTest(TestCase):
+    def setUp(self):
+        self.profile = mommy.make(Profile, _fill_optional=True)
+        self.skills = mommy.make("core.Skill", _quantity=1, _fill_optional=True)
+
+    def test_email_change_on_form(self):
+        data = {
+            "email": "zezinho@huguinho.com",
+            "cellphone": "11912345678",
+            "skills": self.skills,
+        }
+        past_email = self.profile.user.email
+        form = EditProfileForm(instance=self.profile, data=data)
+        self.assertTrue(form.is_valid())
+        form.save()
+        new_email = self.profile.user.email
+        self.assertTrue(past_email != new_email)
+
+    def test_form_is_empty_failing(self):
+        form = EditProfileForm(instance=self.profile, data={})
+        self.assertFalse(form.is_valid())
