@@ -3,6 +3,7 @@
 {% load humanize %}
 {%block ogimage%}
 <meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
+<link rel="canonical" href="{% url 'jobs' %}"/>
 {% endblock %}
 {% block title %}
 {{job.title}} no {{WEBSITE_NAME}}
