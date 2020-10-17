@@ -235,7 +235,7 @@ def close_job(request, pk, close_hash):
 
 
 def applied_users_details(request, pk):
-    job_info = Job.objects.filter(pk=pk).first()
+    job_info = get_object_or_404(Job, pk=pk)
 
     job_hash = request.GET.get("job_hash")
     job_hash = job_hash == job_info.listing_hash()
