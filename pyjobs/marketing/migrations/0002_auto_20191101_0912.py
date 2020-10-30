@@ -64,8 +64,14 @@ class Migration(migrations.Migration):
                 "verbose_name_plural": "Listas de e-mail",
             },
         ),
-        migrations.AlterModelTable(name="contact", table=None,),
-        migrations.AlterModelTable(name="mailinglist", table=None,),
+        migrations.AlterModelTable(
+            name="contact",
+            table=None,
+        ),
+        migrations.AlterModelTable(
+            name="mailinglist",
+            table=None,
+        ),
     ]
 
     operations = [

@@ -494,7 +494,10 @@ class AppliedUsersDetailsTest(TestCase):
     def test_if_get_job_applications_feedback_sends_feedback(self):
         response = self.client.post(
             "/job/application/{}/".format(self.job_application.pk),
-            data={"company_feedback": "Teste", "company_feedback_type": 1,},
+            data={
+                "company_feedback": "Teste",
+                "company_feedback_type": 1,
+            },
         )
         content = response.content.decode("utf-8")
         self.assertIn("Feedback enviado para:", content)

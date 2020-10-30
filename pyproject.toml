@@ -7,7 +7,7 @@ authors = ["Vinicius Mesel <vinicius@pyjobs.com.br>"]
 [tool.poetry.dependencies]
 python = "3.8.5"
 dj-database-url = "*"
-Django = "==2.2.13"
+Django = "^3.1.2"
 django-appconf = "*"
 django-bootstrap3 = "*"
 django-extensions = "*"
@@ -28,11 +28,13 @@ raven = "*"
 requests = "*"
 restless = "*"
 sendgrid = "*"
-sendgrid-django = "*"
+sendgrid-django = "^4.2.0"
 tqdm = "*"
 whitenoise = "*"
 pillow = "*"
 ipython = "==7.16.1"
+six = "^1.15.0"
+parso = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
 black = "*"
