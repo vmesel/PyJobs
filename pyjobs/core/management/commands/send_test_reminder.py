@@ -36,8 +36,8 @@ class Command(BaseCommand):
                     "mensagem": job_app,
                 }
                 template_person = "job_interest_challenge"
-                person_email_subject = "Reenviando: Teste Técnico da empresa: {}!".format(
-                    job.company_name
+                person_email_subject = (
+                    "Reenviando: Teste Técnico da empresa: {}!".format(job.company_name)
                 )
 
                 job_app.challenge_resent = True

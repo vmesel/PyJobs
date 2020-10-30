@@ -48,7 +48,13 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "Indicação", "verbose_name_plural": "Indicações",},
+            options={
+                "verbose_name": "Indicação",
+                "verbose_name_plural": "Indicações",
+            },
         ),
-        migrations.AlterModelTable(name="messages", table=None,),
+        migrations.AlterModelTable(
+            name="messages",
+            table=None,
+        ),
     ]

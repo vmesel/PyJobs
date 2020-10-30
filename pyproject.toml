@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "PyJobs"
+version = "0.1.0"
+description = "A job board website made for software development professionals."
+authors = ["Vinicius Mesel <vinicius@pyjobs.com.br>"]
+
+[tool.poetry.dependencies]
+python = "3.8.5"
+dj-database-url = "*"
+Django = "^3.1.2"
+django-appconf = "*"
+django-bootstrap3 = "*"
+django-extensions = "*"
+django-filter = "*"
+django-material = "*"
+django-model-utils = "*"
+django-recaptcha = "*"
+Django-Select2 = ">7.0.2"
+django-widget-tweaks = "*"
+gunicorn = "*"
+mailchimp3 = "*"
+psycopg2-binary = "*"
+python-dateutil = "*"
+python-decouple = "*"
+python-telegram-bot = "*"
+pytz = "*"
+raven = "*"
+requests = "*"
+restless = "*"
+sendgrid = "*"
+sendgrid-django = "^4.2.0"
+tqdm = "*"
+whitenoise = "*"
+pillow = "*"
+ipython = "==7.16.1"
+six = "^1.15.0"
+parso = "^0.8.0"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+coverage = "*"
+ipdb = "*"
+isort = "*"
+model-mommy = "*"
+nose = "*"
+responses = "*"
+freezegun = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -70,7 +70,7 @@ def send_offer_email_template(job):
         message_title,
         message_text,
         settings.WEBSITE_OWNER_EMAIL,
-        [job.company_email, "viniciuscarqueijo@gmail.com"],
+        [job.company_email],
     )
 
 

@@ -1,7 +1,7 @@
 from unittest.mock import patch
 from pyjobs.core.models import Skill
 from django.test import TestCase
-from django.utils.six import StringIO
+from six import StringIO
 from pyjobs.core.models import Job
 from pyjobs.marketing.models import Messages
 from datetime import datetime, timedelta

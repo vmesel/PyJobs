@@ -2,7 +2,7 @@ from unittest.mock import patch
 from freezegun import freeze_time
 from pyjobs.core.models import Job, Profile, JobApplication
 from django.test import TestCase
-from django.utils.six import StringIO
+from six import StringIO
 from pyjobs.core.management.commands.run_routines import Command as run_routines
 from pyjobs.core.management.commands.send_weekly_summary import *
 from pyjobs.core.management.commands.send_weekly_mailing import (

@@ -40,7 +40,9 @@ class Migration(migrations.Migration):
                 ),
                 ("message", models.TextField(default="", verbose_name="Mensagem")),
             ],
-            options={"db_table": "marketing_contact",},
+            options={
+                "db_table": "marketing_contact",
+            },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
@@ -68,7 +70,9 @@ class Migration(migrations.Migration):
                     models.CharField(default="", max_length=100, verbose_name="Slug"),
                 ),
             ],
-            options={"db_table": "marketing_mailinglist",},
+            options={
+                "db_table": "marketing_mailinglist",
+            },
             bases=(models.Model,),
         ),
     ]

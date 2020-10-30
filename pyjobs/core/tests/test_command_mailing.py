@@ -2,7 +2,7 @@ from unittest.mock import patch
 from pyjobs.core.models import Skill
 from django.test import TestCase, override_settings
 from freezegun import freeze_time
-from django.utils.six import StringIO
+from six import StringIO
 from pyjobs.core.models import Job
 from pyjobs.marketing.models import Messages, MailingList
 from datetime import datetime, timedelta

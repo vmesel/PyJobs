@@ -5,5 +5,9 @@ from django.contrib.sitemaps.views import sitemap
 from .views import *
 
 urlpatterns = [
-    url(r"^partners/$", get_all_partners, name="get_all_partners",),
+    url(
+        r"^partners/$",
+        get_all_partners,
+        name="get_all_partners",
+    ),
 ]

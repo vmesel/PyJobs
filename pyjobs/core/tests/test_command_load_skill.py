@@ -1,6 +1,6 @@
 from pyjobs.core.models import Skill
 from django.test import TestCase
-from django.utils.six import StringIO
+from six import StringIO
 from pyjobs.core.management.commands.load_skills import *
 from django.core.management import call_command
 import sys

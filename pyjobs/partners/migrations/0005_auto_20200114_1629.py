@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="partner", options={"verbose_name": "Parceiro"},
+            name="partner",
+            options={"verbose_name": "Parceiro"},
         ),
     ]
