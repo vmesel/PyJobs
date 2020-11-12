@@ -35,6 +35,9 @@ pillow = "*"
 ipython = "==7.16.1"
 six = "^1.15.0"
 parso = "^0.8.0"
+PyGithub = "^1.53"
+mistune = "2.0.0a4"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "*"
