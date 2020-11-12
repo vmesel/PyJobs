@@ -49,12 +49,12 @@
                     <div class="col-md-4 filtro-form-item-select">
                         <label>{{field.label_tag}}<br/>
                         </label>
-                        {% if field.html_name != "requirements" and field.html_name != "title" %}
-                        <div class="select-form-filtro">
+                        {% if field.html_name != "title" %}
+                            <div class="select-form-filtro">
                         {% endif %}
-                            {%render_field field %}
-                        {% if field.html_name != "requirements" and field.html_name != "title" %}
-                        </div>
+                            {% render_field field %}
+                        {% if field.html_name != "title" %}
+                            </div>
                         {% endif %}
                     </div>
                      {% if forloop.counter|divisibleby:3 %}
