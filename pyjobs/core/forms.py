@@ -171,6 +171,12 @@ class EditProfileForm(forms.ModelForm):
         if commit:
             user = self.instance.user
             user.email = self.cleaned_data["email"]
+            user.profile.github = self.cleaned_data["github"]
+            user.profile.linkedin = self.cleaned_data["linkedin"]
+            user.profile.portfolio = self.cleaned_data["portfolio"]
+            user.profile.cellphone = self.cleaned_data["cellphone"]
+            user.profile.skills.set(self.cleaned_data["skills"])
+            user.profile.save()
             user.save()
 
     def __init__(self, *args, **kwargs):
