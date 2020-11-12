@@ -146,6 +146,7 @@ class Job(models.Model):
     )
     remote = models.BooleanField("Esta vaga é remota?", default=False)
     consultancy = models.BooleanField("Consultoria?", default=False)
+    issue_number = models.IntegerField("Issue do Github", null=True, blank=True)
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 

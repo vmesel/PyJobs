@@ -88,7 +88,7 @@ def send_feedback_collection_email(job):
 
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
-    if not created:
+    if not created or not instance.receive_emails:
         return
 
     # post to telegram
