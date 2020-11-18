@@ -15,15 +15,16 @@ from pyjobs.core.models import Job, Skill
 LINK_REGEX = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
 EMAIL_REGEX = r"[\w\.-]+@[\w\.-]+"
 
+
 def section_reshaping(sections, issue_content):
     """
     This function enables markdown <h2> to be detected and inserted
     in the right section of the original dictionary.
 
     :params:
-    sections -> Dict: this dict is a dict containing all default headers 
+    sections -> Dict: this dict is a dict containing all default headers
     issue_content -> String: this string contains the pure text of the issue
-    
+
     :returns:
     formated_job -> Dict: it is a copy of sections that will be returned filled
     """
@@ -39,8 +40,10 @@ def section_reshaping(sections, issue_content):
 
             to_replace = f"{section_header}"
             content = content.replace(to_replace, "")
-            formated_job[section_header] = str(mistune.html(content)).replace("\n", "<br/>")
-    
+            formated_job[section_header] = str(mistune.html(content)).replace(
+                "\n", "<br/>"
+            )
+
     return formated_job
 
 
@@ -65,10 +68,9 @@ def format_issue_content(issue_content):
         email = None
 
     try:
-        link = re.findall(
-            LINK_REGEX,
-            formated_job["Como se candidatar"],
-        )[0][0]
+        link = re.findall(LINK_REGEX, formated_job["Como se candidatar"],)[
+            0
+        ][0]
     except IndexError:
         link = None
 
@@ -77,8 +79,13 @@ def format_issue_content(issue_content):
     formated_job["company_email"] = email if email else settings.WEBSITE_OWNER_EMAIL
 
     formated_job["requirements"] = formated_job.pop("Requisitos")
-    formated_job["description"] = "<br/>".join([formated_job["Nossa empresa"], formated_job["Descrição da vaga"], formated_job["Benefícios"]])
-
+    formated_job["description"] = "<br/>".join(
+        [
+            formated_job["Nossa empresa"],
+            formated_job["Descrição da vaga"],
+            formated_job["Benefícios"],
+        ]
+    )
 
     formated_job["workplace"] = (
         bs(formated_job.pop("Local"), features="html.parser").get_text().strip()
@@ -126,11 +133,9 @@ def setup_labels(labels, content):
     skills = []
 
     for label in labels:
-        skill, created = Skill.objects.filter(name=label).get_or_create(
-            name=label
-        )
+        skill, created = Skill.objects.filter(name=label).get_or_create(name=label)
         skills.append(skill)
-    
+
     return content, skills
 
 
@@ -162,8 +167,11 @@ class Command(BaseCommand):
         )
 
         for issue in open_issues:
-            
-            if Job.objects.filter(issue_number=issue.id) or issue.user.login in self.website_managers:
+
+            if (
+                Job.objects.filter(issue_number=issue.id)
+                or issue.user.login in self.website_managers
+            ):
                 continue
 
             labels = [label.name for label in issue.labels]
