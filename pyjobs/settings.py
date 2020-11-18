@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "pyjobs.api",
     "pyjobs.partners",
     "pyjobs.marketing",
+    "pyjobs.synchronizer",
     "widget_tweaks",
     "django_select2",
     "django.contrib.sitemaps",
@@ -176,6 +177,7 @@ if "DYNO" in os.environ:  # pragma: no cover
 WEBSITE_NAME = config("WEBSITE_NAME", default=None)
 WEBSITE_SLOGAN = config("WEBSITE_SLOGAN", default=None)
 WEBSITE_OWNER_EMAIL = config("WEBSITE_OWNER_EMAIL", default=None)
+WEBSITE_OWNER_CELLPHONE = config("WEBSITE_OWNER_CELLPHONE", default=None)
 WEBSITE_GENERAL_EMAIL = config("WEBSITE_GENERAL_EMAIL", default=None)
 WEBSITE_WORKING_LANGUAGE = config("WEBSITE_WORKING_LANGUAGE", default=None)
 WEBSITE_MAILINGLIST_LINK = config("WEBSITE_MAILINGLIST_LINK", default=None)
@@ -183,6 +185,12 @@ WEBSITE_OWNER_NAME = config("WEBSITE_OWNER_NAME", default=None)
 USER_SUBSTANTIVE = config("USER_SUBSTANTIVE", default=None)
 WEBSITE_HOME_URL = config("WEBSITE_HOME_URL", default=None)
 MAILERLITE_API_KEY = config("MAILERLITE_API_KEY", default=None)
+
+GITHUB_ACCESS_TOKEN = config("GITHUB_ACCESS_TOKEN", default=None)
+GITHUB_DEFAULT_REPO = config("GITHUB_DEFAULT_REPO", default=None)
+WEBSITE_MANAGERS_GITHUB_NICKNAME = config(
+    "WEBSITE_MANAGERS_GITHUB_NICKNAME", default=None
+)
 
 STATE_CHOICES = [
     (0, "Acre"),
