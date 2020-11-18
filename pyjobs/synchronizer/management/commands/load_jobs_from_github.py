@@ -28,24 +28,19 @@ def section_reshaping(sections, issue_content):
     formated_job -> Dict: it is a copy of sections that will be returned filled
     """
     formated_job = copy(sections)
-    
     for content in issue_content.split("## "):
         for section_header in sections:
-            if not content.startswith(f"{section_header}\r\n\r\n"):
+            if not content.startswith(f"{section_header}"):
                 continue
             content_section_header = section_header
 
             if section_header in ["Nossa empresa", "Descrição da vaga"]:
                 content_section_header = "Descrição da vaga"
 
-            to_replace = f"{section_header}\r\n\r\n"
+            to_replace = f"{section_header}"
             content = content.replace(to_replace, "")
-            content = mistune.html(content)
-            content = content.strip()
-            formated_job[
-                section_header
-            ] = f"{formated_job[section_header]}\r\n{content}"
-
+            formated_job[section_header] = str(mistune.html(content)).replace("\n", "<br/>")
+    
     return formated_job
 
 
@@ -61,9 +56,6 @@ def format_issue_content(issue_content):
     }
 
     formated_job = section_reshaping(sections, issue_content)
-
-    for key, content in formated_job.items():
-        formated_job[key] = mistune.html(content)
 
     soup = bs(formated_job["Como se candidatar"], features="html.parser")
     try:
@@ -85,13 +77,8 @@ def format_issue_content(issue_content):
     formated_job["company_email"] = email if email else settings.WEBSITE_OWNER_EMAIL
 
     formated_job["requirements"] = formated_job.pop("Requisitos")
+    formated_job["description"] = "<br/>".join([formated_job["Nossa empresa"], formated_job["Descrição da vaga"], formated_job["Benefícios"]])
 
-    formated_job["description"] = ""
-
-    for field in ["Nossa empresa", "Descrição da vaga", "Benefícios"]:
-        formated_job[
-            "description"
-        ] = f"{formated_job['description']}<br/>{formated_job[field]}"
 
     formated_job["workplace"] = (
         bs(formated_job.pop("Local"), features="html.parser").get_text().strip()
