@@ -76,21 +76,21 @@ class JobError(Exception):
 class Job(models.Model):
     title = models.CharField(
         "Título da Vaga",
-        max_length=100,
+        max_length=10000,
         default="",
         blank=False,
         help_text="Ex.: Desenvolvedor",
     )
     workplace = models.CharField(
         "Local",
-        max_length=100,
+        max_length=10000,
         default="",
         blank=False,
         help_text="Ex.: Santana - São Paulo",
     )
     company_name = models.CharField(
         "Nome da Empresa",
-        max_length=100,
+        max_length=10000,
         default="",
         blank=False,
         help_text="Ex.: ACME Inc",
