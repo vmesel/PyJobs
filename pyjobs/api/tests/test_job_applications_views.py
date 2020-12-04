@@ -12,8 +12,9 @@ from pyjobs.api.models import ApiKey
 
 
 class TestJobApplicationResourceList(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = mommy.make(Job, _fill_optional=True, public=True)
         self.api_key = mommy.make(ApiKey)
         url = resolve_url("api:jobapplication_list")
@@ -31,8 +32,9 @@ class TestJobApplicationResourceList(TestCase):
 
 
 class TestJobApplicationResourceListWithInvalidAPIKey(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = mommy.make(Job, _fill_optional=True, public=True)
         self.api_key = mommy.make(ApiKey)
         url = resolve_url("api:jobapplication_list")
@@ -50,8 +52,9 @@ class TestJobApplicationResourceListWithInvalidAPIKey(TestCase):
 
 
 class TestJobApplicationWithItemsResourceList(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = mommy.make(Job)
         self.profile = mommy.make(Profile)
 

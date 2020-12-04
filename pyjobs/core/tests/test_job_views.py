@@ -17,7 +17,8 @@ import io
 
 class HomeJobsViewsTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -47,7 +48,8 @@ class HomeJobsViewsTest(TestCase):
 
 class JobDetailsViewTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -90,7 +92,8 @@ class JobDetailsViewTest(TestCase):
 class PyJobsJobApplication(TestCase):
     @responses.activate
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         responses.add(
             responses.POST,
             "https://api.mailerlite.com/api/v2/subscribers",
@@ -178,7 +181,8 @@ class PyJobsContact(TestCase):
 
 class PyJobsMultipleJobsPagesTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=20)
         self.client = Client()
 
@@ -201,7 +205,8 @@ class PyJobsMultipleJobsPagesTest(TestCase):
 
 class PyJobsSummaryPageTest(TestCase):
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
@@ -218,8 +223,9 @@ class PyJobsSummaryPageTest(TestCase):
 
 
 class PyJobsFeedTest(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         mommy.make("core.Job", _quantity=1)
         self.client = Client()
 
@@ -236,8 +242,9 @@ class PyJobsFeedTest(TestCase):
 
 
 class PyJobsPremiumFeedTest(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         mommy.make(
             "core.Job",
             _quantity=1,
@@ -272,8 +279,9 @@ class PyJobsRobotsTXTTest(TestCase):
 
 
 class PyJobsJobCloseView(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -328,19 +336,29 @@ class PyJobsRegisterNewJob(TestCase):
         self.client = Client()
 
     @override_settings(RECAPTCHA_SECRET_KEY=None)
-    def test_if_job_register_page_returns_200(self):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def test_if_job_register_page_returns_200(self, _mock1, _mock2):
         response = self.client.post("/register/new/job/", follow=True)
         self.assertEqual(response.status_code, 200)
 
     @override_settings(RECAPTCHA_SECRET_KEY=None)
-    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(self):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(
+        self, _mock1, _mock2
+    ):
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
         self.assertTrue("Falha na hora de criar o job" in content)
 
     @responses.activate
     @override_settings(RECAPTCHA_SECRET_KEY=None)
-    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(self):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(
+        self, _mock1, _mock2
+    ):
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
         self.assertTrue("Falha na hora de criar o job" in content)
@@ -348,7 +366,11 @@ class PyJobsRegisterNewJob(TestCase):
     @responses.activate
     @override_settings(RECAPTCHA_SECRET_KEY="AAA")
     @patch("pyjobs.core.views.JobForm")
-    def test_if_job_register_page_returns_success_with_recaptcha(self, _mocked_form):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def test_if_job_register_page_returns_success_with_recaptcha(
+        self, _mock_telegram, _mock_push, _mocked_form
+    ):
         responses.add(
             responses.POST,
             "https://www.google.com/recaptcha/api/siteverify",
@@ -361,7 +383,11 @@ class PyJobsRegisterNewJob(TestCase):
 
     @override_settings(RECAPTCHA_SECRET_KEY="AAA")
     @responses.activate
-    def test_if_job_register_page_returns_false_with_recaptcha(self):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def test_if_job_register_page_returns_false_with_recaptcha(
+        self, _mock_telegram, _mock_push
+    ):
         responses.add(
             responses.POST,
             "https://www.google.com/recaptcha/api/siteverify",
@@ -374,8 +400,9 @@ class PyJobsRegisterNewJob(TestCase):
 
 
 class PyJobsJobChallenge(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -432,7 +459,9 @@ class PyJobsJobChallenge(TestCase):
 
 
 class AppliedUsersDetailsTest(TestCase):
-    def setUp(self):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.post_telegram_channel")
+    def setUp(self, _mock1, _mock2):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",

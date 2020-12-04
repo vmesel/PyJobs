@@ -6,23 +6,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0051_job_issue_number'),
+        ("core", "0051_job_issue_number"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='job',
-            name='company_name',
-            field=models.CharField(default='', help_text='Ex.: ACME Inc', max_length=10000, verbose_name='Nome da Empresa'),
+            model_name="job",
+            name="company_name",
+            field=models.CharField(
+                default="",
+                help_text="Ex.: ACME Inc",
+                max_length=10000,
+                verbose_name="Nome da Empresa",
+            ),
         ),
         migrations.AlterField(
-            model_name='job',
-            name='title',
-            field=models.CharField(default='', help_text='Ex.: Desenvolvedor', max_length=10000, verbose_name='Título da Vaga'),
+            model_name="job",
+            name="title",
+            field=models.CharField(
+                default="",
+                help_text="Ex.: Desenvolvedor",
+                max_length=10000,
+                verbose_name="Título da Vaga",
+            ),
         ),
         migrations.AlterField(
-            model_name='job',
-            name='workplace',
-            field=models.CharField(default='', help_text='Ex.: Santana - São Paulo', max_length=10000, verbose_name='Local'),
+            model_name="job",
+            name="workplace",
+            field=models.CharField(
+                default="",
+                help_text="Ex.: Santana - São Paulo",
+                max_length=10000,
+                verbose_name="Local",
+            ),
         ),
     ]

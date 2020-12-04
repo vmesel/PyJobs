@@ -64,8 +64,8 @@
                 {% endfor %}
                 </div>
                 <div class="row" style="margin-top:20px; margin-bottom:10px;">
-                    <div class="col-md-12">
-                        <input type="submit" name="" value="BUSCAR" class="botao">
+                    <div class="d-flex col-md-12 justify-content-center">
+                        <input  type="submit" name="" value="BUSCAR" class="botao max-width-button">
                     </div>
                 </div>
             </form>
@@ -120,8 +120,8 @@
                     {% endfor %}
                 </div>
                 <div class="row navegacao-vagas">
-                    <div class="col-lg-12">
-                        <a href="/jobs/">
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <a class=" max-width-button" style="width: 100%" href="/jobs/">
                             <input type="button" name="" value="VER VAGAS" class="botao">
                         </a>
                     </div>
@@ -177,7 +177,7 @@
                     </div>
                     <div class="col-lg-6 my-auto">
                         <a href="{% url 'job_creation' %}">
-                            <input type="button" name="" value="CADASTRAR AGORA!">
+                            <input style="border: none;" type="button" name="" value="CADASTRAR AGORA!">
                         </a>
                     </div>
                 </div>

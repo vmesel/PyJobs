@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "django_select2",
     "django.contrib.sitemaps",
     "raven.contrib.django.raven_compat",
+    "webpush",
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ TEMPLATES = [
                 "pyjobs.core.context_processors.global_vars",
             ]
         },
-    }
+    },
 ]
 
 WSGI_APPLICATION = "pyjobs.wsgi.application"
@@ -191,6 +192,12 @@ GITHUB_DEFAULT_REPO = config("GITHUB_DEFAULT_REPO", default=None)
 WEBSITE_MANAGERS_GITHUB_NICKNAME = config(
     "WEBSITE_MANAGERS_GITHUB_NICKNAME", default=None
 )
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": config("VAPID_PUBLIC_KEY", default=None),
+    "VAPID_PRIVATE_KEY": config("VAPID_PRIVATE_KEY", default=None),
+    "VAPID_ADMIN_EMAIL": config("VAPID_ADMIN_EMAIL", default=None),
+}
 
 STATE_CHOICES = [
     (0, "Acre"),
