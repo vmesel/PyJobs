@@ -12,8 +12,9 @@ from pyjobs.core.models import Job, Profile, Skill, JobError
 
 
 class JobTest_01(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -62,8 +63,9 @@ class JobTest_01(TestCase):
 
 
 class JobTest_02(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 2",
             workplace="Sao Paulo",
@@ -85,8 +87,9 @@ class JobTest_02(TestCase):
 
 
 class JobTest_03(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -112,8 +115,9 @@ class JobTest_03(TestCase):
 
 class JobTest_Application(TestCase):
     @responses.activate
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -157,8 +161,9 @@ class JobTest_Application(TestCase):
 
 class JobTest_04(TestCase):
     @responses.activate
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -222,8 +227,9 @@ class JobTest_04(TestCase):
 
 
 class JobTest_05(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -248,8 +254,9 @@ class JobTest_05(TestCase):
 
 
 class JobTest_06(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 3",
             workplace="Sao Paulo",
@@ -289,8 +296,9 @@ class JobSkillsTest(TestCase):
 
 
 class JobManagerTest(TestCase):
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",

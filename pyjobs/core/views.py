@@ -25,6 +25,8 @@ from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 
+WEBPUSH_CONTEXT = {"group": "general"}
+
 
 def index(request):
     publicly_available_jobs = Job.get_index_display_jobs()
@@ -34,13 +36,18 @@ def index(request):
     context_dict = {
         "publicly_available_jobs": publicly_available_jobs,
         "filter": user_filtered_query_set,
+        "webpush": WEBPUSH_CONTEXT,
     }
 
     return render(request, template_name="index.html", context=context_dict)
 
 
 def privacy(request):
-    return render(request, template_name="privacy_policy.html", context={})
+    return render(
+        request,
+        template_name="privacy_policy.html",
+        context={"webpush": WEBPUSH_CONTEXT},
+    )
 
 
 def jobs(request):
@@ -71,6 +78,7 @@ def jobs(request):
         "premium_available_jobs": premium_jobs_to_display,
         "pages": paginator.page_range,
         "filter": user_filtered_query_set,
+        "webpush": WEBPUSH_CONTEXT,
     }
 
     return render(request, template_name="jobs.html", context=context_dict)
@@ -136,17 +144,20 @@ def job_state_view(request, state):
         "premium_available_jobs": premium_jobs_to_display,
         "pages": paginator.page_range,
         "state": states[state][1],
+        "webpush": WEBPUSH_CONTEXT,
     }
 
     return render(request, template_name="jobs_by_location.html", context=context_dict)
 
 
 def services_view(request):
-    return render(request, template_name="services.html")
+    return render(
+        request, template_name="services.html", context={"webpush": WEBPUSH_CONTEXT}
+    )
 
 
 def job_creation(request):
-    context_dict = {"new_job_form": JobForm}
+    context_dict = {"new_job_form": JobForm, "webpush": WEBPUSH_CONTEXT}
     return render(request, template_name="job_registration.html", context=context_dict)
 
 
@@ -160,6 +171,7 @@ def job_view(request, pk):
         "logged_in": False,
         "next_job_pk": int(pk) + 1,
         "previous_job_pk": int(pk) - 1,
+        "webpush": WEBPUSH_CONTEXT,
     }
     if context["job"].salary_range != 10:
         salaries = (
@@ -194,7 +206,7 @@ def job_view(request, pk):
 
 def summary_view(request):
     jobs = Job()
-    context = {"jobs": jobs.get_weekly_summary()}
+    context = {"jobs": jobs.get_weekly_summary(), "webpush": WEBPUSH_CONTEXT}
     return render(request, template_name="summary.html", context=context)
 
 
@@ -204,7 +216,7 @@ def register_new_job(request):
 
     new_job = JobForm(request.POST)
     g_recaptcha_response = request.POST.get("g-recaptcha-response")
-    context = {}
+    context = {"webpush": WEBPUSH_CONTEXT}
 
     context["message_first"] = "Falha na hora de criar o job"
     context["message_second"] = "Algum campo não foi preenchido corretamente!"
@@ -228,6 +240,7 @@ def close_job(request, pk, close_hash):
     context = {
         "message_first": "Vaga fechada com sucesso!",
         "message_second": job.title,
+        "webpush": WEBPUSH_CONTEXT,
     }
     job.is_open = False
     job.save()
@@ -248,6 +261,7 @@ def applied_users_details(request, pk):
                 "rows": JobApplication.objects.filter(job__pk=pk),
                 "job": job_info,
                 "is_staff": request.user.is_staff,
+                "webpush": WEBPUSH_CONTEXT,
             },
         )
 
@@ -269,6 +283,8 @@ def contact(request):
         context["message_first"] = "Mensagem enviada com sucesso"
         context["message_second"] = "Vá para a home do site!"
 
+    context["webpush"] = WEBPUSH_CONTEXT
+
     if request.method == "POST":
         return render(request, template_name="generic.html", context=context)
 
@@ -282,6 +298,7 @@ def pythonistas_area(request):
 
 def pythonistas_signup(request):
     context = {"form": RegisterForm(request.POST or None)}
+    context["webpush"] = WEBPUSH_CONTEXT
 
     if request.method == "POST" and context["form"].is_valid():
         user = context["form"].save()
@@ -295,6 +312,7 @@ def pythonistas_signup(request):
 def pythonista_change_password(request):
     template_name = "pythonistas-area-password-change.html"
     context = {"form": PasswordChangeForm(request.user)}
+    context["webpush"] = WEBPUSH_CONTEXT
 
     if request.method == "POST":
         if context["form"].is_valid():
@@ -314,6 +332,7 @@ def pythonista_change_info(request):
     profile = request.user.profile
     template = "pythonistas-area-info-change.html"
     context = {"form": EditProfileForm(instance=profile)}
+    context["webpush"] = WEBPUSH_CONTEXT
 
     if request.method == "POST":
         context["form"] = EditProfileForm(instance=profile, data=request.POST)
@@ -342,6 +361,7 @@ def pythonista_applied_info(request):
     View to retrieve all user applications to job.
     """
     context = {}
+    context["webpush"] = WEBPUSH_CONTEXT
     template = "pythonista-applied-jobs.html"
     context["applications"] = JobApplication.objects.filter(user=request.user.pk)
     return render(request, template, context)

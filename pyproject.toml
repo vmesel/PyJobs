@@ -38,6 +38,8 @@ parso = "^0.8.0"
 PyGithub = "^1.53"
 mistune = "2.0.0a4"
 bs4 = "^0.0.1"
+pywebpush = "1.9.4"
+django-webpush = "^0.3.3"
 
 [tool.poetry.dev-dependencies]
 black = "*"

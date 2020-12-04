@@ -14,6 +14,8 @@ from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.marketing.utils import post_telegram_channel
 from pyjobs.core.email_utils import get_email_with_template
 
+from webpush import send_group_notification
+
 
 @receiver(post_save, sender=Profile)
 def add_user_to_mailchimp(sender, instance, created, **kwargs):
@@ -108,9 +110,17 @@ def new_job_was_created(sender, instance, created, **kwargs):
         "Sua oportunidade está disponível no {}".format(settings.WEBSITE_NAME),
         [instance.company_email],
     )
+
+    payload = {
+        "head": f"Nova Vaga! {instance.title}",
+        "body": instance.description,
+        "url": f"{settings.WEBSITE_HOME_URL}/job/{instance.pk}/",
+    }
+
     msg.send()
     try:
         send_offer_email_template(instance)
+        send_group_notification(group_name="general", payload=payload, ttl=1000)
     except:
         client.captureException()
 

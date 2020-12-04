@@ -19,6 +19,10 @@ body{
     width: 100%;
 }
 
+.max-width-button {
+    max-width: 300px;
+}
+
 .navbar{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -221,15 +225,6 @@ input[type=email]{
     padding: 20px;
 }
 
-.card-body h3{
-    color: #041a3f;
-    font-size: 25px;
-    text-align: left;
-    text-size-adjust: none;
-    text-transform: uppercase;
-    font-weight: bolder;
-}
-
 .card-body{
     color: #1f2228;
     font-size: 14px;
@@ -237,6 +232,18 @@ input[type=email]{
     line-height: 34px;
     text-align: left;
     text-size-adjust: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-body h3{
+    color: #041a3f;
+    font-size: 25px;
+    text-align: left;
+    text-size-adjust: none;
+    text-transform: uppercase;
+    font-weight: bolder;
 }
 
 .card-body ul{

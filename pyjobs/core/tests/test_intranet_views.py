@@ -12,8 +12,9 @@ from pyjobs.core.views import index
 
 class JobAppliedToViewTest(TestCase):
     @responses.activate
+    @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_post_telegram_channel):
+    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",

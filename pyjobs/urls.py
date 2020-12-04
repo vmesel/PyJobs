@@ -21,10 +21,11 @@ from pyjobs.core.views import handler_404
 
 urlpatterns = [
     url(r"^admin_v2/", admin.site.urls),
-    url("api/", include("pyjobs.api.urls", namespace="api")),
+    url(r"api/", include("pyjobs.api.urls", namespace="api")),
     url(r"", include("pyjobs.core.urls")),
     url(r"", include("pyjobs.marketing.urls")),
     url(r"", include("pyjobs.partners.urls")),
+    url(r"^webpush/", include("webpush.urls")),
     url(
         r"^login/$",
         auth_views.LoginView.as_view(template_name="login.html"),
