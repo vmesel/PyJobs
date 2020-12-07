@@ -181,11 +181,15 @@ class Command(BaseCommand):
             content, skills = setup_labels(labels, content)
             content["issue_number"] = issue.id
 
-            if (
-                content["description"] == ""
-                or content["requirements"] == ""
-                or content["description"] is None
-                or content["requirements"] is None
+            if all(
+                [
+                    content["description"],
+                    content["requirements"],
+                    content["description"],
+                    content["requirements"],
+                    content["title"],
+                    content["company_name"],
+                ]
             ):
                 continue
 
