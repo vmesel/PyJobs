@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.sites",
     "django_extensions",
     "pyjobs.core",
     "pyjobs.api",
@@ -188,6 +189,7 @@ WEBSITE_HOME_URL = config("WEBSITE_HOME_URL", default=None)
 MAILERLITE_API_KEY = config("MAILERLITE_API_KEY", default=None)
 
 GITHUB_ACCESS_TOKEN = config("GITHUB_ACCESS_TOKEN", default=None)
+GITHUB_ISSUES_LABELS = config("GITHUB_ISSUES_LABELS", default=None)
 GITHUB_DEFAULT_REPO = config("GITHUB_DEFAULT_REPO", default=None)
 WEBSITE_MANAGERS_GITHUB_NICKNAME = config(
     "WEBSITE_MANAGERS_GITHUB_NICKNAME", default=None
@@ -259,3 +261,5 @@ CONTRACT = [
 ]
 
 FEEDBACK_TYPE = [(1, "Sem feedback"), (2, "Aprovado"), (3, "Reprovado")]
+
+SITE_ID = config("SITE_ID", default=3, cast=int)

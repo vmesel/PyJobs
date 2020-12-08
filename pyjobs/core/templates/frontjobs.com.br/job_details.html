@@ -1,0 +1,188 @@
+{% extends 'frontjobs.com.br/base.html' %}
+{% load static %}
+{% load humanize %}
+{%block metas%}
+<meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
+<meta property="og:title" content="{{job.title}} em {{job.company_name}} | {{WEBSITE_NAME}}" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:description" content="{{job.description|truncatechars:240}}}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="{{job.description|truncatechars:240}}}" name="description"/>
+<meta name="description" content="{{job.description|truncatechars:240}}}"/>
+<title>{{job.title}} no {{WEBSITE_NAME}}</title>
+<meta name="twitter:description" content="{{job.description|truncatechars:250}}}"/>
+<meta property="og:site_name" content="{{WEBSITE_NAME}}" />
+{% endblock %}
+
+{%block main%}
+
+<section class="breadcrumb-nav-vagas">
+    <div class="container-fluid">
+        <div class="row row-breadcrumb-grande">
+            <div class="col-lg-3 indicador-esquerdo">
+                <a href="/job/{{previous_job_pk}}/">Vaga Anterior</a>
+            </div>
+            <div class="col-lg-6 indicador-central">
+                <a href="{% url 'jobs' %}">Ver vagas</a>
+            </div>
+            <div class="col-lg-3 indicador-direito">
+                <a href="/job/{{next_job_pk}}/">Vaga Posterior</a>
+            </div>
+        </div>
+        <div class="row row-breadcrumb-pequeno">
+            <div class="col-6 col-sm-6">
+                <a href="{% url 'jobs' %}">Ver vagas</a>
+            </div>
+            <div class="col-3 col-sm-3 indicador-direito-sinal">
+                <a href="/job/{{previous_job_pk}}/"><</a>
+            </div>
+            <div class="col-3 col-sm-3 indicador-esquerdo-sinal">
+                <a href="/job/{{next_job_pk}}/">></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% if job.is_challenging and applied %}
+<div class="alert alert-success" role="alert">
+  Não se esqueça de responder ao desafio técnico clicando no botão abaixo!
+</div>
+{%endif%}
+<section class="detalhes-vaga">
+    <div class="container">
+        <div class="top-breadcrumb-nav">
+            <a href="/">Home</a> > <a href="{% url 'jobs' %}">Vagas</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
+        </div>
+        <h2>{{job.title}}</h2>
+        <h3 style="font-size:18px;">Vaga Postada: <span>{{job.created_at|naturalday}}</span></h3>
+
+        <div class="row">
+            <div class="col-lg-4 botoes-detalhes">
+                {% if logged_in %}
+                  {% if applied %}
+                    {% if job.is_challenging %}
+                        <a href="{% url 'job_application_challenge_submission' job.pk %}">
+                            <button class="botao" type="button">Clique aqui e preencha o desafio técnico!</button>
+                        </a>
+                    {% else %}
+                        <button class="botao" type="button">Você já aplicou a esta vaga!</button>
+                    {% endif %}
+                  {%else%}
+                    {% if job.is_open %}
+                        {% if job.application_link %}
+                            <a href="{{job.application_link}}">
+                                <button class="botao" type="button">Candidate-se para esta vaga pelo link</button>
+                            </a>
+                        {%else%}
+                        <form action="." method="post">
+                            {% csrf_token %}
+                            <button class="botao" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
+                        </form>
+                        {%endif%}
+                    {% else %}
+                    <button class="botao" disabled>Vaga já fechada pela empresa anunciante</button>
+                    {% endif %}
+                  {% endif %}
+                {%else%}
+                    <a href="{% url 'login' %}?next={{ job.get_absolute_url }}">
+                        <button class="botao" type="button" id="application-status">Se logue e aplique a vaga!</button>
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 botoes-detalhes">
+                <a href="{% url 'sharing_job_view' job.pk %}">
+                    <input type="button" value="Indique {{USER_SUBSTANTIVE}}s!" class="botao" style="background-color: #0069D9!important;font-size:12px;">
+                </a>
+            </div>
+            <div class="col-lg-4 botoes-redes-sociais">
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_whatsapp"></a>
+                    <a class="a2a_button_telegram"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+        </div>
+        <div class="row badges-detalhes">
+            <div class="col-md-12" style="margin-top: 30px">
+                {% for skill in job.skills.all %}
+                    <span class="badge badge-secondary custom-badge">{{skill.name}}</span>
+                {% endfor skill %}
+            </div>
+        </div>
+        <div class="row" style="margin-top:40px;">
+            <ul>
+                <li>Empresa: {{job.company_name}}</li>
+                <li>Faixa salarial: {{job.get_salary_range_display}}</li>
+                <li>Estado: {{job.get_state_display}}</li>
+                <li>Local da vaga: {{job.workplace}}</li>
+                <li>Nível: {{job.get_job_level_display}}</li>
+                <li>Aceita Remoto?: {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
+                <li>Tipo de contrata&ccedil;&atilde;o: {{job.get_contract_form_display}}</li>
+            </ul>
+        </div>
+        <div class="row" style="margin-top:40px; padding: 20px; display: block; word-wrap: break-word;">
+                <h3>Descrição da vaga</h3>
+        </div>
+        <div class="row" style="margin-top:15px; padding: 20px; display: block; word-wrap: break-word;">
+                <br>
+                {% autoescape off %}
+                    {{job.description|linebreaksbr}}
+                {% endautoescape %}
+        </div>
+        <div class="row" style="margin-top:40px; padding: 20px;">
+                <h3>Requisitos</h3>
+            </div>
+            <div class="row" style="margin-top:15px; padding: 20px; display: block; word-wrap: break-word;">
+                <br>
+                {% autoescape off %}
+                    {{job.requirements|linebreaksbr}}
+                {% endautoescape %}
+        </div>
+    </div>
+</section>
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org/",
+        "@type" : "JobPosting",
+        "title" : "{{job.title}}",
+        "description" : "<h3>Descrição:</h3>{{job.description}}<br/><br/><h3>Requisitos:{{job.requirements}}</h3>",
+        "identifier": {
+          "@type": "PropertyValue",
+          "name": "{{job.company_name}}",
+          "value": "{{job.id}}"
+        },
+      
+        "datePosted" : "{{job.created_at|date:"Y-m-d"}}",
+        "validThrough" : "{{valid_thru|date:"Y-m-d"}}",
+          "employmentType" : ["FULL_TIME"],
+        "hiringOrganization" : {
+          "@type" : "Organization",
+          "name" : "{{job.company_name}}"
+        },
+        "jobLocation" : {
+          "@type" : "Place",
+          "address" : {
+            "@type" : "PostalAddress",
+            "addressRegion" : "{{job.get_state_display}}",
+            "addressCountry": "BR"
+          }
+        }
+        {% if job.get_salary_range_display != "A combinar" %}
+        ,
+        "baseSalary": {
+            "@type": "MonetaryAmount",
+            "currency": "BRL",
+            "value": {
+              "@type": "QuantitativeValue",
+              "minValue": {{salary.0}},
+              "maxValue": {{salary.1}},
+              "unitText": "MONTH"
+            }
+          }
+          {% endif %}
+      }
+</script>
+{%endblock%}

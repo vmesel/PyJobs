@@ -6,6 +6,7 @@ from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
@@ -25,6 +26,7 @@ from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 
+CURRENT_DOMAIN = Site.objects.get_current().domain
 WEBPUSH_CONTEXT = {"group": "general"}
 
 
@@ -39,13 +41,15 @@ def index(request):
         "webpush": WEBPUSH_CONTEXT,
     }
 
-    return render(request, template_name="index.html", context=context_dict)
+    return render(
+        request, template_name=f"{CURRENT_DOMAIN}/index.html", context=context_dict
+    )
 
 
 def privacy(request):
     return render(
         request,
-        template_name="privacy_policy.html",
+        template_name=f"{CURRENT_DOMAIN}/privacy_policy.html",
         context={"webpush": WEBPUSH_CONTEXT},
     )
 
@@ -81,7 +85,9 @@ def jobs(request):
         "webpush": WEBPUSH_CONTEXT,
     }
 
-    return render(request, template_name="jobs.html", context=context_dict)
+    return render(
+        request, template_name=f"{CURRENT_DOMAIN}/jobs.html", context=context_dict
+    )
 
 
 def job_state_view(request, state):
@@ -147,22 +153,32 @@ def job_state_view(request, state):
         "webpush": WEBPUSH_CONTEXT,
     }
 
-    return render(request, template_name="jobs_by_location.html", context=context_dict)
+    return render(
+        request,
+        template_name=f"{CURRENT_DOMAIN}/jobs_by_location.html",
+        context=context_dict,
+    )
 
 
 def services_view(request):
     return render(
-        request, template_name="services.html", context={"webpush": WEBPUSH_CONTEXT}
+        request,
+        template_name=f"{CURRENT_DOMAIN}/services.html",
+        context={"webpush": WEBPUSH_CONTEXT},
     )
 
 
 def job_creation(request):
     context_dict = {"new_job_form": JobForm, "webpush": WEBPUSH_CONTEXT}
-    return render(request, template_name="job_registration.html", context=context_dict)
+    return render(
+        request,
+        template_name=f"{CURRENT_DOMAIN}/job_registration.html",
+        context=context_dict,
+    )
 
 
 def robots_view(request):
-    return render(request, template_name="robots.txt")
+    return render(request, template_name=f"{CURRENT_DOMAIN}/robots.txt")
 
 
 def job_view(request, pk):
@@ -201,13 +217,17 @@ def job_view(request, pk):
         ).exists()
         context["logged_in"] = True
 
-    return render(request, template_name="job_details.html", context=context)
+    return render(
+        request, template_name=f"{CURRENT_DOMAIN}/job_details.html", context=context
+    )
 
 
 def summary_view(request):
     jobs = Job()
     context = {"jobs": jobs.get_weekly_summary(), "webpush": WEBPUSH_CONTEXT}
-    return render(request, template_name="summary.html", context=context)
+    return render(
+        request, template_name=f"{CURRENT_DOMAIN}/summary.html", context=context
+    )
 
 
 def register_new_job(request):
@@ -229,7 +249,9 @@ def register_new_job(request):
 
         new_job.save()
 
-    return render(request, template_name="generic.html", context=context)
+    return render(
+        request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
+    )
 
 
 def close_job(request, pk, close_hash):
@@ -244,7 +266,9 @@ def close_job(request, pk, close_hash):
     }
     job.is_open = False
     job.save()
-    return render(request, template_name="generic.html", context=context)
+    return render(
+        request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
+    )
 
 
 def applied_users_details(request, pk):
@@ -256,7 +280,7 @@ def applied_users_details(request, pk):
     if request.user.is_staff or job_hash:
         return render(
             request,
-            template_name="applied_users_details.html",
+            template_name=f"{CURRENT_DOMAIN}/applied_users_details.html",
             context={
                 "rows": JobApplication.objects.filter(job__pk=pk),
                 "job": job_info,
@@ -286,7 +310,9 @@ def contact(request):
     context["webpush"] = WEBPUSH_CONTEXT
 
     if request.method == "POST":
-        return render(request, template_name="generic.html", context=context)
+        return render(
+            request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
+        )
 
     return render(request, "contact-us.html", context)
 
@@ -437,11 +463,13 @@ def job_application_challenge_submission(request, pk):
             "message_second": "Recebemos seu teste, aguarde nosso retorno!",
             "message_explaining": "Recebemos seu teste e vamos avaliar!",
         }
-        return render(request, template_name="generic.html", context=context)
+        return render(
+            request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
+        )
 
     return render(
         request,
-        template_name="job_challenge.html",
+        template_name=f"{CURRENT_DOMAIN}/job_challenge.html",
         context={"job": user_applied.job, "form": form},
     )
 

@@ -145,7 +145,8 @@ def setup_job_title(title, content):
         content["company_name"] = title[1]
         content["title"] = title[0].split("]")[1]
     except IndexError:
-        pass
+        content["company_name"] = None
+        content["title"] = None
     return content
 
 
@@ -162,9 +163,12 @@ class Command(BaseCommand):
 
         minimum_date = datetime.now() - timedelta(days=30)
 
-        open_issues = repo.get_issues(
-            state="open", labels=["python"], since=minimum_date
-        )
+        if settings.GITHUB_ISSUES_LABELS:
+            labels = settings.GITHUB_ISSUES_LABELS.split(",")
+        else:
+            labels = []
+
+        open_issues = repo.get_issues(state="open", labels=labels, since=minimum_date)
 
         for issue in open_issues:
 
@@ -181,7 +185,7 @@ class Command(BaseCommand):
             content, skills = setup_labels(labels, content)
             content["issue_number"] = issue.id
 
-            if all(
+            if not all(
                 [
                     content["description"],
                     content["requirements"],

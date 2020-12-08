@@ -1,0 +1,33 @@
+{% load widget_tweaks %}
+{% load static %}
+<div class="modal fade" id="modal-donate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="container">
+            <div class="row row-modal" style="height: 100%;">
+                <div class="col-md-6 text-center">
+                    <img src="{% static 'assets/img/frontjobs.com.br/logo-FrontJobs.svg' %}" style="height:150px" style="display: inline-block;">
+                </div>
+                <div class="col-md-6 coluna-esquerda-modal">
+                    <h4 class="modal-site-titulo">Inscreva-se em Nossa Newsletter</h4>
+                    <br>
+                    <p>Não perca mais nenhuma dica de {{WEBSITE_WORKING_LANGUAGE}} e nenhum trampo! Se inscreva agora em nossa Newsletter!</p>
+                    <form action="{{WEBSITE_MAILINGLIST_LINK}}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <input type="text" name="" value="" style="width: 100%;margin-top:10px;" placeholder="Seu melhor e-mail aqui!">
+                        <input type="submit" name="" value="ME CADASTRE, {{WEBSITE_NAME}}!" class="botao" style="margin-top: 20px;">
+                    </form>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

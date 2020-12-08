@@ -1,0 +1,87 @@
+{% extends 'pyjobs.com.br/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %}
+Mandar Feedback - {{WEBSITE_NAME}}
+{% endblock %}
+{%block main%}
+{% if not job_application.company_feedback %}
+<section class="cadastro-de-vaga">
+    <div class="container container-cadastro-vaga">
+        <div class="row row-titulo">
+            <div class="col-md-12">
+                <h2>Envie um feedback para {{job_application.user.first_name}}.</h2>
+                <span>Envie um feedback para a pessoa candidata a vaga de sua empresa, o que fará com que eles fiquem mais tranquilos sobre o processo seletivo</span>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div class="container container-cadastro-vaga">
+            <div class="row row-titulo-etapa">
+                <h4>Descritivo do feedback para a pessoa candidata</h4>
+            </div>
+            <div class="row">
+                <p>Este descritivo ser&aacute; enviado ao candidato junto com o status, assim, voc&ecirc; poder&aacute; interagir com o candidato via PyJobs.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-12 filtro-form-item-select">
+                    {% render_field feedback_form.company_feedback class="textarea-dados"%}
+                    <span>{{feedback_form.company_feedback.errors}}</span>
+                </div>
+            </div>
+            <div class="row row-titulo-etapa">
+                <h4>Classifique a pessoa no processo</h4>
+            </div>
+            <div class="row">
+                <p>Classifique a pessoa candidata para ela saber se foi aprovada ou não em seu processo seletivo.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-12 filtro-form-item-select">
+                    <div class="select-form-filtro" style="margin-top:5px;">
+                        {{feedback_form.company_feedback_type}}
+                        {{feedback_form.company_feedback_type.errors}}
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding: 20px 0;">
+                <input type="submit" name="" value="MANDAR FEEDBACK!" class="botao">
+            </div>
+        </div>
+    </form>
+</section>
+{% else %}
+<section class="cadastro-de-vaga">
+    <div class="container container-cadastro-vaga">
+        <div class="row row-titulo">
+            <div class="col-md-12">
+                <h2>Feedback enviado para: {{job_application.user.first_name}}.</h2>
+                <span>Seu feedback para {{job_application.user.first_name}} já foi enviado</span>
+                <hr>
+            </div>
+        </div>
+        <div class="row row-titulo">
+            <h4>O feedback ({{job_application.feedback_type}}) foi:</h4>
+        </div>
+        <div class="row">
+            <p>{{job_application.company_feedback}}</p>
+        </div>
+        <div class="row" style="padding-bottom: 20px;">
+            <a href="{% url 'applied_users_details' job_application.job.pk %}?job_hash={{job_application.job.listing_hash}}">
+                <input type="button" name="" value="Voltar aos outros candidatos!" class="botao">
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{%endblock%}
+{% block extra_scripts%}
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#id_skills').select2();
+});
+</script>
+{%endblock%}
