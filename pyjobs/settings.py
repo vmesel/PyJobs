@@ -262,4 +262,4 @@ CONTRACT = [
 
 FEEDBACK_TYPE = [(1, "Sem feedback"), (2, "Aprovado"), (3, "Reprovado")]
 
-SITE_ID = config("SITE_ID", default=3, cast=int)
+SITE_ID = config("SITE_ID", default=1, cast=int)

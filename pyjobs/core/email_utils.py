@@ -4,7 +4,10 @@ from django.contrib.sites.models import Site
 from django.template.loader import get_template
 from django.template import Context
 
-CURRENT_DOMAIN = Site.objects.get_current().domain
+try:
+    CURRENT_DOMAIN = Site.objects.get_current().domain
+except:
+    CURRENT_DOMAIN = "pyjobs.com.br"
 
 
 def get_email_with_template(template_name, context_specific, subject, to_emails):

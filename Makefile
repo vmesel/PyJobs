@@ -1,9 +1,18 @@
 test:
-	coverage run manage.py test
-	coverage html
-	isort **/*.py --check-only
-	black . --check
+	poetry run coverage run manage.py test
+	poetry run coverage html
+	poetry run isort **/*.py --check-only
+	poetry run black . --check
 
 style:
-	isort **/*.py
-	black .
+	poetry run isort **/*.py
+	poetry run black .
+
+migrate:
+	poetry run python manage.py migrate
+
+makemigrations:
+	poetry run python manage.py makemigrations
+
+run:
+	poetry run python manage.py runserver

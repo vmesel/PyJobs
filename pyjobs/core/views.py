@@ -26,7 +26,11 @@ from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 
-CURRENT_DOMAIN = Site.objects.get_current().domain
+try:
+    CURRENT_DOMAIN = Site.objects.get_current().domain
+except:
+    CURRENT_DOMAIN = "pyjobs.com.br"
+
 WEBPUSH_CONTEXT = {"group": "general"}
 
 
@@ -314,12 +318,12 @@ def contact(request):
             request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
         )
 
-    return render(request, "contact-us.html", context)
+    return render(request, f"{CURRENT_DOMAIN}/contact-us.html", context)
 
 
 @login_required
 def pythonistas_area(request):
-    return render(request, "pythonistas-area.html")
+    return render(request, f"{CURRENT_DOMAIN}/pythonistas-area.html")
 
 
 def pythonistas_signup(request):
@@ -331,12 +335,12 @@ def pythonistas_signup(request):
         login(request, user)
         return redirect("/")
 
-    return render(request, "pythonistas-signup.html", context)
+    return render(request, f"{CURRENT_DOMAIN}/pythonistas-signup.html", context)
 
 
 @login_required
 def pythonista_change_password(request):
-    template_name = "pythonistas-area-password-change.html"
+    template_name = f"{CURRENT_DOMAIN}/pythonistas-area-password-change.html"
     context = {"form": PasswordChangeForm(request.user)}
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -350,13 +354,15 @@ def pythonista_change_password(request):
         else:
             context["form"] = PasswordChangeForm(request.user, request.POST)
             context["message"] = "Por favor, corrija os erros abaixo."
-    return render(request, "pythonistas-area-password-change.html", context)
+    return render(
+        request, f"{CURRENT_DOMAIN}/pythonistas-area-password-change.html", context
+    )
 
 
 @login_required
 def pythonista_change_info(request):
     profile = request.user.profile
-    template = "pythonistas-area-info-change.html"
+    template = f"{CURRENT_DOMAIN}/pythonistas-area-info-change.html"
     context = {"form": EditProfileForm(instance=profile)}
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -377,7 +383,7 @@ def fb_ads_landing(request):
     """
     View to retrieve all user applications to job.
     """
-    template = "landing.html"
+    template = f"{CURRENT_DOMAIN}/landing.html"
     return render(request, template)
 
 
@@ -388,7 +394,7 @@ def pythonista_applied_info(request):
     """
     context = {}
     context["webpush"] = WEBPUSH_CONTEXT
-    template = "pythonista-applied-jobs.html"
+    template = f"{CURRENT_DOMAIN}/pythonista-applied-jobs.html"
     context["applications"] = JobApplication.objects.filter(user=request.user.pk)
     return render(request, template, context)
 
@@ -551,4 +557,4 @@ def job_application_feedback(request, pk):
     if request.method == "POST" and feedback_form.is_valid():
         feedback_form.save()
 
-    return render(request, "job_application_feedback.html", context)
+    return render(request, f"{CURRENT_DOMAIN}/job_application_feedback.html", context)
