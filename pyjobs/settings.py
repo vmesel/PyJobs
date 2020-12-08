@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "raven.contrib.django.raven_compat",
     "webpush",
-    "letsencrypt",
 ]
 
 MIDDLEWARE = [
