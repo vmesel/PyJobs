@@ -40,5 +40,6 @@ urlpatterns = [
         name="password_reset",
     ),
     url("^", include("django.contrib.auth.urls")),
+    url(r"^\.well-known/", include("letsencrypt.urls")),
 ]
 handler404 = handler_404

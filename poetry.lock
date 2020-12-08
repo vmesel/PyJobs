@@ -272,6 +272,18 @@ python-versions = ">=3.5"
 Django = ">=2.2"
 
 [[package]]
+name = "django-letsencrypt"
+version = "4.0.0"
+description = "A simple Django app to handle Let's Encrypt ACME challenges."
+category = "main"
+optional = false
+python-versions = ">=3.6, <4"
+
+[package.dependencies]
+Django = ">=2.2.16"
+pytz = ">=2020.1"
+
+[[package]]
 name = "django-material"
 version = "1.7.1"
 description = "Material design for django forms and admin"
@@ -926,7 +938,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.8.5"
-content-hash = "335b406cfb3a9faff98eb067fb96b77d4273384358ab9a440d3aeda5b2a5f7a8"
+content-hash = "8ab2facade7fe5c07704ca519921cfc3a9002afc01d19b974b7e3d791eb5c6ec"
 
 [metadata.files]
 appdirs = [
@@ -1105,6 +1117,10 @@ django-extensions = [
 django-filter = [
     {file = "django-filter-2.4.0.tar.gz", hash = "sha256:84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06"},
     {file = "django_filter-2.4.0-py3-none-any.whl", hash = "sha256:e00d32cebdb3d54273c48f4f878f898dced8d5dfaad009438fe61ebdf535ace1"},
+]
+django-letsencrypt = [
+    {file = "django-letsencrypt-4.0.0.tar.gz", hash = "sha256:64fdb40ecdf1c44f064ad29c511f666103b8518888f90649a1e9f9b250624bb7"},
+    {file = "django_letsencrypt-4.0.0-py3-none-any.whl", hash = "sha256:7d5aa3f5080e1e1116b7dfdd4ddefb6db63cebaaced4dd694e01d53e1b28710e"},
 ]
 django-material = [
     {file = "django-material-1.7.1.tar.gz", hash = "sha256:77cfcc83da7724066b5b78bbb72cd4fbe752b38ffb20cb6ca36feb9657d9f19f"},
