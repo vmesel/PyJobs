@@ -14,6 +14,8 @@ from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.marketing.utils import post_telegram_channel
 from pyjobs.core.email_utils import get_email_with_template
 
+from github import Github
+
 from webpush import send_group_notification
 
 
@@ -88,6 +90,29 @@ def send_feedback_collection_email(job):
     )
 
 
+def send_job_to_github_issues(job):
+    g = Github(settings.GITHUB_ACCESS_TOKEN)
+    repo = g.get_repo(settings.GITHUB_DEFAULT_REPO)
+    issue_draft = Messages.objects.filter(message_type="github").first()
+    issue_title = issue_draft.message_title.format(
+        title=job.title, company_name=job.company_name, workplace=job.workplace
+    )
+
+    issue_content = issue_draft.message_content.format(
+        description=job.description,
+        requirements=job.requirements,
+        workplace=job.workplace,
+        state=job.get_state_display(),
+        labels="\n - ".join([skill.name for skill in job.skills.all()]),
+        contract_form=job.get_contract_form_display(),
+        job_id=job.id,
+        website_url=settings.WEBSITE_HOME_URL,
+    )
+    issue = repo.create_issue(issue_title, issue_content)
+    job.issue_number = issue.id
+    job.save()
+
+
 @receiver(post_save, sender=Job)
 def new_job_was_created(sender, instance, created, **kwargs):
     if not created or not instance.receive_emails:
@@ -118,6 +143,7 @@ def new_job_was_created(sender, instance, created, **kwargs):
     }
 
     msg.send()
+    send_job_to_github_issues(instance)
     try:
         send_offer_email_template(instance)
         send_group_notification(group_name="general", payload=payload, ttl=1000)

@@ -13,8 +13,11 @@ PER_PAGE = JobResource.page_size
 
 class TestJobResourceList(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.jobs = mommy.make(Job, _quantity=PER_PAGE * 3, public=True)
         mommy.make(Job, public=False)
         self.url = resolve_url("api:job_list")
@@ -41,8 +44,11 @@ class TestJobResourceList(TestCase):
 
 class TestJobResourceListIfEmpty(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.url = resolve_url("api:job_list")
         self.response = self.client.get(self.url)
         self.response.text = self.response.content.decode("utf-8")
@@ -55,8 +61,11 @@ class TestJobResourceListIfEmpty(TestCase):
 
 class TestJobResourceDetail(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.job = mommy.make(Job, _fill_optional=True, public=True)
         url = resolve_url("api:job_detail", pk=self.job.pk)
         self.response = self.client.get(url)

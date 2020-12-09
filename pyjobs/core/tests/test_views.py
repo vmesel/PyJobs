@@ -12,8 +12,11 @@ from pyjobs.core.views import index
 
 class ThumbnailTestingViews(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -57,8 +60,11 @@ class PyJobsSignUp(TestCase):
 
 class SitemapTestingView(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.job = Job(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -80,8 +86,11 @@ class SitemapTestingView(TestCase):
 class TestingRestrictedViews(TestCase):
     @responses.activate
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         responses.add(
             responses.POST,
             "https://api.mailerlite.com/api/v2/subscribers",

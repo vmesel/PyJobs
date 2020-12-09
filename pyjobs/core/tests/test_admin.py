@@ -9,8 +9,11 @@ from pyjobs.core.admin import *
 
 class TestUpdateCreatedAtFunc(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.jobs = mommy.make(Job, _quantity=10 * 3, public=True)
 
     def test_update_created_at(self):
@@ -41,8 +44,11 @@ class TestUpdateCreatedAtFunc(TestCase):
 
 class TestSendingChallengesToOldApplicants(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.job = Job.objects.create(
             title="Vaga 3",
             workplace="Sao Paulo",

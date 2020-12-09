@@ -49,8 +49,11 @@ class JobApplicationFormTest(TestCase):
 
 class JobApplicationFormWithContentTest(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.job = mommy.make(
             Job, _fill_optional=True, public=True, is_challenging=False
         )
@@ -131,8 +134,11 @@ class RegisterFormTest(TestCase):
 
 class JobApplicationFeedbackFormTest(TestCase):
     @patch("pyjobs.marketing.triggers.send_group_notification")
+    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def setUp(self, _mocked_send_group_push, _mocked_post_telegram_channel):
+    def setUp(
+        self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
+    ):
         self.job = mommy.make(
             Job, _fill_optional=True, public=True, is_challenging=False
         )
