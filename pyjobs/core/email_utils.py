@@ -1,7 +1,13 @@
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.contrib.sites.models import Site
 from django.template.loader import get_template
 from django.template import Context
+
+try:
+    CURRENT_DOMAIN = Site.objects.get_current().domain
+except:
+    CURRENT_DOMAIN = "pyjobs.com.br"
 
 
 def get_email_with_template(template_name, context_specific, subject, to_emails):
@@ -19,8 +25,8 @@ def get_email_with_template(template_name, context_specific, subject, to_emails)
         context["vaga_close_url"] = context["vaga"].get_close_url()
         context["vaga_listing_url"] = context["vaga"].get_listing_url()
 
-    plain_text = get_template("emails/{}.txt".format(template_name))
-    html_text = get_template("emails/html/{}.html".format(template_name))
+    plain_text = get_template(f"{CURRENT_DOMAIN}/emails/{template_name}.txt")
+    html_text = get_template(f"{CURRENT_DOMAIN}/emails/html/{template_name}.html")
 
     text_content, html_content = plain_text.render(context), html_text.render(context)
 

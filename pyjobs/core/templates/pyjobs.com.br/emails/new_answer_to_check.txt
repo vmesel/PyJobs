@@ -1,0 +1,9 @@
+Olá {{dono_do_site}},
+
+Segue novo teste a ser visualizado da vaga {{vaga.title}}!
+
+Teste respondido em: {{mensagem.challenge_response_at}}
+Resolução do teste: {{mensagem.challenge_response_link}}
+
+Abs,
+Sistema {{nome_do_site}}

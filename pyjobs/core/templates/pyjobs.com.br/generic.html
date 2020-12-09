@@ -1,0 +1,18 @@
+{% extends 'pyjobs.com.br/base.html' %}
+{% load static %}
+{%block main%}
+<section class="detalhes-vaga">
+    <div class="container" style="min-height:100vh;">
+        <h2>{{message_first}}</h2>
+        {% if message_second %}
+            <h2>{{message_second}}</h2>
+        {% endif %}
+        {% if message_explaining %}
+            <p>{{message_explaining}}</p>
+      {%endif%}
+      <a href="/">
+          <input type="button" name="" value="IR PARA HOME" class="botao">
+      </a>
+    </div>
+</section>
+{%endblock%}
