@@ -12,15 +12,17 @@
           <div class="container">
             <div class="row row-modal" style="height: 100%;">
                 <div class="col-md-6 text-center">
-                    <img src="{% static 'assets/img/pyjobs.com.br/logo-PyJobs.svg' %}" style="height:150px" style="display: inline-block;">
+                    <img src="{% static 'assets/img/frontjobs.com.br/logo-FrontJobs.svg' %}" style="height:150px" style="display: inline-block;">
                 </div>
                 <div class="col-md-6 coluna-esquerda-modal">
                     <h4 class="modal-site-titulo">Inscreva-se em Nossa Newsletter</h4>
                     <br>
                     <p>Não perca mais nenhuma dica de {{WEBSITE_WORKING_LANGUAGE}} e nenhum trampo! Se inscreva agora em nossa Newsletter!</p>
-                    <form action="{{WEBSITE_MAILINGLIST_LINK}}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                        <input type="text" name="" value="" style="width: 100%;margin-top:10px;" placeholder="Seu melhor e-mail aqui!">
-                        <input type="submit" name="" value="ME CADASTRE, {{WEBSITE_NAME}}!" class="botao" style="margin-top: 20px;">
+                    <form class="ml-block-form" action="{{WEBSITE_MAILINGLIST_LINK}}" data-code="c7l1o9" method="post" target="_blank">
+                      <input type="text" name="fields[email]" placeholder="Seu melhor E-mail aqui!" autocomplete="email" style="width: 100%;margin-top:10px;">
+                      <input type="hidden" name="ml-submit" value="1">
+                      <button type="submit" class="botao" style="margin-top: 20px;">ME CADASTRE, {{WEBSITE_NAME}}!</button>
+                      <button disabled="disabled" style="display:none" type="button" class="loading">
                     </form>
                 </div>
             </div>
