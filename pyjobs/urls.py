@@ -16,9 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.sites.models import Site
 
 from pyjobs.core.views import handler_404
-from django.contrib.sites.models import Site
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
