@@ -208,11 +208,13 @@ def job_view(request, pk):
 
     context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 
+    context["too_old"] = False if context["valid_thru"] > datetime.today() else True
+
     context["title"] = context["job"].title
     context["description"] = context["job"].description
 
     if request.method == "POST":
-        context["job"].apply(request.user)  # aplica o usuario
+        context["job"].apply(request.user)
         return redirect("/job/{}/".format(context["job"].pk))
 
     if request.user.is_authenticated:

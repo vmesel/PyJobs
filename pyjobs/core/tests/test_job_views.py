@@ -7,7 +7,7 @@ from django.urls import resolve, reverse
 from model_mommy import mommy
 import responses
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from pyjobs.core.models import Job, Profile, JobApplication
 from pyjobs.core.views import index, jobs
 from pyjobs.core.forms import JobApplicationForm
@@ -445,6 +445,9 @@ class PyJobsJobChallenge(TestCase):
             public=True,
         )
 
+        self.job.created_at = datetime.now() - timedelta(days=70)
+        self.job.save()
+
         self.user = User.objects.create_user(
             username="jacob", email="jacob@gmail.com", password="top_secret"
         )
@@ -488,6 +491,11 @@ class PyJobsJobChallenge(TestCase):
             follow=True,
         )
         mock_form.save.assert_called()
+
+    def test_if_old_job_message_alerts(self):
+        response = self.client.get("/job/{}/".format(self.job.pk), follow=False)
+        content = response.content.decode("utf-8")
+        self.assertIn("Confirme com a empresa sobre a disponbilidade!", content)
 
 
 class AppliedUsersDetailsTest(TestCase):
