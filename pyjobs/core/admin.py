@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.core.mail import send_mail
+from django.utils.html import mark_safe
 from datetime import datetime
 from pyjobs.core.models import (
     Job,
@@ -83,6 +84,7 @@ class JobAdmin(admin.ModelAdmin):
         "created_at",
         "is_open",
         "consultancy",
+        "whatsapp_link"
     )
     readonly_fields = ("get_job_hash",)
     actions = [
@@ -97,6 +99,19 @@ class JobAdmin(admin.ModelAdmin):
 
     def get_job_hash(self, job):
         return job.listing_hash()
+    
+    def whatsapp_link(self, job):
+        try:
+            cellphone = job.cellphone.replace("+", "").replace(" ", "").replace("-", "")
+            return mark_safe(
+                f"""
+                <a href='https://web.whatsapp.com/send?phone=55{job.cellphone}&text=Ol%C3%A1%21%0A%0ASou%20o%20Vin%C3%ADcius%20do%20%21%20Tudo%20bem%20contigo%3F%0A%0AEstou%20passando%20aqui%20para%20saber%20se%20voc%C3%AA%20precisa%20de%20alguma%20ajuda%20com%20sua%20vaga%20ou%20quer%20conhecer%20mais%20sobre%20nossas%20solu%C3%A7%C3%B5es%21%0A%0AAbra%C3%A7o%21'>WhatsApp</a>
+                """
+            )
+        except:
+            return "Sem WhatsApp"
+            
+
 
 
 class ProfileAdmin(admin.ModelAdmin):

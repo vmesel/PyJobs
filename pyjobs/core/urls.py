@@ -3,7 +3,7 @@ from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.urls import reverse
 
-from pyjobs.core.models import Job
+from pyjobs.core.models import Job, Skill
 from pyjobs.core.views import *
 
 
@@ -68,6 +68,17 @@ class PyJobsJobsSitemap(Sitemap):
         return obj.created_at
 
 
+class PyJobsSkillsSitemap(Sitemap):
+    priority = 1.0
+    changefreq = "weekly"
+
+    def items(self):
+        return [skill.unique_slug for skill in Skill.objects.all()]
+
+    def location(self, item):
+        return reverse("job_skill_view", args=[item])
+
+
 urlpatterns = [
     url(r"^$", index, name="index"),
     url(r"^jobs/$", jobs, name="jobs"),
@@ -75,6 +86,9 @@ urlpatterns = [
     url(r"^job/(?P<pk>\d+)/$", job_view, name="job_view"),
     url(
         r"^jobs/location/(?P<state>[-\w\W\d]+)/$", job_state_view, name="job_state_view"
+    ),
+    url(
+        r"^jobs/skill/(?P<unique_slug>[-\w\W\d]+)/$", job_skill_view, name="job_skill_view"
     ),
     url(
         r"^job/close/(?P<pk>\d+)/(?P<close_hash>[\da-f]{128})/$",
@@ -118,6 +132,7 @@ urlpatterns = [
                 "jobs": PyJobsJobsSitemap(),
                 "site": PyJobsSitemap(),
                 "location": PyJobsLocationBasedSitemap(),
+                "skills": PyJobsSkillsSitemap(),
             }
         },
         name="django.contrib.sitemaps.views.sitemap",

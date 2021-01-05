@@ -22,7 +22,7 @@ from pyjobs.core.forms import (
     JobApplicationForm,
     JobApplicationFeedbackForm,
 )
-from pyjobs.core.models import Job, JobApplication, Profile
+from pyjobs.core.models import Job, JobApplication, Profile, Skill
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 
@@ -560,3 +560,49 @@ def job_application_feedback(request, pk):
         feedback_form.save()
 
     return render(request, f"{CURRENT_DOMAIN}/job_application_feedback.html", context)
+
+
+def job_skill_view(request, unique_slug):
+    """
+    This view will return jobs related to a certain skill,
+    i.e., Django Jobs or Flask Jobs.
+    """
+    skill = Skill.objects.get(unique_slug=unique_slug)
+
+    if not skill:
+        return redirect("/")
+
+    publicly_available_jobs = Job.get_publicly_available_jobs().filter(
+        skills = skill
+    )
+    publicly_available_premium_jobs = Job.get_premium_jobs().filter(
+        skills = skill
+    )
+
+    paginator = Paginator(publicly_available_jobs, 10)
+    premium_paginator = Paginator(publicly_available_premium_jobs, 10)
+
+    try:
+        page_number = int(request.GET.get("page", 1))
+    except ValueError:
+        return redirect("/")
+
+    if page_number > paginator.num_pages:
+        return redirect("/")
+
+    public_jobs_to_display = paginator.page(page_number)
+    premium_jobs_to_display = premium_paginator.page(1)
+
+    context_dict = {
+        "publicly_available_jobs": public_jobs_to_display,
+        "premium_available_jobs": premium_jobs_to_display,
+        "pages": paginator.page_range,
+        "skill": skill,
+        "webpush": WEBPUSH_CONTEXT,
+    }
+
+    return render(
+        request,
+        template_name=f"{CURRENT_DOMAIN}/jobs_by_skill.html",
+        context=context_dict,
+    )
