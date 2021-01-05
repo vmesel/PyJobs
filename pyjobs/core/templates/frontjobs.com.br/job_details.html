@@ -43,8 +43,13 @@
     </div>
 </section>
 {% if job.is_challenging and applied %}
-<div class="alert alert-success" role="alert">
+<div class="alert alert-success" role="alert" style="margin-bottom:0px;">
   Não se esqueça de responder ao desafio técnico clicando no botão abaixo!
+</div>
+{%endif%}
+{% if too_old and job.is_open %}
+<div class="alert alert-warning" role="alert" style="margin-bottom:0px;">
+  Esta vaga pode j&aacute; ter sido fechada nos &uacute;ltimos 60 dias. Confirme com a empresa sobre a disponbilidade!
 </div>
 {%endif%}
 <section class="detalhes-vaga">
