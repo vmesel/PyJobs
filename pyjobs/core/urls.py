@@ -88,7 +88,9 @@ urlpatterns = [
         r"^jobs/location/(?P<state>[-\w\W\d]+)/$", job_state_view, name="job_state_view"
     ),
     url(
-        r"^jobs/skill/(?P<unique_slug>[-\w\W\d]+)/$", job_skill_view, name="job_skill_view"
+        r"^jobs/skill/(?P<unique_slug>[-\w\W\d]+)/$",
+        job_skill_view,
+        name="job_skill_view",
     ),
     url(
         r"^job/close/(?P<pk>\d+)/(?P<close_hash>[\da-f]{128})/$",

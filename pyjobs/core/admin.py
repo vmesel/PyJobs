@@ -84,7 +84,7 @@ class JobAdmin(admin.ModelAdmin):
         "created_at",
         "is_open",
         "consultancy",
-        "whatsapp_link"
+        "whatsapp_link",
     )
     readonly_fields = ("get_job_hash",)
     actions = [
@@ -99,7 +99,7 @@ class JobAdmin(admin.ModelAdmin):
 
     def get_job_hash(self, job):
         return job.listing_hash()
-    
+
     def whatsapp_link(self, job):
         try:
             cellphone = job.cellphone.replace("+", "").replace(" ", "").replace("-", "")
@@ -110,8 +110,6 @@ class JobAdmin(admin.ModelAdmin):
             )
         except:
             return "Sem WhatsApp"
-            
-
 
 
 class ProfileAdmin(admin.ModelAdmin):

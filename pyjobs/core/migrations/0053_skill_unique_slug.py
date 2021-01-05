@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0052_auto_20201119_0846'),
+        ("core", "0052_auto_20201119_0846"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='skill',
-            name='unique_slug',
-            field=models.CharField(blank=True, max_length=1000, null=True, verbose_name='Slug Unica'),
+            model_name="skill",
+            name="unique_slug",
+            field=models.CharField(
+                blank=True, max_length=1000, null=True, verbose_name="Slug Unica"
+            ),
         ),
     ]

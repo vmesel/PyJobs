@@ -267,7 +267,7 @@ class Skill(models.Model):
 
     def __repr__(self):
         return self.name
-    
+
     def generate_slug(self):
         self.unique_slug = slugify(self.name)
         self.save()
