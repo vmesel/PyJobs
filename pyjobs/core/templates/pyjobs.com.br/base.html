@@ -112,6 +112,19 @@
             </div>
         </div>
       </nav>
+      <script src="https://cdn.jsdelivr.net/gh/manucaralmo/GlowCookies@2.0.3/src/glowCookies.min.js" async></script>
+      <script>
+          AnalyticsCode = "{{GA_CODE}}"; // Your Analytics tracking code (Optional)
+          linkHref = "/privacy/"; // Your Cookies Policy link
+          btn1Text = "Aceitar cookies";
+          btn2Text = "Rejeitar";
+          bannerDescription = "Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e analisar o tráfego do site.";
+          linkTexto = "Leia mais sobre nossa politica de privacidade";
+          manageText = "Cookies";
+          btn1Background = "#00d1bd";
+          bannerPosition = "right";
+          hideAfterClick = true;
+      </script>
     {%block main%}
     {%endblock main%}
     <footer>
@@ -153,17 +166,18 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     {% if not user.is_authenticated %}
-        {% include 'pyjobs.com.br/modal_donate.html'%}
-        <script>
-            $(document).ready(function(){
-                if (document.cookie.indexOf("visitado=") >= 0) {}
-                else {
-                    document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-                    $("#modal-donate").modal();
-                }
-            });
-        </script>
+    {% include 'pyjobs.com.br/modal_donate.html'%}
+    <script>
+      $(document).ready(function(){
+            if (document.cookie.indexOf("visitado=") >= 0) {}
+            else {
+                document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+                $("#modal-donate").modal();
+            }
+        });
+    </script>
     {% endif %}
+
     <script src="{% static 'assets/js/theme.js' %}"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
