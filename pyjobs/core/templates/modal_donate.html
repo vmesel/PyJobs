@@ -12,7 +12,9 @@
           <div class="container">
             <div class="row row-modal" style="height: 100%;">
                 <div class="col-md-6 text-center">
-                    <img src="{% static 'assets/img/logo-FrontJobs.svg' %}" style="height:150px" style="display: inline-block;">
+                  {% with 'assets/img/'|add:WEBSITE_URL|add:'/logo.webp' as logo_path %}
+                    <img src="{% static logo_path %}" style="height:150px" style="display: inline-block;">
+                  {% endwith %}
                 </div>
                 <div class="col-md-6 coluna-esquerda-modal">
                     <h4 class="modal-site-titulo">Inscreva-se em Nossa Newsletter</h4>

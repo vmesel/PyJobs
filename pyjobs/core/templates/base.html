@@ -62,6 +62,16 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2VF6PC"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <section class="call-to-action-push" id="push-sub-div">
+      <div class="row">
+              <div class="col-lg-6 my-auto">
+                  <h3>Se inscreva em nosso push!</h3>
+              </div>
+              <div class="col-lg-6 my-auto">
+                {% webpush_button with_class="btn-push" %}
+              </div>
+          </div>
+    </section>
     <nav class="navbar navbar-expand-lg navbar-light justify-content-between shadow-sm">
         <div class="container">
             <a class="navbar-brand">
@@ -117,8 +127,8 @@
         </div>
       </nav>
       <script>
-        AnalyticsCode = "{{GA_CODE}}"; // Your Analytics tracking code (Optional)
-        linkHref = "/privacy/"; // Your Cookies Policy link
+        AnalyticsCode = "{{GA_CODE}}";
+        linkHref = "/privacy/";
         btn1Text = "Aceitar cookies";
         btn2Text = "Rejeitar";
         bannerDescription = "Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e analisar o tráfego do site.";
@@ -179,6 +189,8 @@
                     document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
                     $("#modal-donate").modal();
                 }
+                subBtn = document.getElementById('webpush-subscribe-button');
+                subBtn.textContent = 'Inscrever no Push';
             });
         </script>
     {% endif %}
@@ -191,7 +203,6 @@
       ga('create', '{{GA_CODE}}', 'auto');
       ga('send', 'pageview');
       </script>
-      <script src="{% static 'assets/js/webpush.js' %}"></script>
     {%block extra_scripts%}
     {%endblock%}
 </body>

@@ -68,7 +68,6 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = "pyjobs.urls"
 
@@ -135,6 +134,10 @@ USE_TZ = False
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "staticfiles"),)
 
 RAVEN_CONFIG = {"dsn": config("SENTRY_DSN", default=None)}

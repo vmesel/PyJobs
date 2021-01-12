@@ -347,6 +347,38 @@ input[type=email]{
     margin-bottom: 30px;
 }
 
+
+.call-to-action-push{
+    padding: 10px 0;
+    background-color: #E82670;
+}
+
+.call-to-action-push .row{
+    margin: 0;
+}
+
+.call-to-action-push .row .col-lg-6 h3{
+    color: #fff;
+    font-size: 16px;
+    text-align: right;
+}
+
+.btn-push{
+    color: #E82670;
+    font-size: 16px;
+    float: left;
+    background-color: #fff;
+    border-radius: 31px;
+    height: 30px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    width: 200px;
+    font-weight: bold;
+}
+
 .call-to-action-anuncie{
     margin-top: -20px;
     padding: 50px 0;
