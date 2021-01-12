@@ -45,15 +45,13 @@ def index(request):
         "webpush": WEBPUSH_CONTEXT,
     }
 
-    return render(
-        request, template_name=f"{CURRENT_DOMAIN}/index.html", context=context_dict
-    )
+    return render(request, template_name="index.html", context=context_dict)
 
 
 def privacy(request):
     return render(
         request,
-        template_name=f"{CURRENT_DOMAIN}/privacy_policy.html",
+        template_name="privacy_policy.html",
         context={"webpush": WEBPUSH_CONTEXT},
     )
 
@@ -89,9 +87,7 @@ def jobs(request):
         "webpush": WEBPUSH_CONTEXT,
     }
 
-    return render(
-        request, template_name=f"{CURRENT_DOMAIN}/jobs.html", context=context_dict
-    )
+    return render(request, template_name="jobs.html", context=context_dict)
 
 
 def job_state_view(request, state):
@@ -159,7 +155,7 @@ def job_state_view(request, state):
 
     return render(
         request,
-        template_name=f"{CURRENT_DOMAIN}/jobs_by_location.html",
+        template_name="jobs_by_location.html",
         context=context_dict,
     )
 
@@ -167,7 +163,7 @@ def job_state_view(request, state):
 def services_view(request):
     return render(
         request,
-        template_name=f"{CURRENT_DOMAIN}/services.html",
+        template_name="services.html",
         context={"webpush": WEBPUSH_CONTEXT},
     )
 
@@ -176,13 +172,13 @@ def job_creation(request):
     context_dict = {"new_job_form": JobForm, "webpush": WEBPUSH_CONTEXT}
     return render(
         request,
-        template_name=f"{CURRENT_DOMAIN}/job_registration.html",
+        template_name="job_registration.html",
         context=context_dict,
     )
 
 
 def robots_view(request):
-    return render(request, template_name=f"{CURRENT_DOMAIN}/robots.txt")
+    return render(request, template_name="robots.txt")
 
 
 def job_view(request, pk):
@@ -223,17 +219,13 @@ def job_view(request, pk):
         ).exists()
         context["logged_in"] = True
 
-    return render(
-        request, template_name=f"{CURRENT_DOMAIN}/job_details.html", context=context
-    )
+    return render(request, template_name="job_details.html", context=context)
 
 
 def summary_view(request):
     jobs = Job()
     context = {"jobs": jobs.get_weekly_summary(), "webpush": WEBPUSH_CONTEXT}
-    return render(
-        request, template_name=f"{CURRENT_DOMAIN}/summary.html", context=context
-    )
+    return render(request, template_name="summary.html", context=context)
 
 
 def register_new_job(request):
@@ -255,9 +247,7 @@ def register_new_job(request):
 
         new_job.save()
 
-    return render(
-        request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
-    )
+    return render(request, template_name="generic.html", context=context)
 
 
 def close_job(request, pk, close_hash):
@@ -272,9 +262,7 @@ def close_job(request, pk, close_hash):
     }
     job.is_open = False
     job.save()
-    return render(
-        request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
-    )
+    return render(request, template_name="generic.html", context=context)
 
 
 def applied_users_details(request, pk):
@@ -286,7 +274,7 @@ def applied_users_details(request, pk):
     if request.user.is_staff or job_hash:
         return render(
             request,
-            template_name=f"{CURRENT_DOMAIN}/applied_users_details.html",
+            template_name="applied_users_details.html",
             context={
                 "rows": JobApplication.objects.filter(job__pk=pk),
                 "job": job_info,
@@ -316,16 +304,14 @@ def contact(request):
     context["webpush"] = WEBPUSH_CONTEXT
 
     if request.method == "POST":
-        return render(
-            request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
-        )
+        return render(request, template_name="generic.html", context=context)
 
-    return render(request, f"{CURRENT_DOMAIN}/contact-us.html", context)
+    return render(request, "contact-us.html", context)
 
 
 @login_required
 def pythonistas_area(request):
-    return render(request, f"{CURRENT_DOMAIN}/pythonistas-area.html")
+    return render(request, "pythonistas-area.html")
 
 
 def pythonistas_signup(request):
@@ -337,12 +323,12 @@ def pythonistas_signup(request):
         login(request, user)
         return redirect("/")
 
-    return render(request, f"{CURRENT_DOMAIN}/pythonistas-signup.html", context)
+    return render(request, "pythonistas-signup.html", context)
 
 
 @login_required
 def pythonista_change_password(request):
-    template_name = f"{CURRENT_DOMAIN}/pythonistas-area-password-change.html"
+    template_name = "pythonistas-area-password-change.html"
     context = {"form": PasswordChangeForm(request.user)}
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -356,15 +342,13 @@ def pythonista_change_password(request):
         else:
             context["form"] = PasswordChangeForm(request.user, request.POST)
             context["message"] = "Por favor, corrija os erros abaixo."
-    return render(
-        request, f"{CURRENT_DOMAIN}/pythonistas-area-password-change.html", context
-    )
+    return render(request, "pythonistas-area-password-change.html", context)
 
 
 @login_required
 def pythonista_change_info(request):
     profile = request.user.profile
-    template = f"{CURRENT_DOMAIN}/pythonistas-area-info-change.html"
+    template = "pythonistas-area-info-change.html"
     context = {"form": EditProfileForm(instance=profile)}
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -385,7 +369,7 @@ def fb_ads_landing(request):
     """
     View to retrieve all user applications to job.
     """
-    template = f"{CURRENT_DOMAIN}/landing.html"
+    template = "landing.html"
     return render(request, template)
 
 
@@ -396,7 +380,7 @@ def pythonista_applied_info(request):
     """
     context = {}
     context["webpush"] = WEBPUSH_CONTEXT
-    template = f"{CURRENT_DOMAIN}/pythonista-applied-jobs.html"
+    template = "pythonista-applied-jobs.html"
     context["applications"] = JobApplication.objects.filter(user=request.user.pk)
     return render(request, template, context)
 
@@ -471,13 +455,11 @@ def job_application_challenge_submission(request, pk):
             "message_second": "Recebemos seu teste, aguarde nosso retorno!",
             "message_explaining": "Recebemos seu teste e vamos avaliar!",
         }
-        return render(
-            request, template_name=f"{CURRENT_DOMAIN}/generic.html", context=context
-        )
+        return render(request, template_name="generic.html", context=context)
 
     return render(
         request,
-        template_name=f"{CURRENT_DOMAIN}/job_challenge.html",
+        template_name="job_challenge.html",
         context={"job": user_applied.job, "form": form},
     )
 
@@ -559,7 +541,7 @@ def job_application_feedback(request, pk):
     if request.method == "POST" and feedback_form.is_valid():
         feedback_form.save()
 
-    return render(request, f"{CURRENT_DOMAIN}/job_application_feedback.html", context)
+    return render(request, "job_application_feedback.html", context)
 
 
 def job_skill_view(request, unique_slug):
@@ -599,6 +581,6 @@ def job_skill_view(request, unique_slug):
 
     return render(
         request,
-        template_name=f"{CURRENT_DOMAIN}/jobs_by_skill.html",
+        template_name="jobs_by_skill.html",
         context=context_dict,
     )

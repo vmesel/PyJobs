@@ -173,11 +173,9 @@ if "DYNO" in os.environ:  # pragma: no cover
     SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False)
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Website configurations to enable alternative deployments (to be deprecated)
-# TODO: Create a configuration model that works
-
 WEBSITE_NAME = config("WEBSITE_NAME", default=None)
 WEBSITE_SLOGAN = config("WEBSITE_SLOGAN", default=None)
+WEBSITE_URL = config("WEBSITE_URL", default=None)
 WEBSITE_OWNER_EMAIL = config("WEBSITE_OWNER_EMAIL", default=None)
 WEBSITE_OWNER_CELLPHONE = config("WEBSITE_OWNER_CELLPHONE", default=None)
 WEBSITE_GENERAL_EMAIL = config("WEBSITE_GENERAL_EMAIL", default=None)

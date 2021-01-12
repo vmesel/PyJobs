@@ -1,6 +1,0 @@
-Olá {{instance.user.name}},
-
-A vaga {{vaga.title}}, como forma de avaliar seu código, está lhe enviando um desafio de código disponibilizado em: {{url_do_site}}/job/{{vaga.pk}}/challenge_submit
-
-Abraços,
-{{dono_do_site}}
