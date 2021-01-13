@@ -22,10 +22,22 @@
         <div class="row">
             <h2 style="font-size:30px;">Confira as vagas de {{skill.name}}</h2>
         </div>
+        {% if skill.description %}
+            <div class="row" style="margin-top:20px; margin-bottom:5px">
+                <h3 style="font-size:20px; font-weight:bold;">Saiba um pouco mais sobre {{skill.name}}!</h3>
+            </div>
+            <div class="row" style="margin-bottom:20px;">
+                <p style="font-size: 18px;">
+                    {% autoescape off %}
+                        {{ skill.description }}
+                    {% endautoescape %}
+                </p>
+            </div>
+        {% endif %}
             <div class="row" style="margin-top:20px; margin-bottom:10px;">
                 <div class="col-md-12">
                     <a href="{% url 'jobs' %}">
-                        <input type="button" name="" value="BUSCAR MAIS VAGAS" class="botao">
+                        <input type="button" name="" value="QUERO VER OUTRAS VAGAS DE {{ WEBSITE_WORKING_LANGUAGE }}" class="botao">
                     </a>
                 </div>
             </div>
