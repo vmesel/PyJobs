@@ -798,6 +798,10 @@ input[type=checkbox]:checked{
 }
 
 @media (max-width: 1000px){
+    .call-to-action-push{
+        display: none;
+    }
+    
     .modal img{
         margin-bottom: 20px;
     }
