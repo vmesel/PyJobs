@@ -705,6 +705,12 @@ input[type=checkbox]:checked{
     color: #dc3545 !important;
 }
 
+.depoimentos-push {
+    max-width: 700px;
+    height: 200px;
+    width: 400px;
+}
+
 @media (min-width: 1000px){
     .modal img{
         width: 300px;
