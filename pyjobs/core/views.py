@@ -549,7 +549,7 @@ def job_skill_view(request, unique_slug):
     This view will return jobs related to a certain skill,
     i.e., Django Jobs or Flask Jobs.
     """
-    skill = Skill.objects.get(unique_slug=unique_slug)
+    skill = Skill.objects.get(unique_slug=unique_slug).first()
 
     if not skill:
         return redirect("/")
