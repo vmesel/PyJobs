@@ -10,6 +10,7 @@ from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
+from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from datetime import datetime, timedelta
@@ -208,6 +209,16 @@ def job_view(request, pk):
 
     context["title"] = context["job"].title
     context["description"] = context["job"].description
+
+    context["similar_jobs"] = (
+        Job.objects.filter(
+            Q(skills__in=context["job"].skills.all()),
+            ~Q(id=context["job"].id),
+            Q(created_at__gt=datetime.now() - timedelta(days=30)),
+        )
+        .annotate(num_skills=Count("skills"))
+        .order_by("-num_skills")[:3]
+    )
 
     if request.method == "POST":
         context["job"].apply(request.user)

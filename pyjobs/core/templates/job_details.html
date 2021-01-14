@@ -130,24 +130,34 @@
                 <li>Tipo de contrata&ccedil;&atilde;o: {{job.get_contract_form_display}}</li>
             </ul>
         </div>
-        <div class="row" style="margin-top:40px; padding: 20px; display: block; word-wrap: break-word;">
+        <div class="row" style="margin-top:40px; padding: 20px 0 10px 20px; display: block; word-wrap: break-word;">
                 <h3>Descrição da vaga</h3>
         </div>
-        <div class="row" style="margin-top:15px; padding: 20px; display: block; word-wrap: break-word;">
-                <br>
+        <div class="row" style="margin-top:15px; padding: 20px 0 10px 20px; display: block; word-wrap: break-word;">
                 {% autoescape off %}
                     {{job.description|linebreaksbr}}
                 {% endautoescape %}
         </div>
-        <div class="row" style="margin-top:40px; padding: 20px;">
-                <h3>Requisitos</h3>
-            </div>
-            <div class="row" style="margin-top:15px; padding: 20px; display: block; word-wrap: break-word;">
-                <br>
-                {% autoescape off %}
-                    {{job.requirements|linebreaksbr}}
-                {% endautoescape %}
+        <div class="row" style="margin-top:40px; padding: 20px 0 10px 20px;">
+            <h3>Requisitos</h3>
         </div>
+        <div class="row" style="margin-top:15px; padding: 20px 0 10px 20px; display: block; word-wrap: break-word;">
+            {% autoescape off %}
+                {{job.requirements|linebreaksbr}}
+            {% endautoescape %}
+        </div>
+    {% if similar_jobs %}
+        <div class="row" style="margin-top:40px; padding: 20px 0 10px 20px;">
+            <h3>Confira vagas similares</h3>
+        </div>
+        <div class="row">
+            <ul>
+                {% for similar_job in similar_jobs %}
+                    <li><a href="{% url 'job_view' similar_job.pk %}?utm-source=recommended-jobs">{{similar_job.title}}</a></li>
+                {% endfor %}
+                </ul>
+        </div>
+    {% endif %}
     </div>
 </section>
 <script type="application/ld+json">

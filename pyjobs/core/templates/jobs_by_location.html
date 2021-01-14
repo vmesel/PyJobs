@@ -24,7 +24,7 @@
         </div>
             <div class="row" style="margin-top:20px; margin-bottom:10px;">
                 <div class="col-md-12">
-                    <a href="{% url 'jobs' %}">
+                    <a href="{% url 'jobs' %}?utm-source=jobs-region-listing">
                         <input type="button" name="" value="BUSCAR MAIS VAGAS" class="botao">
                     </a>
                 </div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
-                    <a href="{% url 'job_view' job.pk %}">
+                    <a href="{% url 'job_view' job.pk %}?utm-source=jobs-region-listing">
                         <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
                     </a>
                 </div>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
-                    <a href="{% url 'job_view' job.pk %}">
+                    <a href="{% url 'job_view' job.pk %}?utm-source=jobs-region-listing">
                         <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
                     </a>
                 </div>
