@@ -105,7 +105,9 @@
                                 <div class="tags">
                                     {% for skill in job.skills.all %}
                                         {% if forloop.counter <= 4 %}
-                                            <span class="badge badge-secondary custom-badge">{{skill.name}}</span>
+                                            <a href="{% url 'job_skill_view' skill.unique_slug %}">
+                                                <span class="badge badge-secondary custom-badge">{{skill.name}}</span>
+                                            </a>
                                         {% endif %}
                                     {% endfor %}
 
