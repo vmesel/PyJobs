@@ -146,7 +146,10 @@ def new_job_was_created(sender, instance, created, **kwargs):
     if not instance.issue_number:
         send_job_to_github_issues(instance)
 
-    send_group_notification(group_name="general", payload=payload, ttl=1000)
+    try:
+        send_group_notification(group_name="general", payload=payload, ttl=1000)
+    except:
+        pass
 
     try:
         send_offer_email_template(instance)
