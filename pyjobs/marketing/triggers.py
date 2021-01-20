@@ -9,7 +9,7 @@ from raven.contrib.django.raven_compat.models import client
 
 
 from pyjobs.marketing.newsletter import subscribe_user_to_mailer
-from pyjobs.marketing.models import Messages
+from pyjobs.marketing.models import Messages, PushMessage
 from pyjobs.core.models import Job, JobApplication, Profile
 from pyjobs.marketing.utils import post_telegram_channel
 from pyjobs.core.email_utils import get_email_with_template
@@ -174,3 +174,16 @@ def feedback_was_created(sender, instance, **kwargs):
             [instance.user.email],
         )
         msg.send()
+
+
+@receiver(post_save, sender=PushMessage)
+def send_push_message(sender, instance, **kwargs):
+    if not instance.id:
+        return
+
+    payload = {
+        "head": instance.head,
+        "body": instance.body,
+        "url": instance.url,
+    }
+    send_group_notification(group_name="general", payload=payload, ttl=1000)

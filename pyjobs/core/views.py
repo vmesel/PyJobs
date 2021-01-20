@@ -572,12 +572,8 @@ def job_skill_view(request, unique_slug):
     if not skill:
         return redirect("/")
 
-    publicly_available_jobs = Job.get_publicly_available_jobs().filter(
-        skills = skill
-    )
-    publicly_available_premium_jobs = Job.get_premium_jobs().filter(
-        skills = skill
-    )
+    publicly_available_jobs = Job.get_publicly_available_jobs().filter(skills=skill)
+    publicly_available_premium_jobs = Job.get_premium_jobs().filter(skills=skill)
 
     paginator = Paginator(publicly_available_jobs, 10)
     premium_paginator = Paginator(publicly_available_premium_jobs, 10)

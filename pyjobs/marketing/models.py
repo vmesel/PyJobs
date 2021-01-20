@@ -71,6 +71,12 @@ class CustomerQuote(models.Model):
     customer_quote = models.TextField("Texto do depoimento")
 
 
+class PushMessage(models.Model):
+    head = models.CharField("Titulo", max_length=2000)
+    body = models.TextField("Texto da mensagem", max_length=2000)
+    url = models.URLField("Link para a vaga")
+
+
 @receiver(post_save, sender=Contact)
 def new_contact(sender, instance, created, **kwargs):
     email_context = {"mensagem": instance}
