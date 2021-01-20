@@ -147,8 +147,12 @@ def new_job_was_created(sender, instance, created, **kwargs):
         send_job_to_github_issues(instance)
 
     try:
-        send_offer_email_template(instance)
         send_group_notification(group_name="general", payload=payload, ttl=1000)
+    except:
+        pass
+
+    try:
+        send_offer_email_template(instance)
     except:
         client.captureException()
 

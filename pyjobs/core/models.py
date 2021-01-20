@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 from pyjobs.settings import (
@@ -259,9 +260,17 @@ class JobApplication(models.Model):
 
 class Skill(models.Model):
     name = models.CharField("Skill", max_length=100, default="", blank=False)
+    unique_slug = models.CharField("Slug Unica", max_length=1000, blank=True, null=True)
+    description = models.TextField(
+        "Descrição da skill", default="", blank=True, null=True
+    )
 
     def __str__(self):
         return self.name
 
     def __repr__(self):
         return self.name
+
+    def generate_slug(self):
+        self.unique_slug = slugify(self.name)
+        self.save()

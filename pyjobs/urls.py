@@ -34,14 +34,14 @@ urlpatterns = [
     url(r"^webpush/", include("webpush.urls")),
     url(
         r"^login/$",
-        auth_views.LoginView.as_view(template_name=f"{CURRENT_DOMAIN}/login.html"),
+        auth_views.LoginView.as_view(template_name="login.html"),
         name="login",
     ),
     url(r"^logout/$", auth_views.LogoutView.as_view(next_page="/"), name="logout"),
     url(
         r"^password_reset/$",
         auth_views.PasswordResetView.as_view(
-            template_name=f"{CURRENT_DOMAIN}/pythonistas-area-password-change.html"
+            template_name="pythonistas-area-password-change.html"
         ),
         name="password_reset",
     ),

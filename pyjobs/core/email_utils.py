@@ -25,8 +25,8 @@ def get_email_with_template(template_name, context_specific, subject, to_emails)
         context["vaga_close_url"] = context["vaga"].get_close_url()
         context["vaga_listing_url"] = context["vaga"].get_listing_url()
 
-    plain_text = get_template(f"{CURRENT_DOMAIN}/emails/{template_name}.txt")
-    html_text = get_template(f"{CURRENT_DOMAIN}/emails/html/{template_name}.html")
+    plain_text = get_template(f"emails/{template_name}.txt")
+    html_text = get_template(f"emails/html/{template_name}.html")
 
     text_content, html_content = plain_text.render(context), html_text.render(context)
 
