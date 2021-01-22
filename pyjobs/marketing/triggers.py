@@ -144,7 +144,10 @@ def new_job_was_created(sender, instance, created, **kwargs):
 
     msg.send()
     if not instance.issue_number:
-        send_job_to_github_issues(instance)
+        try:
+            send_job_to_github_issues(instance)
+        except:
+            pass
 
     try:
         send_offer_email_template(instance)
