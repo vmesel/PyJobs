@@ -92,7 +92,9 @@
                     <div class="col-md-4 card-col">
                         <div class="card shadow">
                             <div class="card-body">
-                                <h3 class="card-title" style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
+                                <a href="/job/{{job.pk}}">
+                                    <h3 class="card-title" style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
+                                </a>
                                 <p class="card-text">
                                     <ul>
                                         <li><b>Empresa:</b> {{job.company_name}}</li>

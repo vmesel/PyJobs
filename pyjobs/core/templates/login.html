@@ -19,6 +19,9 @@
         -webkit-appearance: none;
         -moz-appearance: none;
     }
+    #push-sub-div{
+      display: none; 
+    }
 </style>
 <section class="listagem-vagas-em-destaque" style="min-height:70vh;">
     <div class="container">
@@ -49,11 +52,20 @@
               </div>
           </div>
           {%endfor%}
-            <div class="form-group">
+          <div class="form-group row container">
+            <p>Ishe... Esqueci minha senha. E agora? Aqui está nosso <a href="{%url 'password_reset'%}">Reset de Senha</a> =P</p>
+          </div>
+            <div class="row form-group">
+              <div class="col-md-6">
               <button class="botao" type="submit">Entrar</button>
             </div>
+              <div class="col-md-6">
+                <a href="">
+                  <button class="botao-inverso" type="submit">Cadastre-se</button>
+                </a>
+              </div>
+            </div>
         </form>
-          <a href="{%url 'password_reset'%}">Reset de Senha</a>
     </div>
 </section>
 {%endblock%}

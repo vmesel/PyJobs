@@ -137,7 +137,7 @@ class PyJobsJobApplication(TestCase):
     def test_check_applied_for_job_anon(self):
         request_client = self.client.get("/job/{}/".format(self.job.pk))
         request = request_client.content.decode("utf-8")
-        expected_response = "Se logue e aplique a vaga!"
+        expected_response = "Entre e Aplique a vaga!"
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):

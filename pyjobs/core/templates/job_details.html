@@ -57,7 +57,9 @@
         <div class="top-breadcrumb-nav">
             <a href="/">Home</a> > <a href="{% url 'jobs' %}">Vagas</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
         </div>
-        <h2>{{job.title}}</h2>
+        <a href="/job/{{job.pk}}">
+            <h2>{{job.title}}</h2>
+        </a>
         <h3 style="font-size:18px;">Vaga Postada: <span>{{job.created_at|naturalday}}</span></h3>
 
         <div class="row">
@@ -89,7 +91,7 @@
                   {% endif %}
                 {%else%}
                     <a href="{% url 'login' %}?next={{ job.get_absolute_url }}">
-                        <button class="botao" type="button" id="application-status">Se logue e aplique a vaga!</button>
+                        <button class="botao" type="button" id="application-status" style="text-decoration: underline;">Entre e Aplique a vaga!</button>
                     </a>
                 {% endif %}
             </div>

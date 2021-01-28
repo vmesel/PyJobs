@@ -19,6 +19,22 @@ body{
     width: 100%;
 }
 
+.botao-inverso{
+    background-color: #fff;
+    border-radius: 50px;
+    border: #00d1bd 1px solid;
+    min-height: 54px;
+    margin: 0 auto;
+    padding: 0 27px;
+    color: #00d1bd;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+}
+
 .max-width-button {
     max-width: 300px;
 }
