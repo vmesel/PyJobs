@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Messages, MailingList, Share, CustomerQuote
+from .models import Contact, Messages, MailingList, Share, CustomerQuote, PushMessage
 
 
 class MailingListsAdmin(admin.ModelAdmin):
@@ -19,3 +19,4 @@ admin.site.register(Messages, MessagesAdmin)
 admin.site.register(MailingList, MailingListsAdmin)
 admin.site.register(Share, SharingAdmin)
 admin.site.register(CustomerQuote)
+admin.site.register(PushMessage)
