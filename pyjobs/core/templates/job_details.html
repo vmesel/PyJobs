@@ -21,13 +21,13 @@
     <div class="container-fluid">
         <div class="row row-breadcrumb-grande">
             <div class="col-lg-3 indicador-esquerdo">
-                <a href="/job/{{previous_job_pk}}/">{% translate "Vaga Anterior"%}</a>
+                <a href="{% url 'job_view' previous_job_pk %}">{% translate "Vaga Anterior"%}</a>
             </div>
             <div class="col-lg-6 indicador-central">
                 <a href="{% url 'jobs' %}">{% translate "Ver vagas"%}</a>
             </div>
             <div class="col-lg-3 indicador-direito">
-                <a href="/job/{{next_job_pk}}/">{% translate "Vaga Posterior"%}</a>
+                <a href="{% url 'job_view' next_job_pk %}">{% translate "Vaga Posterior"%}</a>
             </div>
         </div>
         <div class="row row-breadcrumb-pequeno">
@@ -35,10 +35,10 @@
                 <a href="{% url 'jobs' %}">{% translate "Ver vagas"%}</a>
             </div>
             <div class="col-3 col-sm-3 indicador-direito-sinal">
-                <a href="/job/{{previous_job_pk}}/"><</a>
+                <a href="{% url 'job_view' previous_job_pk %}"><</a>
             </div>
             <div class="col-3 col-sm-3 indicador-esquerdo-sinal">
-                <a href="/job/{{next_job_pk}}/">></a>
+                <a href="{% url 'job_view' next_job_pk %}">></a>
             </div>
         </div>
     </div>
@@ -56,9 +56,9 @@
 <section class="detalhes-vaga">
     <div class="container">
         <div class="top-breadcrumb-nav">
-            <a href="/">Home</a> > <a href="{% url 'jobs' %}">{% translate "Vagas"%}</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
+            <a href="{% url 'jobs' %}">Home</a> > <a href="{% url 'jobs' %}">{% translate "Vagas"%}</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
         </div>
-        <a href="/job/{{job.pk}}">
+        <a href="{% url 'job_view' job.pk %}">
             <h2>{{job.title}}</h2>
         </a>
         <h3 style="font-size:18px;">{% translate "Vaga Postada:"%} <span>{{job.created_at|naturalday}}</span></h3>

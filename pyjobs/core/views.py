@@ -38,7 +38,6 @@ WEBPUSH_CONTEXT = {"group": "general"}
 
 
 def index(request):
-    activate(request.LANGUAGE_CODE)
     publicly_available_jobs = Job.get_index_display_jobs()
 
     user_filtered_query_set = JobFilter(request.GET, queryset=publicly_available_jobs)

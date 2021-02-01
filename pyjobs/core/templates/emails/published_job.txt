@@ -1,3 +1,5 @@
+{% load i18n %}
+{% blocktranslate %}
 Olá {{vaga.company_name}},
 
 Agora a vaga {{vaga.title}} foi avaliada por nossos colaboradores e foi publicada!
@@ -19,3 +21,4 @@ Por favor, nos contate!
 
 Abraços,
 {{dono_do_site}}
+{% endblocktranslate %}

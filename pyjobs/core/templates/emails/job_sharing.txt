@@ -1,9 +1,10 @@
-Olá,
+{% load i18n %}
+{% translate "Olá" %},
 
-A pessoa: {{pessoa.name}} lhe indicou para a vaga: {{vaga.title}}
+{% translate "A pessoa:"%} {{pessoa.name}} {% translate "lhe indicou para a vaga:"%} {{vaga.title}}
 
-Caso você queira saber mais, entre em: {{url_do_site}}/job/{{vaga.pk}}
+{% translate "Caso você queira saber mais, entre em"%}: {{url_do_site}}/job/{{vaga.pk}}
 
-Abraços,
+{% translate "Abraços" %},
 {{dono_do_site}}
 {{url_do_site}}

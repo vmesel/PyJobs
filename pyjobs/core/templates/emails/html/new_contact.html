@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- EMAIL TEMPLATE FROM: https://github.com/leemunroe/responsive-html-email-template/ -->
 <!doctype html>
 <html>
@@ -344,15 +345,15 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                          <p>Olá,</p>
+                          <p>{% translate "Olá"%},</p>
 
-                          <p>A pessoa: {{mensagem.name}} quer falar sobre {{mensagem.subject}}.</p>
+                          <p>{% translate "A pessoa:"%} {{mensagem.name}} {% translate "quer falar sobre" %} {{mensagem.subject}}.</p>
 
-                          <p>A mensagem dela é:</p>
+                          <p>{% translate "A mensagem dela é:"%}</p>
 
                           <p>{{mensagem.message}}</p>
 
-                          <p>Para mandar um email para ela, basta enviar para: {{mensagem.email}}</p>
+                          <p>{% translate "Para mandar um email para ela, basta enviar para:"%} {{mensagem.email}}</p>
                       </td>
                     </tr>
                   </table>

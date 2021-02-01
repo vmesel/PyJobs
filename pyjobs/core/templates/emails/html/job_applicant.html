@@ -1,3 +1,4 @@
+{% load i18n %} 
 <!-- EMAIL TEMPLATE FROM: https://github.com/leemunroe/responsive-html-email-template/ -->
 <!doctype html>
 <html>
@@ -350,24 +351,24 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                          <p>Olá,
+                          <p>{% translate "Olá," %}
 
-                          <p>Você recebeu uma nova pessoa interessada em sua vaga: {{vaga.title}}
+                          <p>{% translate "Você recebeu uma nova pessoa interessada em sua vaga:" %} {{vaga.title}}
 
-                          <p>Nome do interessado(a): {{pessoa.user.first_name}} {{pessoa.user.last_name}}</p>
-                          <p>Email do interessado(a): {{pessoa.user.email}}</p>
-                          <p>Telefone do interessado(a): {{pessoa.cellphone}}</p>
-                          <p>Linkedin do interessado(a): {{pessoa.linkedin}}</p>
-                          <p>GitHub do interessado(a): {{pessoa.github}}</p>
-                          <p>Portfolio do interessado(a): {{pessoa.portfolio}}</p>
+                          <p>{% translate "Nome do interessado(a):" %} {{pessoa.user.first_name}} {{pessoa.user.last_name}}</p>
+                          <p>{% translate "Email do interessado(a):" %} {{pessoa.user.email}}</p>
+                          <p>{% translate "Telefone do interessado(a):" %} {{pessoa.cellphone}}</p>
+                          <p>{% translate "Linkedin do interessado(a):" %} {{pessoa.linkedin}}</p>
+                          <p>{% translate "GitHub do interessado(a):" %} {{pessoa.github}}</p>
+                          <p>{% translate "Portfolio do interessado(a):" %} {{pessoa.portfolio}}</p>
 
-                          <p>Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!</p>
+                          <p>{% translate "Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!"%}</p>
 
-                          <p>Em breve, nós lhe contataremos com mais interessados!</p>
+                          <p>{% translate "Em breve, nós lhe contataremos com mais interessados!"%}</p>
 
-                          <p>Para acessar o {{nome_do_site}}, entre no link: {{url_do_site}}</p>
+                          <p>{% translate "Para acessar o"%} {{nome_do_site}}, {% translate "entre no link"%}: {{url_do_site}}</p>
 
-                          <p>Abraços,</p>
+                          <p>{% translate "Abraços,"%}</p>
                           <p>{{dono_do_site}}</p>
                       </td>
                     </tr>

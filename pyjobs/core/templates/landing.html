@@ -69,7 +69,7 @@
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
         <div class="container">
             <h1>
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="{% url 'index' %}">
                     {% with 'assets/img/'|add:WEBSITE_URL|add:'/logo.webp' as logo_img_path %}
                         <img src="{% static logo_img_path %}" style="height:50px;width:100px;" class="logo">
                     {% endwith %}
@@ -145,9 +145,9 @@
                 <div class="col-sm-3">
                     <h5>{{WEBSITE_NAME}}</h5>
                     <ul>
-                        <li><a href="/">Home</a></li>
+                        <li><a href="{% url 'index' %}">Home</a></li>
                         <li><a href="#oportunidades">Oportunidades {{WEBSITE_WORKING_LANGUAGE}}</a></li>
-                        <li><a id="link-modal-cadastro-footer" href="/job/create/">Cadastre uma vaga</a></li>
+                        <li><a id="link-modal-cadastro-footer" href="{% url 'job_creation' %}>Cadastre uma vaga</a></li>
                         <li><a href="https://br.jooble.org/vagas-de-emprego-desenvolvedor-python">Jooble</a></li>
                     </ul>
                 </div>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- EMAIL TEMPLATE FROM: https://github.com/leemunroe/responsive-html-email-template/ -->
 <!doctype html>
 <html>
@@ -350,11 +351,11 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                          <p>Olá {{vaga.company_name}},</p>
-                          <p>Agora que você criou a vaga {{vaga.title}}, nós lhe enviaremos os detalhes de quem se inscreveu para ela, assim você conseguirá entrar em contato com eles</p>
-                          <p>Em breve iremos lhe enviar o link da sua vaga para divulgação!</p>
+                          <p>{% translate "Olá"%} {{vaga.company_name}},</p>
+                          <p>{% translate "Agora que você criou a vaga"%} {{vaga.title}}, {% translate "nós lhe enviaremos os detalhes de quem se inscreveu para ela, assim você conseguirá entrar em contato com eles"%}</p>
+                          <p>{% translate "Em breve iremos lhe enviar o link da sua vaga para divulgação!"%}</p>
 
-                          <p>Abraços,</p>
+                          <p>{% translate "Abraços,"%}</p>
                           <p>{{dono_do_site}}</p>
                       </td>
                     </tr>

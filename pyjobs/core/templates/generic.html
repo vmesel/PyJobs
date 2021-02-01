@@ -11,7 +11,7 @@
         {% if message_explaining %}
             <p>{{message_explaining}}</p>
       {%endif%}
-      <a href="/">
+      <a href="{% url 'index' %}">
           <input type="button" name="" value="{% translate 'IR PARA HOME'%}" class="botao">
       </a>
     </div>

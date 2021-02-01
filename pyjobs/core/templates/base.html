@@ -34,15 +34,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="{% translate 'Aqui seu novo emprego'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'acha você. Oportunidades para programadores'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.'%}" name="description"/>
-    <meta name="description" content="{% translate 'Aqui seu novo emprego'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'acha você. Oportunidades para programadores'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.'%}">
+    <meta name="description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}">
     <title>{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - {% translate "Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}"%}{%endif%}</title>
-    <meta name="keywords" content="{% translate 'empregos, vagas, buscar vagas, vagas de emprego, vagas de programador '%}{{WEBSITE_WORKING_LANGUAGE}}, {% translate 'emprego de programador ' %}, {{WEBSITE_WORKING_LANGUAGE}}, {% translate 'empregos'%} {{WEBSITE_WORKING_LANGUAGE}}, {% translate 'vagas'%} {{WEBSITE_WORKING_LANGUAGE}}, {% translate 'buscar vagas'%} {{WEBSITE_WORKING_LANGUAGE}}, {% translate 'vagas de emprego'%} {{WEBSITE_WORKING_LANGUAGE}}">
-    <meta name="twitter:description" content="{% translate 'Busque agora vagas de emprego de dev '%} {{WEBSITE_WORKING_LANGUAGE}}. {{WEBSITE_NAME}}, {% translate 'a gente trabalha pelo seu trabalho.'%}">
+    <meta name="keywords" content="{% blocktranslate %} empregos, vagas, buscar vagas, vagas de emprego, vagas de programador {{WEBSITE_WORKING_LANGUAGE}}, emprego de programador {{WEBSITE_WORKING_LANGUAGE}}, empregos {{WEBSITE_WORKING_LANGUAGE}}, vagas {{WEBSITE_WORKING_LANGUAGE}}, buscar vagas {{WEBSITE_WORKING_LANGUAGE}}, vagas de emprego {{WEBSITE_WORKING_LANGUAGE}}{% endblocktranslate %}">
+    <meta name="twitter:description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}">
     <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
     <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
-    <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - {% translate 'Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}'%}{%endif%}" />
+    <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - {% blocktranslate %}Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{% endblocktranslate %}{%endif%}" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:description" content="{% if description %}{{description}}{%else%}{% translate 'Aqui é o portal onde você encontrará seu futuro emprego'%} {{WEBSITE_WORKING_LANGUAGE}}. {% translate 'No'%} {{WEBSITE_NAME}} {% translate 'vagas e pessoas especialistas em'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'não faltam! Somos a referência na linguagem em todo o país.'%}{%endif%}" />
+    <meta property="og:description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}" />
     {% endblock metas%}
     {% block metas_seo %}
     {% endblock metas_seo %}
@@ -87,7 +87,7 @@
     <nav class="navbar navbar-expand-lg navbar-light justify-content-between shadow-sm">
         <div class="container">
             <a class="navbar-brand">
-                    <a class="nav-link" href="/" style="margin: 0; padding: 0;">
+                    <a class="nav-link" href="{% url 'index' %}" style="margin: 0; padding: 0;">
                       {% with 'assets/img/'|add:WEBSITE_URL|add:'/logo.webp' as logo_path %}
                         <img src="{% static logo_path %}" style="height:75px">
                       {% endwith %}
@@ -116,10 +116,10 @@
                   </form>
                   </li>
                   <li class="nav-item active">
-                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                      <a class="nav-link" href="{% url 'index' %}">Home</a>
                   </li>
                   <li class="nav-item active">
-                      <a class="nav-link" href="/jobs/">{% translate "Vagas"%}</a>
+                      <a class="nav-link" href="{% url 'jobs' %}">{% translate "Vagas"%}</a>
                   </li>
                   {% if not user.is_authenticated %}
                   <li class="nav-item active">
@@ -135,7 +135,7 @@
                   {% else %}
                   <li class="nav-item active dropdown ">
                     <a class="nav-link dropdown-toggle" href="{% url 'pythonistas_area' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {% translate "Área do"%} {{USER_SUBSTANTIVE}}
+                      {% blocktranslate %} Área do {{USER_SUBSTANTIVE}} {% endblocktranslate %}
                     </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'pythonistas_area' %}">{% translate "Meu painel"%}</a>
@@ -186,10 +186,10 @@
             <div class="col-6 col-md">
               <h5>VAGAS</h5>
               <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="/jobs/">{% translate "Ver Vagas"%}</a></li>
-                <li><a class="text-muted" href="/jobs/location/sao-paulo/">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - São Paulo</a></li>
-                <li><a class="text-muted" href="/jobs/location/rio-de-janeiro/">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - Rio de Janeiro</a></li>
-                <li><a class="text-muted" href="/jobs/location/espirito-santo/">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - Espirito Santo</a></li>
+                <li><a class="text-muted" href="{% url 'jobs' %}">{% translate "Ver Vagas"%}</a></li>
+                <li><a class="text-muted" href="{% url 'job_state_view' 'sao-paulo' %}">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - São Paulo</a></li>
+                <li><a class="text-muted" href="{% url 'job_state_view' 'rio-de-janeiro' %}">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - Rio de Janeiro</a></li>
+                <li><a class="text-muted" href="{% url 'job_state_view' 'espirito-santo' %}">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - Espirito Santo</a></li>
               </ul>
             </div>
             <div class="col-6 col-md">

@@ -1,12 +1,13 @@
-Olá {{pessoa.user.first_name}},
+{% load i18n %}
+{% translate "Olá" %} {{pessoa.user.first_name}},
 
-Recebemos seu interesse na oportunidade: {{vaga.title}} ({{vaga.application_link}})
+{% translate "Recebemos seu interesse na oportunidade"%}: {{vaga.title}} ({{vaga.application_link}})
 
-Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve, eles entrarão em contato com você!
+{% translate "Estamos lhe enviando este email para te avisar que a empresa responsável pela sua vaga recebeu seus dados e em breve, eles entrarão em contato com você!" %}
 
-Em breve, nós lhe contataremos com mais informações sobre a vaga!
+{% translate "Em breve, nós lhe contataremos com mais informações sobre a vaga!" %}
 
-Para acessar o {{nome_do_site}}, entre no link: {{url_do_site}}
+{% translate "Para acessar o" %} {{nome_do_site}}, {% translate "entre no link:"%} {{url_do_site}}
 
-Abraços,
+{% translate "Abraços,"%}
 {{dono_do_site}}

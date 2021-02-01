@@ -1,13 +1,14 @@
-Olá {{pessoa.first_name}},
+{% load i18n %}
+{% translate "Olá" %} {{pessoa.first_name}},
 
-Aqui vai o seu feedback para a vaga '{{vaga.title}}' na {{vaga.company_name}}
+{% translate "Aqui vai o seu feedback para a vaga" %} '{{vaga.title}}' {% translate "na"%} {{vaga.company_name}}
 
 
 {{job_application.company_feedback}}
 
 
-E o seu status no processo seletivo é: {{job_application.feedback_type}}
+{% translate "E o seu status no processo seletivo é" %}: {{job_application.feedback_type}}
 
 
-Abraços,
+{% translate "Abraços" %},
 {{dono_do_site}}

@@ -83,7 +83,7 @@
                     <h2>{% translate "Nossas vagas"%}</h2>
                 </div>
                 <div class="row">
-                    <p>{% translate "Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se você é uma empresa e quer encontrar os melhores"%} {{USER_SUBSTANTIVE}}s {% translate "e ter sua vaga destacada na comunidade, entre em" %}  <a href="{% url 'contact' %}">{% translate "contato conosco"%}</a> {% translate "e encontre aqui o profissional ideal para seu time!"%}</p>
+                    <p>{% blocktranslate %} Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se você é uma empresa e quer encontrar os melhores {{USER_SUBSTANTIVE}}s e ter sua vaga destacada na comunidade, entre em {% endblocktranslate %}  <a href="{% url 'contact' %}">{% translate "contato conosco"%}</a> {% translate "e encontre aqui o profissional ideal para seu time!"%}</p>
                 </div>
             </div>
         </section>
@@ -95,7 +95,7 @@
                     <div class="col-md-4 card-col">
                         <div class="card shadow">
                             <div class="card-body">
-                                <a href="/job/{{job.pk}}">
+                                <a href="{% url 'job_view' job.pk %}">
                                     <h3 class="card-title" style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
                                 </a>
                                 <p class="card-text">
@@ -117,7 +117,7 @@
                                     {% endfor %}
 
                                 </div>
-                                <a href="/job/{{job.pk}}">
+                                <a href="{% url 'job_view' job.pk %}">
                                     <input type="button" class="botao" value="VER VAGA">
                                 </a>
                             </div>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="row navegacao-vagas">
                     <div class="col-lg-12 d-flex justify-content-center">
-                        <a class=" max-width-button" style="width: 100%" href="/jobs/">
+                        <a class=" max-width-button" style="width: 100%" href="{% url 'jobs' %}">
                             <input type="button" name="" value="VER VAGAS" class="botao">
                         </a>
                     </div>
@@ -143,8 +143,8 @@
                 <div class="row">
                     <div class="col-md-8">
                         <h3>{% translate "Conheça as melhores oportunidades" %} {{WEBSITE_WORKING_LANGUAGE}}</h3>
-                        <p>{% translate "Todas as oportunidades listadas no" %} {{WEBSITE_NAME}} {% translate "passaram por um processo de curadoria para garantir a melhor qualidade possível das vagas. Nossa parceria com as empresas é feita de maneira transparente e visando melhores oportunidades e condições aos desenvolvedores."%}</p>
-                        <a href="/jobs/">
+                        <p>{% blocktranslate %}Todas as oportunidades listadas no {{WEBSITE_NAME}} passaram por um processo de curadoria para garantir a melhor qualidade possível das vagas. Nossa parceria com as empresas é feita de maneira transparente e visando melhores oportunidades e condições aos desenvolvedores.{% endblocktranslate %}</p>
+                        <a href="{% url 'jobs' %}">
                             <input type="button" value="{% translate 'QUERO VER AS VAGAS'%}" class="botao">
                         </a>
                     </div>
