@@ -213,3 +213,4 @@ ENV/
 
 # Postgres Docker container data directory
 db/
+.DS_Store
