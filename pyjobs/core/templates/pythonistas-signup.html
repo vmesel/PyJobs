@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
 {%block main%}
 <section style="padding: 30px;">
     <div class="container">
-        <h2 class="text-info">Cadastre-se no maior portal de vagas {{WEBSITE_WORKING_LANGUAGE}}</h2>
-        <p>Este login &eacute; exclusivo para desenvolvedores relacionados a linguagem {{WEBSITE_WORKING_LANGUAGE}}.</p>
-        <p>Caso você queira postar uma vaga, <a href="{% url 'job_creation' %}">clique aqui</a></p>
+        <h2 class="text-info">{% translate "Cadastre-se no maior portal de vagas"%} {{WEBSITE_WORKING_LANGUAGE}}</h2>
+        <p>{% translate "Este login &eacute; exclusivo para desenvolvedores relacionados a linguagem"%} {{WEBSITE_WORKING_LANGUAGE}}.</p>
+        <p>{% translate "Caso você queira postar uma vaga,"%} <a href="{% url 'job_creation' %}">{% translate "clique aqui"%}</a></p>
         <form action="." method="post">
             <p>{{ message }}</p>
             {% csrf_token %}
@@ -32,9 +33,9 @@
                     {% elif field.html_name == "skills_" %}
                         {% render_field field id="id_skills" style="margin-top:5px; width:100%; height: 44px;border-radius: 10px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow:    inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%}
                     {% elif field.html_name == "on_mailing_list" %}
-                        {% render_field field style="margin-top:5px; border-radius: 5px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow: inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%} Você aceita estar em nossa newsletter? 
+                        {% render_field field style="margin-top:5px; border-radius: 5px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow: inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%} {% translate "Você aceita estar em nossa newsletter?"%}
                     {% elif field.html_name == "agree_privacy_policy" %}
-                        {% render_field field style="margin-top:5px; border-radius: 5px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow: inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%} Você aceita nossa <a href="{% url 'privacy' %}">política de privacidade</a>? 
+                        {% render_field field style="margin-top:5px; border-radius: 5px;border: 1px solid rgba(170, 170, 170, 0.3);overflow: hidden;padding: 10px;-moz-box-shadow: inset 0 0 5px #aaa;-webkit-box-shadow: inset 0 0 5px #aaa;box-shadow: inset 0 0 5px #aaa;-webkit-appearance: none;-moz-appearance: none;"%} {% translate "Você aceita nossa"%} <a href="{% url 'privacy' %}">{% translate "política de privacidade"%}</a>? 
                     {% endif %}
                     {% for error in field.errors %}
                     <div class="invalid-feedback-pj">
@@ -48,7 +49,7 @@
             </div>
             {% endfor %}
             <div class="form-group">
-              <button class="botao" type="submit" style="margin-top: 20px;">ENVIAR</button>
+              <button class="botao" type="submit" style="margin-top: 20px;">{% translate "ENVIAR"%}</button>
             </div>
         </form>
     </div>

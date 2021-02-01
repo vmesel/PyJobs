@@ -15,6 +15,7 @@ from pyjobs.marketing.triggers import (
 from datetime import datetime
 from pyjobs.marketing.newsletter import subscribe_user_to_mailer
 from pyjobs.core.email_utils import get_email_with_template
+from django.utils.translation import gettext_lazy as _
 
 
 def update_created_at(modeladmin, request, queryset):
@@ -57,7 +58,7 @@ def send_challenge_to_old_applicants(modeladmin, request, queryset):
             message = get_email_with_template(
                 "job_interest_challenge",
                 email_context,
-                "Teste Técnico da empresa: {}!".format(job.company_name),
+                " ".join(map(str, [_("Teste Técnico da empresa:"), job.company_name])),
                 [job_applicant.user.email],
             )
 

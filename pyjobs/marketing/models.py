@@ -5,76 +5,79 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from pyjobs.core.email_utils import get_email_with_template
 from pyjobs.core.models import Job
+from django.utils.translation import gettext_lazy as _
 
 
 class MailingList(models.Model):
-    email = models.EmailField("Email", default="", blank=False)
-    name = models.CharField("Nome", max_length=100, default="", blank=False)
-    slug = models.CharField("Slug", max_length=100, default="", blank=False)
+    email = models.EmailField(_("Email"), default="", blank=False)
+    name = models.CharField(_("Nome"), max_length=100, default="", blank=False)
+    slug = models.CharField(_("Slug"), max_length=100, default="", blank=False)
 
     class Meta:
-        verbose_name = "Lista de e-mail"
-        verbose_name_plural = "Listas de e-mail"
+        verbose_name = _("Lista de e-mail")
+        verbose_name_plural = _("Listas de e-mail")
 
 
 class Contact(models.Model):
-    name = models.CharField("Nome", max_length=100, default="", blank=False)
-    subject = models.CharField("Assunto", max_length=100, default="", blank=False)
-    email = models.EmailField("Email", default="", blank=False)
-    message = models.TextField("Mensagem", default="", blank=False)
+    name = models.CharField(_("Nome"), max_length=100, default="", blank=False)
+    subject = models.CharField(_("Assunto"), max_length=100, default="", blank=False)
+    email = models.EmailField(_("Email"), default="", blank=False)
+    message = models.TextField(_("Mensagem"), default="", blank=False)
 
     class Meta:
-        verbose_name = "Resposta de Contato"
-        verbose_name_plural = "Respostas de contatos"
+        verbose_name = _("Resposta de Contato")
+        verbose_name_plural = _("Respostas de contatos")
 
 
 class Messages(models.Model):
     message_title = models.CharField(
-        "Título da Mensagem", max_length=100, default="", blank=False
+        _("Título da Mensagem"), max_length=100, default="", blank=False
     )
 
     message_type = models.CharField(
-        "Ticker usado no backend para ID da msg",
+        _("Ticker usado no backend para ID da msg"),
         default="offer",
         max_length=200,
         blank=False,
     )
 
-    message_content = models.TextField("Texto do E-mail", default="")
+    message_content = models.TextField(_("Texto do E-mail"), default="")
 
     class Meta:
-        verbose_name = "Mensagem"
-        verbose_name_plural = "Mensagens"
+        verbose_name = _("Mensagem")
+        verbose_name_plural = _("Mensagens")
 
 
 class Share(models.Model):
     user_sharing = models.ForeignKey(User, on_delete=models.PROTECT)
 
     user_receiving_email = models.EmailField(
-        "E-mail para enviarmos a indicação", null=False, blank=False
+        _("E-mail para enviarmos a indicação"), null=False, blank=False
     )
 
     job = models.ForeignKey(Job, on_delete=models.PROTECT)
 
     class Meta:
-        verbose_name = "Indicação"
-        verbose_name_plural = "Indicações"
+        verbose_name = _("Indicação")
+        verbose_name_plural = _("Indicações")
 
 
 class CustomerQuote(models.Model):
-    customer_name = models.CharField("Nome do cliente", max_length=500)
+    customer_name = models.CharField(_("Nome do cliente"), max_length=500)
 
-    company_name = models.CharField("Nome da empresa", max_length=500)
+    company_name = models.CharField(_("Nome da empresa"), max_length=500)
 
-    avatar_name = models.CharField("Nome da imagem estatica do avatar", max_length=500)
+    avatar_name = models.CharField(
+        _("Nome da imagem estatica do avatar"), max_length=500
+    )
 
-    customer_quote = models.TextField("Texto do depoimento")
+    customer_quote = models.TextField(_("Texto do depoimento"))
 
 
 class PushMessage(models.Model):
-    head = models.CharField("Titulo", max_length=2000)
-    body = models.TextField("Texto da mensagem", max_length=2000)
-    url = models.URLField("Link para a vaga")
+    head = models.CharField(_("Titulo"), max_length=2000)
+    body = models.TextField(_("Texto da mensagem"), max_length=2000)
+    url = models.URLField(_("Link para a vaga"))
 
 
 @receiver(post_save, sender=Contact)
@@ -92,7 +95,7 @@ def share_to_new_buddy(sender, instance, created, **kwargs):
     msg = get_email_with_template(
         "job_sharing",
         email_context,
-        "Indicacao de vaga",
+        _("Indicacao de vaga"),
         [instance.user_receiving_email],
     )
     msg.send()

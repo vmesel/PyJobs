@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load humanize %}
 {% load widget_tweaks %}
 {% load core_tags %}
 {%block metas%}
 <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
-<meta property="og:title" content="Encontre uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}" />
-<meta name="keywords" content="vagas para devs, vagas para desenvolvedores {{WEBSITE_WORKING_LANGUAGE}}, vagas no {{WEBSITE_NAME}}, vagas {{WEBSITE_WORKING_LANGUAGE}}"/>
-<meta property="og:locale" content="pt_BR" />
-<meta content="Olá {{USER_SUBSTANTIVE}}! Temos vagas de {{WEBSITE_WORKING_LANGUAGE}} aqui no {{WEBSITE_NAME}}. Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no {{WEBSITE_NAME}} e explore!" property="og:description"/>
+<meta property="og:title" content="{% translate 'Encontre uma vaga de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no' %} {{WEBSITE_NAME}}" />
+<meta name="keywords" content="{% translate 'vagas para devs, vagas para desenvolvedores'%} {{WEBSITE_WORKING_LANGUAGE}}, {% translate 'vagas no'%} {{WEBSITE_NAME}}, {% translate 'vagas'%} {{WEBSITE_WORKING_LANGUAGE}}'%}"/>
+<meta property="og:locale" content="{% translate 'pt_BR'%}" />
+<meta content="{% translate 'Olá'%} {{USER_SUBSTANTIVE}}! {% translate 'Temos vagas de' %} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'aqui no' %} {{WEBSITE_NAME}}. {% translate 'Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no'%} {{WEBSITE_NAME}} {% translate 'e explore!'%}" property="og:description"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="Olá {{USER_SUBSTANTIVE}}! Temos vagas de {{WEBSITE_WORKING_LANGUAGE}} aqui no {{WEBSITE_NAME}}. Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no {{WEBSITE_NAME}} e explore!" name="description"/>
-<title>Encontre sua vaga {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}</title>
-<meta content="Olá {{USER_SUBSTANTIVE}}! Temos vagas de {{WEBSITE_WORKING_LANGUAGE}} aqui no {{WEBSITE_NAME}}. Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no {{WEBSITE_NAME}} e explore!" name="twitter:description"/>
+<meta content="{% translate 'Olá'%} {{USER_SUBSTANTIVE}}! {% translate 'Temos vagas de' %} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'aqui no' %} {{WEBSITE_NAME}}. {% translate 'Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no'%} {{WEBSITE_NAME}} {% translate 'e explore!'%}" name="description"/>
+<title>{% translate 'Encontre uma vaga de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no' %} {{WEBSITE_NAME}}</title>
+<meta content="{% translate 'Olá'%} {{USER_SUBSTANTIVE}}! {% translate 'Temos vagas de' %} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'aqui no' %} {{WEBSITE_NAME}}. {% translate 'Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no'%} {{WEBSITE_NAME}} {% translate 'e explore!'%}" name="twitter:description"/>
 <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
 {%block main%}
@@ -20,7 +21,7 @@
 <section class="filtro filtro-shadow-inverse p-3 mb-1 bg-white rounded" style="margin-top:0px!important;">
     <div class="container">
         <div class="row">
-            <h2 class="">PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL</h2>
+            <h2 class="">{% translate "PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL"%}</h2>
         </div>
         <form method="get" action="{% url 'jobs' %}">
             <div class="row" style="margin-top:10px;">
@@ -44,7 +45,7 @@
             </div>
             <div class="row" style="margin-top:20px; margin-bottom:10px;">
                 <div class="col-md-12">
-                    <input type="submit" name="" value="BUSCAR" class="botao">
+                    <input type="submit" name="" value="{% translate 'BUSCAR'%}" class="botao">
                 </div>
             </div>
         </form>
@@ -59,23 +60,23 @@
                 <div class="col-md-8" style="padding-right: 0px;">
                     <div class="container">
                         <div class="row classe-da-vaga">
-                            <p>VAGA DESTACADA</p>
+                            <p>{% translate "VAGA DESTACADA"%}</p>
                         </div>
                         <div class="row">
                             <div class="col-md-6 m-0">
                                 <h3 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
                                 <div class="dados-da-vaga">
-                                    <p>Empresa: {{job.company_name}}</p>
+                                    <p>{% translate "Empresa:"%} {{job.company_name}}</p>
                                 </div>
                             </div>
                             <div class="col-md-6 m-0">
                                 <div class="row">
                                     <div class="col-6">
-                                        <p>N&iacute;vel<br/>
+                                        <p>{% translate "N&iacute;vel"%}<br/>
                                         {{job.get_job_level_display}}</p>
                                     </div>
                                     <div class="col-6">
-                                        <p>Local<br/>
+                                        <p>{% translate "Local"%}<br/>
                                         {{job.workplace|truncatechars:15}}</p>
                                     </div>
                                 </div>
@@ -85,7 +86,7 @@
                 </div>
                 <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
                     <a href="{% url 'job_view' job.pk %}?utm-source=jobs-listing">
-                        <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
+                        <input type="button" value="{% translate 'VER MAIS DETALHES'%}" class="botao vertical-center">
                     </a>
                 </div>
             </div>
@@ -104,7 +105,7 @@
 
     <div class="container">
         {% if publicly_available_jobs|length <= 0 and premium_available_jobs|length <= 0 %}
-            <h3>Nenhuma vaga encontrada...</h3>
+            <h3>{% translate "Nenhuma vaga encontrada..."%}</h3>
         {% endif %}
         {% for job in publicly_available_jobs %}
         <div class="vaga">
@@ -118,17 +119,17 @@
                             <div class="col-md-6 m-0">
                                 <h3 style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
                                 <div class="dados-da-vaga">
-                                    <p>Empresa: {{job.company_name|truncatechars:15}}</p>
+                                    <p>{% translate "Empresa:"%} {{job.company_name|truncatechars:15}}</p>
                                 </div>
                             </div>
                             <div class="col-md-6 m-0">
                                 <div class="row">
                                     <div class="col-6">
-                                        <p>N&iacute;vel<br/>
+                                        <p>{% translate "N&iacute;vel"%}<br/>
                                         {{job.get_job_level_display}}</p>
                                     </div>
                                     <div class="col-6">
-                                        <p>Local<br/>
+                                        <p>{% translate "Local"%}<br/>
                                         {{job.workplace|truncatechars:15}}</p>
                                     </div>
                                 </div>
@@ -138,7 +139,7 @@
                 </div>
                 <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
                     <a href="{% url 'job_view' job.pk %}?utm-source=jobs-listing">
-                        <input type="button" value="VER MAIS DETALHES" class="botao vertical-center">
+                        <input type="button" value="{% translate 'VER MAIS DETALHES'%}" class="botao vertical-center">
                     </a>
                 </div>
             </div>

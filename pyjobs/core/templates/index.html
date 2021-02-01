@@ -1,36 +1,39 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load humanize %}
 {% load widget_tweaks %}
 {% load core_tags %}
 {%block metas%}
 <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
-<meta property="og:title" content="Encontre uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}" />
-<meta name="keywords" content="vagas para devs, vagas para desenvolvedores {{WEBSITE_WORKING_LANGUAGE}}, vagas no {{WEBSITE_NAME}}, vagas {{WEBSITE_WORKING_LANGUAGE}}"/>
-<meta property="og:locale" content="pt_BR" />
-<meta content="Olá {{USER_SUBSTANTIVE}}! Temos vagas de {{WEBSITE_WORKING_LANGUAGE}} aqui no {{WEBSITE_NAME}}. Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no {{WEBSITE_NAME}} e explore!" property="og:description"/>
+<meta property="og:title" content="{% translate 'Encontre sua vaga'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no' %} {{WEBSITE_NAME}}" />
+<meta name="keywords" content="{% translate 'vagas para devs, vagas para desenvolvedores'%} {{WEBSITE_WORKING_LANGUAGE}}, vagas no {{WEBSITE_NAME}}, vagas {{WEBSITE_WORKING_LANGUAGE}}'%}"/>
+<meta property="og:locale" content="{% translate 'pt_BR'%}" />
+<meta content="{% translate 'Olá'%} {{USER_SUBSTANTIVE}}! {% translate 'Temos vagas de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'aqui no'%} {{WEBSITE_NAME}}. {% translate 'Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no'%} {{WEBSITE_NAME}} {% translate 'e explore!'%}" property="og:description"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="Olá {{USER_SUBSTANTIVE}}! Temos vagas de {{WEBSITE_WORKING_LANGUAGE}} aqui no {{WEBSITE_NAME}}. Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no {{WEBSITE_NAME}} e explore!" name="description"/>
-<title>Encontre sua vaga {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}</title>
-<meta content="Olá {{USER_SUBSTANTIVE}}! Temos vagas de {{WEBSITE_WORKING_LANGUAGE}} aqui no {{WEBSITE_NAME}}. Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no {{WEBSITE_NAME}} e explore!" name="twitter:description"/>
+<meta content="{% translate 'Olá'%} {{USER_SUBSTANTIVE}}! {% translate 'Temos vagas de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'aqui no'%} {{WEBSITE_NAME}}. {% translate 'Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no'%} {{WEBSITE_NAME}} {% translate 'e explore!'%}" name="description"/>
+<title>{% translate "Encontre sua vaga"%} {{WEBSITE_WORKING_LANGUAGE}} {% translate "no" %} {{WEBSITE_NAME}}</title>
+<meta content="{% translate 'Olá'%} {{USER_SUBSTANTIVE}}! {% translate 'Temos vagas de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'aqui no'%} {{WEBSITE_NAME}}. {% translate 'Além disso, temos vagas de diversos níveis, skills e remotas! Crie um perfil no'%} {{WEBSITE_NAME}} {% translate 'e explore!'%}" name="twitter:description"/>
 <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
 {%block main%}
+<section>
+</section>
     <header>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 call-to-action">
                         <h2 class="call-to-action-text-h2">
-                            Encontre aqui as melhores vagas e profissionais {{WEBSITE_WORKING_LANGUAGE}}
+                            {% translate "Encontre aqui as melhores vagas e profissionais"%} {{WEBSITE_WORKING_LANGUAGE}}
                         </h2>
                         <p class="call-to-action-text-p">
-                            {{WEBSITE_NAME}} é o maior site de profissionais {{WEBSITE_WORKING_LANGUAGE}} do Brasil. Nossos anúncios alcançam uma rede de mais de 15 mil profissionais {{WEBSITE_WORKING_LANGUAGE}}, e temos mais de 2 anos de experiência com recrutamento.
+                            {{WEBSITE_NAME}} {% translate "é o maior site de profissionais"%} {{WEBSITE_WORKING_LANGUAGE}} {% translate "do Brasil. Nossos anúncios alcançam uma rede de mais de 15 mil profissionais"%} {{WEBSITE_WORKING_LANGUAGE}}, {% translate "e temos mais de 2 anos de experiência com recrutamento."%}
                         </p>
                         <a href="{% url 'job_creation' %}">
-                            <input type="button" value="Quero Cadastrar Uma Vaga" class="botao">
+                            <input type="button" value="{% translate 'Quero Cadastrar Uma Vaga'%}" class="botao">
                         </a>
                         <p class="call-to-action-pos-botao">
-                            ou veja as <a href="#cards">vagas listadas abaixo</a>
+                            {% translate "ou veja as"%} <a href="#cards">{% translate "vagas listadas abaixo"%}</a>
                         </p>
                     </div>
                     <div class="col-lg-6 call-to-action-img mx-auto text-center">
@@ -44,7 +47,7 @@
     <section class="filtro filtro-shadow p-3 mb-1 bg-white rounded">
         <div class="container">
             <div class="row">
-                <h2 class="">PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL</h2>
+                <h2 class="">{% translate "PESQUISE AQUI A VAGA QUE MELHOR SE ENQUADRE AO SEU PERFIL"%}</h2>
             </div>
             <form method="get" action="{% url 'jobs' %}">
                 <div class="row" style="margin-top:10px;">
@@ -68,7 +71,7 @@
                 </div>
                 <div class="row" style="margin-top:20px; margin-bottom:10px;">
                     <div class="d-flex col-md-12 justify-content-center">
-                        <input  type="submit" name="" value="BUSCAR" class="botao max-width-button">
+                        <input  type="submit" name="" value="{% translate 'BUSCAR'%}" class="botao max-width-button">
                     </div>
                 </div>
             </form>
@@ -77,10 +80,10 @@
         <section class="info-cards-section">
             <div class="container">
                 <div class="row">
-                    <h2>Nossas vagas</h2>
+                    <h2>{% translate "Nossas vagas"%}</h2>
                 </div>
                 <div class="row">
-                    <p>Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se você é uma empresa e quer encontrar os melhores {{USER_SUBSTANTIVE}}s e ter sua vaga destacada na comunidade, entre em <a href="{% url 'contact' %}">contato conosco</a> e encontre aqui o profissional ideal para seu time!</p>
+                    <p>{% translate "Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se você é uma empresa e quer encontrar os melhores"%} {{USER_SUBSTANTIVE}}s {% translate "e ter sua vaga destacada na comunidade, entre em" %}  <a href="{% url 'contact' %}">{% translate "contato conosco"%}</a> {% translate "e encontre aqui o profissional ideal para seu time!"%}</p>
                 </div>
             </div>
         </section>
@@ -139,10 +142,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3>Conheça as melhores oportunidades {{WEBSITE_WORKING_LANGUAGE}}</h3>
-                        <p>Todas as oportunidades listadas no {{WEBSITE_NAME}} passaram por um processo de curadoria para garantir a melhor qualidade possível das vagas. Nossa parceria com as empresas é feita de maneira transparente e visando melhores oportunidades e condições aos desenvolvedores.</p>
+                        <h3>{% translate "Conheça as melhores oportunidades" %} {{WEBSITE_WORKING_LANGUAGE}}</h3>
+                        <p>{% translate "Todas as oportunidades listadas no" %} {{WEBSITE_NAME}} {% translate "passaram por um processo de curadoria para garantir a melhor qualidade possível das vagas. Nossa parceria com as empresas é feita de maneira transparente e visando melhores oportunidades e condições aos desenvolvedores."%}</p>
                         <a href="/jobs/">
-                            <input type="button" value="QUERO VER AS VAGAS" class="botao">
+                            <input type="button" value="{% translate 'QUERO VER AS VAGAS'%}" class="botao">
                         </a>
                     </div>
                     <div class="col-md-4">
@@ -157,7 +160,7 @@
         <section class="depoimentos-h3">
             <div class="container">
                 <div class="row">
-                    <h3>Conheça a hist&oacute;ria de nossos devs!</h3>
+                    <h3>{% translate "Conheça a hist&oacute;ria de nossos devs!" %}</h3>
                 </div>
             </div>
         </section>
@@ -178,11 +181,11 @@
         <section class="call-to-action-anuncie h-200">
             <div class="row">
                     <div class="col-lg-6 my-auto">
-                        <h3>Anuncie sua vaga aqui</h3>
+                        <h3>{% translate "Anuncie sua vaga aqui" %}</h3>
                     </div>
                     <div class="col-lg-6 my-auto">
                         <a href="{% url 'job_creation' %}">
-                            <input style="border: none;" type="button" name="" value="CADASTRAR AGORA!">
+                            <input style="border: none;" type="button" name="" value="{% translate 'CADASTRAR AGORA!'%}">
                         </a>
                     </div>
                 </div>

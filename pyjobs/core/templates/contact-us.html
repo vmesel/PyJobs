@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
 {%block main%}
@@ -6,8 +7,8 @@
         <section class="clean-block clean-form dark">
             <div class="container">
                 <div class="block-heading">
-                    <h2 class="text-info">Contato</h2>
-                    <p>Mande uma mensagem para a equipe do {{WEBSITE_NAME}} com uma sugestão, elogio ou dúvida!</p>
+                    <h2 class="text-info">{% translate "Contato"%}</h2>
+                    <p>{% translate "Mande uma mensagem para a equipe do"%} {{WEBSITE_NAME}} {% translate "com uma sugestão, elogio ou dúvida!"%}</p>
                 </div>
                 <form action="." method="post">
                   {% csrf_token %}
@@ -43,7 +44,7 @@
                   <div class="g-recaptcha" data-sitekey="6Lerz1cUAAAAAK9xC1q1Hbqpfbtb75ck26IZVRPf"></div>
                   <br>
                     <div class="form-group">
-                      <button class="btn btn-primary btn-block" type="submit">Enviar</button>
+                      <button class="btn btn-primary btn-block" type="submit">{% translate "Enviar"%}</button>
                     </div>
                 </form>
             </div>

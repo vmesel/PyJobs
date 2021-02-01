@@ -17,36 +17,41 @@ from pyjobs.settings import (
     FEEDBACK_TYPE,
 )
 from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
+from django.utils.translation import gettext_lazy as _
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    github = models.URLField(verbose_name="GitHub", blank=True, default="")
-    linkedin = models.URLField(verbose_name="LinkedIn", blank=True, default="")
-    portfolio = models.URLField(verbose_name="Portfolio", blank=True, default="")
+    github = models.URLField(verbose_name=_("GitHub"), blank=True, default="")
+    linkedin = models.URLField(verbose_name=_("LinkedIn"), blank=True, default="")
+    portfolio = models.URLField(verbose_name=_("Portfolio"), blank=True, default="")
     cellphone = models.CharField(
-        verbose_name="Telefone",
+        verbose_name=_("Telefone"),
         max_length=16,
         validators=[
             RegexValidator(
                 regex="^((?:\([1-9]{2}\)|\([1-9]{2}\) |[1-9]{2}|[1-9]{2} )(?:[2-8]|9[1-9])[0-9]{3}(?:\-[0-9]{4}| [0-9]{4}|[0-9]{4}))$",
-                message="Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen.",
+                message=_(
+                    "Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, espaços, parênteses e hífen."
+                ),
             )
         ],
     )
     state = models.IntegerField("Seu Estado", choices=STATE_CHOICES, default=27)
     salary_range = models.IntegerField(
-        "Sua Faixa Salarial Atual", choices=SALARY_RANGES, default=6
+        _("Sua Faixa Salarial Atual"), choices=SALARY_RANGES, default=6
     )
     job_level = models.IntegerField("Seu nível atual", choices=JOB_LEVELS, default=5)
     bio = models.TextField(
-        "Sua Bio",
+        _("Sua Bio"),
         default="",
-        help_text="Descreva um pouco sobre você para as empresas poderem te conhecer melhor!",
+        help_text=_(
+            "Descreva um pouco sobre você para as empresas poderem te conhecer melhor!"
+        ),
     )
     on_mailing_list = models.BooleanField("Está na mailing list", default=False)
     agree_privacy_policy = models.BooleanField(
-        "Aceitou políticas de privacidade", default=True
+        _("Aceitou políticas de privacidade"), default=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField("Skill")
@@ -58,8 +63,8 @@ class Profile(models.Model):
         return "{} {}".format(self.user.first_name, self.user.last_name)
 
     class Meta:
-        verbose_name = "Perfil"
-        verbose_name_plural = "Perfis"
+        verbose_name = _("Perfil")
+        verbose_name_plural = _("Perfis")
         ordering = ["-created_at"]
 
     objects = models.Manager.from_queryset(ProfilingQuerySet)()
@@ -76,44 +81,46 @@ class JobError(Exception):
 
 class Job(models.Model):
     title = models.CharField(
-        "Título da Vaga",
+        _("Título da Vaga"),
         max_length=10000,
         default="",
         blank=False,
-        help_text="Ex.: Desenvolvedor",
+        help_text=_("Ex.: Desenvolvedor"),
     )
     workplace = models.CharField(
-        "Local",
+        _("Local"),
         max_length=10000,
         default="",
         blank=False,
-        help_text="Ex.: Santana - São Paulo",
+        help_text=_("Ex.: Santana - São Paulo"),
     )
     company_name = models.CharField(
-        "Nome da Empresa",
+        _("Nome da Empresa"),
         max_length=10000,
         default="",
         blank=False,
-        help_text="Ex.: ACME Inc",
+        help_text=_("Ex.: ACME Inc"),
     )
     application_link = models.URLField(
-        verbose_name="Link para a Vaga",
+        verbose_name=_("Link para a Vaga"),
         blank=True,
         default="",
-        help_text="Ex.: http://goo.gl/hahaha",
+        help_text=_("Ex.: http://goo.gl/hahaha"),
     )
     company_email = models.EmailField(
-        verbose_name="Email da Empresa", blank=False, help_text="Ex.: abc@def.com"
+        verbose_name=_("Email da Empresa"), blank=False, help_text=_("Ex.: abc@def.com")
     )
     description = models.TextField(
-        "Descrição da vaga",
+        _("Descrição da vaga"),
         default="",
-        help_text="Descreva um pouco da sua empresa e da vaga, tente ser breve",
+        help_text=_("Descreva um pouco da sua empresa e da vaga, tente ser breve"),
     )
     requirements = models.TextField(
-        "Requisitos da vaga",
+        _("Requisitos da vaga"),
         default="",
-        help_text="Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java",
+        help_text=_(
+            "Descreva os requisitos da sua empresa em bullet points\n\n-Usar Git\n-Saber Java"
+        ),
     )
     premium = models.BooleanField("Premium?", default=False)
     public = models.BooleanField("Público?", default=True)
@@ -131,23 +138,23 @@ class Job(models.Model):
         null=True,
     )
     skills = models.ManyToManyField("Skill")
-    is_open = models.BooleanField("Vaga aberta", default=True)
-    is_challenging = models.BooleanField("Enviar Chall", default=False)
-    challenge = models.TextField("Challenge", blank=True, null=True)
+    is_open = models.BooleanField(_("Vaga aberta"), default=True)
+    is_challenging = models.BooleanField(_("Enviar Chall"), default=False)
+    challenge = models.TextField(_("Challenge"), blank=True, null=True)
 
-    state = models.IntegerField("Estado", choices=STATE_CHOICES, default=27)
+    state = models.IntegerField(_("Estado"), choices=STATE_CHOICES, default=27)
     salary_range = models.IntegerField(
-        "Faixa Salarial", choices=SALARY_RANGES, default=1
+        _("Faixa Salarial"), choices=SALARY_RANGES, default=1
     )
     job_level = models.IntegerField(
-        "Nível do Profissional", choices=JOB_LEVELS, default=1
+        _("Nível do Profissional"), choices=JOB_LEVELS, default=1
     )
     contract_form = models.IntegerField(
-        "Forma de contratação", choices=CONTRACT, default=1
+        _("Forma de contratação"), choices=CONTRACT, default=1
     )
-    remote = models.BooleanField("Esta vaga é remota?", default=False)
-    consultancy = models.BooleanField("Consultoria?", default=False)
-    issue_number = models.IntegerField("Issue do Github", null=True, blank=True)
+    remote = models.BooleanField(_("Esta vaga é remota?"), default=False)
+    consultancy = models.BooleanField(_("Consultoria?"), default=False)
+    issue_number = models.IntegerField(_("Issue do Github"), null=True, blank=True)
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
@@ -234,7 +241,7 @@ class JobApplication(models.Model):
     email_sent = models.BooleanField(default=False)
     email_sent_at = models.DateTimeField(blank=True, null=True)
     challenge_response_link = models.URLField(
-        "Link de resposta ao desafio", default="", blank=True, null=True
+        _("Link de resposta ao desafio"), default="", blank=True, null=True
     )
     challenge_response_at = models.DateTimeField(blank=True, null=True)
     challenge_resent = models.BooleanField(default=False)
@@ -243,26 +250,28 @@ class JobApplication(models.Model):
     output_sent = models.BooleanField(default=False)
     company_feedback = models.CharField(blank=True, null=True, max_length=3000)
     company_feedback_type = models.IntegerField(
-        "Tipo de feedback", choices=FEEDBACK_TYPE, default=5
+        _("Tipo de feedback"), choices=FEEDBACK_TYPE, default=5
     )
 
     class Meta:
         unique_together = ("user", "job")
-        verbose_name = "Job Application"
-        verbose_name_plural = "Job Applications"
+        verbose_name = _("Job Application")
+        verbose_name_plural = _("Job Applications")
 
     def __str__(self):
-        return "{} applied to {}".format(self.user, self.job)
+        return " ".join(map(str, [self.user, _("applied to"), self.job]))
 
     def feedback_type(self):
         return FEEDBACK_TYPE[self.company_feedback_type - 1][1]
 
 
 class Skill(models.Model):
-    name = models.CharField("Skill", max_length=100, default="", blank=False)
-    unique_slug = models.CharField("Slug Unica", max_length=1000, blank=True, null=True)
+    name = models.CharField(_("Skill"), max_length=100, default="", blank=False)
+    unique_slug = models.CharField(
+        _("Slug Unica"), max_length=1000, blank=True, null=True
+    )
     description = models.TextField(
-        "Descrição da skill", default="", blank=True, null=True
+        _("Descrição da skill"), default="", blank=True, null=True
     )
 
     def __str__(self):

@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load humanize %}
 {%block metas%}
 <meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
-<meta property="og:title" content="{{job.title}} em {{job.company_name}} | {{WEBSITE_NAME}}" />
+<meta property="og:title" content="{{job.title}} {% translate 'em'%} {{job.company_name}} | {{WEBSITE_NAME}}" />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:description" content="{{job.description|truncatechars:240}}}" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="{{job.description|truncatechars:240}}}" name="description"/>
 <meta name="description" content="{{job.description|truncatechars:240}}}"/>
-<title>{{job.title}} no {{WEBSITE_NAME}}</title>
+<title>{{job.title}} {% translate "no"%} {{WEBSITE_NAME}}</title>
 <meta name="twitter:description" content="{{job.description|truncatechars:250}}}"/>
 <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
@@ -20,18 +21,18 @@
     <div class="container-fluid">
         <div class="row row-breadcrumb-grande">
             <div class="col-lg-3 indicador-esquerdo">
-                <a href="/job/{{previous_job_pk}}/">Vaga Anterior</a>
+                <a href="/job/{{previous_job_pk}}/">{% translate "Vaga Anterior"%}</a>
             </div>
             <div class="col-lg-6 indicador-central">
-                <a href="{% url 'jobs' %}">Ver vagas</a>
+                <a href="{% url 'jobs' %}">{% translate "Ver vagas"%}</a>
             </div>
             <div class="col-lg-3 indicador-direito">
-                <a href="/job/{{next_job_pk}}/">Vaga Posterior</a>
+                <a href="/job/{{next_job_pk}}/">{% translate "Vaga Posterior"%}</a>
             </div>
         </div>
         <div class="row row-breadcrumb-pequeno">
             <div class="col-6 col-sm-6">
-                <a href="{% url 'jobs' %}">Ver vagas</a>
+                <a href="{% url 'jobs' %}">{% translate "Ver vagas"%}</a>
             </div>
             <div class="col-3 col-sm-3 indicador-direito-sinal">
                 <a href="/job/{{previous_job_pk}}/"><</a>
@@ -44,23 +45,23 @@
 </section>
 {% if job.is_challenging and applied %}
 <div class="alert alert-success" role="alert" style="margin-bottom:0px;">
-  Não se esqueça de responder ao desafio técnico clicando no botão abaixo!
+    {% translate "Não se esqueça de responder ao desafio técnico clicando no botão abaixo!"%}
 </div>
 {%endif%}
 {% if too_old and job.is_open %}
 <div class="alert alert-warning" role="alert" style="margin-bottom:0px;">
-  Esta vaga pode j&aacute; ter sido fechada nos &uacute;ltimos 60 dias. Confirme com a empresa sobre a disponbilidade!
+    {% translate "Esta vaga pode j&aacute; ter sido fechada nos &uacute;ltimos 60 dias. Confirme com a empresa sobre a disponbilidade!"%}
 </div>
 {%endif%}
 <section class="detalhes-vaga">
     <div class="container">
         <div class="top-breadcrumb-nav">
-            <a href="/">Home</a> > <a href="{% url 'jobs' %}">Vagas</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
+            <a href="/">Home</a> > <a href="{% url 'jobs' %}">{% translate "Vagas"%}</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
         </div>
         <a href="/job/{{job.pk}}">
             <h2>{{job.title}}</h2>
         </a>
-        <h3 style="font-size:18px;">Vaga Postada: <span>{{job.created_at|naturalday}}</span></h3>
+        <h3 style="font-size:18px;">{% translate "Vaga Postada:"%} <span>{{job.created_at|naturalday}}</span></h3>
 
         <div class="row">
             <div class="col-lg-4 botoes-detalhes">
@@ -68,36 +69,36 @@
                   {% if applied %}
                     {% if job.is_challenging %}
                         <a href="{% url 'job_application_challenge_submission' job.pk %}">
-                            <button class="botao" type="button">Clique aqui e preencha o desafio técnico!</button>
+                            <button class="botao" type="button">{% translate "Clique aqui e preencha o desafio técnico!"%}</button>
                         </a>
                     {% else %}
-                        <button class="botao" type="button">Você já aplicou a esta vaga!</button>
+                        <button class="botao" type="button">{% translate "Você já aplicou a esta vaga!"%}</button>
                     {% endif %}
                   {%else%}
                     {% if job.is_open %}
                         {% if job.application_link %}
                             <a href="{{job.application_link}}">
-                                <button class="botao" type="button">Candidate-se para esta vaga pelo link</button>
+                                <button class="botao" type="button">{% translate "Candidate-se para esta vaga pelo link"%}</button>
                             </a>
                         {%else%}
                         <form action="." method="post">
                             {% csrf_token %}
-                            <button class="botao" type="submit">Candidate-se para esta vaga pelo {{WEBSITE_NAME}}</button>
+                            <button class="botao" type="submit">{% translate "Candidate-se para esta vaga pelo"%} {{WEBSITE_NAME}}</button>
                         </form>
                         {%endif%}
                     {% else %}
-                    <button class="botao" disabled>Vaga já fechada pela empresa anunciante</button>
+                    <button class="botao" disabled>{% translate "Vaga já fechada pela empresa anunciante"%}</button>
                     {% endif %}
                   {% endif %}
                 {%else%}
                     <a href="{% url 'login' %}?next={{ job.get_absolute_url }}">
-                        <button class="botao" type="button" id="application-status" style="text-decoration: underline;">Entre e Aplique a vaga!</button>
+                        <button class="botao" type="button" id="application-status" style="text-decoration: underline;">{% translate "Entre e Aplique a vaga!"%}</button>
                     </a>
                 {% endif %}
             </div>
             <div class="col-lg-4 botoes-detalhes">
                 <a href="{% url 'sharing_job_view' job.pk %}">
-                    <input type="button" value="Indique {{USER_SUBSTANTIVE}}s!" class="botao" style="background-color: #0069D9!important;font-size:12px;">
+                    <input type="button" value="{% translate 'Indique'%} {{USER_SUBSTANTIVE}}s!" class="botao" style="background-color: #0069D9!important;font-size:12px;">
                 </a>
             </div>
             <div class="col-lg-4 botoes-redes-sociais">
@@ -123,17 +124,17 @@
         </div>
         <div class="row" style="margin-top:40px;">
             <ul>
-                <li>Empresa: {{job.company_name}}</li>
-                <li>Faixa salarial: {{job.get_salary_range_display}}</li>
-                <li>Estado: {{job.get_state_display}}</li>
-                <li>Local da vaga: {{job.workplace}}</li>
-                <li>Nível: {{job.get_job_level_display}}</li>
-                <li>Aceita Remoto?: {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
-                <li>Tipo de contrata&ccedil;&atilde;o: {{job.get_contract_form_display}}</li>
+                <li>{% translate "Empresa:"%} {{job.company_name}}</li>
+                <li>{% translate "Faixa salarial:"%} {{job.get_salary_range_display}}</li>
+                <li>{% translate "Estado:"%} {{job.get_state_display}}</li>
+                <li>{% translate "Local da vaga:"%} {{job.workplace}}</li>
+                <li>{% translate "Nível:"%} {{job.get_job_level_display}}</li>
+                <li>{% translate "Aceita Remoto?:"%} {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
+                <li>{% translate "Tipo de contrata&ccedil;&atilde;o:"%} {{job.get_contract_form_display}}</li>
             </ul>
         </div>
         <div class="row" style="margin-top:40px; padding: 20px 0 10px 20px; display: block; word-wrap: break-word;">
-                <h3>Descrição da vaga</h3>
+                <h3>{% translate "Descrição da vaga"%}</h3>
         </div>
         <div class="row" style="margin-top:15px; padding: 20px 0 10px 20px; display: block; word-wrap: break-word;">
                 {% autoescape off %}
@@ -141,7 +142,7 @@
                 {% endautoescape %}
         </div>
         <div class="row" style="margin-top:40px; padding: 20px 0 10px 20px;">
-            <h3>Requisitos</h3>
+            <h3>{% translate "Requisitos"%}</h3>
         </div>
         <div class="row" style="margin-top:15px; padding: 20px 0 10px 20px; display: block; word-wrap: break-word;">
             {% autoescape off %}
@@ -150,7 +151,7 @@
         </div>
     {% if similar_jobs %}
         <div class="row" style="margin-top:40px; padding: 20px 0 10px 20px;">
-            <h3>Confira vagas similares</h3>
+            <h3>{% translate "Confira vagas similares"%}</h3>
         </div>
         <div class="row">
             <ul>

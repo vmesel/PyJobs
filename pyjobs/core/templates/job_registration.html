@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load widget_tweaks %}
 {% load static %}
 {% block title %}
-Cadastre uma vaga - {{WEBSITE_NAME}}
+{% translate "Cadastre uma vaga - {{WEBSITE_NAME}}"%}
 {% endblock %}
 {%block metas%}
 <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
-<meta property="og:title" content="Poste uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}" />
-<meta property="og:locale" content="pt_BR" />
-<meta content="Poste uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você poderá encontrar os melhores {{USER_SUBSTANTIVE}}s." property="og:description"/>
+<meta property="og:title" content="{% translate 'Poste uma vaga de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no'%} {{WEBSITE_NAME}}" />
+<meta property="og:locale" content="{% translate 'pt_BR'%}" />
+<meta content="{% translate 'Poste uma vaga de' %} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no' %} {{WEBSITE_NAME}}, {% translate 'assim você poderá encontrar os melhores' %} {{USER_SUBSTANTIVE}}s." property="og:description"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta content="Poste uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você poderá encontrar os melhores {{USER_SUBSTANTIVE}}s." name="description"/>
+<meta content="{% translate 'Poste uma vaga de' %} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no' %} {{WEBSITE_NAME}}, {% translate 'assim você poderá encontrar os melhores' %} {{USER_SUBSTANTIVE}}s." name="description"/>
 <title>Poste uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}</title>
-<meta content="Poste uma vaga de {{WEBSITE_WORKING_LANGUAGE}} no {{WEBSITE_NAME}}, assim você poderá encontrar os melhores {{USER_SUBSTANTIVE}}s." name="twitter:description"/>
+<meta content="{% translate 'Poste uma vaga de'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'no' %} {{WEBSITE_NAME}}, {% translate 'assim você poderá encontrar os melhores'%} {{USER_SUBSTANTIVE}}s." name="twitter:description"/>
 <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
 {%block main%}
@@ -20,8 +21,8 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
     <div class="container container-cadastro-vaga">
         <div class="row row-titulo">
             <div class="col-md-12">
-                <h2>Cadastre sua vaga e encontre o profissional ideal.</h2>
-                <span>Complete as informações abaixo com riqueza de detalhes, isso ajudará os profissionais a se candidatarem ao perfil ideal para a vaga.</span>
+                <h2>{% translate "Cadastre sua vaga e encontre o profissional ideal."%}</h2>
+                <span>{% translate "Complete as informações abaixo com riqueza de detalhes, isso ajudará os profissionais a se candidatarem ao perfil ideal para a vaga."%}</span>
                 <hr>
             </div>
         </div>
@@ -30,10 +31,10 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
         {% csrf_token %}
         <div class="container container-cadastro-vaga">
             <div class="row row-titulo-etapa" style="margin-bottom: 15px;">
-                <h4>INFORMAÇÕES B&Aacute;SICAS DA VAGA</h4>
+                <h4>{% translate "INFORMAÇÕES B&Aacute;SICAS DA VAGA"%}</h4>
             </div>
             <div class="row">
-                <p>Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es básicas sobre a vaga, como título, n&iacute;vel de senioridade e o nome da sua empresa</p>
+                <p>{% translate "Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es básicas sobre a vaga, como título, n&iacute;vel de senioridade e o nome da sua empresa"%}</p>
             </div>
             <div class="row">
                 <div class="col-md-8">
@@ -59,7 +60,7 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
                 </div>
             </div>
             <div class="row row-titulo-etapa">
-                    <h4>LOCALIZA&Ccedil;&Atilde;O</h4>
+                    <h4>{% translate "LOCALIZA&Ccedil;&Atilde;O"%}</h4>
             </div>
             <div class="row">
                 <div class="col-md-6 filtro-form-item-select">
@@ -77,12 +78,12 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
                 <div class="col-md-12">
                     <br>
                     {{new_job_form.remote}}
-                    <span>Vaga permite trabalho remoto</span>
+                    <span>{% translate "Vaga permite trabalho remoto"%}</span>
                 </div>
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa">
-                <h4>REMUNERA&Ccedil;&Atilde;O</h4>
+                <h4>{% translate "REMUNERA&Ccedil;&Atilde;O"%}</h4>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -94,7 +95,7 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa">
-                <h4>TIPO DE CONTRATO</h4>
+                <h4>{% translate "TIPO DE CONTRATO"%}</h4>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -106,10 +107,10 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa">
-                <h4>REQUISITOS</h4>
+                <h4>{% translate "REQUISITOS"%}</h4>
             </div>
             <div class="row">
-                <p>Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es sobre os requisitos da vaga. Recomendamos descrever os requisitos conforme o que voc&ecirc;s utilizam na empresa.</p>
+                <p>{% translate "Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es sobre os requisitos da vaga. Recomendamos descrever os requisitos conforme o que voc&ecirc;s utilizam na empresa."%}</p>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -119,10 +120,10 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa">
-                <h4>DESCRI&Ccedil;&Atilde;O</h4>
+                <h4>{% translate "DESCRI&Ccedil;&Atilde;O"%}</h4>
             </div>
             <div class="row">
-                <p>Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es sobre a descri&ccedil;&atilde;o da vaga! Recomendamos que preencha sobre como &eacute; a empresa e como &eacute; a atua&ccedil;&atilde;o nessa vaga</p>
+                <p>{% translate "Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es sobre a descri&ccedil;&atilde;o da vaga! Recomendamos que preencha sobre como &eacute; a empresa e como &eacute; a atua&ccedil;&atilde;o nessa vaga"%}</p>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -132,7 +133,7 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa">
-                <h4>SKILLS</h4>
+                <h4>{% translate "SKILLS"%}</h4>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -141,7 +142,7 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa" style="margin-bottom: 15px;">
-                <h4>DADOS PARA CONTATO</h4>
+                <h4>{% translate "DADOS PARA CONTATO"%}</h4>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -161,23 +162,23 @@ Cadastre uma vaga - {{WEBSITE_NAME}}
             </div>
             <hr style="margin-top:40px;">
             <div class="row row-titulo-etapa">
-                <h4>DÊ UM BOOST EM SUA VAGA! (Extras)</h4>
+                <h4>{% translate "DÊ UM BOOST EM SUA VAGA! (Extras)"%}</h4>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     {% render_field new_job_form.challenge_interested %}
-                    <span>Eu quero aplicar testes técnicos através da ferramenta automatizada do {{WEBSITE_NAME}}.</span>
+                    <span>{% translate "Eu quero aplicar testes técnicos através da ferramenta automatizada do"%} {{WEBSITE_NAME}}.</span>
                 </div>
             </div>
             <div class="row" style="margin-top:15px;">
                 <div class="col-md-12">
                     {% render_field new_job_form.ad_interested %}
-                    <span>Eu desejo ter acesso aos serviços do {{WEBSITE_NAME}} e ao clube de profissionais exclusivos.</span>
+                    <span>{% translate "Eu desejo ter acesso aos serviços do"%} {{WEBSITE_NAME}} {% translate "e ao clube de profissionais exclusivos."%}</span>
                 </div>
             </div>
             <hr style="margin-top:40px;">
             <div class="row" style="padding-bottom: 20px;">
-                <input type="submit" name="" value="CADASTRE MINHA VAGA, {{WEBSITE_NAME}}!" class="botao">
+                <input type="submit" name="" value="{% translate 'CADASTRE MINHA VAGA, '%} {{WEBSITE_NAME}}!" class="botao">
             </div>
         </div>
     </form>

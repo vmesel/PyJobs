@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load humanize %}
 {% block title %}
@@ -13,7 +14,7 @@ Conheça nossos parceiros
             <div class="container">
 
                 <div class="block-heading">
-                    <h1 class="text-info">Nossos parceiros</h1>
+                    <h1 class="text-info">{% translate "Nossos parceiros"%}</h1>
                 </div>
 
                 <div class="block-content">
@@ -35,12 +36,12 @@ Conheça nossos parceiros
                         </div>
                         <div class="answer">
                             <a href="{{partner.company_address}}">
-                                <input type="button" value="Conheça a empresa" class="btn btn-success">
+                                <input type="button" value="{% translate 'Conheça a empresa'%}" class="btn btn-success">
                             </a>
                         </div>
                         <div class="answer">
                             {% if partner.related_jobs.all %}
-                            <h4>Vagas</h4>
+                            <h4>{% translate "Vagas" %}</h4>
                                 {%for job in partner.related_jobs.all%}
                                     <a href="{% url 'job_view' job.pk %}">
                                         <span class="badge badge-pill badge-primary">{{job.title}}</span>

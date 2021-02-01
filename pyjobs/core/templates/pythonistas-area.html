@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load widget_tweaks %}
 {%block main%}
 <section class="detalhes-vaga">
     <div class="container">
-        <h2>Área do {{USER_SUBSTANTIVE}}</h2>
-        <h4>Atualize seu cadastro!</h4>
+        <h2>{% translate "Área do" %} {{USER_SUBSTANTIVE}}</h2>
+        <h4>{% translate "Atualize seu cadastro!" %}</h4>
         <a href="{% url 'change_info' %}">
-          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Atualizar seu Perfil</button>
+          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">{% translate "Atualizar seu Perfil"%}</button>
         </a>
         <a href="{% url 'change_password' %}">
-          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Atualizar sua senha</button>
+          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">{% translate "Atualizar sua senha"%}</button>
         </a>
         <a href="{% url 'applied_to_info' %}">
-          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">Veja os jobs que você aplicou</button>
+          <button class="botao btn btn-primary" type="button" style="height:75px;width:100%;margin-top:25px;">{% translate "Veja os jobs que você aplicou"%}</button>
         </a>
         <a href="/">
-          <button class="botao btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">Visualizar Vagas</button>
+          <button class="botao btn btn-success" type="button" style="height:75px;width:100%;margin-top:25px;">{% translate "Visualizar Vagas"%}</button>
         </a>
     </div>
 </section>
