@@ -1,5 +1,6 @@
 import textwrap
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -25,10 +26,10 @@ def generate_thumbnail(job):
 
     draw = ImageDraw.Draw(im)
 
-    w, _ = draw.textsize("Nova Oportunidade:", font=font_med_cntr)
+    w, _ = draw.textsize(_("Nova Oportunidade:"), font=font_med_cntr)
     draw.text(
         ((1280 - w) / 2, 90),
-        text="Nova Oportunidade:",
+        text=_("Nova Oportunidade:"),
         fill="white",
         font=font_med_cntr,
     )

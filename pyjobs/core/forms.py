@@ -156,7 +156,7 @@ class RegisterForm(UserCreationForm):
 
 class EditProfileForm(forms.ModelForm):
     email = forms.EmailField(
-        label="Seu e-mail",
+        label=_("Seu e-mail"),
         widget=forms.TextInput(attrs={"placeholder": _("seu-email@atualizado.com")}),
         required=False,
     )
