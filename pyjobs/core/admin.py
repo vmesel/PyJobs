@@ -7,6 +7,8 @@ from pyjobs.core.models import (
     JobApplication,
     Profile,
     Skill,
+    Country,
+    Currency
 )
 from pyjobs.marketing.triggers import (
     send_offer_email_template,
@@ -121,3 +123,5 @@ admin.site.register(Job, JobAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(JobApplication, JobApplicationAdmin)
 admin.site.register(Skill)
+admin.site.register(Currency)
+admin.site.register(Country)

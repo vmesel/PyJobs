@@ -26,24 +26,26 @@ def generate_thumbnail(job):
 
     draw = ImageDraw.Draw(im)
 
-    w, _ = draw.textsize(_("Nova Oportunidade:"), font=font_med_cntr)
+    w, nothing = draw.textsize(str(_("Nova Oportunidade:")), font=font_med_cntr)
     draw.text(
         ((1280 - w) / 2, 90),
-        text=_("Nova Oportunidade:"),
+        text=str(_("Nova Oportunidade:")),
         fill="white",
         font=font_med_cntr,
     )
 
     offset = 225
     for line in textwrap.wrap(job.title, width=25):
-        w, _ = draw.textsize(line, font=font_bold_cntr)
+        w, nothing = draw.textsize(line, font=font_bold_cntr)
         draw.text(((1280 - w) / 2, offset), line, font=font_bold_cntr)
         offset += font_bold_cntr.getsize(line)[1]
 
-    w, _ = draw.textsize("Via {}".format(settings.WEBSITE_NAME), font=font_med_cntr)
+    w, nothing = draw.textsize(
+        " ".join([str(_("Via")), settings.WEBSITE_NAME]), font=font_med_cntr
+    )
     draw.text(
         ((1280 - w) / 2, 500),
-        text="Via {}".format(settings.WEBSITE_NAME),
+        text=" ".join([str(_("Via")), settings.WEBSITE_NAME]),
         fill="white",
         font=font_med_cntr,
     )

@@ -44,6 +44,8 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}" />
     {% endblock metas%}
+    <push data-push-subscribe-label="{% translate 'Inscrever no Push' %}" id="push-subscribe"></pushsub>
+    <push data-push-unsubscribe-label="{% translate 'Desinscrever no Push' %}" id="push-unsubscribe"></pushunsub>
     <script src="{% url 'javascript-catalog' %}"></script>
     {% block metas_seo %}
     {% endblock metas_seo %}

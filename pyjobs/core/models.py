@@ -21,15 +21,21 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Currency(models.Model):
-    name = models.CharField(_("Nome da Moeda"), max_length=300, blank=False, help_text=_("Ex.: Euro"))
-    slug = models.CharField(_("Abreviação"), max_length=300, blank=False, help_text=_("Ex.: EUR"))
+    name = models.CharField(
+        _("Nome da Moeda"), max_length=300, blank=False, help_text=_("Ex.: Euro")
+    )
+    slug = models.CharField(
+        _("Abreviação"), max_length=300, blank=False, help_text=_("Ex.: EUR")
+    )
 
     def __str__(self):
         return self.slug
 
 
 class Country(models.Model):
-    name = models.CharField(_("Nome do País"), max_length=300, blank=False, help_text=_("Ex.: Brasil"))
+    name = models.CharField(
+        _("Nome do País"), max_length=300, blank=False, help_text=_("Ex.: Brasil")
+    )
 
     def __str__(self):
         return self.name

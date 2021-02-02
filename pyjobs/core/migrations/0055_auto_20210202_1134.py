@@ -3,6 +3,7 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+
 def create_country_and_currency(apps, schema_editor):
     db_alias = schema_editor.connection.alias
     Country = apps.get_model("core", "Country")
@@ -15,44 +16,117 @@ def create_country_and_currency(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0054_skill_description'),
+        ("core", "0054_skill_description"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Country',
+            name="Country",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Ex.: Brasil', max_length=300, verbose_name='Nome do País')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Ex.: Brasil",
+                        max_length=300,
+                        verbose_name="Nome do País",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Currency',
+            name="Currency",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Ex.: Euro', max_length=300, verbose_name='Nome da Moeda')),
-                ('slug', models.CharField(help_text='Ex.: EUR', max_length=300, verbose_name='Abreviação')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Ex.: Euro",
+                        max_length=300,
+                        verbose_name="Nome da Moeda",
+                    ),
+                ),
+                (
+                    "slug",
+                    models.CharField(
+                        help_text="Ex.: EUR", max_length=300, verbose_name="Abreviação"
+                    ),
+                ),
             ],
         ),
         migrations.AlterField(
-            model_name='job',
-            name='salary_range',
-            field=models.IntegerField(choices=[(1, '0,00 - 1.000,00'), (2, '1.000,01 - 3.000,00'), (3, '3.000,01 - 6.000,00'), (4, '6.000,01 - 10.000,00'), (5, '10.000,01 - 13.000,00'), (6, '13.000,01 - 16.000,00'), (7, '16.000,01 - 19.000,00'), (8, '19.000,01 - 21.000,00'), (9, '21.000,01 - +'), (10, 'A combinar')], default=1, verbose_name='Faixa Salarial'),
+            model_name="job",
+            name="salary_range",
+            field=models.IntegerField(
+                choices=[
+                    (1, "0,00 - 1.000,00"),
+                    (2, "1.000,01 - 3.000,00"),
+                    (3, "3.000,01 - 6.000,00"),
+                    (4, "6.000,01 - 10.000,00"),
+                    (5, "10.000,01 - 13.000,00"),
+                    (6, "13.000,01 - 16.000,00"),
+                    (7, "16.000,01 - 19.000,00"),
+                    (8, "19.000,01 - 21.000,00"),
+                    (9, "21.000,01 - +"),
+                    (10, "A combinar"),
+                ],
+                default=1,
+                verbose_name="Faixa Salarial",
+            ),
         ),
         migrations.AlterField(
-            model_name='profile',
-            name='salary_range',
-            field=models.IntegerField(choices=[(1, '0,00 - 1.000,00'), (2, '1.000,01 - 3.000,00'), (3, '3.000,01 - 6.000,00'), (4, '6.000,01 - 10.000,00'), (5, '10.000,01 - 13.000,00'), (6, '13.000,01 - 16.000,00'), (7, '16.000,01 - 19.000,00'), (8, '19.000,01 - 21.000,00'), (9, '21.000,01 - +'), (10, 'A combinar')], default=6, verbose_name='Sua Faixa Salarial Atual'),
+            model_name="profile",
+            name="salary_range",
+            field=models.IntegerField(
+                choices=[
+                    (1, "0,00 - 1.000,00"),
+                    (2, "1.000,01 - 3.000,00"),
+                    (3, "3.000,01 - 6.000,00"),
+                    (4, "6.000,01 - 10.000,00"),
+                    (5, "10.000,01 - 13.000,00"),
+                    (6, "13.000,01 - 16.000,00"),
+                    (7, "16.000,01 - 19.000,00"),
+                    (8, "19.000,01 - 21.000,00"),
+                    (9, "21.000,01 - +"),
+                    (10, "A combinar"),
+                ],
+                default=6,
+                verbose_name="Sua Faixa Salarial Atual",
+            ),
         ),
         migrations.RunPython(create_country_and_currency),
         migrations.AddField(
-            model_name='job',
-            name='country',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='core.country'),
+            model_name="job",
+            name="country",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="core.country",
+            ),
         ),
         migrations.AddField(
-            model_name='job',
-            name='currency',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='core.currency'),
+            model_name="job",
+            name="currency",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="core.currency",
+            ),
         ),
     ]

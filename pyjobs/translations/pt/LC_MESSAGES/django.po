@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 12:03-0300\n"
+"POT-Creation-Date: 2021-02-02 16:04-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,6 +72,10 @@ msgstr ""
 
 #: pyjobs/core/forms.py:120
 msgid "Ao clicar, você aceita nossa política de privacidade"
+msgstr ""
+
+#: pyjobs/core/forms.py:159
+msgid "Seu e-mail"
 msgstr ""
 
 #: pyjobs/core/forms.py:160
@@ -383,82 +387,91 @@ msgstr ""
 msgid "Vagas de Emprego %(WEBSITE_WORKING_LANGUAGE)s"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:81
+#: pyjobs/core/templates/base.html:47
+msgid "Inscrever no Push"
+msgstr ""
+
+#: pyjobs/core/templates/base.html:48
+msgid "Desinscrever no Push"
+msgstr ""
+
+#: pyjobs/core/templates/base.html:83
 msgid "Se inscreva em nosso push!"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:120
+#: pyjobs/core/templates/base.html:122
 msgid "Home"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:123 pyjobs/core/templates/base.html:191
-#: pyjobs/core/templates/base.html:192 pyjobs/core/templates/base.html:193
+#: pyjobs/core/templates/base.html:125 pyjobs/core/templates/base.html:193
+#: pyjobs/core/templates/base.html:194 pyjobs/core/templates/base.html:195
 #: pyjobs/core/templates/job_details.html:59
 #: pyjobs/partners/templates/partners.html:44
 msgid "Vagas"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:127 pyjobs/core/templates/base.html:183
-#: pyjobs/core/templates/base.html:200 pyjobs/core/templates/login.html:66
+#: pyjobs/core/templates/base.html:129 pyjobs/core/templates/base.html:185
+#: pyjobs/core/templates/base.html:202 pyjobs/core/templates/login.html:66
+#: pyjobs/core/templates/registration/login.html:66
 msgid "Cadastre-se"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:132
+#: pyjobs/core/templates/base.html:134
 msgid "Logar"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:139
+#: pyjobs/core/templates/base.html:141
 #, python-format
 msgid " Área do %(USER_SUBSTANTIVE)s "
 msgstr ""
 
-#: pyjobs/core/templates/base.html:142
+#: pyjobs/core/templates/base.html:144
 msgid "Meu painel"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:143
+#: pyjobs/core/templates/base.html:145
 msgid "Logout"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:150 pyjobs/core/templates/base.html:199
+#: pyjobs/core/templates/base.html:152 pyjobs/core/templates/base.html:201
 msgid "Cadastre uma vaga"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:159
+#: pyjobs/core/templates/base.html:161
 msgid "Aceitar cookies"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:160
+#: pyjobs/core/templates/base.html:162
 msgid "Rejeitar"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:161
+#: pyjobs/core/templates/base.html:163
 msgid ""
 "Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e "
 "analisar o tráfego do site."
 msgstr ""
 
-#: pyjobs/core/templates/base.html:162
+#: pyjobs/core/templates/base.html:164
 msgid "Leia mais sobre nossa politica de privacidade"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:181
+#: pyjobs/core/templates/base.html:183
 msgid "Login"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:182
+#: pyjobs/core/templates/base.html:184
 msgid "Nossos serviços"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:184
+#: pyjobs/core/templates/base.html:186
 msgid "Pol&iacute;tica de privacidade"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:190
+#: pyjobs/core/templates/base.html:192
 msgid "Ver Vagas"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:197
+#: pyjobs/core/templates/base.html:199
 msgid "CADASTRE-SE"
 msgstr ""
 
@@ -1349,22 +1362,27 @@ msgid "QUERO VER OUTRAS VAGAS DE"
 msgstr ""
 
 #: pyjobs/core/templates/login.html:31
+#: pyjobs/core/templates/registration/login.html:31
 msgid "Utilize seu usuário cadastrado (não seu e-mail) para se logar."
 msgstr ""
 
 #: pyjobs/core/templates/login.html:38
+#: pyjobs/core/templates/registration/login.html:38
 msgid "Seu usuário e senha estão incorretos."
 msgstr ""
 
 #: pyjobs/core/templates/login.html:57
+#: pyjobs/core/templates/registration/login.html:57
 msgid "Ishe... Esqueci minha senha. E agora? Aqui está nosso"
 msgstr ""
 
 #: pyjobs/core/templates/login.html:57
+#: pyjobs/core/templates/registration/login.html:57
 msgid "Reset de Senha"
 msgstr ""
 
 #: pyjobs/core/templates/login.html:61
+#: pyjobs/core/templates/registration/login.html:61
 msgid "Entrar"
 msgstr ""
 
@@ -1554,6 +1572,10 @@ msgid ""
 "Para empresas que não são necessariamente do meio de TI, nós ajudamos a "
 "cuidar do processo de seleção do profissional, desde o primeiro "
 "<i>profiling</i> da vaga até a contratação do funcionário."
+msgstr ""
+
+#: pyjobs/core/utils.py:29 pyjobs/core/utils.py:32
+msgid "Nova Oportunidade:"
 msgstr ""
 
 #: pyjobs/core/views.py:251

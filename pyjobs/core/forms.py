@@ -56,7 +56,7 @@ class JobForm(CustomModelForm):
             "ad_interested",
             "contract_form",
             "currency",
-            "country"
+            "country",
         ]
         widgets = {"skills": Select2MultipleWidget}
 

@@ -52,7 +52,7 @@ urlpatterns += i18n_patterns(
         ),
         name="password_reset",
     ),
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    url(r"^jsi18n/$", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     prefix_default_language=False,
 )
 

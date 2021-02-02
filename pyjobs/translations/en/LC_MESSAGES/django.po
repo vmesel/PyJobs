@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 12:03-0300\n"
+"POT-Creation-Date: 2021-02-02 16:04-0300\n"
 "PO-Revision-Date: 2021-02-02 12:04-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -73,6 +73,12 @@ msgstr "When you click, you accept our mailing list terms"
 #: pyjobs/core/forms.py:120
 msgid "Ao clicar, você aceita nossa política de privacidade"
 msgstr "When you click, you accept our privacy policy terms"
+
+#: pyjobs/core/forms.py:159
+#, fuzzy
+#| msgid "Lista de e-mail"
+msgid "Seu e-mail"
+msgstr "Mailing List"
 
 #: pyjobs/core/forms.py:160
 msgid "seu-email@atualizado.com"
@@ -400,56 +406,65 @@ msgstr ""
 msgid "Vagas de Emprego %(WEBSITE_WORKING_LANGUAGE)s"
 msgstr "%(WEBSITE_WORKING_LANGUAGE)s Jobs"
 
-#: pyjobs/core/templates/base.html:81
+#: pyjobs/core/templates/base.html:47
+msgid "Inscrever no Push"
+msgstr "Subscribe"
+
+#: pyjobs/core/templates/base.html:48
+msgid "Desinscrever no Push"
+msgstr "Unsubscribe"
+
+#: pyjobs/core/templates/base.html:83
 msgid "Se inscreva em nosso push!"
 msgstr "Get our push notifications!"
 
-#: pyjobs/core/templates/base.html:120
+#: pyjobs/core/templates/base.html:122
 msgid "Home"
 msgstr "Home"
 
-#: pyjobs/core/templates/base.html:123 pyjobs/core/templates/base.html:191
-#: pyjobs/core/templates/base.html:192 pyjobs/core/templates/base.html:193
+#: pyjobs/core/templates/base.html:125 pyjobs/core/templates/base.html:193
+#: pyjobs/core/templates/base.html:194 pyjobs/core/templates/base.html:195
 #: pyjobs/core/templates/job_details.html:59
 #: pyjobs/partners/templates/partners.html:44
 msgid "Vagas"
 msgstr "Jobs"
 
-#: pyjobs/core/templates/base.html:127 pyjobs/core/templates/base.html:183
-#: pyjobs/core/templates/base.html:200 pyjobs/core/templates/login.html:66
+#: pyjobs/core/templates/base.html:129 pyjobs/core/templates/base.html:185
+#: pyjobs/core/templates/base.html:202 pyjobs/core/templates/login.html:66
+#: pyjobs/core/templates/registration/login.html:66
 msgid "Cadastre-se"
 msgstr "Sign Up"
 
-#: pyjobs/core/templates/base.html:132
+#: pyjobs/core/templates/base.html:134
 msgid "Logar"
 msgstr "Login"
 
-#: pyjobs/core/templates/base.html:139
+#: pyjobs/core/templates/base.html:141
 #, python-format
 msgid " Área do %(USER_SUBSTANTIVE)s "
 msgstr " %(USER_SUBSTANTIVE)s Area "
 
-#: pyjobs/core/templates/base.html:142
+#: pyjobs/core/templates/base.html:144
 msgid "Meu painel"
 msgstr "My Dashboard"
 
-#: pyjobs/core/templates/base.html:143
+#: pyjobs/core/templates/base.html:145
 msgid "Logout"
 msgstr "Logout"
 
-#: pyjobs/core/templates/base.html:150 pyjobs/core/templates/base.html:199
+#: pyjobs/core/templates/base.html:152 pyjobs/core/templates/base.html:201
 msgid "Cadastre uma vaga"
 msgstr "Post a job"
 
-#: pyjobs/core/templates/base.html:159
+#: pyjobs/core/templates/base.html:161
 msgid "Aceitar cookies"
 msgstr "Accept Cookies"
 
-#: pyjobs/core/templates/base.html:160
+#: pyjobs/core/templates/base.html:162
 msgid "Rejeitar"
 msgstr "Reject"
 
-#: pyjobs/core/templates/base.html:161
+#: pyjobs/core/templates/base.html:163
 msgid ""
 "Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e "
 "analisar o tráfego do site."
@@ -457,27 +472,27 @@ msgstr ""
 "We use proprietary and third-party cookies to enhance our content for users "
 "and to analyze website traffic."
 
-#: pyjobs/core/templates/base.html:162
+#: pyjobs/core/templates/base.html:164
 msgid "Leia mais sobre nossa politica de privacidade"
 msgstr "Read more about our Privacy Policy"
 
-#: pyjobs/core/templates/base.html:181
+#: pyjobs/core/templates/base.html:183
 msgid "Login"
 msgstr "Login"
 
-#: pyjobs/core/templates/base.html:182
+#: pyjobs/core/templates/base.html:184
 msgid "Nossos serviços"
 msgstr "Our Services"
 
-#: pyjobs/core/templates/base.html:184
+#: pyjobs/core/templates/base.html:186
 msgid "Pol&iacute;tica de privacidade"
 msgstr "Privacy Policy"
 
-#: pyjobs/core/templates/base.html:190
+#: pyjobs/core/templates/base.html:192
 msgid "Ver Vagas"
 msgstr "Discover more Jobs"
 
-#: pyjobs/core/templates/base.html:197
+#: pyjobs/core/templates/base.html:199
 msgid "CADASTRE-SE"
 msgstr "SIGN-UP"
 
@@ -1448,22 +1463,27 @@ msgid "QUERO VER OUTRAS VAGAS DE"
 msgstr "I WANT TO SEE OTHER JOBS WITH"
 
 #: pyjobs/core/templates/login.html:31
+#: pyjobs/core/templates/registration/login.html:31
 msgid "Utilize seu usuário cadastrado (não seu e-mail) para se logar."
 msgstr "Use your username (not your e-mail) to sign in."
 
 #: pyjobs/core/templates/login.html:38
+#: pyjobs/core/templates/registration/login.html:38
 msgid "Seu usuário e senha estão incorretos."
 msgstr "Your user or password is incorrect."
 
 #: pyjobs/core/templates/login.html:57
+#: pyjobs/core/templates/registration/login.html:57
 msgid "Ishe... Esqueci minha senha. E agora? Aqui está nosso"
 msgstr "Oops… Forgot my password!? Here is our"
 
 #: pyjobs/core/templates/login.html:57
+#: pyjobs/core/templates/registration/login.html:57
 msgid "Reset de Senha"
 msgstr "Password Reset"
 
 #: pyjobs/core/templates/login.html:61
+#: pyjobs/core/templates/registration/login.html:61
 msgid "Entrar"
 msgstr "Sign In"
 
@@ -1686,6 +1706,12 @@ msgstr ""
 "For companies that are not necessarily from the IT environment, we help to "
 "take care of the professional selection process, from the first "
 "<I>profiling</I> of the vacancy to the hiring of the employee."
+
+#: pyjobs/core/utils.py:29 pyjobs/core/utils.py:32
+#, fuzzy
+#| msgid "Nova oportunidade!"
+msgid "Nova Oportunidade:"
+msgstr "New Job Post!"
 
 #: pyjobs/core/views.py:251
 msgid "Falha na hora de criar o job"
@@ -2137,12 +2163,6 @@ msgstr "Reproved"
 
 #~ msgid "Conheça as melhores oportunidades"
 #~ msgstr "Get to know the best job offers for"
-
-#~ msgid "Inscrever no Push"
-#~ msgstr "Subscribe to our Push"
-
-#~ msgid "Desinscrever no Push"
-#~ msgstr "Unsubscribe to our Push"
 
 #~ msgid "e ter sua vaga destacada na comunidade, entre em"
 #~ msgstr "and have your job post shared by the community"
