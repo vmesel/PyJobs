@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 11:23-0300\n"
-"PO-Revision-Date: 2021-02-02 11:24-0300\n"
+"POT-Creation-Date: 2021-02-02 11:56-0300\n"
+"PO-Revision-Date: 2021-02-02 11:58-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -938,10 +938,12 @@ msgid "Aceita Remoto"
 msgstr "Accepts Remote"
 
 #: pyjobs/core/templates/index.html:107
+#: pyjobs/core/templates/job_details.html:132
 msgid "Sim"
 msgstr "Yes"
 
 #: pyjobs/core/templates/index.html:107
+#: pyjobs/core/templates/job_details.html:132
 msgid "N&atilde;o"
 msgstr "No"
 
@@ -1157,6 +1159,10 @@ msgstr "Company:"
 #: pyjobs/core/templates/job_details.html:128
 msgid "Faixa salarial:"
 msgstr "Salary Range:"
+
+#: pyjobs/core/templates/job_details.html:128
+msgid "Não informado"
+msgstr "Not Informed"
 
 #: pyjobs/core/templates/job_details.html:129
 msgid "Estado:"
@@ -1523,13 +1529,18 @@ msgid "Visualizar Vagas"
 msgstr "See jobs"
 
 #: pyjobs/core/templates/pythonistas-signup.html:8
-msgid "Cadastre-se no maior portal de vagas"
-msgstr "Sign up on the biggest job board"
+#, python-format
+msgid " Cadastre-se no maior portal de vagas %(WEBSITE_WORKING_LANGUAGE)s "
+msgstr " Sign up on the biggest %(WEBSITE_WORKING_LANGUAGE)s job board "
 
 #: pyjobs/core/templates/pythonistas-signup.html:9
+#, python-format
 msgid ""
-"Este login &eacute; exclusivo para desenvolvedores relacionados a linguagem"
-msgstr "This login is exclusive for users/developers related to the language"
+" \"Este login &eacute; exclusivo para desenvolvedores relacionados a "
+"linguagem %(WEBSITE_WORKING_LANGUAGE)s. "
+msgstr ""
+"This login is exclusive for users/developers related to "
+"%(WEBSITE_WORKING_LANGUAGE)s. "
 
 #: pyjobs/core/templates/pythonistas-signup.html:10
 msgid "Caso você queira postar uma vaga,"
@@ -2020,9 +2031,9 @@ msgstr "Tocantins"
 msgid "Indeterminado"
 msgstr "Other"
 
-#: pyjobs/settings.py:254 pyjobs/settings.py:266
-msgid "A combinar"
-msgstr "To decide further"
+#: pyjobs/settings.py:254
+msgid "NI"
+msgstr "Not Informed"
 
 #: pyjobs/settings.py:258 pyjobs/settings.py:269
 msgid "Estágio"
@@ -2039,6 +2050,10 @@ msgstr "Middle Level"
 #: pyjobs/settings.py:261
 msgid "Sênior"
 msgstr "Senior"
+
+#: pyjobs/settings.py:266
+msgid "A combinar"
+msgstr "To decide further"
 
 #: pyjobs/settings.py:267
 msgid "CLT"
@@ -2059,6 +2074,9 @@ msgstr "Approved"
 #: pyjobs/settings.py:272
 msgid "Reprovado"
 msgstr "Reproved"
+
+#~ msgid "Cadastre-se no maior portal de vagas"
+#~ msgstr "Sign up on the biggest job board"
 
 #~ msgid "R$ 0,00 || R$ 1.000,00"
 #~ msgstr "R$ 0,00 to R$ 1.000,00"

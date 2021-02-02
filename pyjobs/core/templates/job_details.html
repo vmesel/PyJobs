@@ -125,11 +125,11 @@
         <div class="row" style="margin-top:40px;">
             <ul>
                 <li>{% translate "Empresa:"%} {{job.company_name}}</li>
-                <li>{% translate "Faixa salarial:"%} {{job.get_salary_range_display}}</li>
+                <li>{% translate "Faixa salarial:"%} {% if job.get_salary_range_display != "NI" %}{{job.currency.slug}}${{salary.0}} - {{job.currency.slug}}${{salary.1}}{%else%}{%translate "Não informado" %}{%endif%}</li>
                 <li>{% translate "Estado:"%} {{job.get_state_display}}</li>
                 <li>{% translate "Local da vaga:"%} {{job.workplace}}</li>
                 <li>{% translate "Nível:"%} {{job.get_job_level_display}}</li>
-                <li>{% translate "Aceita Remoto?:"%} {% if job.remote %} Sim {%else%} N&atilde;o {%endif%}</li>
+                <li>{% translate "Aceita Remoto?:"%} {% if job.remote %} {%translate "Sim"%} {%else%} {%translate "N&atilde;o"%} {%endif%}</li>
                 <li>{% translate "Tipo de contrata&ccedil;&atilde;o:"%} {{job.get_contract_form_display}}</li>
             </ul>
         </div>
@@ -187,14 +187,14 @@
           "address" : {
             "@type" : "PostalAddress",
             "addressRegion" : "{{job.get_state_display}}",
-            "addressCountry": "BR"
+            "addressCountry": "{{job.country.name}}"
           }
         }
-        {% if job.get_salary_range_display != "A combinar" %}
+        {% if job.get_salary_range_display != "NI" %}
         ,
         "baseSalary": {
             "@type": "MonetaryAmount",
-            "currency": "BRL",
+            "currency": "{{job.currency.slug}}",
             "value": {
               "@type": "QuantitativeValue",
               "minValue": {{salary.0}},

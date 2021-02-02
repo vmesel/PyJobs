@@ -5,8 +5,8 @@
 {%block main%}
 <section style="padding: 30px;">
     <div class="container">
-        <h2 class="text-info">{% translate "Cadastre-se no maior portal de vagas"%} {{WEBSITE_WORKING_LANGUAGE}}</h2>
-        <p>{% translate "Este login &eacute; exclusivo para desenvolvedores relacionados a linguagem"%} {{WEBSITE_WORKING_LANGUAGE}}.</p>
+        <h2 class="text-info">{% blocktranslate %} Cadastre-se no maior portal de vagas {{WEBSITE_WORKING_LANGUAGE}} {% endblocktranslate %}</h2>
+        <p>{% blocktranslate %} "Este login &eacute; exclusivo para desenvolvedores relacionados a linguagem {{WEBSITE_WORKING_LANGUAGE}}. {% endblocktranslate %}</p>
         <p>{% translate "Caso você queira postar uma vaga,"%} <a href="{% url 'job_creation' %}">{% translate "clique aqui"%}</a></p>
         <form action="." method="post">
             <p>{{ message }}</p>
