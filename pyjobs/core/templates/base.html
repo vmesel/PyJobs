@@ -101,9 +101,9 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto" style="margin-right: 10px;">
-                  <li class="nav-item active">
-                    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                      <input name="next" type="hidden" value="{{ redirect_to }}">
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                  <input name="next" type="hidden" value="{{ redirect_to }}">
+                  <li class="nav-item active" style="margin-top: 8px;">
                       <select name="language" onchange="this.form.submit()">
                           {% get_current_language as LANGUAGE_CODE %}
                           {% get_available_languages as LANGUAGES %}
@@ -114,10 +114,10 @@
                               </option>
                           {% endfor %}
                       </select>
-                  </form>
                   </li>
+                </form>
                   <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'index' %}">Home</a>
+                      <a class="nav-link" href="{% url 'index' %}">{% translate "Home"%}</a>
                   </li>
                   <li class="nav-item active">
                       <a class="nav-link" href="{% url 'jobs' %}">{% translate "Vagas"%}</a>
@@ -129,7 +129,7 @@
                   <li class="nav-item active form-inline my-2 my-lg-0">
                     <a class="" href="{% url 'login' %}">
                     <button class="botao-inverso">
-                      Logar
+                      {% translate "Logar"%}
                     </button>
                   </a>
                   </li>
@@ -140,7 +140,7 @@
                     </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'pythonistas_area' %}">{% translate "Meu painel"%}</a>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">{% translate "Logout"%}</a>
                   </div>
                 </li>
                   {%endif%}

@@ -16,3 +16,9 @@ makemigrations:
 
 run:
 	poetry run python manage.py runserver
+
+comptrans:
+	poetry run python manage.py compilemessages
+
+gentrans:
+	poetry run python manage.py makemessages -a

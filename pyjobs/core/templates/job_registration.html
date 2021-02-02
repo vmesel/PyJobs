@@ -63,6 +63,23 @@
                     <h4>{% translate "LOCALIZA&Ccedil;&Atilde;O"%}</h4>
             </div>
             <div class="row">
+                <p>{% blocktranslate %}Aqui voc&ecirc; ir&aacute; preencher algumas informa&ccedil;&otilde;es sobre a localiza&ccedil;&atilde;o da vaga, como pa&iacute;s, moeda de pagamento, estado (somente v&aacute;lido para o Brasil) e endereço.{% endblocktranslate %}</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 filtro-form-item-select">
+                    <div class="select-form-filtro">
+                        {{new_job_form.country}}
+                        {{new_job_form.country.errors}}
+                    </div>
+                </div>
+                <div class="col-md-6 filtro-form-item-select">
+                    <div class="select-form-filtro">
+                        {% render_field new_job_form.currency style="margin-top: -2px;"%}
+                        {{new_job_form.currency.errors}}
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
                 <div class="col-md-6 filtro-form-item-select">
                     <div class="select-form-filtro">
                         {{new_job_form.state}}

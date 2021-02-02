@@ -55,6 +55,8 @@ class JobForm(CustomModelForm):
             "challenge_interested",
             "ad_interested",
             "contract_form",
+            "currency",
+            "country"
         ]
         widgets = {"skills": Select2MultipleWidget}
 
@@ -62,10 +64,6 @@ class JobForm(CustomModelForm):
         super(JobForm, self).__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.widget.attrs.update({"placeholder": field.label})
-
-        for key, field in self.fields.items():
-            if key in ["state", "salary_range", "job_level"]:
-                field.choices = field.choices[:-1]
 
 
 class ContactForm(CustomModelForm):

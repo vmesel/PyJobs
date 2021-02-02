@@ -197,13 +197,12 @@ def job_view(request, pk):
             str(context["job"].get_salary_range_display())
             .replace(".", "")
             .replace(",", ".")
-            .replace("R$", "")
-            .split(" a ")
+            .split(" - ")
         )
         if len(salaries) == 2:
             context["salary"] = (salaries[0], salaries[1])
         else:
-            context["salary"] = (salaries[0].replace(" ou mais", ""), "30000.00")
+            context["salary"] = (salaries[0].replace(" +", ""), "30000.00")
 
     context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 

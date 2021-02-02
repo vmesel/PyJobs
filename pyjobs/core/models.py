@@ -20,6 +20,21 @@ from pyjobs.core.managers import PublicQuerySet, ProfilingQuerySet
 from django.utils.translation import gettext_lazy as _
 
 
+class Currency(models.Model):
+    name = models.CharField(_("Nome da Moeda"), max_length=3, blank=False, help_text=_("Ex.: Euro"))
+    slug = models.CharField(_("Abreviação"), max_length=3, blank=False, help_text=_("Ex.: EUR"))
+
+    def __str__(self):
+        return self.slug
+
+
+class Country(models.Model):
+    name = models.CharField(_("Nome do País"), max_length=3, blank=False, help_text=_("Ex.: Brasil"))
+
+    def __str__(self):
+        return self.name
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     github = models.URLField(verbose_name=_("GitHub"), blank=True, default="")
@@ -132,11 +147,13 @@ class Job(models.Model):
         "Data de mudança de Status", blank=True, null=True
     )
     cellphone = models.CharField(
-        verbose_name="WhatsApp para contato",
+        verbose_name=_("WhatsApp para contato"),
         max_length=16,
-        help_text="Deixe seu WhatsApp para contatarmos sobre nossos serviços",
+        help_text=_("Deixe seu WhatsApp para contatarmos sobre nossos serviços"),
         null=True,
     )
+    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING, default=1)
+    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING, default=1)
     skills = models.ManyToManyField("Skill")
     is_open = models.BooleanField(_("Vaga aberta"), default=True)
     is_challenging = models.BooleanField(_("Enviar Chall"), default=False)
