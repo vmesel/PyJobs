@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 11:56-0300\n"
-"PO-Revision-Date: 2021-02-02 11:58-0300\n"
+"POT-Creation-Date: 2021-02-02 12:03-0300\n"
+"PO-Revision-Date: 2021-02-02 12:04-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -30,17 +30,33 @@ msgstr "Job Title"
 msgid "Remoto?"
 msgstr "Remote?"
 
+#: pyjobs/core/forms.py:88
+msgid "Github (opcional)"
+msgstr "Github (optional)"
+
 #: pyjobs/core/forms.py:89
 msgid "Link do seu GitHub"
 msgstr "Your GitHub link"
+
+#: pyjobs/core/forms.py:94
+msgid "Linkedin (opcional)"
+msgstr "LinkedIn (optional):"
 
 #: pyjobs/core/forms.py:95
 msgid "Link do seu Linkedin"
 msgstr "Your Linkedin link"
 
+#: pyjobs/core/forms.py:100
+msgid "Portfolio (opcional)"
+msgstr "Portfolio (optional):"
+
 #: pyjobs/core/forms.py:101
 msgid "Link do seu portfolio"
 msgstr "Your portfolio link"
+
+#: pyjobs/core/forms.py:106
+msgid "Celular"
+msgstr "Cellphone"
 
 #: pyjobs/core/forms.py:107
 msgid "Preencha com o seu telefone"
@@ -1539,7 +1555,7 @@ msgid ""
 " \"Este login &eacute; exclusivo para desenvolvedores relacionados a "
 "linguagem %(WEBSITE_WORKING_LANGUAGE)s. "
 msgstr ""
-"This login is exclusive for users/developers related to "
+" This login is exclusive for users/developers related to "
 "%(WEBSITE_WORKING_LANGUAGE)s. "
 
 #: pyjobs/core/templates/pythonistas-signup.html:10

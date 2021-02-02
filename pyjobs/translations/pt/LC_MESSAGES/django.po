@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 11:56-0300\n"
+"POT-Creation-Date: 2021-02-02 12:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,16 +30,32 @@ msgstr ""
 msgid "Remoto?"
 msgstr ""
 
+#: pyjobs/core/forms.py:88
+msgid "Github (opcional)"
+msgstr ""
+
 #: pyjobs/core/forms.py:89
 msgid "Link do seu GitHub"
+msgstr ""
+
+#: pyjobs/core/forms.py:94
+msgid "Linkedin (opcional)"
 msgstr ""
 
 #: pyjobs/core/forms.py:95
 msgid "Link do seu Linkedin"
 msgstr ""
 
+#: pyjobs/core/forms.py:100
+msgid "Portfolio (opcional)"
+msgstr ""
+
 #: pyjobs/core/forms.py:101
 msgid "Link do seu portfolio"
+msgstr ""
+
+#: pyjobs/core/forms.py:106
+msgid "Celular"
 msgstr ""
 
 #: pyjobs/core/forms.py:107
