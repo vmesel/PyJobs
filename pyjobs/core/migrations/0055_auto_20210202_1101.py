@@ -4,15 +4,6 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
-def create_country_and_currency(apps, schema_editor):
-    db_alias = schema_editor.connection.alias
-    Country = apps.get_model("core", "Country")
-    Country.objects.using(db_alias).create(name="Brasil")
-
-    Currency = apps.get_model("core", "Currency")
-    Currency.objects.using(db_alias).create(name="Real", slug="BRL")
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -24,18 +15,17 @@ class Migration(migrations.Migration):
             name='Country',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Ex.: Brasil', max_length=3, verbose_name='Nome do País')),
+                ('name', models.CharField(help_text='Ex.: Brasil', max_length=300, verbose_name='Nome do País')),
             ],
         ),
         migrations.CreateModel(
             name='Currency',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Ex.: Euro', max_length=3, verbose_name='Nome da Moeda')),
-                ('slug', models.CharField(help_text='Ex.: EUR', max_length=3, verbose_name='Abreviação')),
+                ('name', models.CharField(help_text='Ex.: Euro', max_length=300, verbose_name='Nome da Moeda')),
+                ('slug', models.CharField(help_text='Ex.: EUR', max_length=300, verbose_name='Abreviação')),
             ],
         ),
-        migrations.RunPython(create_country_and_currency),
         migrations.AlterField(
             model_name='job',
             name='salary_range',
