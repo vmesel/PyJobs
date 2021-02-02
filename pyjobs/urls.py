@@ -18,6 +18,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.sites.models import Site
+from django.views.i18n import JavaScriptCatalog
 
 from pyjobs.core.views import handler_404
 
@@ -51,6 +52,7 @@ urlpatterns += i18n_patterns(
         ),
         name="password_reset",
     ),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     prefix_default_language=False,
 )
 

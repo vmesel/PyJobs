@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 16:25-0300\n"
+"POT-Creation-Date: 2021-02-02 10:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -335,70 +335,70 @@ msgstr ""
 msgid "Vagas de Emprego %(WEBSITE_WORKING_LANGUAGE)s"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:80
+#: pyjobs/core/templates/base.html:81
 msgid "Se inscreva em nosso push!"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:122 pyjobs/core/templates/base.html:190
-#: pyjobs/core/templates/base.html:191 pyjobs/core/templates/base.html:192
+#: pyjobs/core/templates/base.html:123 pyjobs/core/templates/base.html:191
+#: pyjobs/core/templates/base.html:192 pyjobs/core/templates/base.html:193
 #: pyjobs/core/templates/job_details.html:59
 #: pyjobs/partners/templates/partners.html:44
 msgid "Vagas"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:126 pyjobs/core/templates/base.html:182
-#: pyjobs/core/templates/base.html:199 pyjobs/core/templates/login.html:66
+#: pyjobs/core/templates/base.html:127 pyjobs/core/templates/base.html:183
+#: pyjobs/core/templates/base.html:200 pyjobs/core/templates/login.html:66
 msgid "Cadastre-se"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:138
+#: pyjobs/core/templates/base.html:139
 #, python-format
 msgid " Área do %(USER_SUBSTANTIVE)s "
 msgstr ""
 
-#: pyjobs/core/templates/base.html:141
+#: pyjobs/core/templates/base.html:142
 msgid "Meu painel"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:149 pyjobs/core/templates/base.html:198
+#: pyjobs/core/templates/base.html:150 pyjobs/core/templates/base.html:199
 msgid "Cadastre uma vaga"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:158
+#: pyjobs/core/templates/base.html:159
 msgid "Aceitar cookies"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:159
+#: pyjobs/core/templates/base.html:160
 msgid "Rejeitar"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:160
+#: pyjobs/core/templates/base.html:161
 msgid ""
 "Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e "
 "analisar o tráfego do site."
 msgstr ""
 
-#: pyjobs/core/templates/base.html:161
+#: pyjobs/core/templates/base.html:162
 msgid "Leia mais sobre nossa politica de privacidade"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:180
+#: pyjobs/core/templates/base.html:181
 msgid "Login"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:181
+#: pyjobs/core/templates/base.html:182
 msgid "Nossos serviços"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:183
+#: pyjobs/core/templates/base.html:184
 msgid "Pol&iacute;tica de privacidade"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:189
+#: pyjobs/core/templates/base.html:190
 msgid "Ver Vagas"
 msgstr ""
 
-#: pyjobs/core/templates/base.html:196
+#: pyjobs/core/templates/base.html:197
 msgid "CADASTRE-SE"
 msgstr ""
 
@@ -822,13 +822,11 @@ msgid "Nossas vagas"
 msgstr ""
 
 #: pyjobs/core/templates/index.html:86
+#, python-format
 msgid ""
-"Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se você "
-"é uma empresa e quer encontrar os melhores"
-msgstr ""
-
-#: pyjobs/core/templates/index.html:86
-msgid "e ter sua vaga destacada na comunidade, entre em"
+" Aqui você tem acesso a nossas vagas mais recentes para se cadidatar! Se "
+"você é uma empresa e quer encontrar os melhores %(USER_SUBSTANTIVE)ss e ter "
+"sua vaga destacada na comunidade, entre em "
 msgstr ""
 
 #: pyjobs/core/templates/index.html:86
@@ -844,15 +842,12 @@ msgid "Conheça as melhores oportunidades"
 msgstr ""
 
 #: pyjobs/core/templates/index.html:146
-msgid "Todas as oportunidades listadas no"
-msgstr ""
-
-#: pyjobs/core/templates/index.html:146
+#, python-format
 msgid ""
-"passaram por um processo de curadoria para garantir a melhor qualidade "
-"possível das vagas. Nossa parceria com as empresas é feita de maneira "
-"transparente e visando melhores oportunidades e condições aos "
-"desenvolvedores."
+"Todas as oportunidades listadas no %(WEBSITE_NAME)s passaram por um processo "
+"de curadoria para garantir a melhor qualidade possível das vagas. Nossa "
+"parceria com as empresas é feita de maneira transparente e visando melhores "
+"oportunidades e condições aos desenvolvedores."
 msgstr ""
 
 #: pyjobs/core/templates/index.html:148
@@ -1185,6 +1180,13 @@ msgstr ""
 msgid "Nenhuma vaga encontrada..."
 msgstr ""
 
+#: pyjobs/core/templates/jobs.html:116
+#: pyjobs/core/templates/jobs_by_location.html:97
+#: pyjobs/core/templates/jobs_by_skill.html:109
+#: pyjobs/core/templates/pythonista-applied-jobs.html:29
+msgid "VAGA"
+msgstr ""
+
 #: pyjobs/core/templates/jobs_by_location.html:9
 #: pyjobs/core/templates/jobs_by_location.html:11
 #: pyjobs/core/templates/jobs_by_location.html:13
@@ -1203,12 +1205,6 @@ msgstr ""
 
 #: pyjobs/core/templates/jobs_by_location.html:29
 msgid "BUSCAR MAIS VAGAS"
-msgstr ""
-
-#: pyjobs/core/templates/jobs_by_location.html:97
-#: pyjobs/core/templates/jobs_by_skill.html:109
-#: pyjobs/core/templates/pythonista-applied-jobs.html:29
-msgid "VAGA"
 msgstr ""
 
 #: pyjobs/core/templates/jobs_by_skill.html:9
@@ -1871,4 +1867,10 @@ msgstr ""
 
 #: pyjobs/settings.py:272
 msgid "Reprovado"
+msgstr ""
+
+msgid "Inscrever no Push"
+msgstr ""
+
+msgid "Desinscrever no Push"
 msgstr ""

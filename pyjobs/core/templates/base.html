@@ -44,6 +44,7 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}" />
     {% endblock metas%}
+    <script src="{% url 'javascript-catalog' %}"></script>
     {% block metas_seo %}
     {% endblock metas_seo %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
