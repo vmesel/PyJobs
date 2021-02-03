@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 16:04-0300\n"
-"PO-Revision-Date: 2021-02-02 12:04-0300\n"
+"POT-Creation-Date: 2021-02-03 09:27-0300\n"
+"PO-Revision-Date: 2021-02-03 09:30-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,13 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: pyjobs/core/admin.py:61
+#: pyjobs/core/admin.py:63
 msgid "Teste Técnico da empresa:"
 msgstr "Company's technical challenge:"
 
-#: pyjobs/core/filters.py:8 pyjobs/core/models.py:99
+#: pyjobs/core/filters.py:8 pyjobs/core/models.py:105
 msgid "Título da Vaga"
 msgstr "Job Title"
+
+#: pyjobs/core/filters.py:10
+msgid "País"
+msgstr "Country"
 
 #: pyjobs/core/filters.py:12
 msgid "Remoto?"
@@ -75,56 +79,54 @@ msgid "Ao clicar, você aceita nossa política de privacidade"
 msgstr "When you click, you accept our privacy policy terms"
 
 #: pyjobs/core/forms.py:159
-#, fuzzy
-#| msgid "Lista de e-mail"
 msgid "Seu e-mail"
-msgstr "Mailing List"
+msgstr "Your E-mail"
 
 #: pyjobs/core/forms.py:160
 msgid "seu-email@atualizado.com"
 msgstr "your-email@updated.com"
 
-#: pyjobs/core/models.py:24
+#: pyjobs/core/models.py:25
 msgid "Nome da Moeda"
 msgstr "Currency Name"
 
-#: pyjobs/core/models.py:24
+#: pyjobs/core/models.py:25
 msgid "Ex.: Euro"
 msgstr "I.e.: Euro"
 
-#: pyjobs/core/models.py:25
+#: pyjobs/core/models.py:28
 msgid "Abreviação"
 msgstr "Slug"
 
-#: pyjobs/core/models.py:25
+#: pyjobs/core/models.py:28
 msgid "Ex.: EUR"
 msgstr "I.e.: EUR"
 
-#: pyjobs/core/models.py:32
+#: pyjobs/core/models.py:37
 msgid "Nome do País"
 msgstr "Country Name"
 
-#: pyjobs/core/models.py:32
+#: pyjobs/core/models.py:37
 msgid "Ex.: Brasil"
 msgstr "I.e.: Brasil"
 
-#: pyjobs/core/models.py:40 pyjobs/core/templates/applied_users_details.html:29
+#: pyjobs/core/models.py:46 pyjobs/core/templates/applied_users_details.html:29
 msgid "GitHub"
 msgstr "GitHub"
 
-#: pyjobs/core/models.py:41 pyjobs/core/templates/applied_users_details.html:31
+#: pyjobs/core/models.py:47 pyjobs/core/templates/applied_users_details.html:31
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: pyjobs/core/models.py:42
+#: pyjobs/core/models.py:48
 msgid "Portfolio"
 msgstr "Portfolio"
 
-#: pyjobs/core/models.py:44 pyjobs/core/templates/applied_users_details.html:30
+#: pyjobs/core/models.py:50 pyjobs/core/templates/applied_users_details.html:30
 msgid "Telefone"
 msgstr "Cellphone"
 
-#: pyjobs/core/models.py:50
+#: pyjobs/core/models.py:56
 msgid ""
 "Telefone inválido! Digite entre 11 e 15 caracteres que podem conter números, "
 "espaços, parênteses e hífen."
@@ -132,37 +134,37 @@ msgstr ""
 "Invalid Cellphone! Your cellphone number must contain between 11 to 15 "
 "digits, spaces, parentheses and hyphens."
 
-#: pyjobs/core/models.py:57
+#: pyjobs/core/models.py:63
 msgid "Sua Faixa Salarial Atual"
 msgstr "Your salary range"
 
-#: pyjobs/core/models.py:61
+#: pyjobs/core/models.py:67
 msgid "Sua Bio"
 msgstr "Your bio"
 
-#: pyjobs/core/models.py:64
+#: pyjobs/core/models.py:70
 msgid ""
 "Descreva um pouco sobre você para as empresas poderem te conhecer melhor!"
 msgstr ""
 "Describe to little bit of yourself so companies can get to know you better!"
 
-#: pyjobs/core/models.py:69
+#: pyjobs/core/models.py:75
 msgid "Aceitou políticas de privacidade"
 msgstr "Agreed on privacy policy"
 
-#: pyjobs/core/models.py:81
+#: pyjobs/core/models.py:87
 msgid "Perfil"
 msgstr "Profile"
 
-#: pyjobs/core/models.py:82
+#: pyjobs/core/models.py:88
 msgid "Perfis"
 msgstr "Profiles"
 
-#: pyjobs/core/models.py:103
+#: pyjobs/core/models.py:109
 msgid "Ex.: Desenvolvedor"
 msgstr "I.e.: Developer"
 
-#: pyjobs/core/models.py:106 pyjobs/core/templates/jobs.html:79
+#: pyjobs/core/models.py:112 pyjobs/core/templates/jobs.html:79
 #: pyjobs/core/templates/jobs.html:132
 #: pyjobs/core/templates/jobs_by_location.html:113
 #: pyjobs/core/templates/jobs_by_skill.html:72
@@ -171,49 +173,49 @@ msgstr "I.e.: Developer"
 msgid "Local"
 msgstr "Place"
 
-#: pyjobs/core/models.py:110
+#: pyjobs/core/models.py:116
 msgid "Ex.: Santana - São Paulo"
 msgstr "I.e.: Wall Street - NY"
 
-#: pyjobs/core/models.py:113
+#: pyjobs/core/models.py:119
 msgid "Nome da Empresa"
 msgstr "Company Name"
 
-#: pyjobs/core/models.py:117
+#: pyjobs/core/models.py:123
 msgid "Ex.: ACME Inc"
 msgstr "I.e.: ACME Inc"
 
-#: pyjobs/core/models.py:120
+#: pyjobs/core/models.py:126
 msgid "Link para a Vaga"
 msgstr "Link to the Job Post"
 
-#: pyjobs/core/models.py:123
+#: pyjobs/core/models.py:129
 msgid "Ex.: http://goo.gl/hahaha"
 msgstr "I.e.: http://goo.gl/hahaha"
 
-#: pyjobs/core/models.py:126
+#: pyjobs/core/models.py:132
 msgid "Email da Empresa"
 msgstr "Company E-mail"
 
-#: pyjobs/core/models.py:126
+#: pyjobs/core/models.py:132
 msgid "Ex.: abc@def.com"
 msgstr "I.e..: abc@def.com"
 
-#: pyjobs/core/models.py:129 pyjobs/core/templates/job_details.html:137
+#: pyjobs/core/models.py:135 pyjobs/core/templates/job_details.html:137
 msgid "Descrição da vaga"
 msgstr "Job Description"
 
-#: pyjobs/core/models.py:131
+#: pyjobs/core/models.py:137
 msgid "Descreva um pouco da sua empresa e da vaga, tente ser breve"
 msgstr ""
 "Describe to little bit of your company and job position, try to write it "
 "short and concise so developers don’t spend too much time on it"
 
-#: pyjobs/core/models.py:134
+#: pyjobs/core/models.py:140
 msgid "Requisitos da vaga"
 msgstr "Job Requirements"
 
-#: pyjobs/core/models.py:137
+#: pyjobs/core/models.py:143
 msgid ""
 "Descreva os requisitos da sua empresa em bullet points\n"
 "\n"
@@ -225,83 +227,83 @@ msgstr ""
 "- Know git\n"
 "- Use Python"
 
-#: pyjobs/core/models.py:150
+#: pyjobs/core/models.py:156
 msgid "WhatsApp para contato"
 msgstr "Cellphone to text to"
 
-#: pyjobs/core/models.py:152
+#: pyjobs/core/models.py:158
 msgid "Deixe seu WhatsApp para contatarmos sobre nossos serviços"
 msgstr "Leave your SMS number to contact you about our services"
 
-#: pyjobs/core/models.py:158
+#: pyjobs/core/models.py:164
 msgid "Vaga aberta"
 msgstr "Open Job"
 
-#: pyjobs/core/models.py:159
+#: pyjobs/core/models.py:165
 msgid "Enviar Chall"
 msgstr "Send Challenge"
 
-#: pyjobs/core/models.py:160
+#: pyjobs/core/models.py:166
 msgid "Challenge"
 msgstr "Challenge"
 
-#: pyjobs/core/models.py:162
+#: pyjobs/core/models.py:168
 msgid "Estado"
 msgstr "State"
 
-#: pyjobs/core/models.py:164
+#: pyjobs/core/models.py:170
 msgid "Faixa Salarial"
 msgstr "Salary Range"
 
-#: pyjobs/core/models.py:167
+#: pyjobs/core/models.py:173
 msgid "Nível do Profissional"
 msgstr "Professional Level"
 
-#: pyjobs/core/models.py:170
+#: pyjobs/core/models.py:176
 msgid "Forma de contratação"
 msgstr "Contracting Type"
 
-#: pyjobs/core/models.py:172
+#: pyjobs/core/models.py:178
 msgid "Esta vaga é remota?"
 msgstr "Is this job remote?"
 
-#: pyjobs/core/models.py:173
+#: pyjobs/core/models.py:179
 msgid "Consultoria?"
 msgstr "Consultancy?"
 
-#: pyjobs/core/models.py:174
+#: pyjobs/core/models.py:180
 msgid "Issue do Github"
 msgstr "Github Issue"
 
-#: pyjobs/core/models.py:261
+#: pyjobs/core/models.py:267
 msgid "Link de resposta ao desafio"
 msgstr "Challenge response link"
 
-#: pyjobs/core/models.py:270
+#: pyjobs/core/models.py:276
 msgid "Tipo de feedback"
 msgstr "Feedback type"
 
-#: pyjobs/core/models.py:275
+#: pyjobs/core/models.py:281
 msgid "Job Application"
 msgstr "Job Application"
 
-#: pyjobs/core/models.py:276
+#: pyjobs/core/models.py:282
 msgid "Job Applications"
 msgstr "Job Applications"
 
-#: pyjobs/core/models.py:279
+#: pyjobs/core/models.py:285
 msgid "applied to"
 msgstr "applied to"
 
-#: pyjobs/core/models.py:286
+#: pyjobs/core/models.py:292
 msgid "Skill"
 msgstr "Skill"
 
-#: pyjobs/core/models.py:288
+#: pyjobs/core/models.py:294
 msgid "Slug Unica"
 msgstr "Unique Slug"
 
-#: pyjobs/core/models.py:291
+#: pyjobs/core/models.py:297
 msgid "Descrição da skill"
 msgstr "Skill Description"
 
@@ -354,6 +356,14 @@ msgstr "Output"
 #: pyjobs/core/templates/applied_users_details.html:38
 msgid "Comentário"
 msgstr "Comments"
+
+#: pyjobs/core/templates/applied_users_details.html:41
+msgid "Editar"
+msgstr "Edit"
+
+#: pyjobs/core/templates/applied_users_details.html:64
+msgid "Adicionar"
+msgstr "Add"
 
 #: pyjobs/core/templates/base.html:36
 msgid "Aqui seu novo emprego"
@@ -1708,10 +1718,12 @@ msgstr ""
 "<I>profiling</I> of the vacancy to the hiring of the employee."
 
 #: pyjobs/core/utils.py:29 pyjobs/core/utils.py:32
-#, fuzzy
-#| msgid "Nova oportunidade!"
 msgid "Nova Oportunidade:"
-msgstr "New Job Post!"
+msgstr "New Job Post:"
+
+#: pyjobs/core/utils.py:44 pyjobs/core/utils.py:48
+msgid "Via"
+msgstr "Via"
 
 #: pyjobs/core/views.py:251
 msgid "Falha na hora de criar o job"

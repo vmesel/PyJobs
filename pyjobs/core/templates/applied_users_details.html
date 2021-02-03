@@ -38,7 +38,7 @@
                             <th>{% translate "Comentário" %}</th>
                             {% endif %}
                             {% if is_staff %}
-                            <th>{% translate "Editar"}</th>
+                            <th>{% translate "Editar" %}</th>
                             {% endif %}
                         </tr>
                     </thead>
@@ -61,7 +61,7 @@
                             <td>{% if r.comment is not None %}{{ r.comment }}{% else %}{% endif %}</td>
                             {% endif %}
                             {% if is_staff %}
-                            <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">{% translate "Adicionar"}</a></td>
+                            <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">{% translate "Adicionar"%}</a></td>
                             {% endif %}
                         </tr>
                         {% endfor %}
