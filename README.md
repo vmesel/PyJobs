@@ -11,7 +11,7 @@ O PyJobs é o site de job listing de vagas Python no Brasil, nele você consegue
 git clone https://github.com/vmesel/PyJobs.git
 cd PyJobs/
 cp .env-sample .env
-pipenv install
+pip install poetry
 ```
 
 Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta PyJobs contendo as seguintes informações:
@@ -25,7 +25,7 @@ Para você poder subir a sua versão do PyJobs, crie um `.env` dentro da pasta P
 
 ```
 docker-compose build
-docker-compose run web python manage.py migrate
+docker-compose run web poetry run python manage.py migrate
 docker-compose up
 ```
 

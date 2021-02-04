@@ -4,7 +4,6 @@ python:
 env:
   global:
     - SECRET_KEY=here-comes-a-secret-key
-    - PIPENV_IGNORE_VIRTUALENVS=1
     - CC_TEST_REPORTER_ID=d00a646dd653557dee1029960b0157368f641db4802f51c8df64ae4f6397f933
 before_install:
   - pip install -U pip
