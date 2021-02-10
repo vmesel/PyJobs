@@ -21,7 +21,7 @@ class Command(BaseCommand):
             headers=headers,
         )
         content = response.json()
-        for job in content:
+        for job in content[1:]:
             if Job.objects.filter(issue_number=job["id"]):
                 continue
 
