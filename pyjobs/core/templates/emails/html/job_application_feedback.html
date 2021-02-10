@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- EMAIL TEMPLATE FROM: https://github.com/leemunroe/responsive-html-email-template/ -->
 <!doctype html>
 <html>
@@ -350,18 +351,18 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Olá {{pessoa.first_name}},</p>
+                        <p>{% translate "Olá" %} {{pessoa.first_name}},</p>
 
-                        <p>Aqui vai o seu feedback para a vaga '{{vaga.title}}' na {{vaga.company_name}}</p>
+                        <p>{% translate "Aqui vai o seu feedback para a vaga" %} '{{vaga.title}}' {% translate "na"%} {{vaga.company_name}}</p>
                         
                         
                         <p>{{job_application.company_feedback}}</p>
                         
                         
-                        <p>E o seu status no processo seletivo é: {{job_application.feedback_type}}</p>
+                        <p>{% translate "E o seu status no processo seletivo é" %}: {{job_application.feedback_type}}</p>
                         
                         
-                        <p>Abraços,</p>
+                        <p>{% translate "Abraços" %},</p>
                         <p>{{dono_do_site}}</p>
                       </td>
                     </tr>

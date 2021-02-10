@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {%block main%}
 <section class="detalhes-vaga">
@@ -10,8 +11,8 @@
         {% if message_explaining %}
             <p>{{message_explaining}}</p>
       {%endif%}
-      <a href="/">
-          <input type="button" name="" value="IR PARA HOME" class="botao">
+      <a href="{% url 'index' %}">
+          <input type="button" name="" value="{% translate 'IR PARA HOME'%}" class="botao">
       </a>
     </div>
 </section>

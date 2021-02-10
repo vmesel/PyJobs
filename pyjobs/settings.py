@@ -14,6 +14,7 @@ import os
 
 import dj_database_url
 from decouple import config
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -117,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = "pt-br"
+LANGUAGE_CODE = "pt"
 
 TIME_ZONE = "America/Sao_Paulo"
 
@@ -127,6 +129,12 @@ USE_L10N = True
 
 USE_TZ = False
 
+LOCALE_PATHS = [os.path.join(PROJECT_ROOT, "translations")]
+
+LANGUAGES = [
+    ("pt", _("Portuguese")),
+    ("en", _("English")),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -203,64 +211,64 @@ WEBPUSH_SETTINGS = {
 }
 
 STATE_CHOICES = [
-    (0, "Acre"),
-    (1, "Alagoas"),
-    (2, "Amapá"),
-    (3, "Amazonas"),
-    (4, "Bahia"),
-    (5, "Ceará"),
-    (6, "Distrito Federal"),
-    (7, "Espírito Santo"),
-    (8, "Goiás"),
-    (9, "Maranhão"),
-    (10, "Mato Grosso"),
-    (11, "Mato Grosso do Sul"),
-    (12, "Minas Gerais"),
-    (13, "Pará"),
-    (14, "Paraíba"),
-    (15, "Paraná"),
-    (16, "Pernambuco"),
-    (17, "Piauí"),
-    (18, "Rio de Janeiro"),
-    (19, "Rio Grande do Norte"),
-    (20, "Rio Grande do Sul"),
-    (21, "Rondônia"),
-    (22, "Roraima"),
-    (23, "Santa Catarina"),
-    (24, "São Paulo"),
-    (25, "Sergipe"),
-    (26, "Tocantins"),
-    (27, "Indeterminado"),
+    (0, _("Acre")),
+    (1, _("Alagoas")),
+    (2, _("Amapá")),
+    (3, _("Amazonas")),
+    (4, _("Bahia")),
+    (5, _("Ceará")),
+    (6, _("Distrito Federal")),
+    (7, _("Espírito Santo")),
+    (8, _("Goiás")),
+    (9, _("Maranhão")),
+    (10, _("Mato Grosso")),
+    (11, _("Mato Grosso do Sul")),
+    (12, _("Minas Gerais")),
+    (13, _("Pará")),
+    (14, _("Paraíba")),
+    (15, _("Paraná")),
+    (16, _("Pernambuco")),
+    (17, _("Piauí")),
+    (18, _("Rio de Janeiro")),
+    (19, _("Rio Grande do Norte")),
+    (20, _("Rio Grande do Sul")),
+    (21, _("Rondônia")),
+    (22, _("Roraima")),
+    (23, _("Santa Catarina")),
+    (24, _("São Paulo")),
+    (25, _("Sergipe")),
+    (26, _("Tocantins")),
+    (27, _("Indeterminado")),
 ]
 
 SALARY_RANGES = [
-    (1, "R$ 0,00 a R$ 1.000,00"),
-    (2, "R$ 1.000,01 a R$ 3.000,00"),
-    (3, "R$ 3.000,01 a R$ 6.000,00"),
-    (4, "R$ 6.000,01 a R$ 10.000,00"),
-    (5, "R$ 10.000,01 a R$ 13.000,00"),
-    (6, "R$ 13.000,01 a R$ 16.000,00"),
-    (7, "R$ 16.000,01 a R$ 19.000,00"),
-    (8, "R$ 19.000,01 a R$ 21.000,00"),
-    (9, "R$ 21.000,01 ou mais"),
-    (10, "A combinar"),
+    (1, "0,00 - 1.000,00"),
+    (2, "1.000,01 - 3.000,00"),
+    (3, "3.000,01 - 6.000,00"),
+    (4, "6.000,01 - 10.000,00"),
+    (5, "10.000,01 - 13.000,00"),
+    (6, "13.000,01 - 16.000,00"),
+    (7, "16.000,01 - 19.000,00"),
+    (8, "19.000,01 - 21.000,00"),
+    (9, "21.000,01 - +"),
+    (10, _("NI")),
 ]
 
 JOB_LEVELS = [
-    (1, "Estágio"),
-    (2, "Junior"),
-    (3, "Pleno"),
-    (4, "Sênior"),
-    (5, "Indeterminado"),
+    (1, _("Estágio")),
+    (2, _("Junior")),
+    (3, _("Pleno")),
+    (4, _("Sênior")),
+    (5, _("Indeterminado")),
 ]
 
 CONTRACT = [
-    (1, "A combinar"),
-    (2, "CLT"),
-    (3, "PJ"),
-    (4, "Estágio"),
+    (1, _("A combinar")),
+    (2, _("CLT")),
+    (3, _("PJ")),
+    (4, _("Estágio")),
 ]
 
-FEEDBACK_TYPE = [(1, "Sem feedback"), (2, "Aprovado"), (3, "Reprovado")]
+FEEDBACK_TYPE = [(1, _("Sem feedback")), (2, _("Aprovado")), (3, _("Reprovado"))]
 
 SITE_ID = config("SITE_ID", default=1, cast=int)

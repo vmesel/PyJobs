@@ -26,6 +26,8 @@ from pyjobs.core.forms import (
 from pyjobs.core.models import Job, JobApplication, Profile, Skill
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import activate
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -195,13 +197,12 @@ def job_view(request, pk):
             str(context["job"].get_salary_range_display())
             .replace(".", "")
             .replace(",", ".")
-            .replace("R$", "")
-            .split(" a ")
+            .split(" - ")
         )
         if len(salaries) == 2:
             context["salary"] = (salaries[0], salaries[1])
         else:
-            context["salary"] = (salaries[0].replace(" ou mais", ""), "30000.00")
+            context["salary"] = (salaries[0].replace(" +", ""), "30000.00")
 
     context["valid_thru"] = context["job"].created_at + timedelta(days=60)
 
@@ -247,14 +248,14 @@ def register_new_job(request):
     g_recaptcha_response = request.POST.get("g-recaptcha-response")
     context = {"webpush": WEBPUSH_CONTEXT}
 
-    context["message_first"] = "Falha na hora de criar o job"
-    context["message_second"] = "Algum campo não foi preenchido corretamente!"
+    context["message_first"] = _("Falha na hora de criar o job")
+    context["message_second"] = _("Algum campo não foi preenchido corretamente!")
 
     if new_job.is_valid(g_recaptcha_response):
-        context["message_first"] = "Acabamos de mandar um e-mail para vocês!"
-        context[
-            "message_second"
-        ] = "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
+        context["message_first"] = _("Acabamos de mandar um e-mail para vocês!")
+        context["message_second"] = _(
+            "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
+        )
 
         new_job.save()
 
@@ -264,10 +265,10 @@ def register_new_job(request):
 def close_job(request, pk, close_hash):
     job = get_object_or_404(Job, pk=pk)
     if close_hash != job.close_hash():
-        raise Http404("No Job matches the given hash.")
+        raise Http404(_("No Job matches the given hash."))
 
     context = {
-        "message_first": "Vaga fechada com sucesso!",
+        "message_first": _("Vaga fechada com sucesso!"),
         "message_second": job.title,
         "webpush": WEBPUSH_CONTEXT,
     }
@@ -300,17 +301,17 @@ def applied_users_details(request, pk):
 def contact(request):
     context = {"form": ContactForm(request.POST or None)}
 
-    context["message_first"] = "Falha na hora de mandar a mensagem"
-    context[
-        "message_second"
-    ] = "Você preencheu algum campo da maneira errada, tente novamente!"
+    context["message_first"] = _("Falha na hora de mandar a mensagem")
+    context["message_second"] = _(
+        "Você preencheu algum campo da maneira errada, tente novamente!"
+    )
 
     recaptcha_response = request.POST.get("g-recaptcha-response")
 
     if request.method == "POST" and context["form"].is_valid(recaptcha_response):
         context["form"].save()
-        context["message_first"] = "Mensagem enviada com sucesso"
-        context["message_second"] = "Vá para a home do site!"
+        context["message_first"] = _("Mensagem enviada com sucesso")
+        context["message_second"] = _("Vá para a home do site!")
 
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -347,12 +348,12 @@ def pythonista_change_password(request):
         if context["form"].is_valid():
             context["form"] = PasswordChangeForm(request.user, request.POST)
             user = context["form"].save()
-            context["message"] = "Sua senha foi alterada com sucesso!"
+            context["message"] = _("Sua senha foi alterada com sucesso!")
             update_session_auth_hash(request, user)
             return render(request, template_name, context)
         else:
             context["form"] = PasswordChangeForm(request.user, request.POST)
-            context["message"] = "Por favor, corrija os erros abaixo."
+            context["message"] = _("Por favor, corrija os erros abaixo.")
     return render(request, "pythonistas-area-password-change.html", context)
 
 
@@ -367,11 +368,11 @@ def pythonista_change_info(request):
         context["form"] = EditProfileForm(instance=profile, data=request.POST)
         if context["form"].is_valid():
             user = context["form"].save()
-            context["message"] = "Suas informações foram atualizadas com sucesso!"
+            context["message"] = _("Suas informações foram atualizadas com sucesso!")
             return render(request, template, context)
         else:
-            context["message"] = "Por favor, corrija os erros abaixo."
-            messages.error(request, "Por favor, corrija os erros abaixo.")
+            context["message"] = _("Por favor, corrija os erros abaixo.")
+            messages.error(request, _("Por favor, corrija os erros abaixo."))
 
     return render(request, template, context)
 
@@ -462,9 +463,9 @@ def job_application_challenge_submission(request, pk):
 
     if user_applied.challenge_response_at is not None:
         context = {
-            "message_first": "Seu teste já foi enviado!",
-            "message_second": "Recebemos seu teste, aguarde nosso retorno!",
-            "message_explaining": "Recebemos seu teste e vamos avaliar!",
+            "message_first": _("Seu teste já foi enviado!"),
+            "message_second": _("Recebemos seu teste, aguarde nosso retorno!"),
+            "message_explaining": _("Recebemos seu teste e vamos avaliar!"),
         }
         return render(request, template_name="generic.html", context=context)
 

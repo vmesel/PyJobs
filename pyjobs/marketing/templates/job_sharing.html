@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load humanize %}
 {%block ogimage%}
@@ -6,7 +7,7 @@
 <link rel="canonical" href="{% url 'jobs' %}"/>
 {% endblock %}
 {% block title %}
-{{job.title}} no {{WEBSITE_NAME}}
+{{job.title}} {% translate "no"%} {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
 <section class="detalhes-vaga">
@@ -16,26 +17,26 @@
                 <div class="block-heading">
                     {% if shared %}
                     <div class="alert alert-success" role="alert">
-                      Email enviado ao Pythonista Indicado!
+                        {% translate "Email enviado ao"%} {{USER_SUBSTANTIVE}} {% translate "Indicado!"%}
                     </div>
                     {%endif%}
                     {% if invalid_email %}
                     <div class="alert alert-danger" role="alert">
-                      Email inválido! Tente novamente!
+                        {% translate "Email inválido! Tente novamente!"%}
                     </div>
                     {%endif%}
                     <center><h1 class="text-info">{{job.title}}</h1></center>
-                    <center><p>Postada: {{job.created_at|naturalday}}</p></center>
+                    <center><p>{% translate "Postada:"%} {{job.created_at|naturalday}}</p></center>
                 </div>
 
                         <h2 class="question">
-                            Compartilhe essa vaga:
+                            {% translate "Compartilhe essa vaga:"%}
                         </h2>
                         <form action="." method="post">
                             <div class="answer">
                                 {%csrf_token%}
                                 {{form.as_p}}
-                                <input type="submit" name="" value="Indicar!" class="botao">
+                                <input type="submit" name="" value="{% translate 'Indicar!'%}" class="botao">
                             </div>
                         </form>
 

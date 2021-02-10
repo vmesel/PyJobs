@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- EMAIL TEMPLATE FROM: https://github.com/leemunroe/responsive-html-email-template/ -->
 <!doctype html>
 <html>
@@ -345,15 +346,15 @@
                     <tr>
                       <td>
 
-                        <p>Olá {{dono_do_site}},</p>
+                        <p>{% translate "Olá"%} {{dono_do_site}},</p>
 
-                        <p>Segue novo teste a ser visualizado da vaga {{vaga.title}}!</p>
+                        <p>{% translate "Segue novo teste a ser visualizado da vaga"%} {{vaga.title}}!</p>
 
-                        <p>Teste respondido em: {{mensagem.challenge_response_at}}</p>
-                        <p>Resolução do teste: {{mensagem.challenge_response_link}}</p>
+                        <p>{% translate "Teste respondido em:"%} {{mensagem.challenge_response_at}}</p>
+                        <p>{% translate "Resolução do teste:"%} {{mensagem.challenge_response_link}}</p>
 
-                        <p>Abs,</p>
-                        <p>Sistema {{nome_do_site}}</p>
+                        <p>{% translate "Abs" %},</p>
+                        <p>{% translate "Sistema" %} {{nome_do_site}}</p>
 
                       </td>
                     </tr>

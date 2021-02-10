@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load humanize %}
 {%block ogimage%}
@@ -13,31 +14,31 @@
             <br>
             <br>
             <center><h2>{{job.title}}</h2></center>
-            <center><p>Postada: {{job.created_at|naturalday}}</p></center>
+            <center><p>{% translate "Postada" %}: {{job.created_at|naturalday}}</p></center>
             {% if is_staff %}
             <p>
-                Para baixar estes dados em CSV, <a href="{% url 'get_job_applications' job.pk %}">clique aqui</a>!
+                {% translate "Para baixar estes dados em CSV" %}, <a href="{% url 'get_job_applications' job.pk %}">{% translate "Clique Aqui" %}</a>!
             </p>
             {% endif %}
             <table class="table table-hover table-responsive table-bordered">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Sobrenome</th>
-                            <th>Email</th>
-                            <th>GitHub</th>
-                            <th>Telefone</th>
-                            <th>LinkedIn</th>
-                            <th>Mandar feedback</th>
+                            <th>{% translate "Nome" %}</th>
+                            <th>{% translate "Sobrenome" %}</th>
+                            <th>{% translate "Email" %}</th>
+                            <th>{% translate "GitHub" %}</th>
+                            <th>{% translate "Telefone" %}</th>
+                            <th>{% translate "LinkedIn" %}</th>
+                            <th>{% translate "Mandar feedback" %}</th>
                             {% if job.consultancy or is_staff %}
-                            <th>Enviado Em</th>
-                            <th>Link da Resposta</th>
-                            <th>Respondido Em</th>
-                            <th>Output</th>
-                            <th>Comentário</th>
+                            <th>{% translate "Enviado Em" %}</th>
+                            <th>{% translate "Link da Resposta" %}</th>
+                            <th>{% translate "Respondido Em" %}</th>
+                            <th>{% translate "Output" %}</th>
+                            <th>{% translate "Comentário" %}</th>
                             {% endif %}
                             {% if is_staff %}
-                            <th>Editar</th>
+                            <th>{% translate "Editar" %}</th>
                             {% endif %}
                         </tr>
                     </thead>
@@ -60,7 +61,7 @@
                             <td>{% if r.comment is not None %}{{ r.comment }}{% else %}{% endif %}</td>
                             {% endif %}
                             {% if is_staff %}
-                            <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">Adicionar</a></td>
+                            <td><a href="{% url 'admin:core_jobapplication_change' r.pk %}">{% translate "Adicionar"%}</a></td>
                             {% endif %}
                         </tr>
                         {% endfor %}

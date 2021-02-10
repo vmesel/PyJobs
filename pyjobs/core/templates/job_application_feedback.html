@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load widget_tweaks %}
 {% load static %}
 {% block title %}
-Mandar Feedback - {{WEBSITE_NAME}}
+{% translate "Mandar Feedback"%} - {{WEBSITE_NAME}}
 {% endblock %}
 {%block main%}
 {% if not job_application.company_feedback %}
@@ -10,8 +11,8 @@ Mandar Feedback - {{WEBSITE_NAME}}
     <div class="container container-cadastro-vaga">
         <div class="row row-titulo">
             <div class="col-md-12">
-                <h2>Envie um feedback para {{job_application.user.first_name}}.</h2>
-                <span>Envie um feedback para a pessoa candidata a vaga de sua empresa, o que fará com que eles fiquem mais tranquilos sobre o processo seletivo</span>
+                <h2>{% translate "Envie um feedback para"%} {{job_application.user.first_name}}.</h2>
+                <span>{% translate "Envie um feedback para a pessoa candidata a vaga de sua empresa, o que fará com que eles fiquem mais tranquilos sobre o processo seletivo"%}</span>
                 <hr>
             </div>
         </div>
@@ -20,10 +21,10 @@ Mandar Feedback - {{WEBSITE_NAME}}
         {% csrf_token %}
         <div class="container container-cadastro-vaga">
             <div class="row row-titulo-etapa">
-                <h4>Descritivo do feedback para a pessoa candidata</h4>
+                <h4>{% translate "Descritivo do feedback para a pessoa candidata"%}</h4>
             </div>
             <div class="row">
-                <p>Este descritivo ser&aacute; enviado ao candidato junto com o status, assim, voc&ecirc; poder&aacute; interagir com o candidato via {{WEBSITE_NAME}}.</p>
+                <p>{% translate "Este descritivo ser&aacute; enviado ao candidato junto com o status, assim, voc&ecirc; poder&aacute; interagir com o candidato via."%} {{WEBSITE_NAME}}</p>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -32,10 +33,10 @@ Mandar Feedback - {{WEBSITE_NAME}}
                 </div>
             </div>
             <div class="row row-titulo-etapa">
-                <h4>Classifique a pessoa no processo</h4>
+                <h4>{% translate "Classifique a pessoa no processo"%}</h4>
             </div>
             <div class="row">
-                <p>Classifique a pessoa candidata para ela saber se foi aprovada ou não em seu processo seletivo.</p>
+                <p>{% translate "Classifique a pessoa candidata para ela saber se foi aprovada ou não em seu processo seletivo."%}</p>
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
@@ -46,7 +47,7 @@ Mandar Feedback - {{WEBSITE_NAME}}
                 </div>
             </div>
             <div class="row" style="padding: 20px 0;">
-                <input type="submit" name="" value="MANDAR FEEDBACK!" class="botao">
+                <input type="submit" name="" value="{% translate 'MANDAR FEEDBACK!' %}" class="botao">
             </div>
         </div>
     </form>
@@ -56,20 +57,20 @@ Mandar Feedback - {{WEBSITE_NAME}}
     <div class="container container-cadastro-vaga">
         <div class="row row-titulo">
             <div class="col-md-12">
-                <h2>Feedback enviado para: {{job_application.user.first_name}}.</h2>
-                <span>Seu feedback para {{job_application.user.first_name}} já foi enviado</span>
+                <h2>{% translate "Feedback enviado para:" %} {{job_application.user.first_name}}.</h2>
+                <span>{% translate "Seu feedback para" %} {{job_application.user.first_name}} {% translate "já foi enviado" %}</span>
                 <hr>
             </div>
         </div>
         <div class="row row-titulo">
-            <h4>O feedback ({{job_application.feedback_type}}) foi:</h4>
+            <h4>{% translate "O feedback" %} ({{job_application.feedback_type}}) {% translate "foi" %}:</h4>
         </div>
         <div class="row">
             <p>{{job_application.company_feedback}}</p>
         </div>
         <div class="row" style="padding-bottom: 20px;">
             <a href="{% url 'applied_users_details' job_application.job.pk %}?job_hash={{job_application.job.listing_hash}}">
-                <input type="button" name="" value="Voltar aos outros candidatos!" class="botao">
+                <input type="button" name="" value="{% translate 'Voltar aos outros candidatos!'%}" class="botao">
             </a>
         </div>
     </div>

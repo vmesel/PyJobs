@@ -1,19 +1,20 @@
-Olá,
+{% load i18n %} 
+{% translate "Olá," %}
 
-Você recebeu uma nova pessoa interessada em sua vaga: {{vaga.title}}
+{% translate "Você recebeu uma nova pessoa interessada em sua vaga:" %} {{vaga.title}}
 
-Nome do interessado(a): {{pessoa.user.first_name}} {{pessoa.user.last_name}}
-Email do interessado(a): {{pessoa.user.email}}
-Telefone do interessado(a): {{pessoa.cellphone}
-Linkedin do interessado(a): {{pessoa.linkedin}}
-GitHub do interessado(a): {{pessoa.github}}
-Portfolio do interessado(a): {{pessoa.portfolio}}
+{% translate "Nome do interessado(a):" %} {{pessoa.user.first_name}} {{pessoa.user.last_name}}
+{% translate "Email do interessado(a):" %} {{pessoa.user.email}}
+{% translate "Telefone do interessado(a):" %} {{pessoa.cellphone}
+{% translate "Linkedin do interessado(a):" %} {{pessoa.linkedin}}
+{% translate "GitHub do interessado(a):" %} {{pessoa.github}}
+{% translate "Portfolio do interessado(a):" %} {{pessoa.portfolio}}
 
-Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!
+{% translate "Estamos lhe enviando este email para te avisar que a pessoa está interessada em sua vaga e aguarda uma resposta!"%}
 
-Em breve, nós lhe contataremos com mais interessados!
+{% translate "Em breve, nós lhe contataremos com mais interessados!"%}
 
-Para acessar o {{nome_do_site}}, entre no link: {{url_do_site}}
+{% translate "Para acessar o"%} {{nome_do_site}}, {% translate "entre no link"%}: {{url_do_site}}
 
-Abraços,
+{% translate "Abraços,"%}
 {{dono_do_site}}

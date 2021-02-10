@@ -17,6 +17,7 @@ from pyjobs.core.email_utils import get_email_with_template
 from github import Github
 
 from webpush import send_group_notification
+from django.utils.translation import gettext_lazy as _
 
 
 @receiver(post_save, sender=Profile)
@@ -39,13 +40,13 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
     company_email_context = person_email_context
 
     template_person = "job_application_registered"
-    person_email_subject = "Parabéns! Você se inscreveu na vaga!"
+    person_email_subject = _("Parabéns! Você se inscreveu na vaga!")
     person_to_send_to = [instance.user.email]
 
     if instance.job.is_challenging:
         template_person = "job_interest_challenge"
-        person_email_subject = "Teste Técnico da empresa: {}!".format(
-            instance.job.company_name
+        person_email_subject = " ".join(
+            map(str, [_("Teste Técnico da empresa: "), instance.job.company_name, "!"])
         )
         instance.email_sent = True
         instance.email_sent_at = datetime.now()
@@ -60,7 +61,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         msg_email_company = get_email_with_template(
             "job_applicant",
             company_email_context,
-            "Você possui mais um candidato para a sua vaga",
+            _("Você possui mais um candidato para a sua vaga"),
             [instance.job.company_email],
         )
         msg_email_company.send()
@@ -119,25 +120,34 @@ def new_job_was_created(sender, instance, created, **kwargs):
         return
 
     # post to telegram
-    message_base = "Nova oportunidade! {} - {} em {}\n {}/job/{}/"
-    message_text = message_base.format(
-        instance.title,
-        instance.company_name,
-        instance.workplace,
-        settings.WEBSITE_HOME_URL,
-        instance.pk,
+    message_text = " ".join(
+        map(
+            str,
+            [
+                _("Nova oportunidade!"),
+                instance.title,
+                " - ",
+                instance.company_name,
+                _("em"),
+                instance.workplace,
+                "\n",
+                f"{settings.WEBSITE_HOME_URL}/job/{instance.pk}/",
+            ],
+        )
     )
     post_telegram_channel(message_text)
 
     msg = get_email_with_template(
         "published_job",
         {"vaga": instance},
-        "Sua oportunidade está disponível no {}".format(settings.WEBSITE_NAME),
+        " ".join(
+            map(str, [_("Sua oportunidade está disponível no"), settings.WEBSITE_NAME])
+        ),
         [instance.company_email],
     )
 
     payload = {
-        "head": f"Nova Vaga! {instance.title}",
+        "head": " ".join(map(str, [_("Nova Vaga!"), instance.title])),
         "body": instance.description,
         "url": f"{settings.WEBSITE_HOME_URL}/job/{instance.pk}/",
     }
@@ -175,8 +185,16 @@ def feedback_was_created(sender, instance, **kwargs):
                 "vaga": instance.job,
                 "job_application": instance,
             },
-            "Você recebeu um feedback da vaga {} na empresa {}".format(
-                instance.job.title, instance.job.company_name
+            " ".join(
+                map(
+                    str,
+                    [
+                        _("Você recebeu um feedback da vaga"),
+                        instance.job.title,
+                        _("na empresa"),
+                        instance.job.company_name,
+                    ],
+                )
             ),
             [instance.user.email],
         )

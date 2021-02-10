@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 {% load webpush_notifications %}
 <!DOCTYPE html>
@@ -32,17 +33,20 @@
     {% block metas %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor." name="description"/>
-    <meta name="description" content="Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.">
-    <title>{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}</title>
-    <meta name="keywords" content="empregos, vagas, buscar vagas, vagas de emprego, vagas de programador {{WEBSITE_WORKING_LANGUAGE}}, emprego de programador {{WEBSITE_WORKING_LANGUAGE}}, empregos {{WEBSITE_WORKING_LANGUAGE}}, vagas {{WEBSITE_WORKING_LANGUAGE}}, buscar vagas {{WEBSITE_WORKING_LANGUAGE}}, vagas de emprego {{WEBSITE_WORKING_LANGUAGE}}">
-    <meta name="twitter:description" content="Busque agora vagas de emprego de dev {{WEBSITE_WORKING_LANGUAGE}}. {{WEBSITE_NAME}}, a gente trabalha pelo seu trabalho.">
+    <meta content="{% translate 'Aqui seu novo emprego'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'acha você. Oportunidades para programadores'%} {{WEBSITE_WORKING_LANGUAGE}} {% translate 'nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.'%}" name="description"/>
+    <meta name="description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}">
+    <title>{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - {% translate "Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}"%}{%endif%}</title>
+    <meta name="keywords" content="{% blocktranslate %} empregos, vagas, buscar vagas, vagas de emprego, vagas de programador {{WEBSITE_WORKING_LANGUAGE}}, emprego de programador {{WEBSITE_WORKING_LANGUAGE}}, empregos {{WEBSITE_WORKING_LANGUAGE}}, vagas {{WEBSITE_WORKING_LANGUAGE}}, buscar vagas {{WEBSITE_WORKING_LANGUAGE}}, vagas de emprego {{WEBSITE_WORKING_LANGUAGE}}{% endblocktranslate %}">
+    <meta name="twitter:description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}">
     <meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
     <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
-    <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{%endif%}" />
+    <meta property="og:title" content="{% if title %}{{title}}{%else%}{{WEBSITE_NAME}} - {% blocktranslate %}Vagas de Emprego {{WEBSITE_WORKING_LANGUAGE}}{% endblocktranslate %}{%endif%}" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:description" content="{% if description %}{{description}}{%else%}Aqui é o portal onde você encontrará seu futuro emprego {{WEBSITE_WORKING_LANGUAGE}}. No {{WEBSITE_NAME}} vagas e pessoas especialistas em {{WEBSITE_WORKING_LANGUAGE}} não faltam! Somos a referência na linguagem em todo o país.{%endif%}" />
+    <meta property="og:description" content="{% blocktranslate %}Aqui seu novo emprego {{WEBSITE_WORKING_LANGUAGE}} acha você. Oportunidades para programadores {{WEBSITE_WORKING_LANGUAGE}} nas áreas de back-end, data scientists e outros devs. Receba até 10 ofertas para trabalhar como desenvolvedor.{% endblocktranslate %}" />
     {% endblock metas%}
+    <push data-push-subscribe-label="{% translate 'Inscrever no Push' %}" id="push-subscribe"></pushsub>
+    <push data-push-unsubscribe-label="{% translate 'Desinscrever no Push' %}" id="push-unsubscribe"></pushunsub>
+    <script src="{% url 'javascript-catalog' %}"></script>
     {% block metas_seo %}
     {% endblock metas_seo %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -76,7 +80,7 @@
     <section class="call-to-action-push" id="push-sub-div">
       <div class="row">
               <div class="col-lg-6 my-auto">
-                  <h3>Se inscreva em nosso push!</h3>
+                  <h3>{% translate "Se inscreva em nosso push!"%}</h3>
               </div>
               <div class="col-lg-6 my-auto">
                 {% webpush_button with_class="btn-push" %}
@@ -86,7 +90,7 @@
     <nav class="navbar navbar-expand-lg navbar-light justify-content-between shadow-sm">
         <div class="container">
             <a class="navbar-brand">
-                    <a class="nav-link" href="/" style="margin: 0; padding: 0;">
+                    <a class="nav-link" href="{% url 'index' %}" style="margin: 0; padding: 0;">
                       {% with 'assets/img/'|add:WEBSITE_URL|add:'/logo.webp' as logo_path %}
                         <img src="{% static logo_path %}" style="height:75px">
                       {% endwith %}
@@ -99,38 +103,53 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto" style="margin-right: 10px;">
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                  <input name="next" type="hidden" value="{{ redirect_to }}">
+                  <li class="nav-item active" style="margin-top: 8px;">
+                      <select name="language" onchange="this.form.submit()">
+                          {% get_current_language as LANGUAGE_CODE %}
+                          {% get_available_languages as LANGUAGES %}
+                          {% get_language_info_list for LANGUAGES as languages %}
+                          {% for language in languages %}
+                              <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                  {{ language.name_local }} ({{ language.code }})
+                              </option>
+                          {% endfor %}
+                      </select>
+                  </li>
+                </form>
                   <li class="nav-item active">
-                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                      <a class="nav-link" href="{% url 'index' %}">{% translate "Home"%}</a>
                   </li>
                   <li class="nav-item active">
-                      <a class="nav-link" href="/jobs/">Vagas</a>
+                      <a class="nav-link" href="{% url 'jobs' %}">{% translate "Vagas"%}</a>
                   </li>
                   {% if not user.is_authenticated %}
                   <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'pythonistas_signup' %}">Cadastre-se</a>
+                      <a class="nav-link" href="{% url 'pythonistas_signup' %}">{% translate "Cadastre-se"%}</a>
                   </li>
                   <li class="nav-item active form-inline my-2 my-lg-0">
                     <a class="" href="{% url 'login' %}">
                     <button class="botao-inverso">
-                      Logar
+                      {% translate "Logar"%}
                     </button>
                   </a>
                   </li>
                   {% else %}
                   <li class="nav-item active dropdown ">
                     <a class="nav-link dropdown-toggle" href="{% url 'pythonistas_area' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Área do {{USER_SUBSTANTIVE}}
+                      {% blocktranslate %} Área do {{USER_SUBSTANTIVE}} {% endblocktranslate %}
                     </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'pythonistas_area' %}">Meu painel</a>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    <a class="dropdown-item" href="{% url 'pythonistas_area' %}">{% translate "Meu painel"%}</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">{% translate "Logout"%}</a>
                   </div>
                 </li>
                   {%endif%}
               </ul>
               <div class="form-inline my-2 my-lg-0">
                   <a href="{% url 'job_creation' %}">
-                      <button class="botao">Cadastre uma vaga</button>
+                      <button class="botao">{% translate "Cadastre uma vaga"%}</button>
                   </a>
               </div>
             </div>
@@ -139,10 +158,10 @@
       <script>
         AnalyticsCode = "{{GA_CODE}}";
         linkHref = "/privacy/";
-        btn1Text = "Aceitar cookies";
-        btn2Text = "Rejeitar";
-        bannerDescription = "Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e analisar o tráfego do site.";
-        linkTexto = "Leia mais sobre nossa politica de privacidade";
+        btn1Text = "{% translate 'Aceitar cookies'%}";
+        btn2Text = "{% translate 'Rejeitar'%}";
+        bannerDescription = "{% translate 'Utilizamos cookies próprios e de terceiros para personalizar o conteúdo e analisar o tráfego do site.'%}";
+        linkTexto = "{% translate 'Leia mais sobre nossa politica de privacidade'%}";
         manageText = "Cookies";
         btn1Background = "#E82670";
         bannerPosition = "right";
@@ -161,26 +180,26 @@
             <div class="col-6 col-md">
               <h5>HOME</h5>
               <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="{% url 'login' %}">Login</a></li>
-                <li><a class="text-muted" href="{% url 'services' %}">Nossos serviços</a></li>
-                <li><a class="text-muted" href="{% url 'pythonistas_signup' %}">Cadastre-se</a></li>
-                <li><a class="text-muted" href="{% url 'privacy' %}">Pol&iacute;tica de privacidade</a></li>
+                <li><a class="text-muted" href="{% url 'login' %}">{% translate "Login"%}</a></li>
+                <li><a class="text-muted" href="{% url 'services' %}">{% translate "Nossos serviços"%}</a></li>
+                <li><a class="text-muted" href="{% url 'pythonistas_signup' %}">{% translate "Cadastre-se"%}</a></li>
+                <li><a class="text-muted" href="{% url 'privacy' %}">{% translate "Pol&iacute;tica de privacidade"%}</a></li>
               </ul>
             </div>
             <div class="col-6 col-md">
               <h5>VAGAS</h5>
               <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="/jobs/">Ver Vagas</a></li>
-                <li><a class="text-muted" href="/jobs/location/sao-paulo/">Vagas {{WEBSITE_WORKING_LANGUAGE}} em São Paulo</a></li>
-                <li><a class="text-muted" href="/jobs/location/rio-de-janeiro/">Vagas {{WEBSITE_WORKING_LANGUAGE}} em Rio de Janeiro</a></li>
-                <li><a class="text-muted" href="/jobs/location/espirito-santo/">Vagas {{WEBSITE_WORKING_LANGUAGE}} em Espirito Santo</a></li>
+                <li><a class="text-muted" href="{% url 'jobs' %}">{% translate "Ver Vagas"%}</a></li>
+                <li><a class="text-muted" href="{% url 'job_state_view' 'sao-paulo' %}">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - São Paulo</a></li>
+                <li><a class="text-muted" href="{% url 'job_state_view' 'rio-de-janeiro' %}">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - Rio de Janeiro</a></li>
+                <li><a class="text-muted" href="{% url 'job_state_view' 'espirito-santo' %}">{% translate "Vagas"%} {{WEBSITE_WORKING_LANGUAGE}} - Espirito Santo</a></li>
               </ul>
             </div>
             <div class="col-6 col-md">
-              <h5>CADASTRE-SE</h5>
+              <h5>{% translate "CADASTRE-SE"%}</h5>
               <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="{% url 'job_creation' %}">Cadastre uma vaga</a></li>
-                <li><a class="text-muted" href="{% url 'pythonistas_signup' %}">Cadastre-se</a></li>
+                <li><a class="text-muted" href="{% url 'job_creation' %}">{% translate "Cadastre uma vaga"%}</a></li>
+                <li><a class="text-muted" href="{% url 'pythonistas_signup' %}">{% translate "Cadastre-se"%}</a></li>
               </ul>
             </div>
           </div>

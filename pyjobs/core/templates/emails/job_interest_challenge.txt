@@ -1,6 +1,7 @@
-Olá {{instance.user.name}},
+{% load i18n %}
+{% translate "Olá"%} {{instance.user.name}},
 
-A vaga {{vaga.title}}, como forma de avaliar seu código, está lhe enviando um desafio de código disponibilizado em: {{url_do_site}}/job/{{vaga.pk}}/challenge_submit
+{% translate "A vaga"%} {{vaga.title}}, {% translate "como forma de avaliar seu código, está lhe enviando um desafio de código disponibilizado em"%}: {{url_do_site}}/job/{{vaga.pk}}/challenge_submit
 
-Abraços,
+{% translate "Abraços" %},
 {{dono_do_site}}

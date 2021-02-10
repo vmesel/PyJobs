@@ -11,6 +11,7 @@ from django_select2.forms import Select2MultipleWidget, Select2Widget
 
 from pyjobs.core.models import Job, Profile, Skill, JobApplication
 from pyjobs.marketing.models import Contact
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomModelForm(ModelForm):
@@ -54,6 +55,8 @@ class JobForm(CustomModelForm):
             "challenge_interested",
             "ad_interested",
             "contract_form",
+            "currency",
+            "country",
         ]
         widgets = {"skills": Select2MultipleWidget}
 
@@ -61,10 +64,6 @@ class JobForm(CustomModelForm):
         super(JobForm, self).__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.widget.attrs.update({"placeholder": field.label})
-
-        for key, field in self.fields.items():
-            if key in ["state", "salary_range", "job_level"]:
-                field.choices = field.choices[:-1]
 
 
 class ContactForm(CustomModelForm):
@@ -86,39 +85,39 @@ class JobApplicationForm(ModelForm):
 
 class RegisterForm(UserCreationForm):
     github = forms.URLField(
-        label="Github (opcional)",
-        widget=forms.TextInput(attrs={"placeholder": "Link do seu GitHub"}),
+        label=_("Github (opcional)"),
+        widget=forms.TextInput(attrs={"placeholder": _("Link do seu GitHub")}),
         required=False,
     )
 
     linkedin = forms.URLField(
-        label="Linkedin (opcional)",
-        widget=forms.TextInput(attrs={"placeholder": "Link do seu Linkedin"}),
+        label=_("Linkedin (opcional)"),
+        widget=forms.TextInput(attrs={"placeholder": _("Link do seu Linkedin")}),
         required=False,
     )
 
     portfolio = forms.URLField(
-        label="Portfolio (opcional)",
-        widget=forms.TextInput(attrs={"placeholder": "Link do seu portfolio"}),
+        label=_("Portfolio (opcional)"),
+        widget=forms.TextInput(attrs={"placeholder": _("Link do seu portfolio")}),
         required=False,
     )
 
     cellphone = forms.CharField(
-        label="Celular",
-        widget=forms.TextInput(attrs={"placeholder": "Preencha com o seu telefone"}),
+        label=_("Celular"),
+        widget=forms.TextInput(attrs={"placeholder": _("Preencha com o seu telefone")}),
         required=True,
     )
 
     skills_ = forms.ModelMultipleChoiceField(
-        label="Skills", queryset=Skill.objects.all(), widget=Select2MultipleWidget
+        label=_("Skills"), queryset=Skill.objects.all(), widget=Select2MultipleWidget
     )
 
     on_mailing_list = forms.BooleanField(
-        label="Ao clicar, você aceita estar em nosso mailing list", required=False
+        label=_("Ao clicar, você aceita estar em nosso mailing list"), required=False
     )
 
     agree_privacy_policy = forms.BooleanField(
-        label="Ao clicar, você aceita nossa política de privacidade", required=True
+        label=_("Ao clicar, você aceita nossa política de privacidade"), required=True
     )
 
     class Meta:
@@ -157,8 +156,8 @@ class RegisterForm(UserCreationForm):
 
 class EditProfileForm(forms.ModelForm):
     email = forms.EmailField(
-        label="Seu e-mail",
-        widget=forms.TextInput(attrs={"placeholder": "seu-email@atualizado.com"}),
+        label=_("Seu e-mail"),
+        widget=forms.TextInput(attrs={"placeholder": _("seu-email@atualizado.com")}),
         required=False,
     )
 

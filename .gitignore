@@ -161,9 +161,6 @@ coverage.xml
 *,cover
 .hypothesis/
 
-# Translations
-*.mo
-
 #VSCode stuff
 .vscode
 
@@ -216,3 +213,4 @@ ENV/
 
 # Postgres Docker container data directory
 db/
+.DS_Store

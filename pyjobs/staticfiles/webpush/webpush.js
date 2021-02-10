@@ -32,7 +32,7 @@ window.addEventListener('load', function() {
     // Are Notifications supported in the service worker?  
     if (!(reg.showNotification)) {
         // Show a message and activate the button
-        subBtn.textContent = 'Inscrever no Push';
+        subBtn.textContent = document.getElementById('push-subscribe').getAttribute("data-push-subscribe-label");
         return;
     }
 
@@ -41,7 +41,7 @@ window.addEventListener('load', function() {
     // user changes the permission  
     if (Notification.permission === 'denied') {
       // Show a message and activate the button
-      subBtn.textContent = 'Inscrever no Push';
+      subBtn.textContent = document.getElementById('push-subscribe').getAttribute("data-push-subscribe-label");
       subBtn.disabled = false;
       return;
     }
@@ -49,7 +49,7 @@ window.addEventListener('load', function() {
     // Check if push messaging is supported  
     if (!('PushManager' in window)) {
       // Show a message and activate the button
-      subBtn.textContent = 'Inscrever no Push';
+      subBtn.textContent = document.getElementById('push-subscribe').getAttribute("data-push-subscribe-label");
       subBtn.disabled = false;
       return;  
     }
@@ -63,7 +63,7 @@ window.addEventListener('load', function() {
               // Check the information is saved successfully into server
               if (response.status === 201) {
                 // Show unsubscribe button instead
-                subBtn.textContent = 'Desinscrever no Push';
+                subBtn.textContent = document.getElementById('push-unsubscribe').getAttribute("data-push-unsubscribe-label");
                 subBtn.disabled = false;
                 isPushEnabled = true;
               }
@@ -109,7 +109,7 @@ function subscribe(reg) {
                 // Check the information is saved successfully into server
                 if (response.status === 201) {
                   // Show unsubscribe button instead
-                  subBtn.textContent = 'Desinscrever no Push';
+                  subBtn.textContent = document.getElementById('push-unsubscribe').getAttribute("data-push-unsubscribe-label");
                   subBtn.disabled = false;
                   isPushEnabled = true;
                 }
@@ -160,14 +160,14 @@ function unsubscribe(reg) {
               subscription.unsubscribe()
                 .then(
                   function(successful) {
-                    subBtn.textContent = 'Inscrever no Push';
+                    subBtn.textContent = document.getElementById('push-subscribe').getAttribute("data-push-subscribe-label");
                     isPushEnabled = false;
                     subBtn.disabled = false;
                   }
                 )
                 .catch(
                   function(error) {
-                    subBtn.textContent = 'UnInscrever no Push';
+                    subBtn.textContent = document.getElementById('push-unsubscribe').getAttribute("data-push-unsubscribe-label");
                     subBtn.disabled = false;
                   }
                 );

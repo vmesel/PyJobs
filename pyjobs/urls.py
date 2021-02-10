@@ -14,9 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.sites.models import Site
+from django.views.i18n import JavaScriptCatalog
 
 from pyjobs.core.views import handler_404
 
@@ -28,10 +30,15 @@ except:
 urlpatterns = [
     url(r"^admin_v2/", admin.site.urls),
     url(r"api/", include("pyjobs.api.urls", namespace="api")),
-    url(r"", include("pyjobs.core.urls")),
-    url(r"", include("pyjobs.marketing.urls")),
-    url(r"", include("pyjobs.partners.urls")),
     url(r"^webpush/", include("webpush.urls")),
+    url("^", include("django.contrib.auth.urls")),
+    url("i18n/", include("django.conf.urls.i18n")),
+]
+
+urlpatterns += i18n_patterns(
+    url("", include("pyjobs.core.urls")),
+    url("", include("pyjobs.marketing.urls")),
+    url("", include("pyjobs.partners.urls")),
     url(
         r"^login/$",
         auth_views.LoginView.as_view(template_name="login.html"),
@@ -45,6 +52,8 @@ urlpatterns = [
         ),
         name="password_reset",
     ),
-    url("^", include("django.contrib.auth.urls")),
-]
+    url(r"^jsi18n/$", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    prefix_default_language=False,
+)
+
 handler404 = handler_404
