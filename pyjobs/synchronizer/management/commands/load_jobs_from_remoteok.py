@@ -22,7 +22,7 @@ class Command(BaseCommand):
         )
         content = response.json()
         for job in content[1:]:
-            if Job.objects.filter(issue_number=job["id"]):
+            if Job.objects.filter(issue_number=job["id"]).count() > 0:
                 continue
 
             new_job_data = {
