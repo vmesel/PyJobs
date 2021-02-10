@@ -21,11 +21,10 @@ class Command(BaseCommand):
             headers=headers,
         )
         content = response.json()
-        for job in content[1:10]:
+        for job in content:
             if Job.objects.filter(issue_number=job["id"]):
                 continue
 
-            # import ipdb; ipdb.set_trace()
             new_job_data = {
                 "title": job["position"],
                 "company_name": job["company"],
@@ -51,6 +50,7 @@ class Command(BaseCommand):
                     new_job_data["company_name"],
                 ]
             ):
+                print(new_job_data)
                 job = Job.objects.create(**new_job_data)
                 job.skills.set(skills)
                 job.save()
