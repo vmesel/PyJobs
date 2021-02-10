@@ -21,6 +21,7 @@ class Command(BaseCommand):
             headers=headers,
         )
         content = response.json()
+        print(content)
         for job in content[1:]:
             if Job.objects.filter(issue_number=job["id"]).count() > 0:
                 print(job)
