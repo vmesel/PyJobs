@@ -21,10 +21,8 @@ class Command(BaseCommand):
             headers=headers,
         )
         content = response.json()
-        print(content)
         for job in content[1:]:
             if Job.objects.filter(issue_number=job["id"]).count() > 0:
-                print(job)
                 continue
 
             new_job_data = {
@@ -52,7 +50,6 @@ class Command(BaseCommand):
                     new_job_data["company_name"],
                 ]
             ):
-                print(new_job_data)
                 job = Job.objects.create(**new_job_data)
                 job.skills.set(skills)
                 job.save()
