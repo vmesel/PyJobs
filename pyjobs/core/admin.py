@@ -2,14 +2,7 @@ from django.contrib import admin
 from django.core.mail import send_mail
 from django.utils.html import mark_safe
 from datetime import datetime
-from pyjobs.core.models import (
-    Job,
-    JobApplication,
-    Profile,
-    Skill,
-    Country,
-    Currency
-)
+from pyjobs.core.models import Job, JobApplication, Profile, Skill, Country, Currency
 from pyjobs.marketing.triggers import (
     send_offer_email_template,
     send_feedback_collection_email,

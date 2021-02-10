@@ -1956,7 +1956,7 @@ msgstr ""
 
 #: pyjobs/settings.py:254
 msgid "NI"
-msgstr ""
+msgstr "Não informado"
 
 #: pyjobs/settings.py:258 pyjobs/settings.py:269
 msgid "Estágio"
