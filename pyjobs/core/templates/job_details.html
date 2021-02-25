@@ -3,7 +3,7 @@
 {% load static %}
 {% load humanize %}
 {%block metas%}
-<meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
+<meta property="og:image" content="{% url 'thumbnail_view' job.unique_slug %}" />
 <meta property="og:title" content="{{job.title}} {% translate 'em'%} {{job.company_name}} | {{WEBSITE_NAME}}" />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:description" content="{{job.description|truncatechars:240}}}" />
@@ -56,9 +56,9 @@
 <section class="detalhes-vaga">
     <div class="container">
         <div class="top-breadcrumb-nav">
-            <a href="{% url 'jobs' %}">Home</a> > <a href="{% url 'jobs' %}">{% translate "Vagas"%}</a> > <a href="{% url 'job_view' job.pk%}">{{job.title}}</a>
+            <a href="{% url 'jobs' %}">Home</a> > <a href="{% url 'jobs' %}">{% translate "Vagas"%}</a> > <a href="{% url 'job_view' job.unique_slug%}">{{job.title}}</a>
         </div>
-        <a href="{% url 'job_view' job.pk %}">
+        <a href="{% url 'job_view' job.unique_slug %}">
             <h2>{{job.title}}</h2>
         </a>
         <h3 style="font-size:18px;">{% translate "Vaga Postada:"%} <span>{{job.created_at|naturalday}}</span></h3>
@@ -68,7 +68,7 @@
                 {% if logged_in %}
                   {% if applied %}
                     {% if job.is_challenging %}
-                        <a href="{% url 'job_application_challenge_submission' job.pk %}">
+                        <a href="{% url 'job_application_challenge_submission' job.unique_slug %}">
                             <button class="botao" type="button">{% translate "Clique aqui e preencha o desafio técnico!"%}</button>
                         </a>
                     {% else %}
@@ -97,7 +97,7 @@
                 {% endif %}
             </div>
             <div class="col-lg-4 botoes-detalhes">
-                <a href="{% url 'sharing_job_view' job.pk %}">
+                <a href="{% url 'sharing_job_view' job.unique_slug %}">
                     <input type="button" value="{% translate 'Indique'%} {{USER_SUBSTANTIVE}}s!" class="botao" style="background-color: #0069D9!important;font-size:12px;">
                 </a>
             </div>
@@ -156,7 +156,7 @@
         <div class="row">
             <ul>
                 {% for similar_job in similar_jobs %}
-                    <li><a href="{% url 'job_view' similar_job.pk %}?utm-source=recommended-jobs">{{similar_job.title}}</a></li>
+                    <li><a href="{% url 'job_view' similar_job.unique_slug %}?utm-source=recommended-jobs">{{similar_job.title}}</a></li>
                 {% endfor %}
                 </ul>
         </div>

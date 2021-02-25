@@ -353,7 +353,7 @@
                       <td>
                           <p>{% translate "Olá"%} {{instance.user.name}},</p>
 
-                            <p>{% translate "A vaga"%} {{vaga.title}}, {% translate "como forma de avaliar seu código, está lhe enviando um desafio de código disponibilizado em"%}: <a href="{{url_do_site}}/job/{{vaga.pk}}/challenge_submit">{{url_do_site}}/job/{{vaga.pk}}/challenge_submit</a>.</p>
+                            <p>{% translate "A vaga"%} {{vaga.title}}, {% translate "como forma de avaliar seu código, está lhe enviando um desafio de código disponibilizado em"%}: <a href="{{url_do_site}}/job/{{vaga.unique_slug}}/challenge_submit">{{url_do_site}}/job/{{vaga.unique_slug}}/challenge_submit</a>.</p>
 
                           <p>{% translate "Abraços" %},</p>
                           <p>{{dono_do_site}}</p>

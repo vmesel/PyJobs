@@ -5,7 +5,7 @@ Olá {{vaga.company_name}},
 Agora a vaga {{vaga.title}} foi avaliada por nossos colaboradores e foi publicada!
 
 Para acessar a sua vaga, entre no link:
-{{url_do_site}}/job/{{vaga.pk}}/
+{{url_do_site}}/job/{{vaga.unique_slug}}/
 
 
 Para acompanhar as inscrições na sua vaga, caso você não tenha posto um link no cadastro de

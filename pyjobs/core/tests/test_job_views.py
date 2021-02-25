@@ -45,7 +45,7 @@ class HomeJobsViewsTest(TestCase):
         self.assertTrue(job_title in self.jobs_page_html)
 
     def test_job_url_is_in_home(self):
-        job_url = "/job/{}/".format(str(self.job.pk))
+        job_url = "/job/{}/".format(str(self.job.unique_slug))
         self.assertTrue(job_url in self.jobs_page_html)
 
 
@@ -68,9 +68,9 @@ class JobDetailsViewTest(TestCase):
         )
         self.job.save()
         self.client = Client()
-        self.job_view_html = self.client.get(f"/job/{self.job.pk}/").content.decode(
-            "utf-8"
-        )
+        self.job_view_html = self.client.get(
+            f"/job/{self.job.unique_slug}/"
+        ).content.decode("utf-8")
 
     def test_job_title_in_view(self):
         self.assertTrue(self.job.title in self.job_view_html)
@@ -91,7 +91,7 @@ class JobDetailsViewTest(TestCase):
         self.assertTrue(self.job.requirements in self.job_view_html)
 
     def test_job_status_code_is_200(self):
-        status_code = self.client.get(f"/job/{self.job.pk}/").status_code
+        status_code = self.client.get(f"/job/{self.job.unique_slug}/").status_code
         self.assertEqual(status_code, 200)
 
 
@@ -135,21 +135,21 @@ class PyJobsJobApplication(TestCase):
         self.client = Client()
 
     def test_check_applied_for_job_anon(self):
-        request_client = self.client.get("/job/{}/".format(self.job.pk))
+        request_client = self.client.get("/job/{}/".format(self.job.unique_slug))
         request = request_client.content.decode("utf-8")
         expected_response = "Entre e Aplique a vaga!"
         self.assertTrue(expected_response in request)
 
     def test_check_applied_for_job(self):
         self.client.login(username="jacob", password="top_secret")
-        request_client = self.client.get("/job/{}/".format(self.job.pk))
+        request_client = self.client.get("/job/{}/".format(self.job.unique_slug))
         request = request_client.content.decode("utf-8")
         expected_response = "Candidate-se para esta vaga pelo"
         self.assertTrue(expected_response in request)
 
     def test_check_if_profile_with_no_skills_can_apply(self):
         self.client.login(username="jacob", password="top_secret")
-        job_url = "/job/{}/".format(self.job.pk)
+        job_url = "/job/{}/".format(self.job.unique_slug)
         request_client = self.client.get(job_url)
         request = request_client.content.decode("utf-8")
         request_apply = self.client.post(job_url, follow=True)
@@ -327,18 +327,21 @@ class PyJobsJobCloseView(TestCase):
             self.assertEqual(1, Job.objects.filter(is_open=True).count())
 
     def test_valid_close_view(self):
-        kwargs = {"pk": self.job.pk, "close_hash": self.job.close_hash()}
+        kwargs = {
+            "unique_slug": self.job.unique_slug,
+            "close_hash": self.job.close_hash(),
+        }
         self._assert_close_link(kwargs, closed=True)
 
     def test_close_view_for_non_existent_job(self):
-        wrong_pk = self.job.pk + 1
-        kwargs = {"pk": wrong_pk, "close_hash": self.job.close_hash()}
+        wrong_pk = self.job.unique_slug[:-2]
+        kwargs = {"unique_slug": wrong_pk, "close_hash": self.job.close_hash()}
         self._assert_close_link(kwargs, closed=False)
 
     def test_close_view_with_wrong_hash(self):
         right_hash = self.job.close_hash()
         wrong_hash = right_hash[64:] + right_hash[:64]
-        kwargs = {"pk": self.job.pk, "close_hash": wrong_hash}
+        kwargs = {"unique_slug": self.job.unique_slug, "close_hash": wrong_hash}
         self._assert_close_link(kwargs, closed=False)
 
 
@@ -466,10 +469,10 @@ class PyJobsJobChallenge(TestCase):
 
     def test_if_job_that_is_not_challenging_redirects_to_job_page(self):
         response = self.client.get(
-            "/job/{}/challenge_submit/".format(self.job.pk), follow=True
+            "/job/{}/challenge_submit/".format(self.job.unique_slug), follow=True
         )
         url = response.redirect_chain[0][0]
-        self.assertEqual(url, "/job/{}/".format(self.job.pk))
+        self.assertEqual(url, "/job/{}/".format(self.job.unique_slug))
 
     @patch("pyjobs.core.views.JobApplicationForm")
     def test_if_user_applies(self, _mocked_form):
@@ -485,7 +488,7 @@ class PyJobsJobChallenge(TestCase):
         mock_form.is_valid.return_value = True
 
         response = self.client.post(
-            "/job/{}/challenge_submit/".format(self.job.pk),
+            "/job/{}/challenge_submit/".format(self.job.unique_slug),
             data={"challenge_response_link": "http://www.google.com"},
             content_type="application/x-www-form-urlencoded",
             follow=True,
@@ -493,7 +496,9 @@ class PyJobsJobChallenge(TestCase):
         mock_form.save.assert_called()
 
     def test_if_old_job_message_alerts(self):
-        response = self.client.get("/job/{}/".format(self.job.pk), follow=False)
+        response = self.client.get(
+            "/job/{}/".format(self.job.unique_slug), follow=False
+        )
         content = response.content.decode("utf-8")
         self.assertIn("Confirme com a empresa sobre a disponbilidade!", content)
 
@@ -539,14 +544,14 @@ class AppliedUsersDetailsTest(TestCase):
         self.client.login(username="jacob", password="top_secret")
 
     def test_if_job_application_is_in_page(self):
-        response = self.client.get("/job/{}/details/".format(self.job.pk))
+        response = self.client.get("/job/{}/details/".format(self.job.unique_slug))
         content = response.content.decode("utf-8")
         self.assertIn(self.user.first_name, content)
         self.assertIn(self.user.last_name, content)
         self.assertIn(self.profile.github, content)
 
     def test_if_get_job_applications_page_works(self):
-        response = self.client.get("/job/{}/app/".format(self.job.pk))
+        response = self.client.get("/job/{}/app/".format(self.job.unique_slug))
         content = response.content.decode("utf-8")
         csv_reader = csv.reader(io.StringIO(content))
         body = list(csv_reader)
@@ -578,5 +583,5 @@ class JobApplicationDetailsWithoutLoginTest:
         self.client = Client()
 
     def test_if_application_details_are_not_available_for_wrong_users(self):
-        response = self.client.get("/job/{}/details".format(self.job.pk))
+        response = self.client.get("/job/{}/details".format(self.job.unique_slug))
         self.assertEqual(response.status_code, 301)

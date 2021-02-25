@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.sites",
     "django_extensions",
+    "django.contrib.redirects",
     "pyjobs.core",
     "pyjobs.api",
     "pyjobs.partners",
@@ -71,6 +72,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+    "pyjobs.middleware.RedirectFallbackMiddleware",
 ]
 
 

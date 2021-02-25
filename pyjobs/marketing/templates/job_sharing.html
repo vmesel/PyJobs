@@ -3,7 +3,7 @@
 {% load static %}
 {% load humanize %}
 {%block ogimage%}
-<meta property="og:image" content="{% url 'thumbnail_view' job.pk %}" />
+<meta property="og:image" content="{% url 'thumbnail_view' job.unique_slug %}" />
 <link rel="canonical" href="{% url 'jobs' %}"/>
 {% endblock %}
 {% block title %}

@@ -184,12 +184,13 @@ def robots_view(request):
     return render(request, template_name="robots.txt")
 
 
-def job_view(request, pk):
+def job_view(request, unique_slug):
+    job = get_object_or_404(Job, unique_slug=unique_slug)
     context = {
-        "job": get_object_or_404(Job, pk=pk),
+        "job": job,
         "logged_in": False,
-        "next_job_pk": int(pk) + 1,
-        "previous_job_pk": int(pk) - 1,
+        "next_job_pk": int(job.pk) + 1,
+        "previous_job_pk": int(job.pk) - 1,
         "webpush": WEBPUSH_CONTEXT,
     }
     if context["job"].salary_range != 10:
@@ -223,7 +224,7 @@ def job_view(request, pk):
 
     if request.method == "POST":
         context["job"].apply(request.user)
-        return redirect("/job/{}/".format(context["job"].pk))
+        return redirect("/job/{}/".format(context["job"].unique_slug))
 
     if request.user.is_authenticated:
         context["applied"] = JobApplication.objects.filter(
@@ -262,8 +263,8 @@ def register_new_job(request):
     return render(request, template_name="generic.html", context=context)
 
 
-def close_job(request, pk, close_hash):
-    job = get_object_or_404(Job, pk=pk)
+def close_job(request, unique_slug, close_hash):
+    job = get_object_or_404(Job, unique_slug=unique_slug)
     if close_hash != job.close_hash():
         raise Http404(_("No Job matches the given hash."))
 
@@ -277,8 +278,8 @@ def close_job(request, pk, close_hash):
     return render(request, template_name="generic.html", context=context)
 
 
-def applied_users_details(request, pk):
-    job_info = get_object_or_404(Job, pk=pk)
+def applied_users_details(request, unique_slug):
+    job_info = get_object_or_404(Job, unique_slug=unique_slug)
 
     job_hash = request.GET.get("job_hash")
     job_hash = job_hash == job_info.listing_hash()
@@ -288,7 +289,7 @@ def applied_users_details(request, pk):
             request,
             template_name="applied_users_details.html",
             context={
-                "rows": JobApplication.objects.filter(job__pk=pk),
+                "rows": JobApplication.objects.filter(job__unique_slug=unique_slug),
                 "job": job_info,
                 "is_staff": request.user.is_staff,
                 "webpush": WEBPUSH_CONTEXT,
@@ -448,13 +449,13 @@ class PremiumJobsFeed(Feed):
 
 
 @login_required
-def job_application_challenge_submission(request, pk):
+def job_application_challenge_submission(request, unique_slug):
     user_applied = JobApplication.objects.filter(
-        job__pk=pk, user__pk=request.user.pk
+        job__unique_slug=unique_slug, user__pk=request.user.pk
     ).first()
 
     if not user_applied or not user_applied.job.is_challenging:
-        return redirect("/job/{}/".format(pk))
+        return redirect("/job/{}/".format(unique_slug))
 
     form = JobApplicationForm(request.POST or None, instance=user_applied)
 
@@ -477,10 +478,10 @@ def job_application_challenge_submission(request, pk):
 
 
 @staff_member_required
-def get_job_applications(request, pk):
+def get_job_applications(request, unique_slug):
+    job = get_object_or_404(Job, unique_slug=unique_slug)
     users_grades = [
         (
-            "job_pk",
             "grade",
             "first_name",
             "last_name",
@@ -500,8 +501,7 @@ def get_job_applications(request, pk):
 
     users_grades += [
         (
-            pk,
-            job_applicant.user.profile.profile_skill_grade(pk),
+            job_applicant.user.profile.profile_skill_grade(job.pk),
             job_applicant.user.first_name,
             job_applicant.user.last_name,
             job_applicant.user.email,
@@ -516,12 +516,12 @@ def get_job_applications(request, pk):
             job_applicant.comment,
             job_applicant.output_sent,
         )
-        for job_applicant in JobApplication.objects.filter(job__pk=pk)
+        for job_applicant in JobApplication.objects.filter(job__unique_slug=unique_slug)
     ]
 
     response = HttpResponse(content_type="text/csv")
     response["Content-Disposition"] = 'attachment; filename="job_{}_users.csv"'.format(
-        pk
+        unique_slug
     )
     writer = csv.writer(response)
     writer.writerows(users_grades)
@@ -529,8 +529,8 @@ def get_job_applications(request, pk):
     return response
 
 
-def thumbnail_view(request, pk):
-    job = Job.objects.filter(pk=pk).first()
+def thumbnail_view(request, unique_slug):
+    job = Job.objects.filter(unique_slug=unique_slug).first()
     im = generate_thumbnail(job=job)
 
     response = HttpResponse(content_type="image/png")

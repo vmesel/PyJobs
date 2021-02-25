@@ -27,7 +27,7 @@ class SharingModelTest(TestCase):
             is_staff=True,
         )
 
-        self.job = make(Job)
+        self.job = make(Job, title="Dev Python", company_name="Jacob & Co")
 
         self.sharing_obj = Share.objects.create(
             user_sharing=self.user, user_receiving_email="test@test.com", job=self.job
@@ -63,16 +63,16 @@ class SharingModelTest(TestCase):
 
     def test_job_sharing_view_status_code(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.get("/job/{}/share/".format(self.job.pk))
+        response = self.client.get("/job/{}/share/".format(self.job.unique_slug))
         self.assertEqual(response.status_code, 200)
 
     def test_job_sharing_view_with_invalid_form_data(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.get("/job/{}/share/".format(self.job.pk))
+        response = self.client.get("/job/{}/share/".format(self.job.unique_slug))
         self.assertEqual(response.status_code, 200)
         data = {"user_receiving_email": "testing"}
         response_post = self.client.post(
-            "/job/{}/share/".format(self.job.pk), data=data
+            "/job/{}/share/".format(self.job.unique_slug), data=data
         )
         content = response_post.content.decode("utf-8")
         self.assertEqual(response_post.status_code, 200)
@@ -80,11 +80,11 @@ class SharingModelTest(TestCase):
 
     def test_job_sharing_view_with_valid_form_data(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.get("/job/{}/share/".format(self.job.pk))
+        response = self.client.get("/job/{}/share/".format(self.job.unique_slug))
         self.assertEqual(response.status_code, 200)
         data = {"user_receiving_email": "testing@test.com"}
         response_post = self.client.post(
-            "/job/{}/share/".format(self.job.pk), data=data
+            "/job/{}/share/".format(self.job.unique_slug), data=data
         )
         content = response_post.content.decode("utf-8")
         self.assertEqual(response_post.status_code, 200)

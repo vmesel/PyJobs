@@ -43,7 +43,7 @@ Conheça nossos parceiros
                             {% if partner.related_jobs.all %}
                             <h4>{% translate "Vagas" %}</h4>
                                 {%for job in partner.related_jobs.all%}
-                                    <a href="{% url 'job_view' job.pk %}">
+                                    <a href="{% url 'job_view' job.unique_slug %}">
                                         <span class="badge badge-pill badge-primary">{{job.title}}</span>
                                     </a>
                                 {%endfor%}

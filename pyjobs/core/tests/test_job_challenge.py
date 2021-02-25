@@ -40,7 +40,7 @@ class TestingRestrictedViews(TestCase):
         self.client.login(username="jacob", password="top_secret")
 
     def test_if_user_is_not_applied_to_job(self):
-        response = self.client.get("/job/{}".format(self.job.pk), follow=True)
+        response = self.client.get("/job/{}".format(self.job.unique_slug), follow=True)
         self.assertEqual(200, response.status_code)
         self.assertTrue(b"Candidate-se para esta vaga pelo" in response.content)
 
@@ -51,7 +51,7 @@ class TestingRestrictedViews(TestCase):
             email_sent=True,
             email_sent_at=datetime.datetime.now(),
         )
-        response = self.client.get("/job/{}".format(self.job.pk), follow=True)
+        response = self.client.get("/job/{}".format(self.job.unique_slug), follow=True)
         self.assertEqual(200, response.status_code)
         self.assertTrue(b"Clique aqui e preencha o desafio" in response.content)
 
@@ -63,7 +63,7 @@ class TestingRestrictedViews(TestCase):
             email_sent_at=datetime.datetime.now(),
         )
         response = self.client.get(
-            "/job/{}/challenge_submit/".format(self.job.pk), follow=True
+            "/job/{}/challenge_submit/".format(self.job.unique_slug), follow=True
         )
 
     def test_if_applied_user_cant_answer_job_challenge(self):
@@ -76,7 +76,7 @@ class TestingRestrictedViews(TestCase):
             challenge_response_link="http://www.google.com",
         )
         response = self.client.get(
-            "/job/{}/challenge_submit/".format(self.job.pk), follow=True
+            "/job/{}/challenge_submit/".format(self.job.unique_slug), follow=True
         )
 
         self.assertEqual(200, response.status_code)

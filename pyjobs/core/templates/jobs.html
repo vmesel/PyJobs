@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
-                    <a href="{% url 'job_view' job.pk %}?utm-source=jobs-listing">
+                    <a href="{% url 'job_view' job.unique_slug %}?utm-source=jobs-listing">
                         <input type="button" value="{% translate 'VER MAIS DETALHES'%}" class="botao vertical-center">
                     </a>
                 </div>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 vertical-center" style="margin-right:-15px;padding-right:0px;height:100%;">
-                    <a href="{% url 'job_view' job.pk %}?utm-source=jobs-listing">
+                    <a href="{% url 'job_view' job.unique_slug %}?utm-source=jobs-listing">
                         <input type="button" value="{% translate 'VER MAIS DETALHES'%}" class="botao vertical-center">
                     </a>
                 </div>

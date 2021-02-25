@@ -7,9 +7,9 @@ from pyjobs.core.models import Job
 
 
 @login_required
-def sharing_job_view(request, pk):
+def sharing_job_view(request, unique_slug):
     context = {
-        "job": get_object_or_404(Job, pk=pk),
+        "job": get_object_or_404(Job, unique_slug=unique_slug),
         "logged_in": False,
     }
 

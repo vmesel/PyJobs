@@ -36,9 +36,9 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    url("", include("pyjobs.core.urls")),
     url("", include("pyjobs.marketing.urls")),
     url("", include("pyjobs.partners.urls")),
+    url("", include("pyjobs.core.urls")),
     url(
         r"^login/$",
         auth_views.LoginView.as_view(template_name="login.html"),
