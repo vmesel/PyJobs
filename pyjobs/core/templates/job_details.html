@@ -83,7 +83,7 @@
                         {%else%}
                         <form action="." method="post">
                             {% csrf_token %}
-                            <button class="botao" type="submit">{% translate "Candidate-se para esta vaga pelo"%} {{WEBSITE_NAME}}</button>
+                            <button class="botao" type="submit" onclick="this.disabled=true;this.value='{% translate "Enviando" %}'; this.form.submit();">{% translate "Candidate-se para esta vaga pelo"%} {{WEBSITE_NAME}}</button>
                         </form>
                         {%endif%}
                     {% else %}
