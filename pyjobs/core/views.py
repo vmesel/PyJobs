@@ -542,6 +542,28 @@ def handler_404(request, exception):
     return redirect("/")
 
 
+def handler_500(request, *args, **kwargs):
+    response = render(
+        request,
+        "generic.html",
+        context={
+            "message_first": str(_("Oops... Passamos vergonha agora! =P")),
+            "message_second": str(
+                _(
+                    "Já mandamos o erro que acabou de acontecer contigo ao administrador!"
+                )
+            ),
+            "message_explaining": str(
+                _(
+                    "De vez em quando nós também erramos, esperamos que você não fique chateado e volte ao nosso site"
+                )
+            ),
+        },
+    )
+    response.status_code = 500
+    return response
+
+
 def job_application_feedback(request, pk):
     job_application = get_object_or_404(JobApplication, pk=pk)
     feedback_form = JobApplicationFeedbackForm(

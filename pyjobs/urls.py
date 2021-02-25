@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.sites.models import Site
 from django.views.i18n import JavaScriptCatalog
 
-from pyjobs.core.views import handler_404
+from pyjobs.core.views import handler_404, handler_500
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -57,3 +57,4 @@ urlpatterns += i18n_patterns(
 )
 
 handler404 = handler_404
+handler500 = handler_500
