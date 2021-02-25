@@ -17,7 +17,7 @@
             <center><p>{% translate "Postada" %}: {{job.created_at|naturalday}}</p></center>
             {% if is_staff %}
             <p>
-                {% translate "Para baixar estes dados em CSV" %}, <a href="{% url 'get_job_applications' job.pk %}">{% translate "Clique Aqui" %}</a>!
+                {% translate "Para baixar estes dados em CSV" %}, <a href="{% url 'get_job_applications' job.unique_slug %}">{% translate "Clique Aqui" %}</a>!
             </p>
             {% endif %}
             <table class="table table-hover table-responsive table-bordered">

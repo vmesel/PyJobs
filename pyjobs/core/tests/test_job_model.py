@@ -18,7 +18,7 @@ class JobTest_01(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        self.job = Job(
+        self.job = Job.objects.create(
             title="Vaga 1",
             workplace="Sao Paulo",
             company_name="XPTO",
@@ -26,7 +26,6 @@ class JobTest_01(TestCase):
             company_email="vm@xpto.com",
             description="Job bem maneiro",
         )
-        self.job.save()
         self.email, *_ = mail.outbox
 
     def test_job_created(self):
@@ -46,7 +45,7 @@ class JobTest_01(TestCase):
         )
 
     def test_job_url_is_sent_in_the_email(self):
-        self.assertIn("/job/{}/".format(self.job.pk), self.email.body)
+        self.assertIn("/job/{}/".format(self.job.unique_slug), self.email.body)
 
     def test_close_hash(self):
         value = "::".join(
@@ -57,7 +56,7 @@ class JobTest_01(TestCase):
 
     def test_close_url(self):
         self.assertEqual(
-            f"/job/close/{self.job.pk}/{self.job.close_hash()}/",
+            f"/job/close/{self.job.unique_slug}/{self.job.close_hash()}/",
             self.job.get_close_url(),
         )
 

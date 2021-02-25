@@ -69,7 +69,7 @@
             <p>{{job_application.company_feedback}}</p>
         </div>
         <div class="row" style="padding-bottom: 20px;">
-            <a href="{% url 'applied_users_details' job_application.job.pk %}?job_hash={{job_application.job.listing_hash}}">
+            <a href="{% url 'applied_users_details' job_application.job.unique_slug %}?job_hash={{job_application.job.listing_hash}}">
                 <input type="button" name="" value="{% translate 'Voltar aos outros candidatos!'%}" class="botao">
             </a>
         </div>

@@ -40,7 +40,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
     company_email_context = person_email_context
 
     template_person = "job_application_registered"
-    person_email_subject = _("Parabéns! Você se inscreveu na vaga!")
+    person_email_subject = str(_("Parabéns! Você se inscreveu na vaga!"))
     person_to_send_to = [instance.user.email]
 
     if instance.job.is_challenging:
@@ -61,7 +61,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         msg_email_company = get_email_with_template(
             "job_applicant",
             company_email_context,
-            _("Você possui mais um candidato para a sua vaga"),
+            str(_("Você possui mais um candidato para a sua vaga")),
             [instance.job.company_email],
         )
         msg_email_company.send()

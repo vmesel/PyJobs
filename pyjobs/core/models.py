@@ -1,3 +1,5 @@
+import uuid
+
 from datetime import timedelta, datetime
 from hashlib import sha512
 
@@ -178,6 +180,9 @@ class Job(models.Model):
     remote = models.BooleanField(_("Esta vaga é remota?"), default=False)
     consultancy = models.BooleanField(_("Consultoria?"), default=False)
     issue_number = models.IntegerField(_("Issue do Github"), null=True, blank=True)
+    unique_slug = models.CharField(
+        _("Slug Unica"), max_length=1000, blank=True, null=True
+    )
 
     objects = models.Manager.from_queryset(PublicQuerySet)()
 
@@ -210,7 +215,7 @@ class Job(models.Model):
         return JobApplication.objects.filter(job=self, user=request_user).exists()
 
     def apply(self, request_user):
-        JobApplication.objects.create(job=self, user=request_user)
+        JobApplication.objects.get_or_create(job=self, user=request_user)
         return True
 
     def get_weekly_summary(self):
@@ -247,14 +252,32 @@ class Job(models.Model):
         if not all((self.pk, self.created_at)):
             raise JobError("Unsaved Job models have no close URL")
 
-        kwargs = {"pk": self.pk, "close_hash": self.close_hash()}
+        kwargs = {"unique_slug": self.unique_slug, "close_hash": self.close_hash()}
         return reverse("close_job", kwargs=kwargs)
 
     def get_listing_url(self):
         if not all((self.pk, self.created_at)):
             return "Unsaved Job models have no listing URL"
 
-        return "/job/{}/details/?job_hash={}".format(self.pk, self.listing_hash())
+        return "/job/{}/details/?job_hash={}".format(
+            self.unique_slug, self.listing_hash()
+        )
+    
+    def generate_slug(self):
+        uuid_str = str(uuid.uuid4())
+        self.unique_slug = slugify(
+            f"{self.title} {self.company_name} {uuid_str[:8]}"
+        )
+        self.save()
+    
+    def save(self, *args, **kwargs):
+        if not self.unique_slug:
+            uuid_str = str(uuid.uuid4())
+            self.unique_slug = slugify(
+                f"{self.title} {self.company_name} {uuid_str[:8]}"
+            )
+
+        super(Job, self).save(*args, **kwargs)
 
 
 class JobApplication(models.Model):

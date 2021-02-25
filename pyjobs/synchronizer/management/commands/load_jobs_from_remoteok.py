@@ -21,11 +21,10 @@ class Command(BaseCommand):
             headers=headers,
         )
         content = response.json()
-        for job in content[1:10]:
-            if Job.objects.filter(issue_number=job["id"]):
+        for job in content[1:]:
+            if Job.objects.filter(issue_number=job["id"]).count() > 0:
                 continue
 
-            # import ipdb; ipdb.set_trace()
             new_job_data = {
                 "title": job["position"],
                 "company_name": job["company"],

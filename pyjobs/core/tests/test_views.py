@@ -30,15 +30,17 @@ class ThumbnailTestingViews(TestCase):
         self.client = Client()
 
     def test_return_thumbnail_endpoint_status_code(self):
-        response = self.client.get("/thumb/{}/".format(self.job.pk))
+        response = self.client.get(
+            "/thumb/{}/".format(self.job.unique_slug), follow=True
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_return_signup_page_status_code(self):
-        response = self.client.get("/pythonistas/signup/")
+        response = self.client.get("/pythonistas/signup/", follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_return_feed_status_code(self):
-        response = self.client.get("/feed/")
+        response = self.client.get("/feed/", follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_return_register_new_job_status_code(self):

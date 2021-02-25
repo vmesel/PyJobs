@@ -349,7 +349,7 @@
 
                           <p>{% translate "A pessoa:"%} {{pessoa.name}} {% translate "lhe indicou para a vaga:"%} {{vaga.title}}</p>
 
-                          <p>{% translate "Caso você queira saber mais, entre em"%}: <a href="{{url_do_site}}/job/{{vaga.pk}}">{{url_do_site}}/job/{{vaga.pk}}</a></p>
+                          <p>{% translate "Caso você queira saber mais, entre em"%}: <a href="{{url_do_site}}/job/{{vaga.unique_slug}}">{{url_do_site}}/job/{{vaga.unique_slug}}</a></p>
 
                           <p>{% translate "Abraços" %},</p>
 

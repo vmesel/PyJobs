@@ -15,7 +15,7 @@
         <h2>{% translate "Desafio:"%}</h2>
         {{job.challenge | safe | linebreaks}}
         <center>
-            <form action="{% url 'job_application_challenge_submission' job.pk %}" method="post">
+            <form action="{% url 'job_application_challenge_submission' job.unique_slug %}" method="post">
                 {% csrf_token %}
                 {{form.as_p}}
                 <input type="submit" name="" value="{% translate 'Enviar resposta!'%}">

@@ -3,7 +3,7 @@
 
 {% translate "A pessoa:"%} {{pessoa.name}} {% translate "lhe indicou para a vaga:"%} {{vaga.title}}
 
-{% translate "Caso você queira saber mais, entre em"%}: {{url_do_site}}/job/{{vaga.pk}}
+{% translate "Caso você queira saber mais, entre em"%}: {{url_do_site}}/job/{{vaga.unique_slug}}
 
 {% translate "Abraços" %},
 {{dono_do_site}}

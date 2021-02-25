@@ -95,7 +95,7 @@
                     <div class="col-md-4 card-col">
                         <div class="card shadow">
                             <div class="card-body">
-                                <a href="{% url 'job_view' job.pk %}">
+                                <a href="{% url 'job_view' job.unique_slug %}">
                                     <h3 class="card-title" style="font-size: 18px;">{{ job.title|truncatechars:30 }}</h3>
                                 </a>
                                 <p class="card-text">
@@ -117,7 +117,7 @@
                                     {% endfor %}
 
                                 </div>
-                                <a href="{% url 'job_view' job.pk %}">
+                                <a href="{% url 'job_view' job.unique_slug %}">
                                     <input type="button" class="botao" value="{% translate 'VER VAGA'%}">
                                 </a>
                             </div>

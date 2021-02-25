@@ -41,6 +41,9 @@ bs4 = "^0.0.1"
 pywebpush = "1.9.4"
 django-webpush = "^0.3.3"
 django-letsencrypt = "^4.0.0"
+Unipath = "^1.1"
+scrape-linkedin = {git = "https://github.com/austinoboyle/scrape-linkedin-selenium.git"}
+linkedin-scraper = "^2.7.2"
 
 [tool.poetry.dev-dependencies]
 black = "*"

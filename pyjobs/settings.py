@@ -12,12 +12,14 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-import dj_database_url
 from decouple import config
+from dj_database_url import parse as db_url
 from django.utils.translation import gettext_lazy as _
+from unipath import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR_PARENT = Path(__file__).parent
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Quick-start development settings - unsuitable for production
@@ -46,9 +48,11 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.sites",
     "django_extensions",
+    "django.contrib.redirects",
     "pyjobs.core",
     "pyjobs.api",
     "pyjobs.partners",
+    "pyjobs.profiler",
     "pyjobs.marketing",
     "pyjobs.synchronizer",
     "widget_tweaks",
@@ -68,6 +72,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+    "pyjobs.middleware.RedirectFallbackMiddleware",
 ]
 
 
@@ -95,9 +101,12 @@ WSGI_APPLICATION = "pyjobs.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
-    "default": dj_database_url.config(default="sqlite:///%s/db.sqlite3" % (BASE_DIR))
+    "default": config(
+        "DATABASE_URL",
+        default="sqlite:///" + BASE_DIR_PARENT.child("db.sqlite3"),
+        cast=db_url,
+    )
 }
 
 
@@ -272,3 +281,7 @@ CONTRACT = [
 FEEDBACK_TYPE = [(1, _("Sem feedback")), (2, _("Aprovado")), (3, _("Reprovado"))]
 
 SITE_ID = config("SITE_ID", default=1, cast=int)
+
+
+LINKEDIN_EMAIL = config("LINKEDIN_EMAIL", default=None)
+LINKEDIN_PASSWORD = config("LINKEDIN_PASSWORD", default=None)

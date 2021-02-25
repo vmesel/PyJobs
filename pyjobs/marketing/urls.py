@@ -6,7 +6,7 @@ from pyjobs.marketing.views import *
 
 urlpatterns = [
     url(
-        r"^job/(?P<pk>\d+)/share/$",
+        r"^job/(?P<unique_slug>[-\w\d]+)/share/$",
         sharing_job_view,
         name="sharing_job_view",
     ),
