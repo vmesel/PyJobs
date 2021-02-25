@@ -61,7 +61,7 @@ def send_email_notifing_job_application(sender, instance, created, **kwargs):
         msg_email_company = get_email_with_template(
             "job_applicant",
             company_email_context,
-            _("Você possui mais um candidato para a sua vaga"),
+            str(_("Você possui mais um candidato para a sua vaga")),
             [instance.job.company_email],
         )
         msg_email_company.send()
