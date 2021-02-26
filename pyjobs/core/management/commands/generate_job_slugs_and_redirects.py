@@ -33,7 +33,7 @@ def create_job_redirect(job):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        jobs = Job.objects.filter(unique_slug=None).all()
+        jobs = Job.objects.all()
 
         for job in jobs:
             create_job_redirect(job)

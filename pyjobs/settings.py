@@ -64,7 +64,6 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    # "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "pyjobs.middleware.RedirectFallbackMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.locale.LocaleMiddleware",

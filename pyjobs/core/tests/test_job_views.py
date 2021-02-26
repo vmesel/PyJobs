@@ -327,7 +327,7 @@ class PyJobsJobCloseView(TestCase):
             self.assertEqual(200, response.status_code)
             self.assertEqual(0, Job.objects.filter(is_open=True).count())
         else:
-            self.assertEqual(404, response.status_code)
+            self.assertEqual(302, response.status_code)
             self.assertEqual(1, Job.objects.filter(is_open=True).count())
 
     def test_valid_close_view(self):

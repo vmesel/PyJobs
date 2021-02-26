@@ -17,14 +17,9 @@ class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
             return response
 
         full_path = request.get_full_path()
-        """ 
-            Seperate query parameters and url if full absolute path contains 
-            query parameters using python urlparse library       
-        """
         parsed_url = None
         if "?" in full_path:
             parsed_url = urllib.parse.urlparse(full_path)
-            # Now full path contains no query parameters
             full_path = parsed_url.path
 
         current_site = get_current_site(request)
@@ -61,4 +56,4 @@ class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
             # Handles redirections for urls without query parameters
             return self.response_redirect_class(r.new_path)
 
-        return response
+        return redirect("/")
