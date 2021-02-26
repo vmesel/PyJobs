@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import Client, TestCase, override_settings
 from django.urls import resolve, reverse
-from model_mommy import mommy
+from model_bakery import baker as mommy
 import responses
 import json
 from datetime import datetime, timedelta
-from pyjobs.core.models import Job, Profile, JobApplication
+from pyjobs.core.models import Job, Profile, JobApplication, Country, Currency
 from pyjobs.core.views import index, jobs
 from pyjobs.core.forms import JobApplicationForm
 import csv
@@ -195,7 +195,11 @@ class PyJobsMultipleJobsPagesTest(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        mommy.make("core.Job", _quantity=20)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency, _quantity=20
+        )
         self.client = Client()
 
     def test_first_page(self):
@@ -244,7 +248,11 @@ class PyJobsFeedTest(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        mommy.make("core.Job", _quantity=1)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency
+        )
         self.client = Client()
 
     def test_if_feed_returns_right_status_code(self):
@@ -266,14 +274,10 @@ class PyJobsPremiumFeedTest(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        mommy.make(
-            "core.Job",
-            _quantity=1,
-            premium=True,
-            premium_at=datetime.now(),
-            title="Ola",
-            company_name="test",
-            workplace="test",
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency
         )
         self.client = Client()
 
@@ -323,7 +327,7 @@ class PyJobsJobCloseView(TestCase):
             self.assertEqual(200, response.status_code)
             self.assertEqual(0, Job.objects.filter(is_open=True).count())
         else:
-            self.assertEqual(302, response.status_code)
+            self.assertEqual(404, response.status_code)
             self.assertEqual(1, Job.objects.filter(is_open=True).count())
 
     def test_valid_close_view(self):

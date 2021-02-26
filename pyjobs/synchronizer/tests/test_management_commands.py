@@ -1,7 +1,7 @@
 from django.test import TestCase
 from pyjobs.core.models import Job, Skill
 from pyjobs.synchronizer.management.commands.load_jobs_from_github import *
-from model_mommy import mommy
+from model_bakery import baker as mommy
 from model_mommy.recipe import Recipe
 
 import os

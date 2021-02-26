@@ -7,7 +7,7 @@ from pyjobs.marketing.models import Messages
 from datetime import datetime, timedelta
 from pyjobs.core.management.commands.load_skills import *
 from django.core.management import call_command
-from model_mommy import mommy
+from model_bakery import baker as mommy
 import sys
 
 

@@ -4,7 +4,7 @@ from unittest.mock import patch
 import responses
 from django.contrib.auth.models import User
 from django.test import TestCase
-from model_mommy import mommy
+from model_bakery import baker as mommy
 from model_mommy.recipe import Recipe
 
 from pyjobs.core.models import (

@@ -1,5 +1,5 @@
 from django.test import TestCase
-from model_mommy import mommy
+from model_bakery import baker as mommy
 from unittest.mock import patch
 from datetime import datetime
 from django.contrib.auth.models import User

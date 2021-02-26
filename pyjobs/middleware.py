@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.redirects.middleware import RedirectFallbackMiddleware
 from django.contrib.redirects.models import Redirect
 from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import redirect
 
 
 class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
@@ -38,7 +39,7 @@ class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
                 if parsed_url is not None:
                     r = Redirect.objects.get(
                         site=current_site,
-                        old_path=full_path + "/",
+                        old_path=full_path,
                     )
                 else:
                     r = Redirect.objects.get(

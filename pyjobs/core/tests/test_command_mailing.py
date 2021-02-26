@@ -8,7 +8,7 @@ from pyjobs.marketing.models import Messages, MailingList
 from datetime import datetime, timedelta
 from pyjobs.core.management.commands.send_weekly_mailing import *
 from django.core.management import call_command
-from model_mommy import mommy
+from model_bakery import baker as mommy
 import sys
 
 

@@ -3,11 +3,11 @@ from unittest.mock import patch
 
 from django.shortcuts import resolve_url
 from django.test import TestCase
-from model_mommy import mommy
+from model_bakery import baker as mommy
 from model_mommy.recipe import Recipe
 
 from pyjobs.api.views import JobResource
-from pyjobs.core.models import Job, JobApplication, Profile
+from pyjobs.core.models import *
 from pyjobs.api.models import ApiKey
 
 
@@ -18,7 +18,13 @@ class TestJobApplicationResourceList(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        self.job = mommy.make(Job, _fill_optional=True, public=True)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency
+        )
+        self.job.generate_slug()
+        self.job.save()
         self.api_key = mommy.make(ApiKey)
         url = resolve_url("api:jobapplication_list")
         self.response = self.client.get(
@@ -41,7 +47,11 @@ class TestJobApplicationResourceListWithInvalidAPIKey(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        self.job = mommy.make(Job, _fill_optional=True, public=True)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency
+        )
         self.api_key = mommy.make(ApiKey)
         url = resolve_url("api:jobapplication_list")
         self.response = self.client.get(
@@ -64,7 +74,11 @@ class TestJobApplicationWithItemsResourceList(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        self.job = mommy.make(Job)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency
+        )
         self.profile = mommy.make(Profile)
 
         self.job_app = JobApplication.objects.create(

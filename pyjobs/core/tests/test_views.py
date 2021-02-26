@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve, reverse
-from model_mommy import mommy
+from model_bakery import baker as mommy
 import responses
 from pyjobs.core.models import Job, Profile
 from pyjobs.core.views import index
@@ -52,12 +52,12 @@ class PyJobsSignUp(TestCase):
     def setUp(self):
         self.client = Client()
 
-    @patch("pyjobs.core.views.RegisterForm")
     @patch("pyjobs.core.views.login")
+    @patch("pyjobs.core.views.RegisterForm")
     def test_if_signup_page_returns_true(self, _mocked_signup_form, _mocked_login):
         response = self.client.post("/pythonistas/signup/", follow=True)
         content = response.content.decode("utf-8")
-        _mocked_login.assert_called_once()
+        _mocked_signup_form.assert_called_once()
 
 
 class SitemapTestingView(TestCase):

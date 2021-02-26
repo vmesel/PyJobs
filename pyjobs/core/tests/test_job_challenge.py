@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import Client, TestCase
 from django.urls import resolve, reverse
-from model_mommy import mommy
+from model_bakery import baker as mommy
 import responses
 from pyjobs.core.models import Job, Profile, JobApplication
 from pyjobs.core.views import index
