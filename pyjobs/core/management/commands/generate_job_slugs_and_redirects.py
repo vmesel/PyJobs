@@ -11,15 +11,12 @@ from pyjobs.core.models import Job
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        jobs = Job.objects.filter(unique_slug=None).all()
-
+        jobs = Job.objects.all()
         for job in jobs:
-            slug = job.generate_slug()
-
             redirect = Redirect.objects.create(
                 site_id=settings.SITE_ID,
-                old_path=f"/job/{job.id}/",
-                new_path=f"/job/{job.unique_slug}/",
+                old_path=f"/job/{job.id}",
+                new_path=f"/job/{job.unique_slug}",
             )
 
             redirect.save()
