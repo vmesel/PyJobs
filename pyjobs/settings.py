@@ -62,7 +62,9 @@ INSTALLED_APPS = [
     "webpush",
 ]
 
+
 MIDDLEWARE = [
+    "pyjobs.middleware.RedirectFallbackMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -72,8 +74,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    # "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
-    "pyjobs.middleware.RedirectFallbackMiddleware",
 ]
 
 

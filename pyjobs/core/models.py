@@ -262,20 +262,17 @@ class Job(models.Model):
         return "/job/{}/details/?job_hash={}".format(
             self.unique_slug, self.listing_hash()
         )
-    
+
     def generate_slug(self):
         uuid_str = str(uuid.uuid4())
-        self.unique_slug = slugify(
-            f"{self.title} {self.company_name} {uuid_str[:8]}"
-        )
+        self.unique_slug = slugify(f"{self.title} {self.company_name} {uuid_str[:8]}")
         self.save()
-    
+
     def save(self, *args, **kwargs):
         if not self.unique_slug:
             uuid_str = str(uuid.uuid4())
-            self.unique_slug = slugify(
-                f"{self.title} {self.company_name} {uuid_str[:8]}"
-            )
+            title_and_company = f"{self.title} {self.company_name}"[:192]
+            self.unique_slug = slugify(f"{title_and_company} {uuid_str[:8]}")
 
         super(Job, self).save(*args, **kwargs)
 

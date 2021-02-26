@@ -3,7 +3,7 @@ from model_mommy import mommy
 from datetime import timedelta
 
 from pyjobs.core.forms import *
-from pyjobs.core.models import Skill, Profile
+from pyjobs.core.models import Skill, Profile, Job, Country, Currency
 from unittest.mock import patch
 from django.contrib.auth.models import User
 
@@ -55,8 +55,9 @@ class JobApplicationFormWithContentTest(TestCase):
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
         self.job = mommy.make(
-            Job, _fill_optional=True, public=True, is_challenging=False
+            Job, _fill_optional=False, public=True, is_challenging=False
         )
+        self.job.generate_slug()
         self.profile = mommy.make(Profile, _fill_optional=True)
 
         self.job_application = JobApplication.objects.create(
@@ -139,8 +140,14 @@ class JobApplicationFeedbackFormTest(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
         self.job = mommy.make(
-            Job, _fill_optional=True, public=True, is_challenging=False
+            Job,
+            public=True,
+            country=self.country,
+            currency=self.currency,
+            is_challenging=False,
         )
         self.profile = mommy.make(Profile, _fill_optional=True)
 

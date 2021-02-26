@@ -1,6 +1,6 @@
 from unittest.mock import patch
 from freezegun import freeze_time
-from pyjobs.core.models import Job, Profile, JobApplication
+from pyjobs.core.models import *
 from django.test import TestCase
 from six import StringIO
 from pyjobs.core.management.commands.run_routines import Command as run_routines
@@ -8,7 +8,7 @@ from pyjobs.core.management.commands.send_weekly_summary import *
 from pyjobs.core.management.commands.send_weekly_mailing import (
     check_today_is_the_right_day as check_mailing_date,
 )
-from model_mommy import mommy
+from model_bakery import baker as mommy
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.core.management import call_command
@@ -43,8 +43,10 @@ class SendTestReminderTest(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
         self.job = mommy.make(
-            Job, _fill_optional=True, public=True, is_challenging=False
+            Job, public=True, country=self.country, currency=self.currency
         )
         self.profile = mommy.make(Profile, _fill_optional=True)
 
@@ -82,8 +84,10 @@ class SendWeeklySummaryTest(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
         self.job = mommy.make(
-            Job, _fill_optional=True, public=True, is_challenging=False
+            Job, public=True, country=self.country, currency=self.currency
         )
 
     def test_formatting_string_job(self):

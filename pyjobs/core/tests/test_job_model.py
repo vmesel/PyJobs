@@ -5,10 +5,10 @@ import responses
 from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
-from model_mommy import mommy
+from model_bakery import baker as mommy
 from model_mommy.recipe import Recipe
 
-from pyjobs.core.models import Job, Profile, Skill, JobError
+from pyjobs.core.models import Job, Profile, Skill, JobError, Currency, Country
 
 
 class JobTest_01(TestCase):
@@ -18,6 +18,8 @@ class JobTest_01(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
         self.job = Job.objects.create(
             title="Vaga 1",
             workplace="Sao Paulo",
@@ -25,8 +27,9 @@ class JobTest_01(TestCase):
             application_link="http://www.xpto.com.br/apply",
             company_email="vm@xpto.com",
             description="Job bem maneiro",
+            country=self.country,
+            currency=self.currency,
         )
-        self.email, *_ = mail.outbox
 
     def test_job_created(self):
         self.assertTrue(Job.objects.exists())
@@ -44,9 +47,6 @@ class JobTest_01(TestCase):
             str(self.job.get_application_link()), "http://www.xpto.com.br/apply"
         )
 
-    def test_job_url_is_sent_in_the_email(self):
-        self.assertIn("/job/{}/".format(self.job.unique_slug), self.email.body)
-
     def test_close_hash(self):
         value = "::".join(
             ("close", "Foo Bar", str(self.job.pk), str(self.job.created_at))
@@ -59,9 +59,6 @@ class JobTest_01(TestCase):
             f"/job/close/{self.job.unique_slug}/{self.job.close_hash()}/",
             self.job.get_close_url(),
         )
-
-    def test_close_url_is_sent_in_the_email(self):
-        self.assertIn(self.job.get_close_url(), self.email.body)
 
 
 class JobTest_02(TestCase):

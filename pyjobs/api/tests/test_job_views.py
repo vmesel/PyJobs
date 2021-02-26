@@ -2,11 +2,11 @@ from json import loads
 from unittest.mock import patch
 
 from django.shortcuts import resolve_url
-from django.test import TestCase
-from model_mommy import mommy
+from django.test import TestCase, Client
+from model_bakery import baker as mommy
 
 from pyjobs.api.views import JobResource
-from pyjobs.core.models import Job
+from pyjobs.core.models import Job, Country, Currency
 
 PER_PAGE = JobResource.page_size
 
@@ -18,7 +18,16 @@ class TestJobResourceList(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        self.jobs = mommy.make(Job, _quantity=PER_PAGE * 3, public=True)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.client = Client()
+        self.jobs = mommy.make(
+            Job,
+            _quantity=PER_PAGE * 3,
+            public=True,
+            country=self.country,
+            currency=self.currency,
+        )
         mommy.make(Job, public=False)
         self.url = resolve_url("api:job_list")
         self.response = self.client.get(self.url)
@@ -66,7 +75,12 @@ class TestJobResourceDetail(TestCase):
     def setUp(
         self, _mocked_send_group_push, _mock_github, _mocked_post_telegram_channel
     ):
-        self.job = mommy.make(Job, _fill_optional=True, public=True)
+        self.country = mommy.make(Country)
+        self.currency = mommy.make(Currency)
+        self.job = mommy.make(
+            Job, public=True, country=self.country, currency=self.currency
+        )
+        self.client = Client()
         url = resolve_url("api:job_detail", pk=self.job.pk)
         self.response = self.client.get(url)
         self.response.text = self.response.content.decode("utf-8")

@@ -6,8 +6,9 @@ from django.db import models
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from raven.contrib.django.raven_compat.models import client
-
-
+from pyjobs.core.management.commands.generate_job_slugs_and_redirects import (
+    create_job_redirect,
+)
 from pyjobs.marketing.newsletter import subscribe_user_to_mailer
 from pyjobs.marketing.models import Messages, PushMessage
 from pyjobs.core.models import Job, JobApplication, Profile
@@ -212,3 +213,11 @@ def send_push_message(sender, instance, **kwargs):
         "url": instance.url,
     }
     send_group_notification(group_name="general", payload=payload, ttl=1000)
+
+
+@receiver(post_save, sender=Job)
+def new_job_was_created(sender, instance, created, **kwargs):
+    if not created:
+        return
+
+    create_job_redirect(instance)

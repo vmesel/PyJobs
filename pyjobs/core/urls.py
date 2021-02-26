@@ -92,7 +92,6 @@ urlpatterns = [
     url(r"^password/$", pythonista_change_password, name="change_password"),
     url(r"^info/$", pythonista_change_info, name="change_info"),
     url(r"^applied-to/$", pythonista_applied_info, name="applied_to_info"),
-    url(r"^thumb/(?P<unique_slug>[-\w\d]+)/$", thumbnail_view, name="thumbnail_view"),
     url(r"^job/create/$", job_creation, name="job_creation"),
     url(r"^jobs/location/(?P<state>[-\w\d]+)/$", job_state_view, name="job_state_view"),
     url(
@@ -100,6 +99,7 @@ urlpatterns = [
         job_skill_view,
         name="job_skill_view",
     ),
+    url(r"^thumb/(?P<unique_slug>[-\w\d]+)/$", thumbnail_view, name="thumbnail_view"),
     url(
         r"^job/(?P<unique_slug>[-\w\d]+)/details/$",
         applied_users_details,
@@ -117,7 +117,7 @@ urlpatterns = [
     ),
     url(r"^job/(?P<unique_slug>[-\w\d]+)/$", job_view, name="job_view"),
     url(
-        r"^job/close/(?P<unique_slug>[-\w\W\d]+)/(?P<close_hash>[\da-f]{128})/$",
+        r"^job/close/(?P<unique_slug>[-\w\d]+)/(?P<close_hash>[\da-f]{128})/$",
         close_job,
         name="close_job",
     ),

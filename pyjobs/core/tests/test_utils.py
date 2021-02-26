@@ -7,7 +7,7 @@ from telegram import TelegramError
 from pyjobs.core.utils import *
 from pyjobs.marketing.utils import *
 from pyjobs.core.email_utils import *
-from model_mommy import mommy
+from model_bakery import baker as mommy
 
 from pyjobs.core.models import Job, Profile, Skill
 from PIL import Image

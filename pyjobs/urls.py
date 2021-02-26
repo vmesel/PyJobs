@@ -56,5 +56,4 @@ urlpatterns += i18n_patterns(
     prefix_default_language=False,
 )
 
-handler404 = handler_404
 handler500 = handler_500
