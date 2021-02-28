@@ -2,7 +2,7 @@ import csv
 import requests
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth import login, update_session_auth_hash, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
@@ -334,7 +334,7 @@ def pythonistas_signup(request):
 
     if request.method == "POST" and context["form"].is_valid():
         user = context["form"].save()
-        login(request, user)
+        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
         return redirect("/")
 
     return render(request, "pythonistas-signup.html", context)
