@@ -33,6 +33,7 @@ urlpatterns = [
     url(r"^webpush/", include("webpush.urls")),
     url("^", include("django.contrib.auth.urls")),
     url("i18n/", include("django.conf.urls.i18n")),
+    url(r"^oauth/", include("social_django.urls", namespace="social")),
 ]
 
 urlpatterns += i18n_patterns(

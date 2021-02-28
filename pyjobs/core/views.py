@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
@@ -28,6 +28,7 @@ from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import activate
+from social_django.models import UserSocialAuth
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -342,18 +343,24 @@ def pythonistas_signup(request):
 @login_required
 def pythonista_change_password(request):
     template_name = "pythonistas-area-password-change.html"
-    context = {"form": PasswordChangeForm(request.user)}
+    if request.user.has_usable_password():
+        form = PasswordChangeForm
+    else:
+        form = AdminPasswordChangeForm
+
+    context = {}
+    context["form"] = form(request.user)
     context["webpush"] = WEBPUSH_CONTEXT
 
     if request.method == "POST":
         if context["form"].is_valid():
-            context["form"] = PasswordChangeForm(request.user, request.POST)
+            context["form"] = form(request.user, request.POST)
             user = context["form"].save()
             context["message"] = _("Sua senha foi alterada com sucesso!")
             update_session_auth_hash(request, user)
             return render(request, template_name, context)
         else:
-            context["form"] = PasswordChangeForm(request.user, request.POST)
+            context["form"] = form(request.user, request.POST)
             context["message"] = _("Por favor, corrija os erros abaixo.")
     return render(request, "pythonistas-area-password-change.html", context)
 
