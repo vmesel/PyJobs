@@ -1,0 +1,3 @@
+[submodule "pyjobs/standard_data"]
+	path = pyjobs/standard_data
+	url = git@github.com:vmesel/standard_data.git

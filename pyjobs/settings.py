@@ -38,7 +38,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="pyjobs@pyjobs.com.br"
 
 # Application definition
 
-INSTALLED_APPS = [
+default_apps = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     "pyjobs.core",
     "pyjobs.api",
     "pyjobs.partners",
-    "pyjobs.profiler",
     "pyjobs.marketing",
     "pyjobs.synchronizer",
     "widget_tweaks",
@@ -62,6 +61,15 @@ INSTALLED_APPS = [
     "raven.contrib.django.raven_compat",
     "webpush",
 ]
+
+try:
+    INSTALLED_APPS = config(
+        "INSTALLED_APPS",
+        default=default_apps,
+        cast=lambda apps: apps.split(",")
+    )
+except AttributeError:
+    INSTALLED_APPS = default_apps
 
 
 MIDDLEWARE = [
