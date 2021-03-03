@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "pyjobs.marketing",
     "pyjobs.synchronizer",
     "widget_tweaks",
+    "social_django",
     "django_select2",
     "django.contrib.sitemaps",
     "raven.contrib.django.raven_compat",
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 
@@ -91,6 +93,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "pyjobs.core.context_processors.global_vars",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ]
         },
     },
@@ -161,6 +165,7 @@ RAVEN_CONFIG = {"dsn": config("SENTRY_DSN", default=None)}
 
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/login"
+LOGOUT_REDIRECT_URL = "/"
 
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
@@ -285,3 +290,33 @@ SITE_ID = config("SITE_ID", default=1, cast=int)
 
 LINKEDIN_EMAIL = config("LINKEDIN_EMAIL", default=None)
 LINKEDIN_PASSWORD = config("LINKEDIN_PASSWORD", default=None)
+
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.github.GithubOAuth2",
+    "social_core.backends.linkedin.LinkedinOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+SOCIAL_AUTH_GITHUB_KEY = config("SOCIAL_AUTH_GITHUB_KEY", default=None)
+SOCIAL_AUTH_GITHUB_SECRET = config("SOCIAL_AUTH_GITHUB_SECRET", default=None)
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = config(
+    "SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY", default=None
+)
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = config(
+    "SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET", default=None
+)
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ["r_basicprofile", "r_emailaddress"]
+SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = [
+    "email-address",
+    "formatted-name",
+    "public-profile-url",
+    "picture-url",
+]
+SOCIAL_AUTH_LINKEDIN_OAUTH2_EXTRA_DATA = [
+    ("id", "id"),
+    ("formattedName", "name"),
+    ("emailAddress", "email_address"),
+    ("pictureUrl", "picture_url"),
+    ("publicProfileUrl", "profile_url"),
+]

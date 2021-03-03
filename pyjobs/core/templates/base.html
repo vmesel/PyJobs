@@ -155,6 +155,13 @@
             </div>
         </div>
       </nav>
+      {% if EMPTY_PROFILE %}
+            <div class="alert alert-danger">
+              <a href="{% url 'change_info' %}" style="color: #000; text-decoration: underline">
+                <p style="font-size: 18px;">{% translate "Clique aqui e termine seu cadastro antes de se inscrever a uma vaga!"%}</p>
+              </a>
+            </div>
+      {% endif %}
       <script>
         AnalyticsCode = "{{GA_CODE}}";
         linkHref = "/privacy/";

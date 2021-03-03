@@ -1,6 +1,16 @@
 version: '3.3'
 services:
-
+  db:
+    image: postgres:9.5.6-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: pyjobs
+      POSTGRES_PASSWORD: pyjobs
+      POSTGRES_DB: pyjobs
+    volumes:
+       - ./db:/var/lib/postgresql/data
   web:
     build: .
     command: poetry run python manage.py runserver 0.0.0.0:8000
@@ -13,18 +23,16 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: postgres://pyjobs:pyjobs@db:5432/pyjobs
+      DATABASE_URL: postgres://pyjobs:pyjobs@db/pyjobs
       DEBUG: "True"
-
-
-  db:
-    image: postgres:9.5.6-alpine
-    restart: always
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_USER: pyjobs
-      POSTGRES_PASSWORD: pyjobs
-      POSTGRES_DB: pyjobs
-    volumes:
-      - ./db:/var/lib/postgresql/data
+      SECRET_KEY: "this-is-my-secret"
+      WEBSITE_NAME: "PyJobs"
+      WEBSITE_URL: "pyjobs.com.br"
+      WEBSITE_SLOGAN: "Hire Pythonists really quickly"
+      WEBSITE_GENERAL_EMAIL: "pyjobs@pyjobs.com.br"
+      WEBSITE_WORKING_LANGUAGE: "Python"
+      WEBSITE_OWNER_NAME: "Foo Bar"
+      USER_SUBSTANTIVE: "Pythonista"
+      SITE_ID: 1
+      WEBSITE_HOME_URL: "http://localhost:8000/"
+      GITHUB_ISSUES_LABELS: "python,"

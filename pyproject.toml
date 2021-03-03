@@ -45,6 +45,7 @@ Unipath = "^1.1"
 scrape-linkedin = {git = "https://github.com/austinoboyle/scrape-linkedin-selenium.git"}
 linkedin-scraper = "^2.7.2"
 model-bakery = "^1.2.1"
+social-auth-app-django = "^4.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "*"

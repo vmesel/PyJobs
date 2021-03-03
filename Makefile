@@ -22,3 +22,6 @@ comptrans:
 
 gentrans:
 	poetry run python manage.py makemessages -a
+
+collectstaticdocker:
+	poetry run python manage.py collectstatic --no-input

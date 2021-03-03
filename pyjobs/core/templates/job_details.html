@@ -65,6 +65,7 @@
 
         <div class="row">
             <div class="col-lg-4 botoes-detalhes">
+                {% if not EMPTY_PROFILE %}
                 {% if logged_in %}
                   {% if applied %}
                     {% if job.is_challenging %}
@@ -94,6 +95,11 @@
                     <a href="{% url 'login' %}?next={{ job.get_absolute_url }}">
                         <button class="botao" type="button" id="application-status" style="text-decoration: underline;">{% translate "Entre e Aplique a vaga!"%}</button>
                     </a>
+                {% endif %}
+                {%else%}
+                <a href="{% url 'change_info' %}">
+                    <button class="botao" type="button" id="application-status" style="text-decoration: underline;">{% translate "Preencha seu perfil!"%}</button>
+                </a>                
                 {% endif %}
             </div>
             <div class="col-lg-4 botoes-detalhes">
