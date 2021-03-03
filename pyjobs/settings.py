@@ -64,9 +64,7 @@ default_apps = [
 
 try:
     INSTALLED_APPS = config(
-        "INSTALLED_APPS",
-        default=default_apps,
-        cast=lambda apps: apps.split(",")
+        "INSTALLED_APPS", default=default_apps, cast=lambda apps: apps.split(",")
     )
 except AttributeError:
     INSTALLED_APPS = default_apps
