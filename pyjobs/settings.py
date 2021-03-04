@@ -326,3 +326,4 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_EXTRA_DATA = [
     ("pictureUrl", "picture_url"),
     ("publicProfileUrl", "profile_url"),
 ]
+BLOG_API_URL = config("BLOG_API_URL", default=None)

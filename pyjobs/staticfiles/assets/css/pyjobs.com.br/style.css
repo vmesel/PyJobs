@@ -881,4 +881,7 @@ input[type=checkbox]:checked{
     footer img{
         width: 70px;
     }
+    .post-thumbnail{
+        display:none;
+    }
 }

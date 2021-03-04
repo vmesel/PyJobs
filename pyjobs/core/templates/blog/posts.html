@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% load core_tags %}
+{%block metas%}
+<meta property="og:image" content="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" />
+<meta property="og:title" content="{% blocktranslate %}Posts do {{WEBSITE_NAME}}{% endblocktranslate %}" />
+<meta property="og:locale" content="{% translate 'pt_BR'%}" />
+<meta content="{% blocktranslate %}Posts do {{WEBSITE_NAME}}{% endblocktranslate %}" property="og:description"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="{% blocktranslate %}Posts do {{WEBSITE_NAME}}{% endblocktranslate %}" name="description"/>
+<title>{% blocktranslate %}Posts do {{WEBSITE_NAME}}{% endblocktranslate %}</title>
+<meta content="{% blocktranslate %}Posts do {{WEBSITE_NAME}}{% endblocktranslate %}" name="twitter:description"/>
+<meta property="og:site_name" content="{{WEBSITE_NAME}}" />
+<style>
+    #push-sub-div{
+        display:none;
+    }
+</style>
+{% endblock %}
+{%block main%}
+<section class="cards" id="cards" style="padding-top:30px;">
+    <div class="container-fluid">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-4 card-col">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <a href="{% url 'blog_post' post.slug %}" style="text-decoration:underline; color: #000;">
+                            <h3 class="card-title" style="font-size: 18px;">{{ post.title|truncatechars:50 }}</h3>
+                        </a>
+                        {% if post.thumbnail.URL %}
+                            <img class="card-img-top" src="{{post.thumbnail.URL}}" alt="{{post.title}}">
+                        {% else %}
+                            <img class="card-img-top" src="http://mediad.publicbroadcasting.net/p/shared/npr/styles/x_large/nprshared/201310/208254350.jpg" alt="{{post.title}}">
+                        {% endif %}
+                        <p class="card-text">
+                            {% autoescape off %}
+                            {{ post.excerpt }}
+                            {% endautoescape %}
+                        </p>
+                        <a href="{% url 'blog_post' post.slug %}">
+                            <input type="button" class="botao" value="{% translate 'LER MAIS'%}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}
+                </div>
+                <div class="row">
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{%endblock main%}
