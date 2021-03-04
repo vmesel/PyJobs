@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-28 11:52-0300\n"
-"PO-Revision-Date: 2021-02-28 11:56-0300\n"
+"PO-Revision-Date: 2021-03-04 20:45-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -136,7 +136,7 @@ msgstr ""
 
 #: pyjobs/core/models.py:65
 msgid "Sua Faixa Salarial Atual"
-msgstr "Your salary range"
+msgstr "Your monthly salary range"
 
 #: pyjobs/core/models.py:69
 msgid "Sua Bio"
@@ -253,7 +253,7 @@ msgstr "State"
 
 #: pyjobs/core/models.py:172
 msgid "Faixa Salarial"
-msgstr "Salary Range"
+msgstr "Monthly Salary Range"
 
 #: pyjobs/core/models.py:175
 msgid "Nível do Profissional"
