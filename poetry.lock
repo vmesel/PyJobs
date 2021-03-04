@@ -527,6 +527,18 @@ python-versions = "*"
 requests = ">=2.7.0"
 
 [[package]]
+name = "markdownify"
+version = "0.6.5"
+description = "Convert HTML to markdown."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+beautifulsoup4 = ">=4.9,<5"
+six = ">=1.15,<2"
+
+[[package]]
 name = "mistune"
 version = "2.0.0a4"
 description = "A sane Markdown parser with useful plugins and renderers"
@@ -1113,7 +1125,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.8.5"
-content-hash = "5c94c994b7f98bc41804e816a1004137c06070eaae6207d9a1148425555dba92"
+content-hash = "7b8e3a47a3874709652351cf779699a61257e6d74f84052c2d0d37e1c8b1cd03"
 
 [metadata.files]
 appdirs = [
@@ -1414,6 +1426,10 @@ lxml = [
 mailchimp3 = [
     {file = "mailchimp3-3.0.14-py2.py3-none-any.whl", hash = "sha256:f027871a6b39cd1ec667c4fa0388e6a45ccd93f2d34989515b5cd4030d53fd70"},
     {file = "mailchimp3-3.0.14.tar.gz", hash = "sha256:17acf89fe23e2268bc0176857b71af7f9a89bbcad227888149ff8aeb83966907"},
+]
+markdownify = [
+    {file = "markdownify-0.6.5-py3-none-any.whl", hash = "sha256:ee452328a06b9a34461773a5a0d78655960df3f5506514b219a11245e0031c9c"},
+    {file = "markdownify-0.6.5.tar.gz", hash = "sha256:b76f8055d79c5abf96d8c218f836c565517abeffc510340975e095436b7ce96a"},
 ]
 mistune = [
     {file = "mistune-2.0.0a4-py2.py3-none-any.whl", hash = "sha256:ebbed6e25e342705ec30f3184bdc148229dfbae0da6136c2a6892333c9f8bc6b"},
