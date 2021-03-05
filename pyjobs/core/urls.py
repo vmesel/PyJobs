@@ -7,6 +7,22 @@ from pyjobs.core.models import Job, Skill
 from pyjobs.core.views import *
 
 
+class BlogBasedSitemap(Sitemap):
+    priority = 1.0
+    changefreq = "daily"
+
+    def items(self):
+        posts = []
+        post_request = requests.get(f"{settings.BLOG_API_URL}posts/").json()
+        for post in post_request["posts"]:
+            posts.append(post["slug"])
+
+        return posts
+
+    def location(self, item):
+        return reverse("blog_post", args=[item])
+
+
 class PyJobsLocationBasedSitemap(Sitemap):
     priority = 1.0
     changefreq = "weekly"
@@ -51,7 +67,7 @@ class PyJobsSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        return ["index", "privacy", "services", "job_creation"]
+        return ["index", "privacy", "services", "job_creation", "blog_index"]
 
     def location(self, item):
         return reverse(item)

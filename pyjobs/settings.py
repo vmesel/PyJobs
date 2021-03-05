@@ -38,7 +38,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="pyjobs@pyjobs.com.br"
 
 # Application definition
 
-default_apps = [
+INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,6 +52,7 @@ default_apps = [
     "pyjobs.core",
     "pyjobs.api",
     "pyjobs.partners",
+    "pyjobs.profiler",
     "pyjobs.marketing",
     "pyjobs.synchronizer",
     "widget_tweaks",
