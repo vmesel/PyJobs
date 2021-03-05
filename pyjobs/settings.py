@@ -63,13 +63,6 @@ INSTALLED_APPS = [
     "webpush",
 ]
 
-try:
-    INSTALLED_APPS = config(
-        "INSTALLED_APPS", default=default_apps, cast=lambda apps: apps.split(",")
-    )
-except AttributeError:
-    INSTALLED_APPS = default_apps
-
 
 MIDDLEWARE = [
     "pyjobs.middleware.RedirectFallbackMiddleware",
