@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %}
+{% translate "Atualize suas proficiências"%} - {{WEBSITE_NAME}}
+{% endblock %}
+{%block main%}
+<section style="padding: 30px;">
+    <div class="container">
+        <h2 class="text-info">{% translate "Área do"%} {{USER_SUBSTANTIVE}} - {% translate "Ajuste de proficiências" %} </h2>
+        {{ form.as_p }}
+    </div>
+</section>
+{%endblock%}
+{% block extra_scripts%}
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#id_skills').select2();
+});
+</script>
+{%endblock%}

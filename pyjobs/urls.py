@@ -50,7 +50,7 @@ urlpatterns += i18n_patterns(
     url(
         r"^password_reset/$",
         auth_views.PasswordResetView.as_view(
-            template_name="pythonistas-area-password-change.html"
+            template_name="user_area/pythonistas-area-password-change.html"
         ),
         name="password_reset",
     ),

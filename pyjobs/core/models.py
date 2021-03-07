@@ -326,3 +326,12 @@ class Skill(models.Model):
     def generate_slug(self):
         self.unique_slug = slugify(self.name)
         self.save()
+
+
+class SkillProficiency(models.Model):
+    user = models.ForeignKey(User, default="", on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, default="", on_delete=models.CASCADE)
+    experience = models.IntegerField(_("Anos de experiência"), default=0)
+
+    class Meta:
+        unique_together = ("user", "skill")

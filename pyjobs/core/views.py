@@ -22,6 +22,7 @@ from pyjobs.core.forms import (
     RegisterForm,
     JobApplicationForm,
     JobApplicationFeedbackForm,
+    SkillProficiencyForm
 )
 from pyjobs.core.models import Job, JobApplication, Profile, Skill
 from pyjobs.core.filters import JobFilter
@@ -325,7 +326,7 @@ def contact(request):
 
 @login_required
 def pythonistas_area(request):
-    return render(request, "pythonistas-area.html")
+    return render(request, "user_area/pythonistas-area.html")
 
 
 def pythonistas_signup(request):
@@ -337,12 +338,12 @@ def pythonistas_signup(request):
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
         return redirect("/")
 
-    return render(request, "pythonistas-signup.html", context)
+    return render(request, "user_area/pythonistas-signup.html", context)
 
 
 @login_required
 def pythonista_change_password(request):
-    template_name = "pythonistas-area-password-change.html"
+    template_name = "user_area/pythonistas-area-password-change.html"
     if request.user.has_usable_password():
         form = PasswordChangeForm
     else:
@@ -362,13 +363,13 @@ def pythonista_change_password(request):
         else:
             context["form"] = form(request.user, request.POST)
             context["message"] = _("Por favor, corrija os erros abaixo.")
-    return render(request, "pythonistas-area-password-change.html", context)
+    return render(request, "user_area/pythonistas-area-password-change.html", context)
 
 
 @login_required
 def pythonista_change_info(request):
     profile = request.user.profile
-    template = "pythonistas-area-info-change.html"
+    template = "user_area/pythonistas-area-info-change.html"
     context = {"form": EditProfileForm(instance=profile)}
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -400,9 +401,18 @@ def pythonista_applied_info(request):
     """
     context = {}
     context["webpush"] = WEBPUSH_CONTEXT
-    template = "pythonista-applied-jobs.html"
+    template = "user_area/pythonista-applied-jobs.html"
     context["applications"] = JobApplication.objects.filter(user=request.user.pk)
     return render(request, template, context)
+
+
+@login_required
+def pythonistas_proficiency(request):
+    context = {}
+    context["form"] = SkillProficiencyForm(user=request.user)
+    if request.method == "POST":
+        pass
+    return render(request, "user_area/pythonistas-area-proficiency.html", context)
 
 
 class JobsFeed(Feed):

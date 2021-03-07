@@ -9,7 +9,7 @@ from django.forms import ModelForm
 from datetime import datetime
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from pyjobs.core.models import Job, Profile, Skill, JobApplication
+from pyjobs.core.models import Job, Profile, Skill, JobApplication, SkillProficiency
 from pyjobs.marketing.models import Contact
 from django.utils.translation import gettext_lazy as _
 
@@ -187,3 +187,63 @@ class JobApplicationFeedbackForm(ModelForm):
     class Meta:
         model = JobApplication
         fields = ["company_feedback", "company_feedback_type"]
+
+
+class SkillProficiencyForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+        self.data = kwargs.get("data") if kwargs.get("data") is not None else {}
+
+        for key in self.data:
+            if "skill" in key and "years" not in key: 
+                self.fields[key] = forms.CharField(
+                    widget = forms.Select(
+                        choices = [(skill.pk, skill.name) for skill in Skill.objects.all()]
+                    ),
+                    initial = self.data[key]
+                )
+            else:
+                self.fields[key] = forms.IntegerField(
+                    initial = self.data[key]
+                )
+
+        self.order_skills()
+        self.is_bound = self.data is not None or files is not None
+    
+    def order_skills(self):
+        self.skills = set()
+        self.skills_proficiency = []
+        self.skill_proficiency = [item for item in self.fields if "skill_" in item and "_years_" not in item]
+        self.skill_proficiency.sort()
+        self.years_proficiency = [item for item in self.fields if "skill_years_" in item]
+        self.years_proficiency.sort()
+
+        self.skill_years = zip(self.skill_proficiency, self.years_proficiency)
+        
+    def clean(self):
+        for i, proficiency in enumerate(self.skill_years, start=0):
+            skill, years = proficiency
+            if skill in self.skills:
+                self.add_error(f"skill_{i}", "Duplicate")
+            else:
+                self.skills_proficiency.append({
+                    "skill": self.cleaned_data[skill],
+                    "experience": self.cleaned_data[years],
+                    "user": self.user
+                })
+        self.cleaned_data = {}
+        self.cleaned_data["proficiency"] = self.skills_proficiency
+
+    def save(self, commit=True):
+        if not commit:
+            return
+        
+        for skill_proficiency in self.cleaned_data["proficiency"]:
+            SkillProficiency.objects.get_or_create({
+                    "skill": Skill.objects.get(pk=skill_proficiency["skill"]),
+                    "experience": skill_proficiency["experience"],
+                    "user": self.user
+            })
+
+
