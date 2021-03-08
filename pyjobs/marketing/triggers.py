@@ -114,11 +114,12 @@ def send_job_to_github_issues(job):
     job.issue_number = issue.id
     job.save()
 
+
 @receiver(post_save, sender=Job)
 def test(sender, instance, created, **kwargs):
     if not created or not instance.receive_emails:
         return False
-    
+
     message_text = " ".join(
         map(
             str,
@@ -167,7 +168,7 @@ def test(sender, instance, created, **kwargs):
         send_offer_email_template(instance)
     except:
         client.captureException()
-    
+
     return True
 
 

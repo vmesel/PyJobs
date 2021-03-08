@@ -17,7 +17,7 @@
         <center>
             <form action="{% url 'job_application_challenge_submission' job.unique_slug %}" method="post">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{formset}}
                 <input type="submit" name="" value="{% translate 'Enviar resposta!'%}">
             </form>
         </center>

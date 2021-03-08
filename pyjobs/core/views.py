@@ -15,21 +15,14 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from datetime import datetime, timedelta
 
-from pyjobs.core.forms import (
-    ContactForm,
-    EditProfileForm,
-    JobForm,
-    RegisterForm,
-    JobApplicationForm,
-    JobApplicationFeedbackForm,
-    SkillProficiencyForm
-)
-from pyjobs.core.models import Job, JobApplication, Profile, Skill
+from pyjobs.core.forms import *
+from pyjobs.core.models import Job, JobApplication, Profile, Skill, SkillProficiency
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import activate
 from social_django.models import UserSocialAuth
+from django.contrib.auth.models import User
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -409,9 +402,24 @@ def pythonista_applied_info(request):
 @login_required
 def pythonistas_proficiency(request):
     context = {}
-    context["form"] = SkillProficiencyForm(user=request.user)
-    if request.method == "POST":
-        pass
+    proficiency_objects = SkillProficiency.objects.filter(user=request.user)
+    SkillProficiencyFormset = inlineformset_factory(
+        User,
+        SkillProficiency,
+        fields=["skill", "experience"],
+        can_delete=True,
+        form=SkillProficiencyForm,
+    )
+    context["formset"] = SkillProficiencyFormset(
+        request.POST or None,
+        instance=request.user,
+    )
+
+    if request.method == "POST" and context["formset"].is_valid():
+        for form in context["formset"]:
+            form.save(user=request.user)
+        return redirect(reverse("user_proficiency"))
+
     return render(request, "user_area/pythonistas-area-proficiency.html", context)
 
 

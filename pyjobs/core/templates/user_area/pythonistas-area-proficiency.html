@@ -9,16 +9,51 @@
 <section style="padding: 30px;">
     <div class="container">
         <h2 class="text-info">{% translate "Área do"%} {{USER_SUBSTANTIVE}} - {% translate "Ajuste de proficiências" %} </h2>
-        {{ form.as_p }}
+        <hr>
+        <p>
+            {% blocktranslate %}
+            Aqui, você deverá preencher quais são as suas maiores skills e a quantidade de anos que você atua com elas.
+            {% endblocktranslate %}
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div id="form_set">
+                {% for form in formset.forms %}
+                  {{form.non_field_errors}}
+                {{form.errors}}
+                    <table class='no_error' id="table-{{ forloop.counter0 }}" style="margin-top:30px;">
+                        {{ form }}
+                    </table>
+                {% endfor %}
+            </div>
+            <input type="button" value="{% translate 'Adicionar Skill' %}" id="add_more" class="botao" style="margin-top:30px;">
+            <input type="submit" value="{% translate 'Enviar' %}" class="botao" style="margin-top:30px;" onclick="this.disabled=true;this.value='{% translate "Enviando" %}'; this.form.submit();">
+            <div id="empty_form" style="display:none;">
+                <table class='no_error' style="margin-top:30px;">
+                    {{ formset.empty_form }}
+                </table>
+            </div>
+        </form>
     </div>
 </section>
 {%endblock%}
 {% block extra_scripts%}
-<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('#id_skills').select2();
+<script>
+    $('#add_more').click(function() {
+        var form_idx = $('#id_form-TOTAL_FORMS').val();
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+    });
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach((item) => {
+    item.addEventListener("change", (checkboxItem) => {
+      var formIdToRemove = checkboxItem.target.id.replace("id_skillproficiency_set-", "table-").replace("-DELETE", "");
+      var form = document.getElementById(formIdToRemove);
+      form.style.display = 'none';
+  })
 });
 </script>
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 {%endblock%}

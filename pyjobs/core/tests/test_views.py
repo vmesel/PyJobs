@@ -36,7 +36,7 @@ class ThumbnailTestingViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_return_signup_page_status_code(self):
-        response = self.client.get("/pythonistas/signup/", follow=True)
+        response = self.client.get("/user/signup/", follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_return_feed_status_code(self):
@@ -55,7 +55,7 @@ class PyJobsSignUp(TestCase):
     @patch("pyjobs.core.views.login")
     @patch("pyjobs.core.views.RegisterForm")
     def test_if_signup_page_returns_true(self, _mocked_signup_form, _mocked_login):
-        response = self.client.post("/pythonistas/signup/", follow=True)
+        response = self.client.post("/user/signup/", follow=True)
         content = response.content.decode("utf-8")
         _mocked_signup_form.assert_called_once()
 
@@ -116,12 +116,12 @@ class TestingRestrictedViews(TestCase):
 
     def test_if_status_code_is_two_hundred_on_password_change(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.get("/password/")
+        response = self.client.get("/user/password/")
         self.assertEqual(200, response.status_code)
 
     def test_if_status_code_is_two_hundred_on_pythonistas_home(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.get("/pythonistas/")
+        response = self.client.get("/user/")
         self.assertEqual(200, response.status_code)
 
     def test_if_status_code_is_two_hundred_on_landing_page(self):
@@ -130,32 +130,32 @@ class TestingRestrictedViews(TestCase):
 
     def test_if_status_code_is_two_hundred_on(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.get("/info/")
+        response = self.client.get("/user/info/")
         self.assertEqual(200, response.status_code)
 
     def test_if_change_password_form_is_on_page_and_validating(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.post("/password/")
+        response = self.client.post("/user/password/")
         content = response.content.decode("utf-8")
         self.assertIn("Por favor, corrija os erros abaixo", content)
 
     @patch("pyjobs.core.views.PasswordChangeForm")
     def test_if_change_password_form_is_on_page_and_pass_changed(self, _mocked_form):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.post("/password/")
+        response = self.client.post("/user/password/")
         content = response.content.decode("utf-8")
         self.assertIn("Sua senha foi alterada com sucesso!", content)
 
     def test_if_change_info_form_is_on_page_and_validating(self):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.post("/info/")
+        response = self.client.post("/user/info/")
         content = response.content.decode("utf-8")
         self.assertIn("Por favor, corrija os erros abaixo", content)
 
     @patch("pyjobs.core.views.EditProfileForm")
     def test_if_change_info_form_is_on_page_and_info_changed(self, _mocked_form):
         self.client.login(username="jacob", password="top_secret")
-        response = self.client.post("/info/")
+        response = self.client.post("/user/info/")
         content = response.content.decode("utf-8")
         self.assertIn("Suas informações foram atualizadas com sucesso!", content)
 
