@@ -195,7 +195,7 @@
             </div>
             <hr style="margin-top:40px;">
             <div class="row" style="padding-bottom: 20px;">
-                <input type="submit" name="" value="{% translate 'CADASTRE MINHA VAGA, '%} {{WEBSITE_NAME}}!" class="botao">
+                <input type="submit" name="" value="{% translate 'CADASTRE MINHA VAGA, '%} {{WEBSITE_NAME}}!" class="botao" onclick="this.disabled=true;this.value='{% translate "Enviando" %}'; this.form.submit();">
             </div>
         </div>
     </form>
