@@ -40,6 +40,7 @@ urlpatterns += i18n_patterns(
     url("", include("pyjobs.marketing.urls")),
     url("", include("pyjobs.partners.urls")),
     url("", include("pyjobs.core.urls")),
+    url("blog/", include("pyjobs.blog.urls")),
     url(
         r"^login/$",
         auth_views.LoginView.as_view(template_name="login.html"),
@@ -49,7 +50,7 @@ urlpatterns += i18n_patterns(
     url(
         r"^password_reset/$",
         auth_views.PasswordResetView.as_view(
-            template_name="pythonistas-area-password-change.html"
+            template_name="user_area/pythonistas-area-password-change.html"
         ),
         name="password_reset",
     ),

@@ -7,6 +7,22 @@ from pyjobs.core.models import Job, Skill
 from pyjobs.core.views import *
 
 
+class BlogBasedSitemap(Sitemap):
+    priority = 1.0
+    changefreq = "daily"
+
+    def items(self):
+        posts = []
+        post_request = requests.get(f"{settings.BLOG_API_URL}posts/").json()
+        for post in post_request["posts"]:
+            posts.append(post["slug"])
+
+        return posts
+
+    def location(self, item):
+        return reverse("blog_post", args=[item])
+
+
 class PyJobsLocationBasedSitemap(Sitemap):
     priority = 1.0
     changefreq = "weekly"
@@ -51,7 +67,7 @@ class PyJobsSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        return ["index", "privacy", "services", "job_creation"]
+        return ["index", "privacy", "services", "job_creation", "blog_index"]
 
     def location(self, item):
         return reverse(item)
@@ -87,11 +103,12 @@ urlpatterns = [
     url(r"^services/$", services_view, name="services"),
     url(r"^contact/$", contact, name="contact"),
     url(r"^register/new/job/$", register_new_job, name="register_new_job"),
-    url(r"^pythonistas/$", pythonistas_area, name="pythonistas_area"),
-    url(r"^pythonistas/signup/$", pythonistas_signup, name="pythonistas_signup"),
-    url(r"^password/$", pythonista_change_password, name="change_password"),
-    url(r"^info/$", pythonista_change_info, name="change_info"),
-    url(r"^applied-to/$", pythonista_applied_info, name="applied_to_info"),
+    url(r"^user/$", pythonistas_area, name="pythonistas_area"),
+    url(r"^user/signup/$", pythonistas_signup, name="pythonistas_signup"),
+    url(r"^user/password/$", pythonista_change_password, name="change_password"),
+    url(r"^user/info/$", pythonista_change_info, name="change_info"),
+    url(r"^user/applied-to/$", pythonista_applied_info, name="applied_to_info"),
+    url(r"^user/proficiency/$", pythonistas_proficiency, name="user_proficiency"),
     url(r"^job/create/$", job_creation, name="job_creation"),
     url(r"^jobs/location/(?P<state>[-\w\d]+)/$", job_state_view, name="job_state_view"),
     url(

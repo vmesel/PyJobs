@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+{%block metas%}
+<meta property="og:title" content="{{post.title}} {% translate 'em'%} {{job.company_name}} | {{WEBSITE_NAME}}" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:description" content="{{job.description|truncatechars:240}}}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="{{job.description|truncatechars:240}}}" name="description"/>
+<meta name="description" content="{{job.description|truncatechars:240}}}"/>
+<title>{{post.title}} {% translate "no"%} {{WEBSITE_NAME}}</title>
+<meta name="twitter:description" content="{{job.description|truncatechars:250}}}"/>
+<meta property="og:site_name" content="{{WEBSITE_NAME}}" />
+<style>
+    #push-sub-div{
+        display:none;
+    }
+</style>
+{% endblock %}
+
+{%block main%}
+
+
+<section class="detalhes-vaga">
+    <div class="container">
+        <a href="{% url 'blog_post' post.slug %}">
+            <h2>{{post.title}}</h2>
+        </a>
+        <hr/>
+            {% autoescape off %}
+            {{post.excerpt}}
+            {% endautoescape %}
+        <hr/>
+        <div class="row">
+            <img src="{{post.post_thumbnail.URL}}" alt="" style="width: 100%;">
+        </div>
+        <div class="row">
+            <div class="col-md-4 botoes-redes-sociais">
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_whatsapp"></a>
+                    <a class="a2a_button_telegram"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+            <div class="badges-detalhes col-md-8">
+                <div style="margin-top: 15px">
+                    {% for tag in post.tags.values %}
+                        <a href="{% url 'blog_tag' tag.slug %}">
+                            <span class="badge badge-secondary custom-badge">{{tag.name}}</span>
+                        </a>
+                    {% endfor skill %}
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            {% autoescape off %}
+            {{post.content}}
+            {% endautoescape %}
+        </div>
+        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-md-6">
+                <a href="https://pyjobs.com.br">
+                    <input type="button" class="botao" value="{% translate 'Quero ver as Vagas Python' %}">
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="http://frontjobs.com.br">
+                    <input type="button" class="botao" value="{% translate 'Quero ver as Vagas Front' %}">
+                </a>
+            </div>
+        </div>
+        <div class="bg-light p-5 rounded container">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="{{post.author.avatar_URL}} alt="">
+                </div>
+                <div class="col-md-10">
+                    <h3>Autor: {{post.author.name}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

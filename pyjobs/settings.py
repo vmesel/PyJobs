@@ -38,7 +38,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="pyjobs@pyjobs.com.br"
 
 # Application definition
 
-default_apps = [
+INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -51,8 +51,9 @@ default_apps = [
     "django.contrib.redirects",
     "pyjobs.core",
     "pyjobs.api",
-    "pyjobs.partners",
     "pyjobs.marketing",
+    "pyjobs.partners",
+    "pyjobs.profiler",
     "pyjobs.synchronizer",
     "widget_tweaks",
     "social_django",
@@ -61,13 +62,6 @@ default_apps = [
     "raven.contrib.django.raven_compat",
     "webpush",
 ]
-
-try:
-    INSTALLED_APPS = config(
-        "INSTALLED_APPS", default=default_apps, cast=lambda apps: apps.split(",")
-    )
-except AttributeError:
-    INSTALLED_APPS = default_apps
 
 
 MIDDLEWARE = [
@@ -326,3 +320,4 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_EXTRA_DATA = [
     ("pictureUrl", "picture_url"),
     ("publicProfileUrl", "profile_url"),
 ]
+BLOG_API_URL = config("BLOG_API_URL", default=None)

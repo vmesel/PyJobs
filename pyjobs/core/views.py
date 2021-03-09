@@ -15,20 +15,14 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from datetime import datetime, timedelta
 
-from pyjobs.core.forms import (
-    ContactForm,
-    EditProfileForm,
-    JobForm,
-    RegisterForm,
-    JobApplicationForm,
-    JobApplicationFeedbackForm,
-)
-from pyjobs.core.models import Job, JobApplication, Profile, Skill
+from pyjobs.core.forms import *
+from pyjobs.core.models import Job, JobApplication, Profile, Skill, SkillProficiency
 from pyjobs.core.filters import JobFilter
 from pyjobs.core.utils import generate_thumbnail
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import activate
 from social_django.models import UserSocialAuth
+from django.contrib.auth.models import User
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -250,16 +244,12 @@ def register_new_job(request):
     g_recaptcha_response = request.POST.get("g-recaptcha-response")
     context = {"webpush": WEBPUSH_CONTEXT}
 
+    if new_job.is_valid(g_recaptcha_response):
+        new_job.save()
+        return render(request, template_name="job_created.html", context=context)
+
     context["message_first"] = _("Falha na hora de criar o job")
     context["message_second"] = _("Algum campo não foi preenchido corretamente!")
-
-    if new_job.is_valid(g_recaptcha_response):
-        context["message_first"] = _("Acabamos de mandar um e-mail para vocês!")
-        context["message_second"] = _(
-            "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
-        )
-
-        new_job.save()
 
     return render(request, template_name="generic.html", context=context)
 
@@ -325,7 +315,7 @@ def contact(request):
 
 @login_required
 def pythonistas_area(request):
-    return render(request, "pythonistas-area.html")
+    return render(request, "user_area/pythonistas-area.html")
 
 
 def pythonistas_signup(request):
@@ -337,12 +327,12 @@ def pythonistas_signup(request):
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
         return redirect("/")
 
-    return render(request, "pythonistas-signup.html", context)
+    return render(request, "user_area/pythonistas-signup.html", context)
 
 
 @login_required
 def pythonista_change_password(request):
-    template_name = "pythonistas-area-password-change.html"
+    template_name = "user_area/pythonistas-area-password-change.html"
     if request.user.has_usable_password():
         form = PasswordChangeForm
     else:
@@ -362,13 +352,13 @@ def pythonista_change_password(request):
         else:
             context["form"] = form(request.user, request.POST)
             context["message"] = _("Por favor, corrija os erros abaixo.")
-    return render(request, "pythonistas-area-password-change.html", context)
+    return render(request, "user_area/pythonistas-area-password-change.html", context)
 
 
 @login_required
 def pythonista_change_info(request):
     profile = request.user.profile
-    template = "pythonistas-area-info-change.html"
+    template = "user_area/pythonistas-area-info-change.html"
     context = {"form": EditProfileForm(instance=profile)}
     context["webpush"] = WEBPUSH_CONTEXT
 
@@ -400,9 +390,33 @@ def pythonista_applied_info(request):
     """
     context = {}
     context["webpush"] = WEBPUSH_CONTEXT
-    template = "pythonista-applied-jobs.html"
+    template = "user_area/pythonista-applied-jobs.html"
     context["applications"] = JobApplication.objects.filter(user=request.user.pk)
     return render(request, template, context)
+
+
+@login_required
+def pythonistas_proficiency(request):
+    context = {}
+    proficiency_objects = SkillProficiency.objects.filter(user=request.user)
+    SkillProficiencyFormset = inlineformset_factory(
+        User,
+        SkillProficiency,
+        fields=["skill", "experience"],
+        can_delete=True,
+        form=SkillProficiencyForm,
+    )
+    context["formset"] = SkillProficiencyFormset(
+        request.POST or None,
+        instance=request.user,
+    )
+
+    if request.method == "POST" and context["formset"].is_valid():
+        for form in context["formset"]:
+            form.save(user=request.user)
+        return redirect(reverse("user_proficiency"))
+
+    return render(request, "user_area/pythonistas-area-proficiency.html", context)
 
 
 class JobsFeed(Feed):

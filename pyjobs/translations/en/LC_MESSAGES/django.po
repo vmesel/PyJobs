@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-28 11:52-0300\n"
-"PO-Revision-Date: 2021-02-28 11:56-0300\n"
+"POT-Creation-Date: 2021-03-09 06:28-0300\n"
+"PO-Revision-Date: 2021-03-09 06:32-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: pyjobs/core/admin.py:56
+#: pyjobs/core/admin.py:64
 msgid "Teste Técnico da empresa:"
 msgstr "Company's technical challenge:"
 
@@ -34,55 +34,55 @@ msgstr "Country"
 msgid "Remoto?"
 msgstr "Remote?"
 
-#: pyjobs/core/forms.py:88
+#: pyjobs/core/forms.py:89
 msgid "Github (opcional)"
 msgstr "Github (optional)"
 
-#: pyjobs/core/forms.py:89
+#: pyjobs/core/forms.py:90
 msgid "Link do seu GitHub"
 msgstr "Your GitHub link"
 
-#: pyjobs/core/forms.py:94
+#: pyjobs/core/forms.py:95
 msgid "Linkedin (opcional)"
 msgstr "LinkedIn (optional):"
 
-#: pyjobs/core/forms.py:95
+#: pyjobs/core/forms.py:96
 msgid "Link do seu Linkedin"
 msgstr "Your Linkedin link"
 
-#: pyjobs/core/forms.py:100
+#: pyjobs/core/forms.py:101
 msgid "Portfolio (opcional)"
 msgstr "Portfolio (optional):"
 
-#: pyjobs/core/forms.py:101
+#: pyjobs/core/forms.py:102
 msgid "Link do seu portfolio"
 msgstr "Your portfolio link"
 
-#: pyjobs/core/forms.py:106
+#: pyjobs/core/forms.py:107
 msgid "Celular"
 msgstr "Cellphone"
 
-#: pyjobs/core/forms.py:107
+#: pyjobs/core/forms.py:108
 msgid "Preencha com o seu telefone"
 msgstr "Your cellphone"
 
-#: pyjobs/core/forms.py:112
+#: pyjobs/core/forms.py:113
 msgid "Skills"
 msgstr "Skills"
 
-#: pyjobs/core/forms.py:116
+#: pyjobs/core/forms.py:117
 msgid "Ao clicar, você aceita estar em nosso mailing list"
 msgstr "When you click, you accept our mailing list terms"
 
-#: pyjobs/core/forms.py:120
+#: pyjobs/core/forms.py:121
 msgid "Ao clicar, você aceita nossa política de privacidade"
 msgstr "When you click, you accept our privacy policy terms"
 
-#: pyjobs/core/forms.py:159
+#: pyjobs/core/forms.py:160
 msgid "Seu e-mail"
 msgstr "Your E-mail"
 
-#: pyjobs/core/forms.py:160
+#: pyjobs/core/forms.py:161
 msgid "seu-email@atualizado.com"
 msgstr "your-email@updated.com"
 
@@ -136,7 +136,7 @@ msgstr ""
 
 #: pyjobs/core/models.py:65
 msgid "Sua Faixa Salarial Atual"
-msgstr "Your salary range"
+msgstr "Your monthly salary range"
 
 #: pyjobs/core/models.py:69
 msgid "Sua Bio"
@@ -169,7 +169,7 @@ msgstr "I.e.: Developer"
 #: pyjobs/core/templates/jobs_by_location.html:113
 #: pyjobs/core/templates/jobs_by_skill.html:72
 #: pyjobs/core/templates/jobs_by_skill.html:125
-#: pyjobs/core/templates/pythonista-applied-jobs.html:45
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:45
 msgid "Local"
 msgstr "Place"
 
@@ -253,7 +253,7 @@ msgstr "State"
 
 #: pyjobs/core/models.py:172
 msgid "Faixa Salarial"
-msgstr "Salary Range"
+msgstr "Monthly Salary Range"
 
 #: pyjobs/core/models.py:175
 msgid "Nível do Profissional"
@@ -306,6 +306,10 @@ msgstr "Skill"
 #: pyjobs/core/models.py:317
 msgid "Descrição da skill"
 msgstr "Skill Description"
+
+#: pyjobs/core/models.py:334
+msgid "Anos de experiência"
+msgstr "Experience Years"
 
 #: pyjobs/core/templates/applied_users_details.html:17
 msgid "Postada"
@@ -439,11 +443,9 @@ msgstr "Home"
 msgid "Vagas"
 msgstr "Jobs"
 
-#: pyjobs/core/templates/base.html:129 pyjobs/core/templates/base.html:192
-#: pyjobs/core/templates/base.html:209 pyjobs/core/templates/login.html:66
-#: pyjobs/core/templates/registration/login.html:79
-msgid "Cadastre-se"
-msgstr "Sign Up"
+#: pyjobs/core/templates/base.html:129
+msgid "Blog"
+msgstr "Blog"
 
 #: pyjobs/core/templates/base.html:134
 msgid "Logar"
@@ -498,6 +500,12 @@ msgstr "Login"
 msgid "Nossos serviços"
 msgstr "Our Services"
 
+#: pyjobs/core/templates/base.html:192 pyjobs/core/templates/base.html:209
+#: pyjobs/core/templates/login.html:66
+#: pyjobs/core/templates/registration/login.html:79
+msgid "Cadastre-se"
+msgstr "Sign Up"
+
 #: pyjobs/core/templates/base.html:193
 msgid "Pol&iacute;tica de privacidade"
 msgstr "Privacy Policy"
@@ -509,6 +517,70 @@ msgstr "Discover more Jobs"
 #: pyjobs/core/templates/base.html:206
 msgid "CADASTRE-SE"
 msgstr "SIGN-UP"
+
+#: pyjobs/core/templates/blog/post_details.html:6
+#: pyjobs/core/templates/emails/weekly_summary.txt:12
+#: pyjobs/core/templates/job_details.html:7
+#: pyjobs/core/templates/jobs_by_location.html:9
+#: pyjobs/core/templates/jobs_by_location.html:11
+#: pyjobs/core/templates/jobs_by_location.html:13
+#: pyjobs/core/templates/jobs_by_location.html:14
+#: pyjobs/core/templates/jobs_by_location.html:16
+#: pyjobs/marketing/triggers.py:131
+msgid "em"
+msgstr "at"
+
+#: pyjobs/core/templates/blog/post_details.html:12
+#: pyjobs/core/templates/job_challenge.html:8
+#: pyjobs/core/templates/job_details.html:13
+#: pyjobs/core/templates/job_registration.html:10
+#: pyjobs/core/templates/job_registration.html:12
+#: pyjobs/core/templates/job_registration.html:14
+#: pyjobs/core/templates/job_registration.html:16
+#: pyjobs/core/templates/jobs.html:9 pyjobs/core/templates/jobs.html:15
+#: pyjobs/core/templates/jobs_by_location.html:9
+#: pyjobs/core/templates/jobs_by_location.html:11
+#: pyjobs/core/templates/jobs_by_location.html:13
+#: pyjobs/core/templates/jobs_by_location.html:14
+#: pyjobs/core/templates/jobs_by_location.html:16
+#: pyjobs/core/templates/jobs_by_skill.html:9
+#: pyjobs/core/templates/jobs_by_skill.html:11
+#: pyjobs/core/templates/jobs_by_skill.html:13
+#: pyjobs/core/templates/jobs_by_skill.html:14
+#: pyjobs/core/templates/jobs_by_skill.html:15
+#: pyjobs/core/templates/jobs_by_skill.html:16
+#: pyjobs/marketing/templates/job_sharing.html:10
+msgid "no"
+msgstr "at"
+
+#: pyjobs/core/templates/blog/post_details.html:68
+msgid "Quero ver as Vagas Python"
+msgstr "Show me Python Job Positions"
+
+#: pyjobs/core/templates/blog/post_details.html:73
+msgid "Quero ver as Vagas Front"
+msgstr "Show me Front Job Positions"
+
+#: pyjobs/core/templates/blog/posts.html:9
+#: pyjobs/core/templates/blog/posts.html:11
+#: pyjobs/core/templates/blog/posts.html:13
+#: pyjobs/core/templates/blog/posts.html:14
+#: pyjobs/core/templates/blog/posts.html:15
+#, python-format
+msgid "Posts do %(WEBSITE_NAME)s"
+msgstr "Posts from %(WEBSITE_NAME)s"
+
+#: pyjobs/core/templates/blog/posts.html:10 pyjobs/core/templates/index.html:11
+#: pyjobs/core/templates/job_registration.html:11
+#: pyjobs/core/templates/jobs.html:11
+#: pyjobs/core/templates/jobs_by_location.html:10
+#: pyjobs/core/templates/jobs_by_skill.html:10
+msgid "pt_BR"
+msgstr "en_US"
+
+#: pyjobs/core/templates/blog/posts.html:45
+msgid "LER MAIS"
+msgstr "READ MORE"
 
 #: pyjobs/core/templates/contact-us.html:10
 msgid "Contato"
@@ -523,6 +595,7 @@ msgid "com uma sugestão, elogio ou dúvida!"
 msgstr "with a suggestion or doubt!"
 
 #: pyjobs/core/templates/contact-us.html:47
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:31
 msgid "Enviar"
 msgstr "Submit"
 
@@ -760,7 +833,7 @@ msgid "Para mandar um email para ela, basta enviar para:"
 msgstr "To send an e-mail to her, you just need to:"
 
 #: pyjobs/core/templates/emails/published_job.txt:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "Olá %(vaga.company_name)s,\n"
@@ -795,7 +868,7 @@ msgstr ""
 "Now the job: %(vaga.title)s is available at your job board!\n"
 "\n"
 "To reach it, click on the link below:\n"
-"%(url_do_site)s/en/job/%(vaga.pk)s/ \n"
+"%(url_do_site)s/en/job/%(vaga.unique_slug)s/ \n"
 "\n"
 "To get applied candidates data from the job, if you didn’t use an external "
 "sourcerer link\n"
@@ -835,17 +908,6 @@ msgstr ""
 "If you have any doubts, send me an e-mail!\n"
 
 #: pyjobs/core/templates/emails/weekly_summary.txt:12
-#: pyjobs/core/templates/job_details.html:7
-#: pyjobs/core/templates/jobs_by_location.html:9
-#: pyjobs/core/templates/jobs_by_location.html:11
-#: pyjobs/core/templates/jobs_by_location.html:13
-#: pyjobs/core/templates/jobs_by_location.html:14
-#: pyjobs/core/templates/jobs_by_location.html:16
-#: pyjobs/marketing/triggers.py:132
-msgid "em"
-msgstr "at"
-
-#: pyjobs/core/templates/emails/weekly_summary.txt:12
 msgid "disponível em"
 msgstr "available at"
 
@@ -861,6 +923,7 @@ msgstr ""
 "%(dono_do_site)s\n"
 
 #: pyjobs/core/templates/generic.html:15
+#: pyjobs/core/templates/job_created.html:23
 msgid "IR PARA HOME"
 msgstr "HEAD HOME"
 
@@ -877,14 +940,6 @@ msgid ""
 msgstr ""
 " developer jobs, jobs for %(WEBSITE_WORKING_LANGUAGE)s developers, jobs on "
 "%(WEBSITE_NAME)s, %(WEBSITE_WORKING_LANGUAGE)s jobs "
-
-#: pyjobs/core/templates/index.html:11
-#: pyjobs/core/templates/job_registration.html:11
-#: pyjobs/core/templates/jobs.html:11
-#: pyjobs/core/templates/jobs_by_location.html:10
-#: pyjobs/core/templates/jobs_by_skill.html:10
-msgid "pt_BR"
-msgstr "en_US"
 
 #: pyjobs/core/templates/index.html:12 pyjobs/core/templates/index.html:14
 #: pyjobs/core/templates/index.html:16
@@ -1102,28 +1157,6 @@ msgstr "was"
 msgid "Voltar aos outros candidatos!"
 msgstr "Go back to other candidates!"
 
-#: pyjobs/core/templates/job_challenge.html:8
-#: pyjobs/core/templates/job_details.html:13
-#: pyjobs/core/templates/job_registration.html:10
-#: pyjobs/core/templates/job_registration.html:12
-#: pyjobs/core/templates/job_registration.html:14
-#: pyjobs/core/templates/job_registration.html:16
-#: pyjobs/core/templates/jobs.html:9 pyjobs/core/templates/jobs.html:15
-#: pyjobs/core/templates/jobs_by_location.html:9
-#: pyjobs/core/templates/jobs_by_location.html:11
-#: pyjobs/core/templates/jobs_by_location.html:13
-#: pyjobs/core/templates/jobs_by_location.html:14
-#: pyjobs/core/templates/jobs_by_location.html:16
-#: pyjobs/core/templates/jobs_by_skill.html:9
-#: pyjobs/core/templates/jobs_by_skill.html:11
-#: pyjobs/core/templates/jobs_by_skill.html:13
-#: pyjobs/core/templates/jobs_by_skill.html:14
-#: pyjobs/core/templates/jobs_by_skill.html:15
-#: pyjobs/core/templates/jobs_by_skill.html:16
-#: pyjobs/marketing/templates/job_sharing.html:10
-msgid "no"
-msgstr "at"
-
 #: pyjobs/core/templates/job_challenge.html:15
 msgid "Desafio:"
 msgstr "Challenge:"
@@ -1131,6 +1164,32 @@ msgstr "Challenge:"
 #: pyjobs/core/templates/job_challenge.html:21
 msgid "Enviar resposta!"
 msgstr "Send the answer!"
+
+#: pyjobs/core/templates/job_created.html:7
+msgid "Parabéns! Sua vaga foi registrada!"
+msgstr "Congrats! Your position was registered!"
+
+#: pyjobs/core/templates/job_created.html:8
+msgid ""
+"Agora você começará a receber os candidatos por e-mail e no link que lhe "
+"enviamos!"
+msgstr ""
+"Now you will start receiving candidates directly through your e-mail and on "
+"the link we have sent you!"
+
+#: pyjobs/core/templates/job_created.html:10
+msgid "Impulsione a sua vaga agora com nossa rede de contatos!"
+msgstr "Boost your job with ads and access our contact network!"
+
+#: pyjobs/core/templates/job_created.html:11
+msgid ""
+"Deixe a sua vaga entre as primeiras de nosso site e tenha acesso a mais de "
+"100 mil pessoas com nosso mailing de vagas e conteúdos de programação "
+"durante 30 dias (divulgações são semanais)."
+msgstr ""
+"Give your job a boost and stay displayed for thousands of users. Our network "
+"has 100 thousand developers on our job and content mailings. The ad stays on "
+"display for 30 days (weekly shoutout on the mailings)."
 
 #: pyjobs/core/templates/job_details.html:24
 msgid "Vaga Anterior"
@@ -1176,6 +1235,8 @@ msgid "Candidate-se para esta vaga pelo link"
 msgstr "Apply for this job through this link"
 
 #: pyjobs/core/templates/job_details.html:87
+#: pyjobs/core/templates/job_registration.html:198
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:31
 msgid "Enviando"
 msgstr "Sent on"
 
@@ -1205,7 +1266,7 @@ msgstr "Share"
 #: pyjobs/core/templates/jobs_by_location.html:103
 #: pyjobs/core/templates/jobs_by_skill.html:62
 #: pyjobs/core/templates/jobs_by_skill.html:115
-#: pyjobs/core/templates/pythonista-applied-jobs.html:35
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:35
 msgid "Empresa:"
 msgstr "Company:"
 
@@ -1417,7 +1478,7 @@ msgstr "AD"
 #: pyjobs/core/templates/jobs_by_location.html:109
 #: pyjobs/core/templates/jobs_by_skill.html:68
 #: pyjobs/core/templates/jobs_by_skill.html:121
-#: pyjobs/core/templates/pythonista-applied-jobs.html:41
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:41
 msgid "N&iacute;vel"
 msgstr "Level"
 
@@ -1426,7 +1487,7 @@ msgstr "Level"
 #: pyjobs/core/templates/jobs_by_location.html:123
 #: pyjobs/core/templates/jobs_by_skill.html:82
 #: pyjobs/core/templates/jobs_by_skill.html:135
-#: pyjobs/core/templates/pythonista-applied-jobs.html:55
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:55
 msgid "VER MAIS DETALHES"
 msgstr "MORE DETAILS"
 
@@ -1439,7 +1500,7 @@ msgstr "Jobs not found…"
 #: pyjobs/core/templates/jobs.html:116
 #: pyjobs/core/templates/jobs_by_location.html:97
 #: pyjobs/core/templates/jobs_by_skill.html:109
-#: pyjobs/core/templates/pythonista-applied-jobs.html:29
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:29
 msgid "VAGA"
 msgstr "JOB"
 
@@ -1528,97 +1589,6 @@ msgstr "SIGN ME UP"
 #: pyjobs/core/templates/privacy_policy.html:6
 msgid "Política de Privacidade e Relacionamento com o Usuário"
 msgstr "Privacy Policy with users"
-
-#: pyjobs/core/templates/pythonista-applied-jobs.html:8
-#: pyjobs/core/templates/pythonistas-area-info-change.html:11
-#: pyjobs/core/templates/pythonistas-area-password-change.html:9
-#: pyjobs/core/templates/pythonistas-area.html:8
-msgid "Área do"
-msgstr "Area for"
-
-#: pyjobs/core/templates/pythonista-applied-jobs.html:11
-msgid "Vagas que você aplicou via"
-msgstr "Jobs that you applied for within"
-
-#: pyjobs/core/templates/pythonista-applied-jobs.html:12
-msgid "Aqui aparecem apenas as vagas que você se inscreveu via botão do"
-msgstr "Here we just show up jobs that you applied from inside the platform"
-
-#: pyjobs/core/templates/pythonista-applied-jobs.html:14
-msgid "Você ainda não aplicou a nenhuma vaga via"
-msgstr "You haven’t applied for any job yet"
-
-#: pyjobs/core/templates/pythonista-applied-jobs.html:21
-msgid "Nenhuma aplica&ccedil;&atilde;o encontrada..."
-msgstr "We didn’t find any job applications yet."
-
-#: pyjobs/core/templates/pythonistas-area-info-change.html:6
-msgid "Atualize seus dados"
-msgstr "Update your data"
-
-#: pyjobs/core/templates/pythonistas-area-info-change.html:36
-#: pyjobs/core/templates/pythonistas-area-password-change.html:37
-#: pyjobs/core/templates/pythonistas-signup.html:52
-msgid "ENVIAR"
-msgstr "SUBMIT"
-
-#: pyjobs/core/templates/pythonistas-area-password-change.html:10
-msgid "Atualize sua senha!"
-msgstr "Update your password!"
-
-#: pyjobs/core/templates/pythonistas-area.html:9
-msgid "Atualize seu cadastro!"
-msgstr "Update your info!"
-
-#: pyjobs/core/templates/pythonistas-area.html:11
-msgid "Atualizar seu Perfil"
-msgstr "Update your profile"
-
-#: pyjobs/core/templates/pythonistas-area.html:14
-msgid "Atualizar sua senha"
-msgstr "Update your password"
-
-#: pyjobs/core/templates/pythonistas-area.html:17
-msgid "Veja os jobs que você aplicou"
-msgstr "See your applications"
-
-#: pyjobs/core/templates/pythonistas-area.html:20
-msgid "Visualizar Vagas"
-msgstr "See jobs"
-
-#: pyjobs/core/templates/pythonistas-signup.html:8
-#, python-format
-msgid " Cadastre-se no maior portal de vagas %(WEBSITE_WORKING_LANGUAGE)s "
-msgstr " Sign up on the biggest %(WEBSITE_WORKING_LANGUAGE)s job board "
-
-#: pyjobs/core/templates/pythonistas-signup.html:9
-#, python-format
-msgid ""
-" \"Este login &eacute; exclusivo para desenvolvedores relacionados a "
-"linguagem %(WEBSITE_WORKING_LANGUAGE)s. "
-msgstr ""
-" This login is exclusive for users/developers related to "
-"%(WEBSITE_WORKING_LANGUAGE)s. "
-
-#: pyjobs/core/templates/pythonistas-signup.html:10
-msgid "Caso você queira postar uma vaga,"
-msgstr "If you want to post a job,"
-
-#: pyjobs/core/templates/pythonistas-signup.html:10
-msgid "clique aqui"
-msgstr "click here"
-
-#: pyjobs/core/templates/pythonistas-signup.html:36
-msgid "Você aceita estar em nossa newsletter?"
-msgstr "Do you accept signing up for our newsletter?"
-
-#: pyjobs/core/templates/pythonistas-signup.html:38
-msgid "Você aceita nossa"
-msgstr "Do you agree"
-
-#: pyjobs/core/templates/pythonistas-signup.html:38
-msgid "política de privacidade"
-msgstr "our privacy policy"
 
 #: pyjobs/core/templates/registration/login.html:30
 msgid "Se conecte via GitHub ou LinkedIn"
@@ -1745,6 +1715,123 @@ msgstr ""
 "take care of the professional selection process, from the first "
 "<I>profiling</I> of the vacancy to the hiring of the employee."
 
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:8
+#: pyjobs/core/templates/user_area/pythonistas-area-info-change.html:11
+#: pyjobs/core/templates/user_area/pythonistas-area-password-change.html:9
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:11
+#: pyjobs/core/templates/user_area/pythonistas-area.html:8
+msgid "Área do"
+msgstr "Area for"
+
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:11
+msgid "Vagas que você aplicou via"
+msgstr "Jobs that you applied for within"
+
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:12
+msgid "Aqui aparecem apenas as vagas que você se inscreveu via botão do"
+msgstr "Here we just show up jobs that you applied from inside the platform"
+
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:14
+msgid "Você ainda não aplicou a nenhuma vaga via"
+msgstr "You haven’t applied for any job yet"
+
+#: pyjobs/core/templates/user_area/pythonista-applied-jobs.html:21
+msgid "Nenhuma aplica&ccedil;&atilde;o encontrada..."
+msgstr "We didn’t find any job applications yet."
+
+#: pyjobs/core/templates/user_area/pythonistas-area-info-change.html:6
+msgid "Atualize seus dados"
+msgstr "Update your data"
+
+#: pyjobs/core/templates/user_area/pythonistas-area-info-change.html:36
+#: pyjobs/core/templates/user_area/pythonistas-area-password-change.html:37
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:52
+msgid "ENVIAR"
+msgstr "SUBMIT"
+
+#: pyjobs/core/templates/user_area/pythonistas-area-password-change.html:10
+msgid "Atualize sua senha!"
+msgstr "Update your password!"
+
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:6
+#: pyjobs/core/templates/user_area/pythonistas-area.html:20
+msgid "Atualize suas proficiências"
+msgstr "Update your proficiencies"
+
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:11
+msgid "Ajuste de proficiências"
+msgstr "Skills Proficiency Settings"
+
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:14
+msgid ""
+"\n"
+"            Aqui, você deverá preencher quais são as suas maiores skills e a "
+"quantidade de anos que você atua com elas.\n"
+"            "
+msgstr ""
+"\n"
+"            Here you will be able to film all of your major skills and years "
+"that you have been using that technology .\n"
+"            "
+
+#: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:30
+msgid "Adicionar Skill"
+msgstr "Add Skill"
+
+#: pyjobs/core/templates/user_area/pythonistas-area.html:9
+msgid "Atualize seu cadastro!"
+msgstr "Update your info!"
+
+#: pyjobs/core/templates/user_area/pythonistas-area.html:11
+msgid "Atualizar seu Perfil"
+msgstr "Update your profile"
+
+#: pyjobs/core/templates/user_area/pythonistas-area.html:14
+msgid "Atualizar sua senha"
+msgstr "Update your password"
+
+#: pyjobs/core/templates/user_area/pythonistas-area.html:17
+msgid "Veja os jobs que você aplicou"
+msgstr "See your applications"
+
+#: pyjobs/core/templates/user_area/pythonistas-area.html:23
+msgid "Visualizar Vagas"
+msgstr "See jobs"
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:8
+#, python-format
+msgid " Cadastre-se no maior portal de vagas %(WEBSITE_WORKING_LANGUAGE)s "
+msgstr " Sign up on the biggest %(WEBSITE_WORKING_LANGUAGE)s job board "
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:9
+#, python-format
+msgid ""
+" \"Este login &eacute; exclusivo para desenvolvedores relacionados a "
+"linguagem %(WEBSITE_WORKING_LANGUAGE)s. "
+msgstr ""
+" This login is exclusive for users/developers related to "
+"%(WEBSITE_WORKING_LANGUAGE)s. "
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:10
+msgid "Caso você queira postar uma vaga,"
+msgstr "If you want to post a job,"
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:10
+msgid "clique aqui"
+msgstr "click here"
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:36
+msgid "Você aceita estar em nossa newsletter?"
+msgstr "Do you accept signing up for our newsletter?"
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:38
+msgid "Você aceita nossa"
+msgstr "Do you agree"
+
+#: pyjobs/core/templates/user_area/pythonistas-signup.html:38
+msgid "política de privacidade"
+msgstr "our privacy policy"
+
 #: pyjobs/core/utils.py:29 pyjobs/core/utils.py:32
 msgid "Nova Oportunidade:"
 msgstr "New Job Post:"
@@ -1753,81 +1840,73 @@ msgstr "New Job Post:"
 msgid "Via"
 msgstr "Via"
 
-#: pyjobs/core/views.py:253
+#: pyjobs/core/views.py:251
 msgid "Falha na hora de criar o job"
 msgstr "Failed to create the job"
 
-#: pyjobs/core/views.py:254
+#: pyjobs/core/views.py:252
 msgid "Algum campo não foi preenchido corretamente!"
 msgstr "Some field was not filled in correctly!"
 
-#: pyjobs/core/views.py:257
-msgid "Acabamos de mandar um e-mail para vocês!"
-msgstr "We just sent you an email!"
-
-#: pyjobs/core/views.py:259
-msgid "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
-msgstr "Check your email to learn how to leverage this position!"
-
-#: pyjobs/core/views.py:270
+#: pyjobs/core/views.py:260
 msgid "No Job matches the given hash."
 msgstr "No Job matches the given hash."
 
-#: pyjobs/core/views.py:273
+#: pyjobs/core/views.py:263
 msgid "Vaga fechada com sucesso!"
 msgstr "Successfully closed this job!"
 
-#: pyjobs/core/views.py:306
+#: pyjobs/core/views.py:296
 msgid "Falha na hora de mandar a mensagem"
 msgstr "Failed to send the message"
 
-#: pyjobs/core/views.py:308
+#: pyjobs/core/views.py:298
 msgid "Você preencheu algum campo da maneira errada, tente novamente!"
 msgstr "You filled up some thing in a way that is not orthodox, try again!"
 
-#: pyjobs/core/views.py:315
+#: pyjobs/core/views.py:305
 msgid "Mensagem enviada com sucesso"
 msgstr "Message sent successfully"
 
-#: pyjobs/core/views.py:316
+#: pyjobs/core/views.py:306
 msgid "Vá para a home do site!"
 msgstr "Go to website home!"
 
-#: pyjobs/core/views.py:359
+#: pyjobs/core/views.py:349
 msgid "Sua senha foi alterada com sucesso!"
 msgstr "Your password was updated successfully!"
 
-#: pyjobs/core/views.py:364 pyjobs/core/views.py:382 pyjobs/core/views.py:383
+#: pyjobs/core/views.py:354 pyjobs/core/views.py:372 pyjobs/core/views.py:373
 msgid "Por favor, corrija os erros abaixo."
 msgstr "Please, fix the mistakes below."
 
-#: pyjobs/core/views.py:379
+#: pyjobs/core/views.py:369
 msgid "Suas informações foram atualizadas com sucesso!"
 msgstr "Your information is already updated!"
 
-#: pyjobs/core/views.py:474
+#: pyjobs/core/views.py:488
 msgid "Seu teste já foi enviado!"
 msgstr "Your challenge was sent!"
 
-#: pyjobs/core/views.py:475
+#: pyjobs/core/views.py:489
 msgid "Recebemos seu teste, aguarde nosso retorno!"
 msgstr "We received your test, wait for our feedback!"
 
-#: pyjobs/core/views.py:476
+#: pyjobs/core/views.py:490
 msgid "Recebemos seu teste e vamos avaliar!"
 msgstr "We received your test and we will evaluate it!"
 
-#: pyjobs/core/views.py:557
+#: pyjobs/core/views.py:571
 msgid "Oops... Passamos vergonha agora! =P"
 msgstr "Oops… Such a shame now! =P"
 
-#: pyjobs/core/views.py:560
+#: pyjobs/core/views.py:574
 msgid "Já mandamos o erro que acabou de acontecer contigo ao administrador!"
 msgstr ""
 "We’ve sent your platform error to our admin so he can figure out what "
 "happened!"
 
-#: pyjobs/core/views.py:565
+#: pyjobs/core/views.py:579
 msgid ""
 "De vez em quando nós também erramos, esperamos que você não fique chateado e "
 "volte ao nosso site"
@@ -1963,23 +2042,23 @@ msgstr "Technical Challenge: "
 msgid "Você possui mais um candidato para a sua vaga"
 msgstr "You have a new candidate for your open position"
 
-#: pyjobs/marketing/triggers.py:128
+#: pyjobs/marketing/triggers.py:127
 msgid "Nova oportunidade!"
 msgstr "New Job Post!"
 
-#: pyjobs/marketing/triggers.py:145
+#: pyjobs/marketing/triggers.py:144
 msgid "Sua oportunidade está disponível no"
 msgstr "Your job post is available at"
 
-#: pyjobs/marketing/triggers.py:151
+#: pyjobs/marketing/triggers.py:150
 msgid "Nova Vaga!"
 msgstr "New Job Post!"
 
-#: pyjobs/marketing/triggers.py:193
+#: pyjobs/marketing/triggers.py:194
 msgid "Você recebeu um feedback da vaga"
 msgstr "You’ve received a feedback from the job"
 
-#: pyjobs/marketing/triggers.py:195
+#: pyjobs/marketing/triggers.py:196
 msgid "na empresa"
 msgstr "from the company"
 
@@ -2182,6 +2261,12 @@ msgstr "Approved"
 #: pyjobs/settings.py:286
 msgid "Reprovado"
 msgstr "Reproved"
+
+#~ msgid "Acabamos de mandar um e-mail para vocês!"
+#~ msgstr "We just sent you an email!"
+
+#~ msgid "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
+#~ msgstr "Check your email to learn how to leverage this position!"
 
 #~ msgid "Cadastre-se no maior portal de vagas"
 #~ msgstr "Sign up on the biggest job board"

@@ -5,13 +5,14 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.forms import ModelForm
+from django.forms import ModelForm, formset_factory, inlineformset_factory
 from datetime import datetime
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 
-from pyjobs.core.models import Job, Profile, Skill, JobApplication
+from pyjobs.core.models import Job, Profile, Skill, JobApplication, SkillProficiency
 from pyjobs.marketing.models import Contact
 from django.utils.translation import gettext_lazy as _
+from django.forms.utils import ErrorDict
 
 
 class CustomModelForm(ModelForm):
@@ -187,3 +188,24 @@ class JobApplicationFeedbackForm(ModelForm):
     class Meta:
         model = JobApplication
         fields = ["company_feedback", "company_feedback_type"]
+
+
+class SkillProficiencyForm(ModelForm):
+    class Meta:
+        model = SkillProficiency
+        fields = ["skill", "experience"]
+
+    def full_clean(self, *args, **kwargs):
+        super(SkillProficiencyForm, self).full_clean(*args, **kwargs)
+        if hasattr(self, "cleaned_data") and self.cleaned_data.get("DELETE", False):
+            self._errors = ErrorDict()
+
+    def save(self, user=None, commit=True):
+        if self.cleaned_data.get("DELETE") or self.cleaned_data.get("experience") == 0:
+            return
+
+        SkillProficiency.objects.get_or_create(
+            skill=self.cleaned_data["skill"],
+            user=user,
+            experience=self.cleaned_data["experience"],
+        )

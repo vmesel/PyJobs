@@ -116,11 +116,10 @@ def send_job_to_github_issues(job):
 
 
 @receiver(post_save, sender=Job)
-def new_job_was_created(sender, instance, created, **kwargs):
+def test(sender, instance, created, **kwargs):
     if not created or not instance.receive_emails:
-        return
+        return False
 
-    # post to telegram
     message_text = " ".join(
         map(
             str,
@@ -169,6 +168,8 @@ def new_job_was_created(sender, instance, created, **kwargs):
         send_offer_email_template(instance)
     except:
         client.captureException()
+
+    return True
 
 
 @receiver(pre_save, sender=JobApplication)
