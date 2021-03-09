@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 20:04-0300\n"
-"PO-Revision-Date: 2021-03-08 20:13-0300\n"
+"POT-Creation-Date: 2021-03-09 06:28-0300\n"
+"PO-Revision-Date: 2021-03-09 06:32-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -309,7 +309,7 @@ msgstr "Skill Description"
 
 #: pyjobs/core/models.py:334
 msgid "Anos de experiência"
-msgstr "Experience Years:"
+msgstr "Experience Years"
 
 #: pyjobs/core/templates/applied_users_details.html:17
 msgid "Postada"
@@ -923,6 +923,7 @@ msgstr ""
 "%(dono_do_site)s\n"
 
 #: pyjobs/core/templates/generic.html:15
+#: pyjobs/core/templates/job_created.html:23
 msgid "IR PARA HOME"
 msgstr "HEAD HOME"
 
@@ -1163,6 +1164,32 @@ msgstr "Challenge:"
 #: pyjobs/core/templates/job_challenge.html:21
 msgid "Enviar resposta!"
 msgstr "Send the answer!"
+
+#: pyjobs/core/templates/job_created.html:7
+msgid "Parabéns! Sua vaga foi registrada!"
+msgstr "Congrats! Your position was registered!"
+
+#: pyjobs/core/templates/job_created.html:8
+msgid ""
+"Agora você começará a receber os candidatos por e-mail e no link que lhe "
+"enviamos!"
+msgstr ""
+"Now you will start receiving candidates directly through your e-mail and on "
+"the link we have sent you!"
+
+#: pyjobs/core/templates/job_created.html:10
+msgid "Impulsione a sua vaga agora com nossa rede de contatos!"
+msgstr "Boost your job with ads and access our contact network!"
+
+#: pyjobs/core/templates/job_created.html:11
+msgid ""
+"Deixe a sua vaga entre as primeiras de nosso site e tenha acesso a mais de "
+"100 mil pessoas com nosso mailing de vagas e conteúdos de programação "
+"durante 30 dias (divulgações são semanais)."
+msgstr ""
+"Give your job a boost and stay displayed for thousands of users. Our network "
+"has 100 thousand developers on our job and content mailings. The ad stays on "
+"display for 30 days (weekly shoutout on the mailings)."
 
 #: pyjobs/core/templates/job_details.html:24
 msgid "Vaga Anterior"
@@ -1729,7 +1756,7 @@ msgstr "Update your password!"
 #: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:6
 #: pyjobs/core/templates/user_area/pythonistas-area.html:20
 msgid "Atualize suas proficiências"
-msgstr "Update your proficiencies!"
+msgstr "Update your proficiencies"
 
 #: pyjobs/core/templates/user_area/pythonistas-area-proficiency.html:11
 msgid "Ajuste de proficiências"
@@ -1813,81 +1840,73 @@ msgstr "New Job Post:"
 msgid "Via"
 msgstr "Via"
 
-#: pyjobs/core/views.py:247
+#: pyjobs/core/views.py:251
 msgid "Falha na hora de criar o job"
 msgstr "Failed to create the job"
 
-#: pyjobs/core/views.py:248
+#: pyjobs/core/views.py:252
 msgid "Algum campo não foi preenchido corretamente!"
 msgstr "Some field was not filled in correctly!"
 
-#: pyjobs/core/views.py:251
-msgid "Acabamos de mandar um e-mail para vocês!"
-msgstr "We just sent you an email!"
-
-#: pyjobs/core/views.py:253
-msgid "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
-msgstr "Check your email to learn how to leverage this position!"
-
-#: pyjobs/core/views.py:264
+#: pyjobs/core/views.py:260
 msgid "No Job matches the given hash."
 msgstr "No Job matches the given hash."
 
-#: pyjobs/core/views.py:267
+#: pyjobs/core/views.py:263
 msgid "Vaga fechada com sucesso!"
 msgstr "Successfully closed this job!"
 
-#: pyjobs/core/views.py:300
+#: pyjobs/core/views.py:296
 msgid "Falha na hora de mandar a mensagem"
 msgstr "Failed to send the message"
 
-#: pyjobs/core/views.py:302
+#: pyjobs/core/views.py:298
 msgid "Você preencheu algum campo da maneira errada, tente novamente!"
 msgstr "You filled up some thing in a way that is not orthodox, try again!"
 
-#: pyjobs/core/views.py:309
+#: pyjobs/core/views.py:305
 msgid "Mensagem enviada com sucesso"
 msgstr "Message sent successfully"
 
-#: pyjobs/core/views.py:310
+#: pyjobs/core/views.py:306
 msgid "Vá para a home do site!"
 msgstr "Go to website home!"
 
-#: pyjobs/core/views.py:353
+#: pyjobs/core/views.py:349
 msgid "Sua senha foi alterada com sucesso!"
 msgstr "Your password was updated successfully!"
 
-#: pyjobs/core/views.py:358 pyjobs/core/views.py:376 pyjobs/core/views.py:377
+#: pyjobs/core/views.py:354 pyjobs/core/views.py:372 pyjobs/core/views.py:373
 msgid "Por favor, corrija os erros abaixo."
 msgstr "Please, fix the mistakes below."
 
-#: pyjobs/core/views.py:373
+#: pyjobs/core/views.py:369
 msgid "Suas informações foram atualizadas com sucesso!"
 msgstr "Your information is already updated!"
 
-#: pyjobs/core/views.py:492
+#: pyjobs/core/views.py:488
 msgid "Seu teste já foi enviado!"
 msgstr "Your challenge was sent!"
 
-#: pyjobs/core/views.py:493
+#: pyjobs/core/views.py:489
 msgid "Recebemos seu teste, aguarde nosso retorno!"
 msgstr "We received your test, wait for our feedback!"
 
-#: pyjobs/core/views.py:494
+#: pyjobs/core/views.py:490
 msgid "Recebemos seu teste e vamos avaliar!"
 msgstr "We received your test and we will evaluate it!"
 
-#: pyjobs/core/views.py:575
+#: pyjobs/core/views.py:571
 msgid "Oops... Passamos vergonha agora! =P"
 msgstr "Oops… Such a shame now! =P"
 
-#: pyjobs/core/views.py:578
+#: pyjobs/core/views.py:574
 msgid "Já mandamos o erro que acabou de acontecer contigo ao administrador!"
 msgstr ""
 "We’ve sent your platform error to our admin so he can figure out what "
 "happened!"
 
-#: pyjobs/core/views.py:583
+#: pyjobs/core/views.py:579
 msgid ""
 "De vez em quando nós também erramos, esperamos que você não fique chateado e "
 "volte ao nosso site"
@@ -2242,6 +2261,12 @@ msgstr "Approved"
 #: pyjobs/settings.py:286
 msgid "Reprovado"
 msgstr "Reproved"
+
+#~ msgid "Acabamos de mandar um e-mail para vocês!"
+#~ msgstr "We just sent you an email!"
+
+#~ msgid "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
+#~ msgstr "Check your email to learn how to leverage this position!"
 
 #~ msgid "Cadastre-se no maior portal de vagas"
 #~ msgstr "Sign up on the biggest job board"

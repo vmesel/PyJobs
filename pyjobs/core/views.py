@@ -244,16 +244,12 @@ def register_new_job(request):
     g_recaptcha_response = request.POST.get("g-recaptcha-response")
     context = {"webpush": WEBPUSH_CONTEXT}
 
+    if new_job.is_valid(g_recaptcha_response):
+        new_job.save()
+        return render(request, template_name="job_created.html", context=context)
+
     context["message_first"] = _("Falha na hora de criar o job")
     context["message_second"] = _("Algum campo não foi preenchido corretamente!")
-
-    if new_job.is_valid(g_recaptcha_response):
-        context["message_first"] = _("Acabamos de mandar um e-mail para vocês!")
-        context["message_second"] = _(
-            "Cheque o e-mail de vocês para saber como alavancar essa vaga!"
-        )
-
-        new_job.save()
 
     return render(request, template_name="generic.html", context=context)
 

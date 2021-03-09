@@ -414,7 +414,7 @@ class PyJobsRegisterNewJob(TestCase):
         )
         response = self.client.post("/register/new/job/", follow=True)
         content = response.content.decode("utf-8")
-        self.assertTrue("Acabamos de mandar um e-mail para vocês" in content)
+        self.assertTrue("Parabéns! Sua vaga foi registrada!" in content)
 
     @override_settings(RECAPTCHA_SECRET_KEY="AAA")
     @responses.activate
