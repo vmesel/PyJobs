@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    {% blocktranslate %}
+        {{ assessment.name }} no {{WEBSITE_NAME}}
+    {% endblocktranslate %} 
+{% endblock %}
+
+{%block main%}
+    <div class="container" style="min-height: 100vh; padding-top: 50px;">
+        <h2 style="text-align: center; font-weight: bold;">{{assessment.name}}</h2>
+        <h3 style="font-size: 18px;">{% blocktranslate %}Categoria:{% endblocktranslate %} <span style="font-weight: bold;">{{ assessment.theme.name }}</span></h3>
+        <hr/>
+        <h3 style="font-size: 18px;">Descrição:</h3>
+        <p style="margin-top: 20px">
+            {{ assessment.description }}
+        </p>
+        {% if started_answering and not finished %}
+            <a href="{% url 'question_page' assessment.slug %}">
+                <input type="button" class="botao" value="{% translate 'Continuar Respondendo' %}" style="margin-top: 20px;">
+            </a>
+        {% elif started_answering and finished %}
+            <a href="{% url 'question_page' assessment.slug %}">
+                <input type="button" class="botao" value="{% translate 'Ver resultado' %}" style="margin-top: 20px;">
+            </a>
+        {% else %}
+        <a href="{% url 'question_page' assessment.slug %}">
+            <input type="button" class="botao" value="{% translate 'Começar o Quiz' %}" style="margin-top: 20px;">
+        </a>
+        {% endif %}
+
+    </div>
+{%endblock%}

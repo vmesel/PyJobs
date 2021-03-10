@@ -40,6 +40,7 @@ urlpatterns += i18n_patterns(
     url("", include("pyjobs.marketing.urls")),
     url("", include("pyjobs.partners.urls")),
     url("", include("pyjobs.core.urls")),
+    url("quiz/", include("pyjobs.assessment.urls")),
     url("blog/", include("pyjobs.blog.urls")),
     url(
         r"^login/$",

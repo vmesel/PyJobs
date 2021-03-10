@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    {% blocktranslate %}
+        {{ assessment.name }} no {{WEBSITE_NAME}}
+    {% endblocktranslate %} 
+{% endblock %}
+
+{%block main%}
+    <div class="container" style="min-height: 100vh; padding-top: 50px;">
+        <h2 style="text-align: center; font-weight: bold;">{{assessment.name}}</h2>
+        <h3 style="font-size: 18px;">{{question.question}}</h3>
+        <hr/>
+        <form action="{% url 'question_submit' assessment.slug question.id %}" method="post">
+            {% csrf_token %}
+            <ul>
+                {% for answer in possible_answers %}
+                    <li style="margin-top: 15px;" ><input type="radio" name="answer" value="{{answer}}"><span style="padding-left: 10px;">{{ answer }}</span></span></li>
+                {% endfor %}
+            </ul>
+            <input type="submit" class="botao" value="{% translate 'Submeter resposta' %}" style="margin-top: 20px;">
+        </form>
+
+    </div>
+{%endblock%}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    {% blocktranslate %}
+        {{ assessment.name }} no {{WEBSITE_NAME}}
+    {% endblocktranslate %} 
+{% endblock %}
+
+{%block main%}
+    <div class="container" style="min-height: 100vh; padding-top: 50px;">
+        <h2 style="text-align: center; font-weight: bold;">{{assessment.name}}</h2>
+        <h3 style="font-size: 18px;">{% blocktranslate %}Categoria:{% endblocktranslate %} <span style="font-weight: bold;">{{ assessment.theme.name }}</span></h3>
+        <hr/>
+        <h3 style="font-size: 18px;">{% blocktranslate %}Descrição{% endblocktranslate %}</h3>
+        <p style="margin-top: 20px">
+            {{ assessment.description }}
+        </p>
+        <hr style="margin-top: 50px; margin-bottom: 50px;"/>
+        <h3 style="font-size: 24px; text-align: center; margin-bottom: 50px;">{% blocktranslate %}Sua pontuação foi de:{% endblocktranslate %} <span style="font-weight: bold;">{{punctuation}}%</span></h3>
+        <a href="{% url 'jobs' %}">
+            <input type="button" class="botao" value="{% translate 'Ver Jobs' %}" style="margin-top: 20px;">
+        </a>
+
+    </div>
+{%endblock%}
