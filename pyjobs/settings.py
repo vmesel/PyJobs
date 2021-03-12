@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "pyjobs.partners",
     "pyjobs.profiler",
     "pyjobs.synchronizer",
+    "pyjobs.assessment",
     "widget_tweaks",
     "social_django",
     "django_select2",
@@ -84,7 +85,7 @@ ROOT_URLCONF = "pyjobs.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR + "/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

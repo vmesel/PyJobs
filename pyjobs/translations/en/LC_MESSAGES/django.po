@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-09 06:28-0300\n"
-"PO-Revision-Date: 2021-03-09 06:32-0300\n"
+"POT-Creation-Date: 2021-03-11 08:34-0300\n"
+"PO-Revision-Date: 2021-03-11 08:35-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -17,6 +17,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
+
+#: pyjobs/assessment/models.py:28
+msgid "Categoria do Teste"
+msgstr "Test Category"
+
+#: pyjobs/assessment/models.py:29
+msgid "Categorias dos Testes"
+msgstr "Tests Categories"
+
+#: pyjobs/assessment/models.py:60
+msgid "Teste"
+msgstr "Test"
+
+#: pyjobs/assessment/models.py:61
+msgid "Testes"
+msgstr "Tests"
+
+#: pyjobs/assessment/models.py:80
+msgid "Pergunta"
+msgstr "Question"
+
+#: pyjobs/assessment/models.py:81
+msgid "Perguntas"
+msgstr "Question"
+
+#: pyjobs/assessment/models.py:93
+msgid "Pontuação"
+msgstr "Point"
+
+#: pyjobs/assessment/models.py:94
+msgid "Pontuações"
+msgstr "Points"
+
+#: pyjobs/assessment/templates/quiz_final_page.html:7
+#: pyjobs/assessment/templates/quiz_index.html:7
+#: pyjobs/assessment/templates/quiz_question.html:7
+#, python-format
+msgid ""
+"\n"
+"        %(assessment.name)s no %(WEBSITE_NAME)s\n"
+"    "
+msgstr ""
+"\n"
+"        %(assessment.name)s at %(WEBSITE_NAME)s\n"
+"    "
+
+#: pyjobs/assessment/templates/quiz_final_page.html:15
+#: pyjobs/assessment/templates/quiz_index.html:15
+msgid "Categoria:"
+msgstr "Category:"
+
+#: pyjobs/assessment/templates/quiz_final_page.html:17
+msgid "Descrição"
+msgstr "Description"
+
+#: pyjobs/assessment/templates/quiz_final_page.html:22
+msgid "Sua pontuação foi de:"
+msgstr "Your score was:"
+
+#: pyjobs/assessment/templates/quiz_final_page.html:24
+msgid "Ver Jobs"
+msgstr "See More Jobs"
+
+#: pyjobs/assessment/templates/quiz_index.html:23
+msgid "Continuar Respondendo"
+msgstr "Continue Answering"
+
+#: pyjobs/assessment/templates/quiz_index.html:27
+msgid "Ver resultado"
+msgstr "See the Result"
+
+#: pyjobs/assessment/templates/quiz_index.html:31
+msgid "Começar o Quiz"
+msgstr "Start Answering"
+
+#: pyjobs/assessment/templates/quiz_question.html:24
+msgid "Submeter resposta"
+msgstr "Send the answer!"
 
 #: pyjobs/core/admin.py:64
 msgid "Teste Técnico da empresa:"
@@ -2098,167 +2176,167 @@ msgstr "Github Data"
 msgid "Linkedin Data"
 msgstr "LinkedIn Data"
 
-#: pyjobs/settings.py:148
+#: pyjobs/settings.py:149
 msgid "Portuguese"
 msgstr "Portuguese"
 
-#: pyjobs/settings.py:149
+#: pyjobs/settings.py:150
 msgid "English"
 msgstr "English"
 
-#: pyjobs/settings.py:228
+#: pyjobs/settings.py:229
 msgid "Acre"
 msgstr "Acre"
 
-#: pyjobs/settings.py:229
+#: pyjobs/settings.py:230
 msgid "Alagoas"
 msgstr "Alagoas"
 
-#: pyjobs/settings.py:230
+#: pyjobs/settings.py:231
 msgid "Amapá"
 msgstr "Amapá"
 
-#: pyjobs/settings.py:231
+#: pyjobs/settings.py:232
 msgid "Amazonas"
 msgstr "Amazonas"
 
-#: pyjobs/settings.py:232
+#: pyjobs/settings.py:233
 msgid "Bahia"
 msgstr "Bahia"
 
-#: pyjobs/settings.py:233
+#: pyjobs/settings.py:234
 msgid "Ceará"
 msgstr "Ceará"
 
-#: pyjobs/settings.py:234
+#: pyjobs/settings.py:235
 msgid "Distrito Federal"
 msgstr "Distrito Federal"
 
-#: pyjobs/settings.py:235
+#: pyjobs/settings.py:236
 msgid "Espírito Santo"
 msgstr "Espírito Santo"
 
-#: pyjobs/settings.py:236
+#: pyjobs/settings.py:237
 msgid "Goiás"
 msgstr "Goiás"
 
-#: pyjobs/settings.py:237
+#: pyjobs/settings.py:238
 msgid "Maranhão"
 msgstr "Maranhão"
 
-#: pyjobs/settings.py:238
+#: pyjobs/settings.py:239
 msgid "Mato Grosso"
 msgstr "Mato Grosso"
 
-#: pyjobs/settings.py:239
+#: pyjobs/settings.py:240
 msgid "Mato Grosso do Sul"
 msgstr "Mato Grosso do Sul"
 
-#: pyjobs/settings.py:240
+#: pyjobs/settings.py:241
 msgid "Minas Gerais"
 msgstr "Minas Gerais"
 
-#: pyjobs/settings.py:241
+#: pyjobs/settings.py:242
 msgid "Pará"
 msgstr "Pará"
 
-#: pyjobs/settings.py:242
+#: pyjobs/settings.py:243
 msgid "Paraíba"
 msgstr "Paraíba"
 
-#: pyjobs/settings.py:243
+#: pyjobs/settings.py:244
 msgid "Paraná"
 msgstr "Paraná"
 
-#: pyjobs/settings.py:244
+#: pyjobs/settings.py:245
 msgid "Pernambuco"
 msgstr "Pernambuco"
 
-#: pyjobs/settings.py:245
+#: pyjobs/settings.py:246
 msgid "Piauí"
 msgstr "Piauí"
 
-#: pyjobs/settings.py:246
+#: pyjobs/settings.py:247
 msgid "Rio de Janeiro"
 msgstr "Rio de Janeiro"
 
-#: pyjobs/settings.py:247
+#: pyjobs/settings.py:248
 msgid "Rio Grande do Norte"
 msgstr "Rio Grande do Norte"
 
-#: pyjobs/settings.py:248
+#: pyjobs/settings.py:249
 msgid "Rio Grande do Sul"
 msgstr "Rio Grande do Sul"
 
-#: pyjobs/settings.py:249
+#: pyjobs/settings.py:250
 msgid "Rondônia"
 msgstr "Rondônia"
 
-#: pyjobs/settings.py:250
+#: pyjobs/settings.py:251
 msgid "Roraima"
 msgstr "Roraima"
 
-#: pyjobs/settings.py:251
+#: pyjobs/settings.py:252
 msgid "Santa Catarina"
 msgstr "Santa Catarina"
 
-#: pyjobs/settings.py:252
+#: pyjobs/settings.py:253
 msgid "São Paulo"
 msgstr "São Paulo"
 
-#: pyjobs/settings.py:253
+#: pyjobs/settings.py:254
 msgid "Sergipe"
 msgstr "Sergipe"
 
-#: pyjobs/settings.py:254
+#: pyjobs/settings.py:255
 msgid "Tocantins"
 msgstr "Tocantins"
 
-#: pyjobs/settings.py:255 pyjobs/settings.py:276
+#: pyjobs/settings.py:256 pyjobs/settings.py:277
 msgid "Indeterminado"
 msgstr "Other"
 
-#: pyjobs/settings.py:268
+#: pyjobs/settings.py:269
 msgid "NI"
 msgstr "Not Informed"
 
-#: pyjobs/settings.py:272 pyjobs/settings.py:283
+#: pyjobs/settings.py:273 pyjobs/settings.py:284
 msgid "Estágio"
 msgstr "Internship"
 
-#: pyjobs/settings.py:273
+#: pyjobs/settings.py:274
 msgid "Junior"
 msgstr "Entry Level"
 
-#: pyjobs/settings.py:274
+#: pyjobs/settings.py:275
 msgid "Pleno"
 msgstr "Middle Level"
 
-#: pyjobs/settings.py:275
+#: pyjobs/settings.py:276
 msgid "Sênior"
 msgstr "Senior"
 
-#: pyjobs/settings.py:280
+#: pyjobs/settings.py:281
 msgid "A combinar"
 msgstr "To decide further"
 
-#: pyjobs/settings.py:281
+#: pyjobs/settings.py:282
 msgid "CLT"
 msgstr "Within the country employment law"
 
-#: pyjobs/settings.py:282
+#: pyjobs/settings.py:283
 msgid "PJ"
 msgstr "Contractor"
 
-#: pyjobs/settings.py:286
+#: pyjobs/settings.py:287
 msgid "Sem feedback"
 msgstr "Without feedback"
 
-#: pyjobs/settings.py:286
+#: pyjobs/settings.py:287
 msgid "Aprovado"
 msgstr "Approved"
 
-#: pyjobs/settings.py:286
+#: pyjobs/settings.py:287
 msgid "Reprovado"
 msgstr "Reproved"
 

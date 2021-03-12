@@ -120,10 +120,19 @@ class ProfileAdmin(admin.ModelAdmin):
     actions = [add_subscriber]
 
 
+class SkillProficiencyAdmin(admin.ModelAdmin):
+    list_display = (
+        "skill",
+        "user",
+        "experience",
+    )
+    readonly_fields = ("skill", "user", "experience")
+
+
 admin.site.register(Job, JobAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(JobApplication, JobApplicationAdmin)
 admin.site.register(Skill)
 admin.site.register(Currency)
 admin.site.register(Country)
-admin.site.register(SkillProficiency)
+admin.site.register(SkillProficiency, SkillProficiencyAdmin)
