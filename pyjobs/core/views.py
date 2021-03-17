@@ -405,7 +405,11 @@ def pythonistas_proficiency(request):
         fields=["skill", "experience"],
         can_delete=True,
         form=SkillProficiencyForm,
+        extra=1,
     )
+    import ipdb
+
+    ipdb.set_trace()
     context["formset"] = SkillProficiencyFormset(
         request.POST or None,
         instance=request.user,
