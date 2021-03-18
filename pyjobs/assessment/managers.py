@@ -37,7 +37,15 @@ class AssessmentQuerySet(models.QuerySet):
             )
             .values("user__username")
             .annotate(
-                points=Cast(models.Sum("correct_answer"), models.FloatField())
+                points=Cast(
+                    models.Sum(
+                        models.Case(
+                            models.When(correct_answer=True, then=1),
+                            default=models.Value(0),
+                        )
+                    ),
+                    models.FloatField(),
+                )
                 / Cast(models.Count("correct_answer"), models.FloatField())
                 * 100
             )
