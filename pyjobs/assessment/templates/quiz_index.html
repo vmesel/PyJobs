@@ -26,11 +26,28 @@
             <a href="{% url 'question_page' assessment.slug %}">
                 <input type="button" class="botao" value="{% translate 'Ver resultado' %}" style="margin-top: 20px;">
             </a>
+            {% if assessment.public %}
+                <center>
+                    <table style="width: 500px; margin-top: 50px;">
+                        <thead>
+                        <tr style="background-color: #00d1bd; border-bottom: 1px solid #000; color: #fff;">
+                            <th style="width: 50%; text-align: center; font-size: 18px;">{% translate 'Usuário' %}</th>
+                            <th style="width: 50%; text-align: center; font-size: 18px;">{% translate 'Pontuação' %}</th>
+                        </tr>
+                        </thead>
+                        {% for candidate_answer in quiz_ranking %}
+                            <tr style="border-bottom: 1px solid #000;">
+                                <td style="width: 50%; text-align: center; font-size: 18px;">{{candidate_answer.user__username}}</td>
+                                <td style="width: 50%; text-align: center; font-size: 18px;">{{candidate_answer.points}}%</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                </center>
+            {% endif %}
         {% else %}
         <a href="{% url 'question_page' assessment.slug %}">
             <input type="button" class="botao" value="{% translate 'Começar o Quiz' %}" style="margin-top: 20px;">
         </a>
         {% endif %}
-
     </div>
 {%endblock%}

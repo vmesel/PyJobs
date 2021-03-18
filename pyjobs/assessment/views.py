@@ -12,6 +12,7 @@ def quiz_home(request, unique_slug):
     started_answering, finished = Punctuation.objects.unanswered_questions(
         request.user, assessment
     )
+    quiz_ranking = Punctuation.objects.ranking(assessment)
 
     return render(
         request,
@@ -20,6 +21,7 @@ def quiz_home(request, unique_slug):
             "assessment": assessment,
             "finished": finished,
             "started_answering": started_answering,
+            "quiz_ranking": quiz_ranking,
         },
     )
 
