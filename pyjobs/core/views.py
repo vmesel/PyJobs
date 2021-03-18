@@ -280,7 +280,7 @@ def applied_users_details(request, unique_slug):
             request,
             template_name="applied_users_details.html",
             context={
-                "rows": JobApplication.objects.filter(job__unique_slug=unique_slug),
+                "rows": JobApplication.objects.filter(job__unique_slug=unique_slug).order_by("-created_at"),
                 "job": job_info,
                 "is_staff": request.user.is_staff,
                 "webpush": WEBPUSH_CONTEXT,
