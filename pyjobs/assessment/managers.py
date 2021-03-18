@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.functions import Cast
 
 
 class AssessmentQuerySet(models.QuerySet):
@@ -28,3 +29,19 @@ class AssessmentQuerySet(models.QuerySet):
             return True, False
 
         return False, False
+
+    def ranking(self, assessment, n=10):
+        all_candidates_answers = (
+            self.filter(
+                question__assessment=assessment,
+            )
+            .values("user__username")
+            .annotate(
+                points=Cast(models.Sum("correct_answer"), models.FloatField())
+                / Cast(models.Count("correct_answer"), models.FloatField())
+                * 100
+            )
+            .order_by("-points")[:n]
+        )
+
+        return all_candidates_answers.all()
