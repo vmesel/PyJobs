@@ -8,11 +8,14 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import redirect
 
 
+MAX_AGE = getattr(settings, 'CACHE_CONTROL_MAX_AGE', 2592000)
+
 class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
     response_gone_class = http.HttpResponseGone
     response_redirect_class = http.HttpResponsePermanentRedirect
 
     def process_response(self, request, response):
+        response['Cache-Control'] = 'max-age=%d' % MAX_AGE
         if response.status_code != 404:
             return response
 
