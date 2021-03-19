@@ -12,6 +12,23 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-T2VF6PC');</script>
     <!-- End Google Tag Manager -->
+    <!-- Facebook Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '595313061373123');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=595313061373123&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
     <meta charset="utf-8">
     {% block metas %}
     <meta charset="utf-8">
@@ -33,11 +50,14 @@
     {% block metas_seo %}
     {% endblock metas_seo %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    {% with css_static='assets/css/'|add:WEBSITE_URL|add:'/style.css' favico_path='assets/img/'|add:WEBSITE_URL|add:'/favicon.ico' %}
-        <link rel="stylesheet" href="{% static css_static %}">
-        <link rel="shortcut icon" href="{% static favico_path %}">
+    {% with 'assets/css/'|add:WEBSITE_URL|add:'/style.css' as css_static %}
+      <link rel="stylesheet" href="{% static css_static %}">
+    {% endwith %}
+    {% with 'assets/img/'|add:WEBSITE_URL|add:'/favicon.ico' as favico_path %}
+      <link rel="shortcut icon" href="{% static favico_path %}">
     {% endwith %}
     <script src="https://kit.fontawesome.com/8347312236.js" crossorigin="anonymous"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     {% webpush_header %}
     <!-- Hotjar Tracking Code for www.pyjobs.com.br -->
     <script>
