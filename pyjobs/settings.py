@@ -161,6 +161,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "staticfiles"),)
+STATICFILES_STORAGE = "compress_staticfiles.storage.CompressStaticFilesStorage"
 
 RAVEN_CONFIG = {"dsn": config("SENTRY_DSN", default=None)}
 

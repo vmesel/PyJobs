@@ -39,7 +39,6 @@ PyGithub = "^1.53"
 mistune = "2.0.0a4"
 bs4 = "^0.0.1"
 pywebpush = "1.9.4"
-django-webpush = "^0.3.3"
 django-letsencrypt = "^4.0.0"
 Unipath = "^1.1"
 scrape-linkedin = {git = "https://github.com/austinoboyle/scrape-linkedin-selenium.git"}
@@ -47,6 +46,8 @@ linkedin-scraper = "^2.7.2"
 model-bakery = "^1.2.1"
 social-auth-app-django = "^4.0.0"
 markdownify = "^0.6.5"
+django-webpush = {git = "https://github.com/safwanrahman/django-webpush"}
+django-compress-staticfiles = {git = "https://github.com/armandtvz/django-compress-staticfiles.git"}
 
 [tool.poetry.dev-dependencies]
 black = "*"
