@@ -83,6 +83,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "pyjobs.urls"
 
+CACHE_BACKEND = 'locmem:///'
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
