@@ -722,7 +722,7 @@ input[type=checkbox]:checked{
 }
 
 .depoimentos-push {
-    max-width: 700px;
+    max-width: 300px;
     height: 200px;
     width: 400px;
 }
