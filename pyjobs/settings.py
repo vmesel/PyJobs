@@ -77,6 +77,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
+    "django.middleware.gzip.GZipMiddleware"
 ]
 
 

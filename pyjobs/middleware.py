@@ -7,6 +7,8 @@ from django.contrib.redirects.models import Redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import redirect
 
+from django.middleware.gzip import GZipMiddleware
+
 
 MAX_AGE = getattr(settings, 'CACHE_CONTROL_MAX_AGE', 2592000)
 
