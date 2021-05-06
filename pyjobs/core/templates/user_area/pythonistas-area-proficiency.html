@@ -15,7 +15,7 @@
             Aqui, você deverá preencher quais são as suas maiores skills e a quantidade de anos que você atua com elas.
             {% endblocktranslate %}
         </p>
-        <form method="post">
+        <form method="post" action=".">
             {% csrf_token %}
             {{ formset.management_form }}
             <div id="form_set">

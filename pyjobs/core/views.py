@@ -407,7 +407,7 @@ def pythonistas_proficiency(request):
         fields=["skill", "experience"],
         can_delete=True,
         form=SkillProficiencyForm,
-        extra=1,
+        extra=0,
     )
 
     context["formset"] = SkillProficiencyFormset(
@@ -416,8 +416,7 @@ def pythonistas_proficiency(request):
     )
 
     if request.method == "POST" and context["formset"].is_valid():
-        for form in context["formset"]:
-            form.save(user=request.user)
+        context["formset"].save()
         return redirect(reverse("user_proficiency"))
 
     return render(request, "user_area/pythonistas-area-proficiency.html", context)
