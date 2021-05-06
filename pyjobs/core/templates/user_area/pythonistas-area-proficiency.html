@@ -15,7 +15,7 @@
             Aqui, você deverá preencher quais são as suas maiores skills e a quantidade de anos que você atua com elas.
             {% endblocktranslate %}
         </p>
-        <form method="post">
+        <form method="post" action="." encrypt="multipart/form-data">
             {% csrf_token %}
             {{ formset.management_form }}
             <div id="form_set">
@@ -41,9 +41,9 @@
 {% block extra_scripts%}
 <script>
     $('#add_more').click(function() {
-        var form_idx = $('#id_form-TOTAL_FORMS').val();
+        var form_idx = $('#id_skillproficiency_set-TOTAL_FORMS').val();
         $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
-        $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        $('#id_skillproficiency_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
     });
 const checkboxes = document.querySelectorAll("input[type='checkbox']");
 checkboxes.forEach((item) => {
