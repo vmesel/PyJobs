@@ -5,13 +5,13 @@ body{
 
 .botao{
     background-color: #00d1bd;
-    border-radius: 50px;
+    border-radius: 25px;
     border: 0px;
-    min-height: 54px;
+    min-height: 42px;
     margin: 0 auto;
-    padding: 0 27px;
+    padding: 0 10px;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
     -webkit-appearance: none;
@@ -21,13 +21,13 @@ body{
 
 .botao-inverso{
     background-color: #fff;
-    border-radius: 50px;
+    border-radius: 25px;
     border: #00d1bd 1px solid;
-    min-height: 54px;
+    min-height: 42px;
     margin: 0 auto;
-    padding: 0 27px;
+    padding: 0 10px;
     color: #00d1bd;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
     -webkit-appearance: none;
@@ -39,10 +39,6 @@ body{
     max-width: 300px;
 }
 
-.navbar{
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
 .call-to-action-text-h2{
     color: #041a3f;
     font-weight: bold;
@@ -111,7 +107,8 @@ body{
     -moz-appearance: none;
     -webkit-appearance: none;
 }
-body header{
+.main-page-ad{
+    display: block;
     margin-top:20px;
 }
 
