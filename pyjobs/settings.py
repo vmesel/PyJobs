@@ -77,13 +77,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
-    "django.middleware.gzip.GZipMiddleware"
+    "django.middleware.gzip.GZipMiddleware",
 ]
 
 
 ROOT_URLCONF = "pyjobs.urls"
 
-CACHE_BACKEND = 'locmem:///'
+CACHE_BACKEND = "locmem:///"
 
 TEMPLATES = [
     {

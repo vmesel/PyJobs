@@ -8,28 +8,31 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('assessment', '0007_auto_20210309_2122'),
+        ("assessment", "0007_auto_20210309_2122"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='assessment',
-            options={'verbose_name': 'Teste', 'verbose_name_plural': 'Testes'},
+            name="assessment",
+            options={"verbose_name": "Teste", "verbose_name_plural": "Testes"},
         ),
         migrations.AlterModelOptions(
-            name='assessmentcategory',
-            options={'verbose_name': 'Categoria do Teste', 'verbose_name_plural': 'Categorias dos Testes'},
+            name="assessmentcategory",
+            options={
+                "verbose_name": "Categoria do Teste",
+                "verbose_name_plural": "Categorias dos Testes",
+            },
         ),
         migrations.AlterModelOptions(
-            name='punctuation',
-            options={'verbose_name': 'Pontuação', 'verbose_name_plural': 'Pontuações'},
+            name="punctuation",
+            options={"verbose_name": "Pontuação", "verbose_name_plural": "Pontuações"},
         ),
         migrations.AlterModelOptions(
-            name='question',
-            options={'verbose_name': 'Pergunta', 'verbose_name_plural': 'Perguntas'},
+            name="question",
+            options={"verbose_name": "Pergunta", "verbose_name_plural": "Perguntas"},
         ),
         migrations.AlterUniqueTogether(
-            name='punctuation',
-            unique_together={('user', 'question')},
+            name="punctuation",
+            unique_together={("user", "question")},
         ),
     ]

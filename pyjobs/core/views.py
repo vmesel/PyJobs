@@ -418,7 +418,7 @@ def pythonistas_proficiency(request):
     if request.method == "POST" and context["formset"].is_valid():
         for form in context["formset"].forms:
             form.save()
-        
+
         context["formset"].save()
         return redirect(reverse("user_proficiency"))
 
