@@ -19,41 +19,88 @@
             {% csrf_token %}
             {{ formset.management_form }}
             <div id="form_set">
+                <div class='row' id="table-{{ forloop.counter0 }}" style="margin-top:30px;">
+                        <div class="col-md-4">
+                            <b>
+                                {% blocktranslate %}
+                                Skill
+                                {% endblocktranslate %}
+                            </b>
+                        </div>
+                        <div class="col-md-4">
+                            <b>
+                                {% blocktranslate %}
+                                Anos de experiência
+                                {% endblocktranslate %}
+                            </b>
+                        </div>
+                        <div class="col-md-4">
+                            <b>
+                                {% blocktranslate %}
+                                Deletar?
+                                {% endblocktranslate %}
+                            </b>
+                        </div>
+                </div>
                 {% for form in formset.forms %}
-                  {{form.non_field_errors}}
-                {{form.errors}}
-                    <table class='no_error' id="table-{{ forloop.counter0 }}" style="margin-top:30px;">
-                        {{ form }}
-                    </table>
+                    {{form.non_field_errors}}
+                    {{form.errors}}
+                    <div class='row' id="table-{{ forloop.counter0 }}" style="margin-top:30px;">
+                        {% for field in form.visible_fields %}
+                            <div class="col-md-4">
+                                {% if form.errors %}
+                                    {% render_field field class="form-control is-invalid" %}
+                                {% else %}
+                                    {% render_field field class="form-control" %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
             </div>
             <input type="button" value="{% translate 'Adicionar Skill' %}" id="add_more" class="botao" style="margin-top:30px;">
             <input type="submit" value="{% translate 'Enviar' %}" class="botao" style="margin-top:30px;" onclick="this.disabled=true;this.value='{% translate "Enviando" %}'; this.form.submit();">
+            
             <div id="empty_form" style="display:none;">
-                <table class='no_error' style="margin-top:30px;">
-                    {{ formset.empty_form }}
-                </table>
-            </div>
+                <div class="row" id="table-__prefix__" style="margin-top:30px;">
+                {% for field in formset.empty_form.visible_fields %}
+                <div class="col-md-4">
+                    {% render_field field class="form-control" %}
+                </div>
+            {% endfor %}
+        </div>
+        </div>
         </form>
     </div>
 </section>
 {%endblock%}
 {% block extra_scripts%}
 <script>
+    function addEventListenerToCheckBoxes(checkboxes) {
+        checkboxes.forEach((item) => {
+            item.addEventListener("change", (checkboxItem) => {
+                console.log(checkboxItem);
+                var formIdToRemove = checkboxItem.target.id.replace("id_skillproficiency_set-", "table-").replace("-DELETE", "");
+                var form = document.getElementById(formIdToRemove);
+                form.style.display = "none";
+            })
+        });
+    }
+
+
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    addEventListenerToCheckBoxes(checkboxes);
+
     $('#add_more').click(function() {
         var form_idx = $('#id_skillproficiency_set-TOTAL_FORMS').val();
         $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
         $('#id_skillproficiency_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        $("#id_skillproficiency_set-NUM-skill".replace("NUM", form_idx)).val("");
+        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+        addEventListenerToCheckBoxes(checkboxes);
     });
-const checkboxes = document.querySelectorAll("input[type='checkbox']");
-checkboxes.forEach((item) => {
-    item.addEventListener("change", (checkboxItem) => {
-      var formIdToRemove = checkboxItem.target.id.replace("id_skillproficiency_set-", "table-").replace("-DELETE", "");
-      var form = document.getElementById(formIdToRemove);
-      form.style.display = 'none';
-  })
-});
+
+
 </script>
 <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 {%endblock%}
