@@ -154,7 +154,7 @@
               <ul class="pagination">
                   {% for page in pages %}
                     {% if page == this_page %}
-                        <li class="page-item active-pagination"><a class="page-link" href="{% url 'jobs' %}?{% merge_query_params page=page %}">{{ page }}</a></li>
+                        <li class="page-item active"><a class="page-link" href="{% url 'jobs' %}?{% merge_query_params page=page %}">{{ page }}</a></li>
                     {% else %}
                         <li class="page-item"><a class="page-link" href="{% url 'jobs' %}?{% merge_query_params page=page %}">{{ page }}<span class="sr-only">(current)</span></a></li>
                     {% endif %}
