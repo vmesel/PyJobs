@@ -1,0 +1,19 @@
+:root {
+    --main-color: #00d1bd;
+    --main-background-color: #FFF;
+    --shadow-color: #aaa;
+    --input-border: rgba(170, 170, 170, 0.3);
+    --section-header-color: #041a3f;
+    --cta-text-color: #1f2228;
+    --filter-border-color: #eee;
+    --cards-section-bg-color: #F7F8F9;
+    --badge-bg-color: #1A1F2A;
+    --section-gray-bg-color: #f4f5f7;
+    --job-shadow: rgba(0, 0, 0, 0.2);
+    --ad-job-main-color: #364A5F;
+    --page-item-a: rgba(183,201,218,.99);
+    --default-font-family: "Raleway", Helvetica, Arial, serif;
+    --job-main-background-color: #ccc;
+    --top-breadcrumb-color: #000;
+    --invalid-feedback: #dc3545;
+}

@@ -39,10 +39,10 @@
     {% block metas_seo %}
     {% endblock metas_seo %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    {% with 'assets/css/'|add:WEBSITE_URL|add:'/style.css' as css_static %}
+    {% with 'assets/css/'|add:WEBSITE_URL|add:'/variables.css' as css_static %}
       <link rel="stylesheet" href="{% static css_static %}">
     {% endwith %}
-    <link rel="stylesheet" href="{% static 'assets/css/general-style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     {% with 'assets/img/'|add:WEBSITE_URL|add:'/favicon.ico' as favico_path %}
       <link rel="shortcut icon" href="{% static favico_path %}">
     {% endwith %}
