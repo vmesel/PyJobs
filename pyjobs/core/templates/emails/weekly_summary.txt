@@ -9,7 +9,7 @@ Qualquer dúvida, apenas responda a este e-mail!
 {% endblocktranslate %}
 
 {% for job in jobs %}
-    - {{job.title}} - {{job.company_name}} {% translate "em" %} {{job.workplace}} {% translate "disponível em" %}: {{url_do_site}}/job/{{job.pk}}
+    - {{job.title}} - {{job.company_name}} {% translate "em" %} {{job.workplace}} {% translate "disponível em" %}: {{url_do_site}}/job/{{job.unique_slug}}
 {% endfor %}
 
 {% blocktranslate %}

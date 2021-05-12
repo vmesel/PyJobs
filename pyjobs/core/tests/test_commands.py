@@ -93,7 +93,10 @@ class SendWeeklySummaryTest(TestCase):
     def test_formatting_string_job(self):
         self.assertEqual(
             " - {} na {} em: {} - http://www.pyjobs.com.br/job/{}".format(
-                self.job.title, self.job.company_name, self.job.workplace, self.job.pk
+                self.job.title,
+                self.job.company_name,
+                self.job.workplace,
+                self.job.unique_slug,
             ),
             format_job(self.job),
         )
