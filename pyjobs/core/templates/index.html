@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load webpush_notifications %}
 {% load i18n %}
 {% load static %}
 {% load humanize %}
@@ -17,9 +18,17 @@
 <meta property="og:site_name" content="{{WEBSITE_NAME}}" />
 {% endblock %}
 {%block main%}
-<section>
-</section>
-    <header>
+<section class="call-to-action-push" id="push-sub-div">
+    <div class="row">
+            <div class="col-lg-6 my-auto">
+                <h3>{% translate "Se inscreva em nosso push!"%}</h3>
+            </div>
+            <div class="col-lg-6 my-auto">
+              {% webpush_button with_class="btn-push" %}
+            </div>
+        </div>
+  </section>
+    <div class="main-page-ad">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 call-to-action">
@@ -43,7 +52,7 @@
                     </div>
                 </div>
             </div>
-    </header>
+    </div>
     <section class="filtro filtro-shadow p-3 mb-1 bg-white rounded">
         <div class="container">
             <div class="row">
@@ -168,12 +177,12 @@
             <div class="row depoimento-conteudo">
                 <div class="col-md-6">
                     <center>
-                        <iframe src="https://www.youtube.com/embed/T6jwRBEI7Gw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="depoimentos-push"></iframe>
+                        <iframe src="" data-src="https://www.youtube.com/embed/T6jwRBEI7Gw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="depoimentos-push" loading="lazy"></iframe>
                     </center>
                 </div>
                 <div class="col-md-6">
                     <center>
-                        <iframe src="https://www.youtube.com/embed/WOxRlCCFGQk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="depoimentos-push"></iframe>
+                        <iframe src="" data-src="https://www.youtube.com/embed/WOxRlCCFGQk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="depoimentos-push" loading="lazy"></iframe>
                     </center>
                 </div>
             </div>
@@ -198,4 +207,13 @@
     $('#id_skills').select2();
   });
   </script>
+  <script>
+    function init() {
+    var vidDefer = document.getElementsByTagName('iframe');
+    for (var i=0; i<vidDefer.length; i++) {
+    if(vidDefer[i].getAttribute('data-src')) {
+    vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
+    } } }
+    window.onload = init;
+    </script>    
   {%endblock%}

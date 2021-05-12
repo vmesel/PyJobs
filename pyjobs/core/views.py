@@ -11,7 +11,7 @@ from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.db.models import Count, Q
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, resolve_url
 from django.urls import reverse
 from datetime import datetime, timedelta
 
@@ -23,6 +23,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import activate
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
+from django.forms import modelformset_factory
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -400,25 +401,25 @@ def pythonista_applied_info(request):
 @login_required
 def pythonistas_proficiency(request):
     context = {}
-    proficiency_objects = SkillProficiency.objects.filter(user=request.user)
     SkillProficiencyFormset = inlineformset_factory(
         User,
         SkillProficiency,
         fields=["skill", "experience"],
         can_delete=True,
         form=SkillProficiencyForm,
-        extra=1,
+        extra=0,
     )
 
-    context["formset"] = SkillProficiencyFormset(
-        request.POST or None,
-        instance=request.user,
-    )
+    context["formset"] = SkillProficiencyFormset(instance=request.user)
 
-    if request.method == "POST" and context["formset"].is_valid():
-        for form in context["formset"]:
-            form.save(user=request.user)
-        return redirect(reverse("user_proficiency"))
+    if request.method == "POST":
+        context["formset"] = SkillProficiencyFormset(
+            request.POST, request.FILES, instance=request.user
+        )
+
+        if context["formset"].is_valid():
+            context["formset"].save(request)
+            redirect(resolve_url("user_proficiency"))
 
     return render(request, "user_area/pythonistas-area-proficiency.html", context)
 

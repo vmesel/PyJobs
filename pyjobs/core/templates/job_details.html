@@ -195,9 +195,7 @@
             "addressRegion" : "{{job.get_state_display}}",
             "addressCountry": "{{job.country.name}}"
           }
-        }
-        {% if job.get_salary_range_display != "NI" %}
-        ,
+        }{% if job.get_salary_range_display != "NI" and salary.0 is not None and salary.1 is not None %},
         "baseSalary": {
             "@type": "MonetaryAmount",
             "currency": "{{job.currency.slug}}",

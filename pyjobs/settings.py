@@ -77,10 +77,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
 ]
 
 
 ROOT_URLCONF = "pyjobs.urls"
+
+CACHE_BACKEND = "locmem:///"
 
 TEMPLATES = [
     {
@@ -96,7 +99,7 @@ TEMPLATES = [
                 "pyjobs.core.context_processors.global_vars",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
-            ]
+            ],
         },
     },
 ]
@@ -161,6 +164,8 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "staticfiles"),)
+STATICFILES_STORAGE = "compress_staticfiles.storage.CompressStaticFilesStorage"
+WHITENOISE_MAX_AGE = 604800
 
 RAVEN_CONFIG = {"dsn": config("SENTRY_DSN", default=None)}
 

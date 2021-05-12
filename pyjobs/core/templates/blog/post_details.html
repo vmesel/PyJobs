@@ -57,31 +57,23 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container post-content">
             {% autoescape off %}
             {{post.content}}
             {% endautoescape %}
         </div>
         <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <a href="https://pyjobs.com.br">
                     <input type="button" class="botao" value="{% translate 'Quero ver as Vagas Python' %}">
                 </a>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-md-12">
                 <a href="http://frontjobs.com.br">
                     <input type="button" class="botao" value="{% translate 'Quero ver as Vagas Front' %}">
                 </a>
-            </div>
-        </div>
-        <div class="bg-light p-5 rounded container">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="{{post.author.avatar_URL}} alt="">
-                </div>
-                <div class="col-md-10">
-                    <h3>Autor: {{post.author.name}}</h3>
-                </div>
             </div>
         </div>
     </div>

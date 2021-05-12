@@ -5,7 +5,10 @@ from django.conf import settings
 from django.contrib.redirects.middleware import RedirectFallbackMiddleware
 from django.contrib.redirects.models import Redirect
 from django.contrib.sites.shortcuts import get_current_site
+from django.middleware.gzip import GZipMiddleware
 from django.shortcuts import redirect
+
+MAX_AGE = getattr(settings, "CACHE_CONTROL_MAX_AGE", 2592000)
 
 
 class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
@@ -13,6 +16,7 @@ class RedirectFallbackMiddleware(RedirectFallbackMiddleware):
     response_redirect_class = http.HttpResponsePermanentRedirect
 
     def process_response(self, request, response):
+        response["Cache-Control"] = "max-age=%d" % MAX_AGE
         if response.status_code != 404:
             return response
 

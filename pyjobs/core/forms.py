@@ -194,18 +194,3 @@ class SkillProficiencyForm(ModelForm):
     class Meta:
         model = SkillProficiency
         fields = ["skill", "experience"]
-
-    def full_clean(self, *args, **kwargs):
-        super(SkillProficiencyForm, self).full_clean(*args, **kwargs)
-        if hasattr(self, "cleaned_data") and self.cleaned_data.get("DELETE", False):
-            self._errors = ErrorDict()
-
-    def save(self, user=None, commit=True):
-        if self.cleaned_data.get("DELETE") or self.cleaned_data.get("experience") == 0:
-            return
-
-        SkillProficiency.objects.get_or_create(
-            skill=self.cleaned_data["skill"],
-            user=user,
-            experience=self.cleaned_data["experience"],
-        )

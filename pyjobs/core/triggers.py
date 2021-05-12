@@ -13,7 +13,7 @@ from social_django.models import UserSocialAuth
 
 @receiver(post_save, sender=UserSocialAuth)
 def new_user_created_via_social_network(sender, instance, created, **kwargs):
-    if not created and len(Profile.objects.filter(user=instance.user)) > 0:
+    if not created and Profile.objects.filter(user=instance.user).count() > 0:
         return
 
     Profile.objects.create(user=instance.user)

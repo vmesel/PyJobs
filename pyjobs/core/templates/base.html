@@ -13,18 +13,7 @@
     })(window,document,'script','dataLayer','GTM-T2VF6PC');</script>
     <!-- End Google Tag Manager -->
     <!-- Facebook Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '595313061373123');
-      fbq('track', 'PageView');
-    </script>
+    <!-- Facebook Pixel Code --><script defer>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '2952044945010312'); fbq('track', 'PageView');</script><noscript> <img height="1" width="1" src="https://www.facebook.com/tr?id=2952044945010312&ev=PageView&noscript=1"/></noscript><!-- End Facebook Pixel Code -->
     <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=595313061373123&ev=PageView&noscript=1"
     /></noscript>
@@ -50,17 +39,17 @@
     {% block metas_seo %}
     {% endblock metas_seo %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    {% with 'assets/css/'|add:WEBSITE_URL|add:'/style.css' as css_static %}
+    {% with 'assets/css/'|add:WEBSITE_URL|add:'/variables.css' as css_static %}
       <link rel="stylesheet" href="{% static css_static %}">
     {% endwith %}
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     {% with 'assets/img/'|add:WEBSITE_URL|add:'/favicon.ico' as favico_path %}
       <link rel="shortcut icon" href="{% static favico_path %}">
     {% endwith %}
     <script src="https://kit.fontawesome.com/8347312236.js" crossorigin="anonymous"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
     {% webpush_header %}
     <!-- Hotjar Tracking Code for www.pyjobs.com.br -->
-    <script>
+    <script defer>
         (function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
             h._hjSettings={hjid:2219438,hjsv:6};
@@ -77,22 +66,12 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2VF6PC"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <section class="call-to-action-push" id="push-sub-div">
-      <div class="row">
-              <div class="col-lg-6 my-auto">
-                  <h3>{% translate "Se inscreva em nosso push!"%}</h3>
-              </div>
-              <div class="col-lg-6 my-auto">
-                {% webpush_button with_class="btn-push" %}
-              </div>
-          </div>
-    </section>
-    <nav class="navbar navbar-expand-lg navbar-light justify-content-between shadow-sm">
-        <div class="container">
+    <nav class="navbar navbar-expand-md navbar-light justify-content-between shadow-sm p-2">
+      <div class="container-fluid">
             <a class="navbar-brand">
                     <a class="nav-link" href="{% url 'index' %}" style="margin: 0; padding: 0;">
                       {% with 'assets/img/'|add:WEBSITE_URL|add:'/logo.webp' as logo_path %}
-                        <img src="{% static logo_path %}" style="height:75px">
+                        <img src="{% static logo_path %}" style="height:42px">
                       {% endwith %}
                         <h1 style="display:none;">{{WEBSITE_NAME}}</h1>
                     </a>
@@ -119,15 +98,12 @@
                   </li>
                 </form>
                   <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'index' %}">{% translate "Home"%}</a>
-                  </li>
-                  <li class="nav-item active">
                       <a class="nav-link" href="{% url 'jobs' %}">{% translate "Vagas"%}</a>
                   </li>
-                  {% if not user.is_authenticated %}
                   <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'blog_index' %}">{% translate "Blog"%}</a>
-                  </li>
+                    <a class="nav-link" href="{% url 'blog_index' %}">{% translate "Blog"%}</a>
+                </li>
+                  {% if not user.is_authenticated %}
                   <li class="nav-item active form-inline my-2 my-lg-0">
                     <a class="" href="{% url 'login' %}">
                     <button class="botao-inverso">
@@ -146,14 +122,15 @@
                   </div>
                 </li>
                   {%endif%}
+                  <div class="form-inline my-2 my-lg-0">
+                    <a href="{% url 'job_creation' %}">
+                        <button class="botao">{% translate "Cadastre uma vaga"%}</button>
+                    </a>
+                </div>
               </ul>
-              <div class="form-inline my-2 my-lg-0">
-                  <a href="{% url 'job_creation' %}">
-                      <button class="botao">{% translate "Cadastre uma vaga"%}</button>
-                  </a>
-              </div>
             </div>
         </div>
+      </div>
       </nav>
       {% if EMPTY_PROFILE %}
             <div class="alert alert-danger">
@@ -217,19 +194,25 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     {% if not user.is_authenticated %}
-        {% include 'modal_donate.html'%}
-        <script>
-            $(document).ready(function(){
-                if (document.cookie.indexOf("visitado=") >= 0) {}
-                else {
-                    document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-                    $("#modal-donate").modal();
-                }
-                subBtn = document.getElementById('webpush-subscribe-button');
-                subBtn.textContent = 'Inscrever no Push';
-            });
-        </script>
+      {% include 'modal_donate.html'%}
     {% endif %}
+    {% if not user.is_authenticated %}
+      <script>
+        $(document).ready(function(){
+          if (document.cookie.indexOf("visitado=") >= 0) {}
+          else {
+              document.cookie = "visitado=yes; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+              $("#modal-donate").modal();
+          }
+        });
+      </script>
+      {% endif %}
+      <script>
+        $(document).ready(function(){
+          subBtn = document.getElementById('webpush-subscribe-button');
+          subBtn.textContent = 'Inscrever no Push';
+        });
+      </script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
