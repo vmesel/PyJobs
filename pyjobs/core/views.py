@@ -23,6 +23,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import activate
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
+from django.forms import modelformset_factory
 
 try:
     CURRENT_DOMAIN = Site.objects.get_current().domain
@@ -400,7 +401,6 @@ def pythonista_applied_info(request):
 @login_required
 def pythonistas_proficiency(request):
     context = {}
-    proficiency_objects = SkillProficiency.objects.filter(user=request.user)
     SkillProficiencyFormset = inlineformset_factory(
         User,
         SkillProficiency,
@@ -410,17 +410,16 @@ def pythonistas_proficiency(request):
         extra=0,
     )
 
-    context["formset"] = SkillProficiencyFormset(
-        request.POST or None,
-        instance=request.user,
-    )
+    context["formset"] = SkillProficiencyFormset(instance=request.user)
 
-    if request.method == "POST" and context["formset"].is_valid():
-        for form in context["formset"].forms:
-            form.save()
+    if request.method == "POST":
+        context["formset"] = SkillProficiencyFormset(
+            request.POST, request.FILES, instance=request.user
+        )
 
-        context["formset"].save()
-        return redirect(reverse("user_proficiency"))
+        if context["formset"].is_valid():
+            context["formset"].save(request)
+            redirect(resolve_url("user_proficiency"))
 
     return render(request, "user_area/pythonistas-area-proficiency.html", context)
 

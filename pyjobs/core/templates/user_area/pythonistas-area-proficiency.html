@@ -15,7 +15,7 @@
             Aqui, você deverá preencher quais são as suas maiores skills e a quantidade de anos que você atua com elas.
             {% endblocktranslate %}
         </p>
-        <form method="post" action="." encrypt="multipart/form-data">
+        <form method="post" action="/user/proficiency/">
             {% csrf_token %}
             {{ formset.management_form }}
             <div id="form_set">
@@ -43,9 +43,12 @@
                         </div>
                 </div>
                 {% for form in formset.forms %}
-                    {{form.non_field_errors}}
-                    {{form.errors}}
                     <div class='row' id="table-{{ forloop.counter0 }}" style="margin-top:30px;">
+                        {% for hidden_field in form.hidden_fields %}
+                            {{ hidden_field }}
+                        {% endfor %}
+                        {{form.non_field_errors}}
+                        {{form.errors}}
                         {% for field in form.visible_fields %}
                             <div class="col-md-4">
                                 {% if form.errors %}
