@@ -82,6 +82,7 @@ def jobs(request):
         "publicly_available_jobs": public_jobs_to_display,
         "premium_available_jobs": premium_jobs_to_display,
         "pages": paginator.page_range,
+        "this_page": page_number,
         "filter": user_filtered_query_set,
         "webpush": WEBPUSH_CONTEXT,
     }
