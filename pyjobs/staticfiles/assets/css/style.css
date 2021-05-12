@@ -565,18 +565,6 @@ footer h5{
     line-height: 18px;
 }
 
-.page-item a{
-    color: var(--main-background-color);
-    background-color: var(--page-item-a) !important;
-    height: 37px;
-    width: 37px;
-    margin: 0px 1px;
-}
-
-.page-item a:hover{
-    color: var(--main-background-color);
-}
-
 .cadastro-de-vaga{
     padding-top: 50px
 }
