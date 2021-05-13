@@ -365,40 +365,52 @@ class PyJobsNormalViews(TestCase):
 class PyJobsRegisterNewJob(TestCase):
     def setUp(self):
         self.client = Client()
+        invalid_data = {}
+        valid_data = {
+            "title": "Test",
+        }
 
-    @override_settings(RECAPTCHA_SECRET_KEY=None)
     @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def test_if_job_register_page_returns_200(self, _mock1, _mock_github, _mock2):
-        response = self.client.post("/register/new/job/", follow=True)
-        self.assertEqual(response.status_code, 200)
+    @responses.activate
+    def test_if_job_register_page_returns_400(self, _mock1, _mock_github, _mock2):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json.dumps({"success": False}),
+            status=200,
+            content_type="application/json",
+        )
+        response = self.client.post("/job/create/", follow=True, data={})
+        self.assertEqual(response.status_code, 400)
 
-    @override_settings(RECAPTCHA_SECRET_KEY=None)
     @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(
+    # @responses.activate
+    def test_if_job_register_page_returns_form_error(
         self, _mock1, _mock_github, _mock2
     ):
-        response = self.client.post("/register/new/job/", follow=True)
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json.dumps({"success": False}),
+            status=200,
+            content_type="application/json",
+            match_querystring=True,
+        )
+        response = self.client.post(
+            "/job/create/",
+            data={
+                "title": "",
+                "skills": "",
+            },
+        )
         content = response.content.decode("utf-8")
         self.assertTrue("Falha na hora de criar o job" in content)
 
     @responses.activate
-    @override_settings(RECAPTCHA_SECRET_KEY=None)
-    @patch("pyjobs.marketing.triggers.send_group_notification")
-    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
-    @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def test_if_job_register_page_returns_error_if_form_is_filled_wrong(
-        self, _mock1, _mock_github, _mock2
-    ):
-        response = self.client.post("/register/new/job/", follow=True)
-        content = response.content.decode("utf-8")
-        self.assertTrue("Falha na hora de criar o job" in content)
-
-    @responses.activate
-    @override_settings(RECAPTCHA_SECRET_KEY="AAA")
     @patch("pyjobs.core.views.JobForm")
     @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
@@ -409,30 +421,24 @@ class PyJobsRegisterNewJob(TestCase):
         responses.add(
             responses.POST,
             "https://www.google.com/recaptcha/api/siteverify",
-            json={"success": "Success"},
+            json={"success": True},
             status=200,
         )
-        response = self.client.post("/register/new/job/", follow=True)
+        response = self.client.post(
+            "/job/create/",
+            follow=True,
+            data={
+                "title": "Vaga 3",
+                "workplace": "Sao Paulo",
+                "company_name": "XPTO",
+                "company_email": "vm@xpto.com",
+                "description": "Job bem maneiro",
+                "premium": True,
+                "public": True,
+            },
+        )
         content = response.content.decode("utf-8")
         self.assertTrue("Parabéns! Sua vaga foi registrada!" in content)
-
-    @override_settings(RECAPTCHA_SECRET_KEY="AAA")
-    @responses.activate
-    @patch("pyjobs.marketing.triggers.send_group_notification")
-    @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
-    @patch("pyjobs.marketing.triggers.post_telegram_channel")
-    def test_if_job_register_page_returns_false_with_recaptcha(
-        self, _mock_telegram, _mock_github, _mock_push
-    ):
-        responses.add(
-            responses.POST,
-            "https://www.google.com/recaptcha/api/siteverify",
-            json={"failed": "yes"},
-            status=200,
-        )
-        response = self.client.post("/register/new/job/", follow=True)
-        content = response.content.decode("utf-8")
-        self.assertTrue("Falha na hora de criar o job" in content)
 
 
 class PyJobsJobChallenge(TestCase):

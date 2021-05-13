@@ -169,11 +169,31 @@ def services_view(request):
 
 
 def job_creation(request):
-    context_dict = {"new_job_form": JobForm, "webpush": WEBPUSH_CONTEXT}
+    context = {
+        "new_job_form": JobForm(request.POST or None),
+        "webpush": WEBPUSH_CONTEXT,
+    }
+
+    if request.method == "POST":
+        g_recaptcha_response = request.POST.get("g-recaptcha-response")
+
+        if context["new_job_form"].is_valid(g_recaptcha_response):
+            context["new_job_form"].save()
+            return render(
+                request, template_name="job_created.html", context=context, status=201
+            )
+        else:
+            return render(
+                request,
+                template_name="job_registration.html",
+                context=context,
+                status=400,
+            )
+
     return render(
         request,
         template_name="job_registration.html",
-        context=context_dict,
+        context=context,
     )
 
 
@@ -236,24 +256,6 @@ def summary_view(request):
     jobs = Job()
     context = {"jobs": jobs.get_weekly_summary(), "webpush": WEBPUSH_CONTEXT}
     return render(request, template_name="summary.html", context=context)
-
-
-def register_new_job(request):
-    if request.method != "POST":
-        return redirect("/")
-
-    new_job = JobForm(request.POST)
-    g_recaptcha_response = request.POST.get("g-recaptcha-response")
-    context = {"webpush": WEBPUSH_CONTEXT}
-
-    if new_job.is_valid(g_recaptcha_response):
-        new_job.save()
-        return render(request, template_name="job_created.html", context=context)
-
-    context["message_first"] = _("Falha na hora de criar o job")
-    context["message_second"] = _("Algum campo não foi preenchido corretamente!")
-
-    return render(request, template_name="generic.html", context=context)
 
 
 def close_job(request, unique_slug, close_hash):
@@ -326,7 +328,9 @@ def pythonistas_signup(request):
     context = {"form": RegisterForm(request.POST or None)}
     context["webpush"] = WEBPUSH_CONTEXT
 
-    if request.method == "POST" and context["form"].is_valid():
+    g_recaptcha_response = request.POST.get("g-recaptcha-response")
+
+    if request.method == "POST" and context["form"].is_valid(g_recaptcha_response):
         user = context["form"].save()
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
         return redirect("/")

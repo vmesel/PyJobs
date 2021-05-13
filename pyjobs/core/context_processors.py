@@ -45,6 +45,8 @@ def global_vars(request):
         "WEBSITE_GENERAL_EMAIL": settings.WEBSITE_GENERAL_EMAIL,
         "WEBSITE_WORKING_LANGUAGE": settings.WEBSITE_WORKING_LANGUAGE,
         "WEBSITE_MAILINGLIST_LINK": settings.WEBSITE_MAILINGLIST_LINK,
+        "RECAPTCHA_SECRET_KEY": settings.RECAPTCHA_SECRET_KEY,
+        "RECAPTCHA_SITE_KEY": settings.RECAPTCHA_SITE_KEY,
         "USER_SUBSTANTIVE": settings.USER_SUBSTANTIVE,
         "VAPID_PUBLIC_KEY": settings.WEBPUSH_SETTINGS["VAPID_PUBLIC_KEY"],
         **append_social_info_to_context(request),

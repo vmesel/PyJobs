@@ -13,6 +13,8 @@ from pyjobs.core.models import Job, Profile, Skill, JobApplication, SkillProfici
 from pyjobs.marketing.models import Contact
 from django.utils.translation import gettext_lazy as _
 from django.forms.utils import ErrorDict
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 
 class CustomModelForm(ModelForm):
@@ -20,7 +22,7 @@ class CustomModelForm(ModelForm):
         super(CustomModelForm, self).__init__(*args, **kwargs)
 
     def is_valid(self, g_recaptcha_response):
-        if not settings.RECAPTCHA_SECRET_KEY:
+        if settings.DEBUG and not settings.RECAPTCHA_SECRET_KEY:
             return super().is_valid()
 
         data = {
@@ -33,7 +35,7 @@ class CustomModelForm(ModelForm):
 
         result = recaptcha_response.json()
 
-        return ("success" in result) and super().is_valid()
+        return result["success"] and super().is_valid()
 
 
 class JobForm(CustomModelForm):
@@ -84,7 +86,7 @@ class JobApplicationForm(ModelForm):
             self.instance.save()
 
 
-class RegisterForm(UserCreationForm):
+class RegisterForm(CustomModelForm, UserCreationForm):
     github = forms.URLField(
         label=_("Github (opcional)"),
         widget=forms.TextInput(attrs={"placeholder": _("Link do seu GitHub")}),

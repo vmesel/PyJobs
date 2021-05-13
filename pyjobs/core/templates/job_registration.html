@@ -27,8 +27,11 @@
             </div>
         </div>
     </div>
-    <form action="{% url 'register_new_job' %}" method="post">
+    <form action="." method="post">
         {% csrf_token %}
+        {% if new_job_form.errors %}
+            {% translate "Falha na hora de criar o job" %}
+        {% endif %}
         <div class="container container-cadastro-vaga">
             <div class="row row-titulo-etapa" style="margin-bottom: 15px;">
                 <h4>{% translate "INFORMAÇÕES B&Aacute;SICAS DA VAGA"%}</h4>
@@ -195,12 +198,16 @@
             </div>
             <hr style="margin-top:40px;">
             <div class="row" style="padding-bottom: 20px;">
+                <div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div>
+            </div>
+            <div class="row" style="padding-bottom: 20px;">
                 <input type="submit" name="" value="{% translate 'CADASTRE MINHA VAGA, '%} {{WEBSITE_NAME}}!" class="botao" onclick="this.disabled=true;this.value='{% translate "Enviando" %}'; this.form.submit();">
             </div>
         </div>
     </form>
 {%endblock%}
 {% block extra_scripts%}
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <script src="{% static 'assets/js/jquery.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script type="text/javascript">
