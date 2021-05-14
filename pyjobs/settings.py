@@ -197,6 +197,7 @@ TELEGRAM_CHATID = config("TELEGRAM_CHATID", default=None)
 # Recaptcha
 
 RECAPTCHA_SECRET_KEY = config("RECAPTCHA_SECRET_KEY", default=None)
+RECAPTCHA_SITE_KEY = config("RECAPTCHA_SITE_KEY", default=None)
 
 # Force SSL
 

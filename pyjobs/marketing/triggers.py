@@ -131,7 +131,7 @@ def test(sender, instance, created, **kwargs):
                 _("em"),
                 instance.workplace,
                 "\n",
-                f"{settings.WEBSITE_HOME_URL}/job/{instance.pk}/",
+                f"{settings.WEBSITE_HOME_URL}/job/{instance.unique_slug}/",
             ],
         )
     )

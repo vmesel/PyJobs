@@ -1,6 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from model_mommy import mommy
 from datetime import timedelta
+
+import responses
 
 from pyjobs.core.forms import *
 from pyjobs.core.models import Skill, Profile, Job, Country, Currency
@@ -9,9 +11,16 @@ from django.contrib.auth.models import User
 
 
 class RegisterFormTest(TestCase):
+    @responses.activate
     def test_empty_form_is_not_valid(self):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"success": True},
+            status=200,
+        )
         form = RegisterForm(data={})
-        self.assertTrue(form.is_valid() == False)
+        self.assertTrue(form.is_valid("test") == False)
 
     def test_form_is_valid(self):
         skills = mommy.make("core.Skill", _quantity=1, _fill_optional=True)
@@ -78,12 +87,26 @@ class RegisterFormTest(TestCase):
     def setUp(self):
         self.skills = mommy.make(Skill, _quantity=5)
 
+    @responses.activate
     def test_invalid_form(self):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"success": True},
+            status=200,
+        )
         form = RegisterForm(data={})
-        self.assertFalse(form.is_valid())
+        self.assertFalse(form.is_valid("test"))
 
+    @responses.activate
     @patch("pyjobs.marketing.triggers.subscribe_user_to_mailer")
     def test_valid_form(self, _mocked_subscription):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"success": True},
+            status=200,
+        )
         data = {
             "github": "http://www.google.com",
             "linkedin": "http://www.google.com",
@@ -100,15 +123,22 @@ class RegisterFormTest(TestCase):
         }
         data["password2"] = data["password1"]
         form = RegisterForm(data=data)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid("test"))
         form.save()
         self.user = User.objects.all().first()
         self.profile = Profile.objects.filter(user=self.user).first()
         self.assertTrue(self.profile.github == data["github"])
         self.assertTrue(_mocked_subscription.called)
 
+    @responses.activate
     @patch("pyjobs.marketing.triggers.subscribe_user_to_mailer")
     def test_valid_form_but_without_mailer(self, _mocked_subscription):
+        responses.add(
+            responses.POST,
+            "https://www.google.com/recaptcha/api/siteverify",
+            json={"success": True},
+            status=200,
+        )
         data = {
             "github": "http://www.google.com",
             "linkedin": "http://www.google.com",
@@ -125,7 +155,7 @@ class RegisterFormTest(TestCase):
         }
         data["password2"] = data["password1"]
         form = RegisterForm(data=data)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid("test"))
         form.save()
         self.user = User.objects.all().first()
         self.profile = Profile.objects.filter(user=self.user).first()
@@ -134,6 +164,7 @@ class RegisterFormTest(TestCase):
 
 
 class JobApplicationFeedbackFormTest(TestCase):
+    @responses.activate
     @patch("pyjobs.marketing.triggers.send_group_notification")
     @patch("pyjobs.marketing.triggers.send_job_to_github_issues")
     @patch("pyjobs.marketing.triggers.post_telegram_channel")

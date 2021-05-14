@@ -10,7 +10,7 @@ from pyjobs.marketing.utils import post_telegram_channel
 
 def format_job(job):
     return " - {} na {} em: {} - http://www.pyjobs.com.br/job/{}".format(
-        job.title, job.company_name, job.workplace, job.pk
+        job.title, job.company_name, job.workplace, job.unique_slug
     )
 
 

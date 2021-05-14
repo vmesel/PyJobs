@@ -43,10 +43,6 @@ class ThumbnailTestingViews(TestCase):
         response = self.client.get("/feed/", follow=True)
         self.assertEqual(response.status_code, 200)
 
-    def test_return_register_new_job_status_code(self):
-        response = self.client.get("/register/new/job/")
-        self.assertEqual(response.status_code, 302)
-
 
 class PyJobsSignUp(TestCase):
     def setUp(self):
