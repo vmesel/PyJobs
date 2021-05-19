@@ -30,7 +30,7 @@
     <form action="." method="post">
         {% csrf_token %}
         {% if new_job_form.errors %}
-            {% translate "Falha na hora de criar o job" %}
+            <p class="text-center">{% translate "Falha na hora de criar o job" %}</p>
         {% endif %}
         <div class="container container-cadastro-vaga">
             <div class="row row-titulo-etapa" style="margin-bottom: 15px;">
@@ -41,8 +41,13 @@
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    {{new_job_form.title}}
-                    <span>{{new_job_form.title.errors}}</span>
+                    {% if new_job_form.title.errors %}
+                        {% render_field new_job_form.title class="form-control is-invalid"%}
+                    {% else %}
+                        {% render_field new_job_form.title class="form-control"%}
+                    {% endif %}
+                    
+                    <p class='mt-1'>{{new_job_form.title.errors}}</p>
                 </div>
                 <div class="col-md-4 filtro-form-item-select">
                     <div class="select-form-filtro" style="margin-top:5px;">
@@ -53,8 +58,13 @@
             </div>
             <div class="row">
                     <div class="col-md-12">
-                        {{new_job_form.company_name}}
-                        {{new_job_form.company_name.errors}}
+                        {% if new_job_form.company_name.errors %}
+                            {% render_field new_job_form.company_name class="form-control is-invalid"%}
+                        {% else %}
+                            {% render_field new_job_form.company_name class="form-control"%}
+                        {% endif %}
+                    
+                        <p class='mt-1'>{{new_job_form.company_name.errors}}</p>
                     </div>
             </div>
             <div class="row">
@@ -90,8 +100,14 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    {% render_field new_job_form.workplace style="margin-top: -2px;"%}
-                    {{new_job_form.workplace.errors}}
+                    
+                    {% if new_job_form.workplace.errors %}
+                        {% render_field new_job_form.workplace style="margin-top: -2px" class="form-control is-invalid"%}
+                    {% else %}
+                        {% render_field new_job_form.workplace style="margin-top: -2px" class="form-control"%}
+                    {% endif %}
+                    
+                    <p class="mt-1">{{new_job_form.workplace.errors}}</p>
                 </div>
             </div>
             <div class="row">
@@ -134,8 +150,16 @@
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
-                    {% render_field new_job_form.requirements class="textarea-dados"%}
-                    {{new_job_form.requirements.errors}}
+                    
+                    {% if new_job_form.requirements.errors %}
+                        {% render_field new_job_form.requirements class="form-control is-invalid"%}
+                    {% else %}
+                        {% render_field new_job_form.requirements class="form-control"%}
+                    {% endif %}
+                    
+                    <p class="mt-1">
+                        {{new_job_form.requirements.errors}}
+                    </p>
                 </div>
             </div>
             <hr style="margin-top:40px;">
@@ -147,8 +171,16 @@
             </div>
             <div class="row">
                 <div class="col-md-12 filtro-form-item-select">
-                    {% render_field new_job_form.description class="textarea-dados"%}
-                    {{new_job_form.description.errors}}
+                    
+                    {% if new_job_form.description.errors %}
+                        {% render_field new_job_form.description class="form-control is-invalid"%}
+                    {% else %}
+                        {% render_field new_job_form.description class="form-control"%}
+                    {% endif %}
+                    
+                    <p class="mt-1">
+                        {{new_job_form.description.errors}}
+                    </p>
                 </div>
             </div>
             <hr style="margin-top:40px;">
@@ -166,12 +198,28 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    {% render_field new_job_form.cellphone %}
-                    {{ new_job_form.cellphone.errors }}
+                    {% if new_job_form.cellphone.errors %}
+                        {% render_field new_job_form.cellphone class="form-control is-invalid"%}
+                    {% else %}
+                        {% render_field new_job_form.cellphone class="form-control"%}
+                    {% endif %}
+                    
+                    <p class="mt-1">
+                        {{ new_job_form.cellphone.errors }}
+                    </p>
                 </div>
                 <div class="col-md-6">
-                    {% render_field new_job_form.company_email %}
-                    {{ new_job_form.company_email.errors }}
+
+                    
+                    {% if new_job_form.company_email.errors %}
+                        {% render_field new_job_form.company_email class="form-control is-invalid"%}
+                    {% else %}
+                        {% render_field new_job_form.company_email class="form-control"%}
+                    {% endif %}
+                    
+                    <p class="mt-1">
+                        {{ new_job_form.company_email.errors }}
+                    </p>
                 </div>
             </div>
             <div class="row">
@@ -201,7 +249,10 @@
                 <div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div>
             </div>
             <div class="row" style="padding-bottom: 20px;">
-                <input type="submit" name="" value="{% translate 'CADASTRE MINHA VAGA, '%} {{WEBSITE_NAME}}!" class="botao" onclick="this.disabled=true;this.value='{% translate "Enviando" %}'; this.form.submit();">
+                <script>
+                    const translateSnippet = '{% translate "Enviando" %}' 
+                </script>
+                <input type="submit" name="" value="{% translate 'CADASTRE MINHA VAGA, '%} {{WEBSITE_NAME}}!" class="botao" onclick="this.disabled=true; this.value=`${translateSnippet}`; this.form.submit();">
             </div>
         </div>
     </form>
