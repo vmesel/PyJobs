@@ -13,4 +13,9 @@ urlpatterns = [
         question_submit,
         name="question_submit",
     ),
+    url(
+        r"^(?P<unique_slug>[-\w\d]+)/thumb/$",
+        quiz_thumbnail,
+        name="quiz_thumbnail",
+    ),
 ]

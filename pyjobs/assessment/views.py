@@ -1,17 +1,21 @@
-from django.shortcuts import get_object_or_404, render, redirect, reverse
+from django.shortcuts import get_object_or_404, render, redirect, reverse, HttpResponse
 from django.utils.translation import gettext_lazy as _
 from pyjobs.assessment.models import *
 from django.contrib.auth.decorators import login_required
+from pyjobs.core.utils import generate_thumbnail_quiz
 
 from random import shuffle
 
 
-@login_required
 def quiz_home(request, unique_slug):
     assessment = get_object_or_404(Assessment, slug=unique_slug)
-    started_answering, finished = Punctuation.objects.unanswered_questions(
-        request.user, assessment
-    )
+    if request.user.is_authenticated:
+        started_answering, finished = Punctuation.objects.unanswered_questions(
+            request.user, assessment
+        )
+    else:
+        started_answering, finished = None, None
+
     quiz_ranking = Punctuation.objects.ranking(assessment)
 
     return render(
@@ -81,3 +85,12 @@ def question_submit(request, unique_slug, question_id):
     )
 
     return redirect(reverse("question_page", args=[unique_slug]))
+
+
+def quiz_thumbnail(request, unique_slug):
+    quiz = Assessment.objects.filter(slug=unique_slug).first()
+    im = generate_thumbnail_quiz(quiz=quiz)
+
+    response = HttpResponse(content_type="image/png")
+    im.save(response, "PNG")
+    return response
