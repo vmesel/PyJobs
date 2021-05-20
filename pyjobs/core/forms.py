@@ -87,6 +87,11 @@ class JobApplicationForm(ModelForm):
 
 
 class RegisterForm(CustomModelForm, UserCreationForm):
+
+    error_messages = {
+        'password_mismatch': _("Os campos de senha não coincidem."),
+    }
+
     github = forms.URLField(
         label=_("Github (opcional)"),
         widget=forms.TextInput(attrs={"placeholder": _("Link do seu GitHub")}),
