@@ -111,7 +111,7 @@ WSGI_APPLICATION = "pyjobs.wsgi.application"
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
     "default": config(
-        "DATABASE_URL",
+        "DATABASE_URL_",
         default="sqlite:///" + BASE_DIR_PARENT.child("db.sqlite3"),
         cast=db_url,
     )
